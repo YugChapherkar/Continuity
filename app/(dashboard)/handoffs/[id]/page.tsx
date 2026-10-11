@@ -133,7 +133,7 @@ export default function HandoffDossierPage() {
             ) : isPending && !isRecipient ? (
               <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-neutral-400 flex items-center gap-2">
                 <Lock className="w-3.5 h-3.5 text-neutral-500" />
-                <span>Assigned to {recipient?.name}. Switch perspective to accept.</span>
+                <span>Assigned to {recipient?.name}. Awaiting acceptance.</span>
               </div>
             ) : (
               <div className="px-4 py-2.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 font-mono flex items-center gap-2">

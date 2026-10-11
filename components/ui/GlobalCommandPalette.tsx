@@ -201,24 +201,23 @@ export function GlobalCommandPalette() {
           {matchingUsers.length > 0 && (
             <div>
               <div className="px-3 py-1.5 text-[11px] font-semibold tracking-wider text-neutral-400 uppercase">
-                Switch Teammate Identity ({matchingUsers.length})
+                Teammates ({matchingUsers.length})
               </div>
               <div className="space-y-1">
                 {matchingUsers.slice(0, 4).map((u) => (
                   <button
                     key={u.id}
                     onClick={() => {
-                      setCurrentUser(u);
-                      setIsCommandPaletteOpen(false);
+                      navigate('/team');
                     }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/5 text-left text-neutral-200 transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <UserCheck className="w-4 h-4 text-violet-400" />
+                      <UserCheck className="w-4 h-4 text-neutral-400" />
                       <span>{u.name}</span>
                       <span className="text-neutral-500">({u.role})</span>
                     </div>
-                    <span className="text-[11px] text-blue-400">Switch</span>
+                    <span className="text-[11px] text-neutral-400">View</span>
                   </button>
                 ))}
               </div>

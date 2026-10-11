@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AppProvider } from '@/context/AppContext';
-import { PersonaSwitcherModal } from '@/components/ui/PersonaSwitcherModal';
 import { CreateHandoffModal } from '@/components/ui/CreateHandoffModal';
 import { GlobalCommandPalette } from '@/components/ui/GlobalCommandPalette';
 import { GlobalToast } from '@/components/ui/Toast';
@@ -30,7 +29,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-[#050606] text-[#F5F5F2] antialiased min-h-screen" suppressHydrationWarning>
         <AppProvider>
           {children}
-          <PersonaSwitcherModal />
           <CreateHandoffModal />
           <GlobalCommandPalette />
           <GlobalToast />

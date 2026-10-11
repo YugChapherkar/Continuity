@@ -1,2 +1,60 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --neon-amber: #FF5E00;
+  --neon-orange: #FF7700;
+  --neon-magenta: #D946EF;
+  --neon-purple: #9333EA;
+  --neon-cyan: #00D2FF;
+  --neon-blue: #2563EB;
+  --neon-dark: #050608;
+}
+
+/* Luxury Editorial Serif Display matching reference image ("Neon Drift") */
+.font-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+.font-sans-clean {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Reference Image Gradient Text: Amber -> Magenta -> Cyan */
+.neon-drift-gradient {
+  background: linear-gradient(135deg, #FFAA00 0%, #FF5500 25%, #D946EF 60%, #00D2FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Frosted Glass Pill matching the reference bottom card */
+.neon-glass-card {
+  background: rgba(18, 20, 24, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.neon-glass-pill {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Luminous Neon Buttons & Hover states */
+.neon-glow-amber {
+  box-shadow: 0 0 25px -5px rgba(255, 119, 0, 0.45);
+}
+
+.neon-glow-magenta {
+  box-shadow: 0 0 25px -5px rgba(217, 70, 239, 0.45);
+}
+
+.neon-glow-cyan {
+  box-shadow: 0 0 25px -5px rgba(0, 210, 255, 0.45);
+}
+

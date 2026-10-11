@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
-import { IridescentWave } from '@/components/ui/IridescentWave';
 import { Avatar } from '@/components/ui/Avatar';
 import {
   ArrowRight,
@@ -20,7 +19,6 @@ import {
 export default function HomePage() {
   const {
     currentUser,
-    setIsPersonaModalOpen,
     setIsCreateHandoffModalOpen,
     handoffs,
     projects,
@@ -35,70 +33,61 @@ export default function HomePage() {
   return (
     <div className="relative space-y-24">
       {/* =========================================================================
-          1. ABOVE THE FOLD (INITIAL VIEWPORT)
+          1. ABOVE THE FOLD (INITIAL VIEWPORT) - LUMEN PRISMATIC WAVE THEME
          ========================================================================= */}
-      <section className="relative min-h-[calc(100vh-8rem)] flex flex-col justify-between py-8 lg:py-12">
-        {/* Iridescent background artwork */}
-        <IridescentWave />
+      <section className="relative min-h-[calc(100vh-8rem)] flex flex-col justify-between py-6 lg:py-10">
+        {/* Top Header Group: Status Badge */}
+        <div className="relative z-10 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>CONTINUITY ARCHITECTURE</span>
+          </div>
 
-        {/* Top welcome chip with live pulse & immediate Switch button */}
-        <div className="relative z-10 inline-flex items-center gap-3">
-          <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0D0F10] border border-white/10 text-xs shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#0D0F10]/80 backdrop-blur-md border border-white/10 text-xs shadow-sm">
             <span className="text-[#F5F5F2] font-medium">{currentUser.name}</span>
             <span className="text-neutral-500">·</span>
-            <span className="text-[#A0A09D] truncate max-w-[200px] sm:max-w-none">{currentUser.role}</span>
-            <button
-              onClick={() => setIsPersonaModalOpen(true)}
-              className="ml-2 px-2 py-0.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 rounded-md text-[11px] font-medium transition-colors cursor-pointer"
-            >
-              Switch
-            </button>
+            <span className="text-[#A0A09D] truncate max-w-[180px] sm:max-w-none">{currentUser.role}</span>
           </div>
         </div>
 
-        {/* Main Hero Statement */}
-        <div className="relative z-10 max-w-4xl my-auto py-10">
-          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-[#F5F5F2] uppercase leading-[0.92] select-none">
-            PROJECT<br />
-            CONTINUITY.
+        {/* Main Hero Statement: Bold Sans-Serif Typography + Signature Blue Pill Button */}
+        <div className="relative z-10 max-w-4xl my-auto py-6">
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white uppercase leading-[0.92] select-none">
+            DIGITAL ENGINEERING<br />
+            SOLUTIONS
           </h1>
 
-          <p className="mt-8 text-lg sm:text-2xl text-[#A0A09D] max-w-2xl font-light leading-relaxed">
-            Every project has a story. Make sure the next person can continue it.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <button
               onClick={() => setIsCreateHandoffModalOpen(true)}
-              className="px-8 py-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-base font-semibold rounded-full shadow-lg shadow-[#2563EB]/30 transition-all transform hover:-translate-y-0.5 flex items-center gap-2.5"
+              className="px-8 py-3.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-[#2563EB]/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2.5 cursor-pointer"
             >
-              <span>Start a handoff</span>
+              <span>Start your audit</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
             <a
               href="#workspace-details"
-              className="px-6 py-4 text-sm font-medium text-neutral-300 hover:text-white transition-colors flex items-center gap-2"
+              className="px-6 py-3.5 text-sm font-medium text-neutral-300 hover:text-white transition-all flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md hover:bg-white/[0.08]"
             >
-              <span>Explore projects</span>
-              <span className="text-xs text-neutral-500 font-mono">↓</span>
+              <span>Explore workspaces</span>
+              <span className="text-xs text-neutral-400 font-mono">↓</span>
             </a>
           </div>
         </div>
 
-        {/* Scroll Cue at Bottom */}
-        <div className="relative z-10 pt-4 flex items-center gap-3 text-xs text-neutral-400 font-mono">
-          <a
-            href="#workspace-details"
-            className="hover:text-neutral-200 transition-colors flex items-center gap-2"
-          >
-            <span>Scroll to view attention items &amp; projects</span>
-            <span className="animate-bounce inline-block">↓</span>
-          </a>
+        {/* Bottom Split Narrative Row matching reference design */}
+        <div className="relative z-10 pt-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
+          {/* Bottom Left Microcopy */}
+          <div className="text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed">
+            Tailored strategies,<br />
+            <span className="text-neutral-300">guaranteed results</span>
+          </div>
+
+          {/* Bottom Right Narrative Paragraph with highlighted key terms */}
+          <div className="max-w-xl text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
+            At Continuity, we understand that no two engineering teams are the same. That’s why we offer a full suite of lossless handoff services, each tailored to address your unique challenges and rotation goals. Our team <span className="text-white font-medium">combines verifiable cryptographic handoffs</span> with <span className="text-white font-medium">automated ADR tracking</span> to build workflows that <span className="text-white font-medium">deliver results</span>.
+          </div>
         </div>
       </section>
 
@@ -134,7 +123,7 @@ export default function HomePage() {
               {attentionHandoffs.map((handoff) => (
                 <div
                   key={handoff.id}
-                  className="bg-[#0D0F10] border border-amber-500/30 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-all hover:border-amber-500/50"
+                  className="bg-[#0D0F10]/75 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-all hover:border-amber-500/50"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div className="space-y-3 max-w-3xl">
@@ -189,12 +178,11 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="p-8 rounded-2xl bg-[#0D0F10] border border-white/5 text-center space-y-2">
+            <div className="p-8 rounded-2xl bg-[#0D0F10]/75 backdrop-blur-xl border border-white/5 text-center space-y-2">
               <CheckCircle2 className="w-6 h-6 text-emerald-400 mx-auto" />
               <p className="text-sm text-[#F5F5F2] font-medium">All transition queues clear</p>
               <p className="text-xs text-neutral-400 max-w-md mx-auto">
-                No handoff packages are currently pending your acceptance as {currentUser.name}. Switch
-                personas above to test perspectives of other colleagues.
+                No handoff packages are currently pending your acceptance as {currentUser.name}.
               </p>
             </div>
           )}
@@ -218,7 +206,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="bg-[#0D0F10] border border-white/10 rounded-2xl overflow-hidden shadow-lg">
+          <div className="bg-[#0D0F10]/75 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-lg">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs text-[#F5F5F2]">
                 <thead className="bg-[#050606] border-b border-white/10 text-neutral-400 uppercase text-[10px] tracking-wider font-mono">
@@ -303,7 +291,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg divide-y divide-white/5">
+          <div className="bg-[#0D0F10]/75 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg divide-y divide-white/5">
             {auditLogs.slice(0, 5).map((log) => (
               <div key={log.id} className="py-3.5 first:pt-0 last:pb-0 flex items-start gap-4">
                 <Avatar name={log.actorName} size="sm" />
