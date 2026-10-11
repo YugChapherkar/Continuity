@@ -123,7 +123,7 @@ export default function HandoffsInboxPage() {
           </div>
           <button
             onClick={() => setActiveTab('Received')}
-            className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/30 rounded-lg text-xs font-medium shrink-0 transition-colors"
+            className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 text-blue-200 border border-blue-500/30 rounded-lg text-xs font-medium shrink-0 transition-colors"
           >
             Filter My Queue
           </button>

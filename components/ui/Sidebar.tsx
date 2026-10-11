@@ -14,12 +14,12 @@ import {
   Terminal,
   Menu,
   X,
-  UserCheck,
+  PanelLeftClose,
 } from 'lucide-react';
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { currentUser, setIsPersonaModalOpen, handoffs } = useApp();
+  const { currentUser, handoffs, isSidebarOpen, toggleSidebar } = useApp();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   // Pending for current user
@@ -54,14 +54,24 @@ export function Sidebar() {
             <span className="text-[9px] text-neutral-400 tracking-wider uppercase">Lossless Handoffs</span>
           </div>
         </Link>
-        {isMobileOpen && (
+        <div className="flex items-center gap-1">
           <button
-            onClick={() => setIsMobileOpen(false)}
-            className="md:hidden p-1 text-neutral-400 hover:text-white"
+            onClick={toggleSidebar}
+            className="hidden md:flex p-1.5 text-neutral-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+            title="Close sidebar"
+            aria-label="Close sidebar"
           >
-            <X className="w-5 h-5" />
+            <PanelLeftClose className="w-4 h-4" />
           </button>
-        )}
+          {isMobileOpen && (
+            <button
+              onClick={() => setIsMobileOpen(false)}
+              className="md:hidden p-1 text-neutral-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Navigation Items */}
@@ -98,34 +108,29 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Bottom Profile Card - clickable to open Persona Switcher */}
+      {/* Bottom Profile Card */}
       <div className="p-3 border-t border-white/10 bg-[#050606]/60">
-        <button
-          onClick={() => setIsPersonaModalOpen(true)}
-          className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all text-left group"
-          title="Click to switch employee perspective"
-        >
-          <div className="flex items-center gap-3 min-w-0">
-            <Avatar name={currentUser.name} initials={currentUser.initials} size="sm" showIndicator />
-            <div className="min-w-0">
-              <p className="text-xs font-medium text-[#F5F5F2] truncate group-hover:text-blue-400 transition-colors">
-                {currentUser.name}
-              </p>
-              <p className="text-[10px] text-neutral-400 truncate">{currentUser.role}</p>
-            </div>
+        <div className="w-full flex items-center gap-3 p-2.5 rounded-xl text-left">
+          <Avatar name={currentUser.name} initials={currentUser.initials} size="sm" showIndicator />
+          <div className="min-w-0">
+            <p className="text-xs font-medium text-[#F5F5F2] truncate">
+              {currentUser.name}
+            </p>
+            <p className="text-[10px] text-neutral-400 truncate">{currentUser.role}</p>
           </div>
-          <div className="shrink-0 p-1 rounded-lg text-neutral-400 group-hover:text-blue-400">
-            <UserCheck className="w-3.5 h-3.5" />
-          </div>
-        </button>
+        </div>
       </div>
     </div>
   );
 
   return (
     <>
-      {/* Desktop Persistent Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 shrink-0 fixed inset-y-0 left-0 z-40">
+      {/* Desktop Persistent / Collapsible Sidebar */}
+      <aside
+        className={`hidden md:flex flex-col w-64 shrink-0 fixed inset-y-0 left-0 z-40 transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full pointer-events-none'
+        }`}
+      >
         {sidebarContent}
       </aside>
 

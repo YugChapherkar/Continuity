@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { Avatar } from '@/components/ui/Avatar';
 import {
   Users,
   Search,
-  Check,
   ArrowRight,
   Briefcase,
   Inbox,
@@ -139,20 +139,13 @@ export default function TeamDirectoryPage() {
 
               {/* Action Button */}
               <div className="mt-6 pt-3 border-t border-white/5">
-                {isCurrent ? (
-                  <div className="w-full py-2 bg-blue-500/10 border border-blue-500/20 text-blue-300 rounded-xl text-xs font-semibold flex items-center justify-center gap-2">
-                    <Check className="w-4 h-4" />
-                    <span>Active Perspective</span>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => setCurrentUser(user)}
-                    className="w-full py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl text-xs font-semibold shadow-md shadow-[#2563EB]/25 transition-all flex items-center justify-center gap-2"
-                  >
-                    <span>Switch to {user.name.split(' ')[0]}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                )}
+                <Link
+                  href="/handoffs"
+                  className="w-full py-2 bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white rounded-xl text-xs font-medium border border-white/10 transition-all flex items-center justify-center gap-2"
+                >
+                  <span>View Member Dossiers</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </div>
           );
