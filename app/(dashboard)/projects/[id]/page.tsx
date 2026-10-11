@@ -36,6 +36,7 @@ export default function ProjectWorkspacePage() {
     setIsCreateHandoffModalOpen,
     updateTaskStatus,
     addProjectDecision,
+    uploadVersion,
     showToast,
   } = useApp();
 
@@ -50,6 +51,13 @@ export default function ProjectWorkspacePage() {
   const [adrContext, setAdrContext] = useState('');
   const [adrDecision, setAdrDecision] = useState('');
   const [adrConsequences, setAdrConsequences] = useState('');
+
+  // Snapshot ZIP Upload State
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [commitMsg, setCommitMsg] = useState('');
+  const [baseVerId, setBaseVerId] = useState('');
+  const [isSubmittingVersion, setIsSubmittingVersion] = useState(false);
 
   const project = projects.find((p) => p.id === projectId);
   if (!project) return notFound();
@@ -85,6 +93,35 @@ export default function ProjectWorkspacePage() {
     setAdrContext('');
     setAdrDecision('');
     setAdrConsequences('');
+  };
+
+  const handleUploadVersion = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadFile) {
+      showToast('Please select a ZIP snapshot archive', 'error');
+      return;
+    }
+    if (!commitMsg.trim()) {
+      showToast('Commit message is required', 'error');
+      return;
+    }
+
+    setIsSubmittingVersion(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', uploadFile);
+      formData.append('commitMessage', commitMsg);
+      if (baseVerId) formData.append('baseVersionId', baseVerId);
+
+      await uploadVersion(project.id, formData);
+      setIsUploadModalOpen(false);
+      setUploadFile(null);
+      setCommitMsg('');
+    } catch {
+      // error toast shown in AppContext
+    } finally {
+      setIsSubmittingVersion(false);
+    }
   };
 
   return (
@@ -398,9 +435,21 @@ export default function ProjectWorkspacePage() {
                 Verifiable release milestones with file insertion/deletion metrics.
               </p>
             </div>
-            <span className="font-mono text-xs text-neutral-500">
-              {project.versions.length} recorded versions
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-xs text-neutral-500">
+                {project.versions.length} recorded versions
+              </span>
+              <button
+                onClick={() => {
+                  setBaseVerId(project.currentVersionId || project.versions[0]?.id || '');
+                  setIsUploadModalOpen(true);
+                }}
+                className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Upload Snapshot (ZIP)</span>
+              </button>
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -590,6 +639,95 @@ export default function ProjectWorkspacePage() {
             <pre className="text-xs font-mono text-neutral-300 bg-[#050606] p-4 rounded-xl border border-white/5 overflow-x-auto leading-relaxed">
               {project.files[selectedFileIdx]?.contentSnippet}
             </pre>
+          </div>
+        </div>
+      )}
+      {/* Snapshot ZIP Upload Modal */}
+      {isUploadModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in"
+          onClick={() => setIsUploadModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-lg bg-[#0D0F10] border border-white/10 rounded-2xl shadow-2xl p-6 space-y-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div>
+                <h3 className="text-base font-semibold text-[#F5F5F2]">Commit Snapshot (ZIP Archive)</h3>
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  Upload project snapshot to trigger versioning, diffing, and RAG indexing.
+                </p>
+              </div>
+              <button
+                onClick={() => setIsUploadModalOpen(false)}
+                className="p-1.5 text-neutral-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleUploadVersion} className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1.5">
+                  Select Snapshot ZIP File
+                </label>
+                <input
+                  type="file"
+                  accept=".zip"
+                  onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                  required
+                  className="w-full bg-[#141718] border border-white/10 rounded-xl p-2.5 text-xs text-[#F5F5F2] file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1.5">
+                  Commit Message
+                </label>
+                <textarea
+                  rows={2}
+                  value={commitMsg}
+                  onChange={(e) => setCommitMsg(e.target.value)}
+                  placeholder="e.g. feat(raft): speculative read barriers with monotonic leases [ADR-041]"
+                  required
+                  className="w-full bg-[#141718] border border-white/10 rounded-xl p-3 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1.5">
+                  Base Version ID (Concurrency Guard)
+                </label>
+                <input
+                  type="text"
+                  value={baseVerId}
+                  onChange={(e) => setBaseVerId(e.target.value)}
+                  placeholder="e.g. v2.4.0"
+                  className="w-full bg-[#141718] border border-white/10 rounded-xl p-2.5 text-xs text-[#F5F5F2] font-mono placeholder-neutral-500 focus:outline-none focus:border-blue-500"
+                />
+                <p className="text-[11px] text-neutral-500 mt-1">
+                  Protects against race conditions. Stale base versions are rejected with HTTP 409 Conflict.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setIsUploadModalOpen(false)}
+                  className="px-4 py-2 text-xs text-neutral-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmittingVersion}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-medium rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  {isSubmittingVersion ? 'Uploading & Indexing...' : 'Commit Version'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

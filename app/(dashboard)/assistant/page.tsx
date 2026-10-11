@@ -26,11 +26,12 @@ interface Message {
 
 export default function AssistantTerminalPage() {
   const { projects } = useApp();
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('apollo-core');
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
       content: `CONTINUITY Knowledge Synthesizer initialized.
-Grounded in 5 active repositories, 8 ratified Architecture Decision Records (ADRs), and 5 handoff dossiers.
+Grounded in active repositories, ratified Architecture Decision Records (ADRs), and handoff dossiers.
 
 How can I assist your engineering shift handover today? Select an inquiry below or type a custom query.`,
       citations: ['ADR-041', 'HO-2026-089', 'apollo-core'],
@@ -66,7 +67,10 @@ How can I assist your engineering shift handover today? Select an inquiry below 
       const res = await fetch('/api/assistant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: textToSend }),
+        body: JSON.stringify({
+          query: textToSend,
+          activeProjectId: selectedProjectId,
+        }),
       });
 
       const data = await res.json();
@@ -101,9 +105,9 @@ How can I assist your engineering shift handover today? Select an inquiry below 
   return (
     <div className="space-y-6 max-w-5xl mx-auto flex flex-col h-[calc(100vh-8rem)]">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-4 shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center text-blue-400">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center text-blue-400 shrink-0">
             <Terminal className="w-5 h-5" />
           </div>
           <div>
@@ -116,9 +120,23 @@ How can I assist your engineering shift handover today? Select an inquiry below 
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Gemini 3.8 Intelligence</span>
+        <div className="flex items-center gap-2">
+          <select
+            value={selectedProjectId}
+            onChange={(e) => setSelectedProjectId(e.target.value)}
+            className="bg-[#141718] border border-white/10 rounded-lg text-xs text-[#F5F5F2] px-3 py-1.5 focus:outline-none focus:border-blue-500 font-mono"
+          >
+            {projects.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+
+          <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full shrink-0">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Spring Boot RAG</span>
+          </div>
         </div>
       </div>
 

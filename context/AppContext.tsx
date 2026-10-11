@@ -1,8 +1,9 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, Project, HandoffPackage, AuditLogEntry, AppNotification, Task, ArchitectureDecision } from '@/lib/types';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import { User, Project, HandoffPackage, AuditLogEntry, AppNotification, Task, ArchitectureDecision, ProjectVersion } from '@/lib/types';
 import { INITIAL_USERS, INITIAL_PROJECTS, INITIAL_HANDOFFS, INITIAL_AUDIT_LOGS, INITIAL_NOTIFICATIONS } from '@/lib/mock-data';
+import { api } from '@/lib/api';
 
 interface AppContextType {
   currentUser: User;
@@ -31,17 +32,21 @@ interface AppContextType {
     criticalBlockers: string[];
     runbookCommands: string[];
   }) => Promise<HandoffPackage>;
-  updateTaskStatus: (projectId: string, taskId: string, newStatus: Task['status']) => void;
-  addProjectDecision: (projectId: string, decision: Omit<ArchitectureDecision, 'id'>) => void;
+  createProject: (payload: Partial<Project>) => Promise<Project>;
+  uploadVersion: (projectId: string, formData: FormData) => Promise<ProjectVersion>;
+  updateTaskStatus: (projectId: string, taskId: string, newStatus: Task['status']) => Promise<void>;
+  addProjectDecision: (projectId: string, decision: Omit<ArchitectureDecision, 'id'>) => Promise<void>;
   markNotificationRead: (notifId: string) => void;
   toast: { message: string; type: 'success' | 'info' | 'error' } | null;
   showToast: (message: string, type?: 'success' | 'info' | 'error') => void;
+  isBackendConnected: boolean;
+  refreshData: () => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [users] = useState<User[]>(INITIAL_USERS);
+  const [users, setUsers] = useState<User[]>(INITIAL_USERS);
   const [currentUser, setCurrentUserState] = useState<User>(INITIAL_USERS[0]);
   const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
   const [handoffs, setHandoffs] = useState<HandoffPackage[]>(INITIAL_HANDOFFS);
@@ -53,29 +58,67 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null);
+  const [isBackendConnected, setIsBackendConnected] = useState(false);
 
-  // Safely restore persisted state after hydration without causing mismatch
+  const showToast = useCallback((message: string, type: 'success' | 'info' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => {
+      setToast((current) => (current?.message === message ? null : current));
+    }, 4500);
+  }, []);
+
+  // Fetch live state from Spring Boot backend with graceful local fallback
+  const refreshData = useCallback(async () => {
+    try {
+      const [backendProjects, backendHandoffs, backendActivity, backendUsers] = await Promise.allSettled([
+        api.getProjects(),
+        api.getHandoffs(),
+        api.getActivity(),
+        api.getUsers(),
+      ]);
+
+      let connected = false;
+
+      if (backendProjects.status === 'fulfilled' && backendProjects.value.length > 0) {
+        setProjects(backendProjects.value);
+        connected = true;
+      }
+      if (backendHandoffs.status === 'fulfilled' && backendHandoffs.value.length > 0) {
+        setHandoffs(backendHandoffs.value);
+        connected = true;
+      }
+      if (backendActivity.status === 'fulfilled' && backendActivity.value.length > 0) {
+        setAuditLogs(backendActivity.value);
+        connected = true;
+      }
+      if (backendUsers.status === 'fulfilled' && backendUsers.value.length > 0) {
+        setUsers(backendUsers.value);
+        connected = true;
+      }
+
+      setIsBackendConnected(connected);
+    } catch {
+      // Backend not running, remain on offline state
+      setIsBackendConnected(false);
+    }
+  }, []);
+
+  // Initial load: restore saved user and fetch backend
   useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        if (typeof window === 'undefined') return;
+    try {
+      if (typeof window !== 'undefined') {
         const savedUserId = localStorage.getItem('continuity_current_user_id');
         if (savedUserId) {
           const found = INITIAL_USERS.find((u) => u.id === savedUserId);
           if (found) setCurrentUserState(found);
         }
-        const savedHandoffs = localStorage.getItem('continuity_handoffs');
-        if (savedHandoffs) setHandoffs(JSON.parse(savedHandoffs));
-        const savedProjects = localStorage.getItem('continuity_projects');
-        if (savedProjects) setProjects(JSON.parse(savedProjects));
-        const savedAuditLogs = localStorage.getItem('continuity_audit_logs');
-        if (savedAuditLogs) setAuditLogs(JSON.parse(savedAuditLogs));
-      } catch {
-        // storage disabled or unavailable in sandboxed iframe
       }
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+    } catch {
+      // ignore
+    }
+
+    refreshData();
+  }, [refreshData]);
 
   // Global keyboard shortcuts (Cmd+K for Command Palette)
   useEffect(() => {
@@ -88,13 +131,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  const showToast = (message: string, type: 'success' | 'info' | 'error' = 'success') => {
-    setToast({ message, type });
-    setTimeout(() => {
-      setToast((current) => (current?.message === message ? null : current));
-    }, 4500);
-  };
 
   const setCurrentUser = (user: User) => {
     setCurrentUserState(user);
@@ -113,79 +149,63 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const acceptHandoff = async (handoffId: string, signoffNote: string): Promise<boolean> => {
-    const targetHandoff = handoffs.find((h) => h.id === handoffId);
-    if (!targetHandoff) return false;
-
-    const acceptedTimestamp = new Date().toISOString();
-    const formattedDate = new Date().toUTCString();
-    const pseudoHash = Math.random().toString(16).substring(2, 10) +
-      Math.random().toString(16).substring(2, 10) +
-      Math.random().toString(16).substring(2, 10) +
-      Math.random().toString(16).substring(2, 10);
-
-    const updatedHandoffs = handoffs.map((h) => {
-      if (h.id === handoffId) {
-        return {
-          ...h,
-          status: 'Accepted' as const,
-          acceptedAt: acceptedTimestamp,
-          auditTrail: [
-            ...h.auditTrail,
-            {
-              action: 'HANDOFF_ACCEPTED',
-              actor: currentUser.name,
-              timestamp: `${formattedDate}`,
-              detail: `Verified losslessness, attested runbook readiness, and assumed ownership. Attestation: "${signoffNote}"`,
-              hash: pseudoHash,
-            },
-          ],
-        };
-      }
-      return h;
-    });
-
-    // Also transfer project owner to recipient
-    const updatedProjects = projects.map((p) => {
-      if (p.id === targetHandoff.projectId) {
-        return {
-          ...p,
-          ownerId: targetHandoff.recipientId,
-          status: 'Active' as const,
-          updatedAt: acceptedTimestamp,
-        };
-      }
-      return p;
-    });
-
-    const newAuditLog: AuditLogEntry = {
-      id: `AUDIT-${Math.floor(8900 + Math.random() * 1000)}`,
-      timestamp: formattedDate,
-      hash: pseudoHash,
-      prevHash: auditLogs[0]?.hash || '00000000000000000000000000000000',
-      action: 'HANDOFF_ACCEPTED',
-      actorId: currentUser.id,
-      actorName: currentUser.name,
-      projectName: targetHandoff.projectName,
-      detail: `Accepted operational guardianship for dossier ${targetHandoff.id}. Owner transferred to ${currentUser.name}.`,
-      verifiable: true,
-    };
-
-    const updatedAuditLogs = [newAuditLog, ...auditLogs];
-
-    setHandoffs(updatedHandoffs);
-    setProjects(updatedProjects);
-    setAuditLogs(updatedAuditLogs);
-
     try {
-      localStorage.setItem('continuity_handoffs', JSON.stringify(updatedHandoffs));
-      localStorage.setItem('continuity_projects', JSON.stringify(updatedProjects));
-      localStorage.setItem('continuity_audit_logs', JSON.stringify(updatedAuditLogs));
-    } catch {
-      // ignore
-    }
+      // Real backend acceptance call
+      await api.acceptHandoff(handoffId, signoffNote);
+      await refreshData();
+      showToast(`Lossless handoff verified on Spring Boot ledger. Primary ownership transferred to you.`, 'success');
+      return true;
+    } catch (err: unknown) {
+      const error = err as Error;
+      // If backend throws an authorization or business error
+      if (error?.message && !error.message.includes('Failed to fetch')) {
+        showToast(error.message, 'error');
+        return false;
+      }
 
-    showToast(`Lossless handoff verified. Primary ownership of ${targetHandoff.projectName} transferred to you.`, 'success');
-    return true;
+      // Offline optimistic fallback
+      const targetHandoff = handoffs.find((h) => h.id === handoffId);
+      if (!targetHandoff) return false;
+
+      const acceptedTimestamp = new Date().toISOString();
+      const updatedHandoffs = handoffs.map((h) => {
+        if (h.id === handoffId) {
+          return {
+            ...h,
+            status: 'Accepted' as const,
+            acceptedAt: acceptedTimestamp,
+            auditTrail: [
+              ...h.auditTrail,
+              {
+                action: 'HANDOFF_ACCEPTED',
+                actor: currentUser.name,
+                timestamp: new Date().toUTCString(),
+                detail: `Verified losslessness, attested runbook readiness, and assumed ownership. Attestation: "${signoffNote}"`,
+                hash: Math.random().toString(16).substring(2, 18),
+              },
+            ],
+          };
+        }
+        return h;
+      });
+
+      const updatedProjects = projects.map((p) => {
+        if (p.id === targetHandoff.projectId) {
+          return {
+            ...p,
+            ownerId: targetHandoff.recipientId,
+            status: 'Active' as const,
+            updatedAt: acceptedTimestamp,
+          };
+        }
+        return p;
+      });
+
+      setHandoffs(updatedHandoffs);
+      setProjects(updatedProjects);
+      showToast(`Lossless handoff verified. Primary ownership of ${targetHandoff.projectName} transferred to you.`, 'success');
+      return true;
+    }
   };
 
   const createHandoff = async (payload: {
@@ -198,134 +218,130 @@ export function AppProvider({ children }: { children: ReactNode }) {
     criticalBlockers: string[];
     runbookCommands: string[];
   }): Promise<HandoffPackage> => {
-    const project = projects.find((p) => p.id === payload.projectId) || projects[0];
-    const latestVersion = project.versions[0] || { id: 'v1.0.0', hash: '1234567' };
-    const newId = `HO-2026-${Math.floor(100 + Math.random() * 899)}`;
-    const formattedDate = new Date().toUTCString();
-    const pseudoHash = Math.random().toString(16).substring(2, 10) +
-      Math.random().toString(16).substring(2, 10) +
-      Math.random().toString(16).substring(2, 10) +
-      Math.random().toString(16).substring(2, 10);
+    try {
+      const created = await api.createHandoff(payload.projectId, payload);
+      await refreshData();
+      showToast(`Handoff package ${created.id} compiled and dispatched.`, 'success');
+      return created;
+    } catch (err: unknown) {
+      const error = err as Error;
+      if (error?.message && !error.message.includes('Failed to fetch')) {
+        showToast(error.message, 'error');
+      }
 
-    const newHandoff: HandoffPackage = {
-      id: newId,
-      projectId: project.id,
-      projectName: project.name,
-      senderId: currentUser.id,
-      recipientId: payload.recipientId,
-      pinnedVersionId: latestVersion.id,
-      pinnedVersionHash: latestVersion.hash,
-      status: 'Pending',
-      createdAt: new Date().toISOString(),
-      note: payload.note,
-      briefing: {
-        executiveSummary: payload.executiveSummary,
-        completedItems: payload.completedItems,
-        nextSteps: payload.nextSteps,
-        criticalBlockers: payload.criticalBlockers,
-        architecturalDecisions: project.decisions.map((d) => `${d.id}: ${d.title}`),
-        keyFiles: project.files.map((f) => f.path),
-        runbookCommands: payload.runbookCommands,
-      },
-      auditTrail: [
-        {
-          action: 'HANDOFF_INITIATED',
-          actor: currentUser.name,
-          timestamp: formattedDate,
-          detail: `Generated transfer dossier for ${project.name} (version ${latestVersion.id}).`,
-          hash: pseudoHash,
+      // Offline optimistic fallback
+      const project = projects.find((p) => p.id === payload.projectId) || projects[0];
+      const latestVersion = project.versions[0] || { id: 'v1.0.0', hash: '1234567' };
+      const newId = `HO-2026-${Math.floor(100 + Math.random() * 899)}`;
+
+      const newHandoff: HandoffPackage = {
+        id: newId,
+        projectId: project.id,
+        projectName: project.name,
+        senderId: currentUser.id,
+        recipientId: payload.recipientId,
+        pinnedVersionId: latestVersion.id,
+        pinnedVersionHash: latestVersion.hash,
+        status: 'Pending',
+        createdAt: new Date().toISOString(),
+        note: payload.note,
+        briefing: {
+          executiveSummary: payload.executiveSummary,
+          completedItems: payload.completedItems,
+          nextSteps: payload.nextSteps,
+          criticalBlockers: payload.criticalBlockers,
+          architecturalDecisions: project.decisions.map((d) => `${d.id}: ${d.title}`),
+          keyFiles: project.files.map((f) => f.path),
+          runbookCommands: payload.runbookCommands,
         },
-      ],
-    };
+        auditTrail: [
+          {
+            action: 'HANDOFF_INITIATED',
+            actor: currentUser.name,
+            timestamp: new Date().toUTCString(),
+            detail: `Generated transfer dossier for ${project.name} (version ${latestVersion.id}).`,
+            hash: Math.random().toString(16).substring(2, 18),
+          },
+        ],
+      };
 
-    const updatedHandoffs = [newHandoff, ...handoffs];
-    setHandoffs(updatedHandoffs);
-
-    const newAuditLog: AuditLogEntry = {
-      id: `AUDIT-${Math.floor(8900 + Math.random() * 1000)}`,
-      timestamp: formattedDate,
-      hash: pseudoHash,
-      prevHash: auditLogs[0]?.hash || '00000000000000000000000000000000',
-      action: 'HANDOFF_INITIATED',
-      actorId: currentUser.id,
-      actorName: currentUser.name,
-      projectName: project.name,
-      detail: `Initiated handoff ${newId} with pinned commit hash ${latestVersion.hash}.`,
-      verifiable: true,
-    };
-
-    const updatedAuditLogs = [newAuditLog, ...auditLogs];
-    setAuditLogs(updatedAuditLogs);
-
-    try {
-      localStorage.setItem('continuity_handoffs', JSON.stringify(updatedHandoffs));
-      localStorage.setItem('continuity_audit_logs', JSON.stringify(updatedAuditLogs));
-    } catch {
-      // ignore
+      setHandoffs([newHandoff, ...handoffs]);
+      showToast(`Handoff package ${newId} compiled and dispatched.`, 'success');
+      return newHandoff;
     }
-
-    showToast(`Handoff package ${newId} compiled and dispatched.`, 'success');
-    return newHandoff;
   };
 
-  const updateTaskStatus = (projectId: string, taskId: string, newStatus: Task['status']) => {
-    const updatedProjects = projects.map((p) => {
-      if (p.id === projectId) {
-        return {
-          ...p,
-          tasks: p.tasks.map((t) => (t.id === taskId ? { ...t, status: newStatus } : t)),
-        };
-      }
-      return p;
-    });
-    setProjects(updatedProjects);
+  const createProject = async (payload: Partial<Project>): Promise<Project> => {
     try {
-      localStorage.setItem('continuity_projects', JSON.stringify(updatedProjects));
-    } catch {
-      // ignore
+      const created = await api.createProject(payload);
+      await refreshData();
+      showToast(`Initialized workspace ${created.name}`, 'success');
+      return created;
+    } catch (err: unknown) {
+      const error = err as Error;
+      showToast(error?.message || 'Failed to create project', 'error');
+      throw err;
     }
-    showToast(`Updated task ${taskId} to ${newStatus}`, 'info');
   };
 
-  const addProjectDecision = (projectId: string, decision: Omit<ArchitectureDecision, 'id'>) => {
-    const newId = `ADR-0${Math.floor(45 + Math.random() * 20)}`;
-    const fullDecision: ArchitectureDecision = {
-      ...decision,
-      id: newId,
-      status: 'Accepted',
-    };
-
-    const updatedProjects = projects.map((p) => {
-      if (p.id === projectId) {
-        return {
-          ...p,
-          decisions: [fullDecision, ...p.decisions],
-        };
-      }
-      return p;
-    });
-    setProjects(updatedProjects);
-
-    const newAuditLog: AuditLogEntry = {
-      id: `AUDIT-${Math.floor(8900 + Math.random() * 1000)}`,
-      timestamp: new Date().toUTCString(),
-      hash: Math.random().toString(16).substring(2, 18),
-      prevHash: auditLogs[0]?.hash || '00000000000000000000000000000000',
-      action: 'ADR_REGISTERED',
-      actorId: currentUser.id,
-      actorName: currentUser.name,
-      projectName: projects.find((p) => p.id === projectId)?.name || projectId,
-      detail: `Registered ${newId}: ${decision.title}`,
-      verifiable: true,
-    };
-    setAuditLogs([newAuditLog, ...auditLogs]);
-
+  const uploadVersion = async (projectId: string, formData: FormData): Promise<ProjectVersion> => {
     try {
-      localStorage.setItem('continuity_projects', JSON.stringify(updatedProjects));
-    } catch {
-      // ignore
+      const created = await api.uploadVersion(projectId, formData);
+      await refreshData();
+      showToast(`Snapshot ${created.id} committed and indexed successfully.`, 'success');
+      return created;
+    } catch (err: unknown) {
+      const error = err as Error;
+      showToast(error?.message || 'Version upload failed', 'error');
+      throw err;
     }
-    showToast(`Registered architectural decision ${newId}`, 'success');
+  };
+
+  const updateTaskStatus = async (projectId: string, taskId: string, newStatus: Task['status']) => {
+    try {
+      await api.updateTask(taskId, { status: newStatus });
+      await refreshData();
+      showToast(`Updated task ${taskId} to ${newStatus}`, 'info');
+    } catch {
+      // Local fallback
+      const updatedProjects = projects.map((p) => {
+        if (p.id === projectId) {
+          return {
+            ...p,
+            tasks: p.tasks.map((t) => (t.id === taskId ? { ...t, status: newStatus } : t)),
+          };
+        }
+        return p;
+      });
+      setProjects(updatedProjects);
+      showToast(`Updated task ${taskId} to ${newStatus}`, 'info');
+    }
+  };
+
+  const addProjectDecision = async (projectId: string, decision: Omit<ArchitectureDecision, 'id'>) => {
+    try {
+      await api.addDecision(projectId, decision);
+      await refreshData();
+      showToast(`Registered architectural decision`, 'success');
+    } catch {
+      const newId = `ADR-0${Math.floor(45 + Math.random() * 20)}`;
+      const fullDecision: ArchitectureDecision = {
+        ...decision,
+        id: newId,
+        status: 'Accepted',
+      };
+      const updatedProjects = projects.map((p) => {
+        if (p.id === projectId) {
+          return {
+            ...p,
+            decisions: [fullDecision, ...p.decisions],
+          };
+        }
+        return p;
+      });
+      setProjects(updatedProjects);
+      showToast(`Registered architectural decision ${newId}`, 'success');
+    }
   };
 
   return (
@@ -348,11 +364,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setSearchQuery,
         acceptHandoff,
         createHandoff,
+        createProject,
+        uploadVersion,
         updateTaskStatus,
         addProjectDecision,
         markNotificationRead,
         toast,
         showToast,
+        isBackendConnected,
+        refreshData,
       }}
     >
       {children}

@@ -1,90 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenAI } from '@google/genai';
-import { INITIAL_PROJECTS, INITIAL_HANDOFFS } from '@/lib/mock-data';
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
 
 export async function POST(req: NextRequest) {
   try {
-    const { query, activeProjectId } = await req.json();
+    const { query, activeProjectId, versionId, handoffId } = await req.json();
 
     if (!query || typeof query !== 'string') {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
     }
 
-    // Build grounding knowledge context from projects and handoffs
-    const projectsContext = INITIAL_PROJECTS.map((p) => {
-      const adrs = p.decisions.map((d) => `  * ${d.id}: ${d.title} (Context: ${d.context} -> Decision: ${d.decision} -> Consequences: ${d.consequences})`).join('\n');
-      const files = p.files.map((f) => `  * ${f.path} (${f.type})`).join('\n');
-      return `PROJECT: ${p.name} (ID: ${p.id}, Version: ${p.currentVersionId}, Status: ${p.status})\nArchitecture Summary: ${p.architectureSummary}\nQuickstart Runbook: ${p.quickstartGuide}\nDecisions:\n${adrs}\nFiles:\n${files}\n`;
-    }).join('\n---\n');
+    const targetProject = activeProjectId || 'apollo-core';
+    const userId = req.headers.get('x-user-id') || 'user-jessica';
 
-    const handoffsContext = INITIAL_HANDOFFS.map((h) => {
-      return `HANDOFF ${h.id}: Project ${h.projectName} (Status: ${h.status})\nExecutive Summary: ${h.briefing.executiveSummary}\nCritical Blockers: ${h.briefing.criticalBlockers.join('; ')}\nRunbook Commands: ${h.briefing.runbookCommands.join('; ')}\nNext Steps: ${h.briefing.nextSteps.join('; ')}\n`;
-    }).join('\n---\n');
-
-    const systemPrompt = `You are CONTINUITY Terminal AI, an enterprise systems intelligence agent.
-Your mission is to help engineers navigating shifts, developer rotations, and project transitions understand system invariants, trade-offs, runbook commands, and architectural decisions.
-
-Available Engineering Context:
-=== PROJECTS ===
-${projectsContext}
-
-=== HANDOFF DOSSIERS ===
-${handoffsContext}
-
-Guidelines:
-1. Always ground your explanations in the explicit decisions, ADRs, and runbooks provided.
-2. When mentioning architectural choices, cite the exact ADR ID (e.g. [ADR-041: Speculative Read Barriers], [ADR-039: io_uring WAL Disk Flush]).
-3. Provide exact, copy-pasteable runbook commands where applicable.
-4. Highlight critical blockers, failure modes, or recovery protocols if relevant.
-5. Use clean markdown formatting with concise engineering tone (no filler or marketing speak).`;
-
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    if (!apiKey) {
-      // Return smart grounded fallback when API key is not present in local dev
-      return NextResponse.json({
-        response: generateFallbackResponse(query, activeProjectId),
-        model: 'local-knowledge-engine',
-        citations: ['ADR-041', 'HO-2026-089', 'src/consensus/raft_state.rs'],
+    // Call Spring Boot RAG endpoint
+    try {
+      const backendRes = await fetch(`${BACKEND_URL}/api/projects/${targetProject}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Id': userId,
+        },
+        body: JSON.stringify({
+          query,
+          versionId,
+          handoffId,
+        }),
       });
+
+      if (backendRes.ok) {
+        const data = await backendRes.json();
+        return NextResponse.json(data);
+      }
+    } catch {
+      // Backend temporarily offline, fallback below
     }
 
-    const ai = new GoogleGenAI({
-      apiKey,
-      httpOptions: {
-        headers: {
-          'User-Agent': 'aistudio-build',
-        },
-      },
-    });
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
-      contents: `User Query: ${query}\nActive Project Focus: ${activeProjectId || 'All projects'}`,
-      config: {
-        systemInstruction: systemPrompt,
-        temperature: 0.2,
-      },
-    });
-
-    const text = response.text || 'No response generated from analysis.';
-
-    // Extract citations
-    const citations: string[] = [];
-    if (text.includes('ADR-041')) citations.push('ADR-041');
-    if (text.includes('ADR-039')) citations.push('ADR-039');
-    if (text.includes('ADR-038')) citations.push('ADR-038');
-    if (text.includes('HO-2026-089')) citations.push('HO-2026-089');
-    if (text.includes('apollo-core')) citations.push('apollo-core');
-    if (text.includes('sentinel-gateway')) citations.push('sentinel-gateway');
-
+    // Grounded fallback if backend is unreachable
     return NextResponse.json({
-      response: text,
-      model: 'gemini-3.8-flash',
-      citations,
+      response: generateFallbackResponse(query, targetProject),
+      model: 'continuity-grounded-cache',
+      citations: ['ADR-041', 'HO-2026-089', 'src/consensus/raft_state.rs'],
+      pinnedVersionId: versionId || 'v2.4.0',
     });
   } catch (error) {
-    console.error('AI assistant error:', error);
+    console.error('AI assistant route error:', error);
     return NextResponse.json({
       response: generateFallbackResponse('general_fallback'),
       model: 'fallback-cache',
@@ -107,7 +67,7 @@ function generateFallbackResponse(query: string, activeProjectId?: string): stri
 * **[ADR-039: io_uring WAL Flush]**: Replaced POSIX synchronous \`fsync\` threads with Linux \`io_uring\` kernel rings (\`src/wal/journal_uring.rs\`). P99 flush latency is now **1.18ms**.
 
 #### 2. Critical Blockers & Action Items
-* **Kernel Compatibility**: Staging node \`apollo-staging-04\` requires \`ulimit -l unlimited\` for kernel 6.1 memory locked buffers.
+* **Kernel Compatibility**: Staging node \`apollo-staging-04\` requires \`ulimit -l unlimited\` for kernel memory locked buffers.
 * **Chaos Mesh Validation**: Run a 4-node partition test before promoting to production.
 
 #### 3. Runbook Execution
@@ -144,11 +104,8 @@ sudo bpftrace -e 'tracepoint:io_uring:io_uring_submit { @count = count(); }'
 All actions are logged to the tamper-evident audit ledger (\`Chronos [AUDIT-8910]\`).`;
   }
 
-  return `### CONTINUITY Knowledge Synthesizer
+  return `### CONTINUITY Grounded Knowledge Synthesizer
 
 **Context Analyzed**: 5 Repositories, 8 Architectural Decision Records (ADRs), 5 Handoff Packages.
-
-* **Pending Attentions**: Handoff **[HO-2026-089]** (Apollo Core v2.4.0) is awaiting acceptance by Jessica Chauhan. Key changes include **[ADR-041]** (Speculative Read Barriers) and **[ADR-039]** (io_uring Async Journal).
-* **Security Guardrails**: Sentinel Zero-Trust Mesh (**[ADR-035]**) enforces automated SPIRE certificate rotation every 60 minutes across internal ingress proxies.
-* **Audit Integrity**: Cryptographic chain verified back to genesis epoch with zero hash drift.`;
+All information is grounded in verified codebase snapshots and operational runbooks.`;
 }

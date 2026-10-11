@@ -17,9 +17,36 @@ import {
 } from 'lucide-react';
 
 export default function ProjectsPage() {
-  const { projects, users, setIsCreateHandoffModalOpen } = useApp();
+  const { projects, users, setIsCreateHandoffModalOpen, createProject } = useApp();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [newProjectName, setNewProjectName] = useState('');
+  const [newProjectDesc, setNewProjectDesc] = useState('');
+  const [newProjectTeam, setNewProjectTeam] = useState('Core Engineering');
+  const [isCreating, setIsCreating] = useState(false);
+
+  const handleCreateProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newProjectName.trim()) return;
+
+    setIsCreating(true);
+    try {
+      await createProject({
+        name: newProjectName,
+        description: newProjectDesc,
+        team: newProjectTeam,
+        status: 'Active',
+      });
+      setIsCreateModalOpen(false);
+      setNewProjectName('');
+      setNewProjectDesc('');
+    } catch {
+      // Handled
+    } finally {
+      setIsCreating(false);
+    }
+  };
 
   const filteredProjects = projects.filter((p) => {
     const matchesQuery =
@@ -45,8 +72,15 @@ export default function ProjectsPage() {
         </div>
         <div className="flex items-center gap-3">
           <button
+            onClick={() => setIsCreateModalOpen(true)}
+            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-[#F5F5F2] text-xs font-medium rounded-xl border border-white/10 transition-all flex items-center gap-2 cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>New Workspace</span>
+          </button>
+          <button
             onClick={() => setIsCreateHandoffModalOpen(true)}
-            className="px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-medium rounded-xl shadow-md shadow-[#2563EB]/25 transition-all flex items-center gap-2"
+            className="px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-medium rounded-xl shadow-md shadow-[#2563EB]/25 transition-all flex items-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Start a handoff</span>
@@ -190,6 +224,93 @@ export default function ProjectsPage() {
           </div>
         )}
       </div>
+
+      {/* New Workspace Modal */}
+      {isCreateModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in"
+          onClick={() => setIsCreateModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-lg bg-[#0D0F10] border border-white/10 rounded-2xl shadow-2xl p-6 space-y-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div>
+                <h3 className="text-base font-semibold text-[#F5F5F2]">Create Engineering Workspace</h3>
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  Initialize a new repository workspace with governed continuity tracking.
+                </p>
+              </div>
+              <button
+                onClick={() => setIsCreateModalOpen(false)}
+                className="p-1.5 text-neutral-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateProject} className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1.5">
+                  Workspace Name
+                </label>
+                <input
+                  type="text"
+                  value={newProjectName}
+                  onChange={(e) => setNewProjectName(e.target.value)}
+                  placeholder="e.g. Hyperion Observability Mesh"
+                  required
+                  className="w-full bg-[#141718] border border-white/10 rounded-xl p-2.5 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1.5">
+                  Responsible Team
+                </label>
+                <input
+                  type="text"
+                  value={newProjectTeam}
+                  onChange={(e) => setNewProjectTeam(e.target.value)}
+                  placeholder="e.g. Edge Infrastructure"
+                  className="w-full bg-[#141718] border border-white/10 rounded-xl p-2.5 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1.5">
+                  Description & Mission Invariants
+                </label>
+                <textarea
+                  rows={3}
+                  value={newProjectDesc}
+                  onChange={(e) => setNewProjectDesc(e.target.value)}
+                  placeholder="Describe system purpose, key invariants, and architecture scope..."
+                  className="w-full bg-[#141718] border border-white/10 rounded-xl p-3 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setIsCreateModalOpen(false)}
+                  className="px-4 py-2 text-xs text-neutral-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isCreating}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-medium rounded-xl shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  {isCreating ? 'Creating Workspace...' : 'Create Workspace'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
