@@ -1,0 +1,6 @@
+{
+  "name": "CONTINUITY — Enterprise Engineering Knowledge Handoff Platform",
+  "description": "Mission-critical enterprise engineering knowledge handoff platform for verifiable, lossless developer rotations, shift handoffs, and project continuity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
