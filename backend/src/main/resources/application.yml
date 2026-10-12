@@ -55,7 +55,6 @@ springdoc:
 
 trustfabric:
   base-url: ${TRUSTFABRIC_BASE_URL:https://continuity.404piyush.me}
-  fallback-url: ${TRUSTFABRIC_LOCAL_URL:http://localhost:8000}
   besu-url: ${TRUSTFABRIC_BESU_URL:http://localhost:9545}
   chain-id: 1338
-  contract: "0xEf89440626EC6FCA59dfb164f42D027BfeC7c881"
+  contract: "0x02A2A64fE6Bc42d4C27eA834Aac4566Daa126455"

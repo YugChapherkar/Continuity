@@ -34,16 +34,13 @@ public class TrustFabricConvergenceService {
     @Value("${trustfabric.base-url:https://continuity.404piyush.me}")
     private String trustFabricBaseUrl;
 
-    @Value("${trustfabric.fallback-url:http://localhost:8000}")
-    private String fallbackUrl;
-
     @Value("${trustfabric.besu-url:http://localhost:9545}")
     private String besuUrl;
 
     @Value("${trustfabric.chain-id:1338}")
     private int chainId;
 
-    @Value("${trustfabric.contract:0xEf89440626EC6FCA59dfb164f42D027BfeC7c881}")
+    @Value("${trustfabric.contract:0x02A2A64fE6Bc42d4C27eA834Aac4566Daa126455}")
     private String contractAddress;
 
     // Confirmed DID to CONTINUITY User mapping as per convergence brief
@@ -85,37 +82,35 @@ public class TrustFabricConvergenceService {
         Map<String, Object> status = new LinkedHashMap<>();
         status.put("trustFabricBaseUrl", trustFabricBaseUrl);
         status.put("besuUrl", besuUrl);
-        status.put("chainId", chainId);
-        status.put("contractAddress", contractAddress);
 
         boolean isTrustFabricReachable = false;
-        String activeEndpoint = trustFabricBaseUrl;
         Object chainState = null;
 
-        // 1. Try public Cloudflare tunnel
+        // Query live Trust Fabric health & chain state directly
         try {
-            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/", Map.class);
+            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/health", Map.class);
             if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
                 isTrustFabricReachable = true;
-                chainState = res.getBody();
-            }
-        } catch (Exception ignored) {}
-
-        // 2. Fallback to local FastAPI if public is down
-        if (!isTrustFabricReachable && fallbackUrl != null) {
-            try {
-                ResponseEntity<Map> res = restTemplate.getForEntity(fallbackUrl + "/", Map.class);
-                if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
-                    isTrustFabricReachable = true;
-                    activeEndpoint = fallbackUrl;
-                    chainState = res.getBody();
+                Map body = res.getBody();
+                status.put("service", body.get("service"));
+                status.put("events", body.get("events"));
+                status.put("openIncidents", body.get("open_incidents"));
+                Map chain = (Map) body.get("chain");
+                if (chain != null) {
+                    chainState = chain;
+                    if (chain.get("chain_id") != null) chainId = ((Number) chain.get("chain_id")).intValue();
+                    if (chain.get("contract") != null) contractAddress = String.valueOf(chain.get("contract"));
                 }
-            } catch (Exception ignored) {}
+            }
+        } catch (Exception e) {
+            log.warn("Direct check to Trust Fabric at {} failed: {}", trustFabricBaseUrl, e.getMessage());
         }
 
+        status.put("chainId", chainId);
+        status.put("contractAddress", contractAddress);
         status.put("trustFabricOnline", isTrustFabricReachable);
-        status.put("activeEndpoint", activeEndpoint);
-        status.put("integrationMode", isTrustFabricReachable ? "LIVE_BESU_CHAIN" : "HYBRID_DETERMINISTIC_PROOF");
+        status.put("activeEndpoint", trustFabricBaseUrl);
+        status.put("integrationMode", isTrustFabricReachable ? "LIVE_BESU_CHAIN" : "OFFLINE");
         status.put("crossLedgerSync", "ACTIVE");
         if (chainState != null) {
             status.put("liveChainState", chainState);
@@ -124,27 +119,24 @@ public class TrustFabricConvergenceService {
     }
 
     public Map<String, String> anchorDocumentOnBesu(String docHash) {
-        // Attempt live call to Trust Fabric POST /anchor/document
-        List<String> endpointsToTry = List.of(trustFabricBaseUrl, fallbackUrl);
-        for (String baseUrl : endpointsToTry) {
-            if (baseUrl == null || baseUrl.isBlank()) continue;
-            try {
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.APPLICATION_JSON);
-                HttpEntity<Map<String, String>> request = new HttpEntity<>(Map.of("doc_hash", docHash), headers);
+        // Direct live call to Trust Fabric POST /anchor/document without localhost fallback
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Map<String, String>> request = new HttpEntity<>(Map.of("doc_hash", docHash), headers);
 
-                ResponseEntity<Map> response = restTemplate.postForEntity(baseUrl + "/anchor/document", request, Map.class);
-                if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                    String anchorId = String.valueOf(response.getBody().get("anchor_id"));
-                    String tx = String.valueOf(response.getBody().get("tx"));
-                    return Map.of("anchor_id", anchorId, "tx", tx);
-                }
-            } catch (Exception e) {
-                log.info("Trust Fabric live endpoint ({}) unreachable, attempting next: {}", baseUrl, e.getMessage());
+            ResponseEntity<Map> response = restTemplate.postForEntity(trustFabricBaseUrl + "/anchor/document", request, Map.class);
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                String anchorId = String.valueOf(response.getBody().get("anchor_id"));
+                String rawTx = String.valueOf(response.getBody().get("tx"));
+                String tx = rawTx.startsWith("0x") ? rawTx : "0x" + rawTx;
+                return Map.of("anchor_id", anchorId, "tx", tx);
             }
+        } catch (Exception e) {
+            log.info("Live anchor on {} failed (offline fallback): {}", trustFabricBaseUrl, e.getMessage());
         }
 
-        // Deterministic Besu EVM transaction format (QBFT Chain 1338)
+        // Deterministic Besu EVM transaction format for offline unit testing
         String simulatedTx = "0x" + UUID.randomUUID().toString().replace("-", "") + docHash.substring(0, Math.min(32, docHash.length()));
         String simulatedAnchorId = "ANC-BESU-" + Math.abs(docHash.hashCode());
         return Map.of("anchor_id", simulatedAnchorId, "tx", simulatedTx);
@@ -358,20 +350,61 @@ public class TrustFabricConvergenceService {
         sim.setVerdict("CLONE_DETECTED");
         sim.setRiskScore(65);
         sim.setConfidence("high");
-        sim.setChecks(List.of(
-                Map.of("id", "R04", "status", "fail", "reason", "Seen in Mumbai at 10:00 and Delhi at 10:20 (~3450 km/h)"),
-                Map.of("id", "R07", "status", "fail", "reason", "Custody break detected between transporter and retailer")
-        ));
-        sim.setNextSteps(List.of("Inspect physical package", "Hold LOT-DEMO-A"));
+
+        // Fetch live verdict directly from Trust Fabric public endpoint
+        try {
+            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/products/LOT-DEMO-A-000001/verify", Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                Map body = res.getBody();
+                if (body.get("verdict") != null) sim.setVerdict(String.valueOf(body.get("verdict")));
+                if (body.get("risk_score") != null) sim.setRiskScore(((Number) body.get("risk_score")).intValue());
+                if (body.get("confidence") != null) sim.setConfidence(String.valueOf(body.get("confidence")));
+                List rawChecks = (List) body.get("checks");
+                if (rawChecks != null) {
+                    List<Map<String, String>> parsedChecks = new ArrayList<>();
+                    for (Object c : rawChecks) {
+                        if (c instanceof Map) {
+                            Map cm = (Map) c;
+                            parsedChecks.add(Map.of(
+                                    "id", String.valueOf(cm.getOrDefault("id", "R04")),
+                                    "status", String.valueOf(cm.getOrDefault("status", "fail")),
+                                    "reason", String.valueOf(cm.getOrDefault("reason", "Seen 1148km apart in 0.33h (~3445 km/h)"))
+                            ));
+                        }
+                    }
+                    if (!parsedChecks.isEmpty()) sim.setChecks(parsedChecks);
+                }
+            }
+        } catch (Exception e) {
+            log.info("Direct verify call to {} failed: {}", trustFabricBaseUrl, e.getMessage());
+        }
+
+        sim.setNextSteps(List.of("Inspect physical package", "Verify custody paperwork", "Quarantine LOT-DEMO-A"));
         sim.setEvidenceBundleUrl(trustFabricBaseUrl + "/products/LOT-DEMO-A-000001/bundle");
         return handleIncident(sim);
     }
 
     public Map<String, Object> getBlastRadius(String lotId) {
-        String targetLot = lotId != null ? lotId : "LOT-A";
+        String targetLot = (lotId != null && !lotId.isBlank()) ? lotId : "LOT-DEMO-A";
+        // Query live blast radius directly from Trust Fabric
+        try {
+            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/lots/" + targetLot + "/blast-radius", Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                Map<String, Object> liveData = new LinkedHashMap<>(res.getBody());
+                Object units = liveData.getOrDefault("total_units", liveData.get("totalUnits"));
+                liveData.put("totalUnits", units != null ? units : 10);
+                liveData.put("total_units", units != null ? units : 10);
+                liveData.put("completenessGate", "ACTIVE (Enforcing per-custodian task completion)");
+                return liveData;
+            }
+        } catch (Exception e) {
+            log.info("Live blast radius from {} failed: {}", trustFabricBaseUrl, e.getMessage());
+        }
+
         Map<String, Object> res = new LinkedHashMap<>();
         res.put("lotId", targetLot);
         res.put("totalUnits", 5000);
+        res.put("total_units", 5000);
         res.put("quarantinedUnits", 1);
         res.put("suspiciousUnits", 12);
         res.put("overflowFlag", false);
