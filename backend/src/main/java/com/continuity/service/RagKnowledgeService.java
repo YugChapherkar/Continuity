@@ -44,7 +44,7 @@ public class RagKnowledgeService {
     @Value("${gemini.api-key:}")
     private String geminiApiKey;
 
-    @Value("${gemini.model:gemini-2.5-flash}")
+    @Value("${gemini.model:gemini-3.8-flash}")
     private String geminiModel;
 
     public RagKnowledgeService(ProjectRepository projectRepository,
@@ -230,19 +230,30 @@ public class RagKnowledgeService {
                 ? request.getModel()
                 : geminiModel;
 
+        if (selectedModel.contains("2.5") || selectedModel.contains("1.5")) {
+            selectedModel = "gemini-3.8-flash";
+        }
+
         if (effectiveApiKey != null && !effectiveApiKey.isBlank() && !effectiveApiKey.equals("MY_GEMINI_API_KEY")) {
-            try {
-                Client client = Client.builder().apiKey(effectiveApiKey).build();
-                GenerateContentResponse response = client.models.generateContent(
-                        selectedModel,
-                        prompt,
-                        null
-                );
-                String answer = response.text();
-                List<String> citations = extractCitations(answer, versionFiles, handoff, adrs, tasks);
-                return new ChatResponseDto(answer, selectedModel, citations, targetVersionId, request.getHandoffId());
-            } catch (Exception e) {
-                log.warn("Gemini API call failed ({}), falling back to local grounded synthesis: {}", selectedModel, e.getMessage());
+            for (int attempt = 0; attempt < 2; attempt++) {
+                try {
+                    Client client = Client.builder().apiKey(effectiveApiKey).build();
+                    GenerateContentResponse response = client.models.generateContent(
+                            selectedModel,
+                            prompt,
+                            null
+                    );
+                    String answer = response.text();
+                    if (answer != null && !answer.isBlank()) {
+                        List<String> citations = extractCitations(answer, versionFiles, handoff, adrs, tasks);
+                        return new ChatResponseDto(answer, selectedModel, citations, targetVersionId, request.getHandoffId());
+                    }
+                } catch (Exception e) {
+                    log.warn("Gemini API call attempt {} failed ({}): {}", attempt + 1, selectedModel, e.getMessage());
+                    if (attempt == 0) {
+                        try { Thread.sleep(600); } catch (InterruptedException ignored) {}
+                    }
+                }
             }
         }
 

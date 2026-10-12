@@ -41,16 +41,17 @@ interface KnowledgeStatus {
 }
 
 const AVAILABLE_MODELS = [
-  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', badge: 'Google GenAI SDK', icon: Sparkles },
-  { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro', badge: 'Deep Reasoning', icon: Cpu },
+  { id: 'gemini-3.8-flash', name: 'Gemini 3.8 Flash', badge: 'Live Google GenAI', icon: Sparkles },
   { id: 'continuity-rag-engine', name: 'Continuity Grounded RAG', badge: 'Deterministic Proof', icon: ShieldCheck },
 ];
 
 export default function AssistantTerminalPage() {
   const { projects } = useApp();
   const [selectedProjectId, setSelectedProjectId] = useState<string>('apollo-core');
-  const [selectedModel, setSelectedModel] = useState<string>('gemini-2.5-flash');
-  const [geminiApiKey, setGeminiApiKey] = useState<string>('');
+  const [selectedModel, setSelectedModel] = useState<string>('gemini-3.8-flash');
+  const [geminiApiKey, setGeminiApiKey] = useState<string>(
+    process.env.NEXT_PUBLIC_GEMINI_API_KEY || ''
+  );
   const [showKeyModal, setShowKeyModal] = useState<boolean>(false);
   const [knowledgeStatus, setKnowledgeStatus] = useState<KnowledgeStatus | null>(null);
   const [isReindexing, setIsReindexing] = useState<boolean>(false);
