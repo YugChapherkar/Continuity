@@ -52,3 +52,10 @@ springdoc:
     operationsSorter: method
   api-docs:
     path: /v3/api-docs
+
+trustfabric:
+  base-url: ${TRUSTFABRIC_BASE_URL:https://continuity.404piyush.me}
+  fallback-url: ${TRUSTFABRIC_LOCAL_URL:http://localhost:8000}
+  besu-url: ${TRUSTFABRIC_BESU_URL:http://localhost:9545}
+  chain-id: 1338
+  contract: "0xEf89440626EC6FCA59dfb164f42D027BfeC7c881"

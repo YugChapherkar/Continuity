@@ -236,17 +236,19 @@ export default function ConvergencePage() {
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-white">Trust Fabric Engine</h3>
-                <span className="text-xs text-neutral-400 font-mono">http://localhost:8000</span>
+                <span className="text-xs text-neutral-400 font-mono truncate max-w-[160px] block" title="https://continuity.404piyush.me">
+                  continuity.404piyush.me
+                </span>
               </div>
             </div>
             <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${
-              statusData?.trustFabricOnline ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'
+              statusData?.trustFabricOnline ? 'bg-emerald-500/20 text-emerald-400' : 'bg-indigo-500/20 text-indigo-300'
             }`}>
-              {statusData?.trustFabricOnline ? 'Connected' : 'Hybrid Proof'}
+              {statusData?.trustFabricOnline ? 'Connected' : 'QBFT Cloud'}
             </span>
           </div>
           <p className="text-xs text-neutral-400 mt-3">
-            FastAPI anti-counterfeit physical-to-digital detection core. Flags counterfeit clones via spatiotemporal & Merkle verification.
+            FastAPI anti-counterfeit detection core & Cloudflare tunnel. Verifies physical tamper marks, scan intervals & spatiotemporal bounds.
           </p>
         </div>
 
@@ -258,16 +260,18 @@ export default function ConvergencePage() {
                 <Database className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-white">Besu EVM Chain</h3>
-                <span className="text-xs text-neutral-400 font-mono">http://localhost:8545</span>
+                <h3 className="text-sm font-semibold text-white">Besu QBFT Chain</h3>
+                <span className="text-[10px] text-neutral-400 font-mono truncate max-w-[150px] block" title="0xEf89440626EC6FCA59dfb164f42D027BfeC7c881">
+                  0xEf8944...881
+                </span>
               </div>
             </div>
             <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300">
-              Chain Id: 1337
+              Chain Id: 1338
             </span>
           </div>
           <p className="text-xs text-neutral-400 mt-3">
-            Private Ethereum PoA ledger. Dossier Merkle roots and recall tamper incidents are anchored as immutable smart contract state.
+            Private QBFT Ethereum PoA ledger on port 9545. Seals continuously; dossier Merkle roots anchored via smart contract.
           </p>
         </div>
 

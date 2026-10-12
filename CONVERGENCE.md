@@ -10,8 +10,9 @@
 
 This specification establishes the cross-ecosystem bridge between:
 1. **Team Trust Fabric** (PS2 Physical-to-Digital Anti-Counterfeit Trust Fabric):
-   - FastAPI core running on `http://localhost:8000`
-   - Hyperledger Besu EVM private blockchain on `http://localhost:8545` (Chain ID 1337)
+   - FastAPI core running on `http://localhost:8000` (Public mirror: `https://continuity.404piyush.me`)
+   - Hyperledger Besu QBFT private blockchain on `http://localhost:9545` (Chain ID 1338)
+   - Live Anchor Contract: `0xEf89440626EC6FCA59dfb164f42D027BfeC7c881`
 2. **CONTINUITY**:
    - Lossless engineering governance, custodial handoffs, completeness gates, and task orchestration on `http://localhost:8080` (Backend) and `http://localhost:3000` (Frontend).
 

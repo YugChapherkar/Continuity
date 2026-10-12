@@ -31,11 +31,20 @@ public class TrustFabricConvergenceService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper;
 
-    @Value("${trustfabric.base-url:http://localhost:8000}")
+    @Value("${trustfabric.base-url:https://continuity.404piyush.me}")
     private String trustFabricBaseUrl;
 
-    @Value("${trustfabric.besu-url:http://localhost:8545}")
+    @Value("${trustfabric.fallback-url:http://localhost:8000}")
+    private String fallbackUrl;
+
+    @Value("${trustfabric.besu-url:http://localhost:9545}")
     private String besuUrl;
+
+    @Value("${trustfabric.chain-id:1338}")
+    private int chainId;
+
+    @Value("${trustfabric.contract:0xEf89440626EC6FCA59dfb164f42D027BfeC7c881}")
+    private String contractAddress;
 
     // Confirmed DID to CONTINUITY User mapping as per convergence brief
     public static final Map<String, String> DID_ACTOR_MAP = Map.of(
@@ -76,37 +85,66 @@ public class TrustFabricConvergenceService {
         Map<String, Object> status = new LinkedHashMap<>();
         status.put("trustFabricBaseUrl", trustFabricBaseUrl);
         status.put("besuUrl", besuUrl);
+        status.put("chainId", chainId);
+        status.put("contractAddress", contractAddress);
 
         boolean isTrustFabricReachable = false;
+        String activeEndpoint = trustFabricBaseUrl;
+        Object chainState = null;
+
+        // 1. Try public Cloudflare tunnel
         try {
-            ResponseEntity<String> res = restTemplate.getForEntity(trustFabricBaseUrl + "/docs", String.class);
-            isTrustFabricReachable = res.getStatusCode().is2xxSuccessful();
+            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/", Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                isTrustFabricReachable = true;
+                chainState = res.getBody();
+            }
         } catch (Exception ignored) {}
 
+        // 2. Fallback to local FastAPI if public is down
+        if (!isTrustFabricReachable && fallbackUrl != null) {
+            try {
+                ResponseEntity<Map> res = restTemplate.getForEntity(fallbackUrl + "/", Map.class);
+                if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                    isTrustFabricReachable = true;
+                    activeEndpoint = fallbackUrl;
+                    chainState = res.getBody();
+                }
+            } catch (Exception ignored) {}
+        }
+
         status.put("trustFabricOnline", isTrustFabricReachable);
+        status.put("activeEndpoint", activeEndpoint);
         status.put("integrationMode", isTrustFabricReachable ? "LIVE_BESU_CHAIN" : "HYBRID_DETERMINISTIC_PROOF");
         status.put("crossLedgerSync", "ACTIVE");
+        if (chainState != null) {
+            status.put("liveChainState", chainState);
+        }
         return status;
     }
 
     public Map<String, String> anchorDocumentOnBesu(String docHash) {
-        // Attempt live call to Trust Fabric FastAPI POST /anchor/document
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<Map<String, String>> request = new HttpEntity<>(Map.of("doc_hash", docHash), headers);
+        // Attempt live call to Trust Fabric POST /anchor/document
+        List<String> endpointsToTry = List.of(trustFabricBaseUrl, fallbackUrl);
+        for (String baseUrl : endpointsToTry) {
+            if (baseUrl == null || baseUrl.isBlank()) continue;
+            try {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                HttpEntity<Map<String, String>> request = new HttpEntity<>(Map.of("doc_hash", docHash), headers);
 
-            ResponseEntity<Map> response = restTemplate.postForEntity(trustFabricBaseUrl + "/anchor/document", request, Map.class);
-            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                String anchorId = String.valueOf(response.getBody().get("anchor_id"));
-                String tx = String.valueOf(response.getBody().get("tx"));
-                return Map.of("anchor_id", anchorId, "tx", tx);
+                ResponseEntity<Map> response = restTemplate.postForEntity(baseUrl + "/anchor/document", request, Map.class);
+                if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                    String anchorId = String.valueOf(response.getBody().get("anchor_id"));
+                    String tx = String.valueOf(response.getBody().get("tx"));
+                    return Map.of("anchor_id", anchorId, "tx", tx);
+                }
+            } catch (Exception e) {
+                log.info("Trust Fabric live endpoint ({}) unreachable, attempting next: {}", baseUrl, e.getMessage());
             }
-        } catch (Exception e) {
-            log.info("Trust Fabric live endpoint unreachable, generating deterministic Besu EVM anchor: {}", e.getMessage());
         }
 
-        // Deterministic Besu EVM transaction format
+        // Deterministic Besu EVM transaction format (QBFT Chain 1338)
         String simulatedTx = "0x" + UUID.randomUUID().toString().replace("-", "") + docHash.substring(0, Math.min(32, docHash.length()));
         String simulatedAnchorId = "ANC-BESU-" + Math.abs(docHash.hashCode());
         return Map.of("anchor_id", simulatedAnchorId, "tx", simulatedTx);
@@ -288,8 +326,8 @@ public class TrustFabricConvergenceService {
                 Map.of("location", "Delhi Retail Hub", "time", "10:20 AM UTC", "status", "FLAGGED_IMPOSSIBLE_VELOCITY (~3450 km/h)")
         ));
         res.put("blockchainProofRef", Map.of(
-                "network", "Hyperledger Besu EVM (Chain ID 1337)",
-                "contractAnchor", "0x22b541d79586461790a346d54ec7b1afc049ec7dcdba4077b67b58f4636f5403",
+                "network", "Hyperledger Besu EVM (QBFT Chain ID " + chainId + ")",
+                "contractAnchor", contractAddress,
                 "blockHeight", "0x1ce857",
                 "merkleRoot", "0x89fbc001e9a3b84179e95123fcda1234988771"
         ));
@@ -302,10 +340,10 @@ public class TrustFabricConvergenceService {
                 "deadlineAlert", "ON_TRACK"
         ));
         res.put("completenessGate", "ENFORCED (Custodian cannot accept/close case without verified physical package inspection)");
-        res.put("evidenceBundleUrl", "http://localhost:8000/products/LOT-A-000123/bundle");
+        res.put("evidenceBundleUrl", trustFabricBaseUrl + "/products/LOT-DEMO-A-000001/bundle");
         res.put("activityTimeline", List.of(
                 Map.of("step", 1, "action", "CASE_CREATED_BY_TRACECHAIN", "actor", "TraceChain Engine", "detail", "CLONE_DETECTED alert on duplicate QR scan in Mumbai & Delhi."),
-                Map.of("step", 2, "action", "ON_CHAIN_BESU_ANCHOR", "actor", "Besu EVM Smart Contract", "detail", "Anchor tx 0x22b541d... confirmed at block 0x1ce857."),
+                Map.of("step", 2, "action", "ON_CHAIN_BESU_ANCHOR", "actor", "Besu EVM Smart Contract (" + contractAddress + ")", "detail", "Anchor tx confirmed on Besu chain " + chainId + "."),
                 Map.of("step", 3, "action", "RECALL_TASKS_DISPATCHED", "actor", "CONTINUITY Governance", "detail", "Assigned P0 package inspection to Jessicaa Chauhab and transit telemetry audit to Shruti Patil."),
                 Map.of("step", 4, "action", "CUSTODY_HANDOFF_INITIATED", "actor", "Yash Lokhande (Manufacturer)", "detail", "Transferred emergency quarantine custody to distributor and retailer.")
         ));
@@ -315,16 +353,17 @@ public class TrustFabricConvergenceService {
     public TrustFabricIncidentResponse simulateCloneIncident() {
         TrustFabricIncidentRequest sim = new TrustFabricIncidentRequest();
         sim.setCaseId("TC-1042");
-        sim.setSerial("LOT-A-000123");
-        sim.setLotId("LOT-A");
+        sim.setSerial("LOT-DEMO-A-000001");
+        sim.setLotId("LOT-DEMO-A");
         sim.setVerdict("CLONE_DETECTED");
-        sim.setRiskScore(80);
+        sim.setRiskScore(65);
         sim.setConfidence("high");
         sim.setChecks(List.of(
-                Map.of("id", "R04", "status", "fail", "reason", "Seen in Mumbai at 10:00 and Delhi at 10:20 (~3450 km/h)")
+                Map.of("id", "R04", "status", "fail", "reason", "Seen in Mumbai at 10:00 and Delhi at 10:20 (~3450 km/h)"),
+                Map.of("id", "R07", "status", "fail", "reason", "Custody break detected between transporter and retailer")
         ));
-        sim.setNextSteps(List.of("Inspect physical package", "Hold LOT-A"));
-        sim.setEvidenceBundleUrl("http://localhost:8000/products/LOT-A-000123/bundle");
+        sim.setNextSteps(List.of("Inspect physical package", "Hold LOT-DEMO-A"));
+        sim.setEvidenceBundleUrl(trustFabricBaseUrl + "/products/LOT-DEMO-A-000001/bundle");
         return handleIncident(sim);
     }
 
