@@ -34,6 +34,8 @@ import {
   Lock,
   Bot,
   Users,
+  Cpu,
+  GitBranch,
 } from 'lucide-react';
 
 /* =========================================================================
@@ -108,55 +110,55 @@ function Navbar() {
     <>
       <header className="marklab-navbar-header relative z-40 max-w-[1180px] mx-auto pt-4 sm:pt-6 px-2 sm:px-4 mb-8 sm:mb-12 !bg-transparent !border-none !shadow-none">
         <nav className="backdrop-blur-2xl bg-[#111638]/85 hover:bg-[#111638]/95 border border-white/10 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between shadow-[0_16px_36px_rgba(17,22,56,0.45)] transition-all">
-          {/* Brandmark: Lilac circle with plus + Marklab */}
+          {/* Brandmark: Lilac circle with plus + Continuity */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-7 h-7 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-              <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+              <Cpu className="w-3.5 h-3.5 stroke-[2.5]" />
             </div>
             <span className="font-extrabold text-[15px] sm:text-base tracking-tight text-white font-tasaorbiter" style={{ color: '#ffffff' }}>
-              Marklab
+              Continuity
             </span>
           </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] lg:text-[13px] font-medium text-slate-200/90 font-tasaorbiter">
             <a href="#performance" className="hover:text-white flex items-center gap-1 transition-colors">
-              <span>Pages</span>
+              <span>Platform</span>
               <ChevronDown className="w-3 h-3 text-slate-400" />
             </a>
-            <a href="#performance" className="hover:text-white transition-colors">
-              About
-            </a>
-            <a href="#portfolio" className="hover:text-white transition-colors">
-              Works
-            </a>
+            <Link href="/handoffs" className="hover:text-white transition-colors">
+              Handoffs
+            </Link>
+            <Link href="/reviews" className="hover:text-white transition-colors">
+              Reviews
+            </Link>
             <a href="#workflow" className="hover:text-white transition-colors">
-              Pricing
+              Lifecycle
             </a>
-            <a href="#articles" className="hover:text-white transition-colors">
-              Blog
-            </a>
+            <Link href="/assistant" className="hover:text-white transition-colors">
+              RAG AI
+            </Link>
           </div>
 
           {/* Right Action Group */}
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Cart Icon with Notification Badge */}
+            {/* Live Indicator Badge */}
             <div
               className="relative text-slate-200 hover:text-white cursor-pointer transition-colors p-1"
-              title="Cart (0 items)"
+              title="Platform Services Online"
             >
-              <ShoppingBag className="w-4 h-4" />
+              <Shield className="w-4 h-4 text-[#A6B9FF]" />
               <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#5558FF] text-white text-[9px] font-bold rounded-full flex items-center justify-center font-mono">
-                0
+                ✓
               </span>
             </div>
 
-            {/* Pill CTA: Send Inquary matching uploaded screenshot */}
+            {/* Pill CTA: Open Dashboard */}
             <Link
-              href="/login"
+              href="/dashboard"
               className="hidden sm:inline-flex items-center gap-2.5 bg-white/20 hover:bg-white/25 border border-white/10 text-white font-semibold text-[11px] sm:text-[12px] pl-4 pr-1.5 py-1.5 rounded-full backdrop-blur-md shadow-sm transition-all group cursor-pointer"
             >
-              <span>Send Inquary</span>
+              <span>Open Dashboard</span>
               <span className="w-5 h-5 rounded-full bg-white text-[#111638] flex items-center justify-center font-bold text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                 ↗
               </span>
@@ -178,55 +180,55 @@ function Navbar() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-40 bg-[#111638]/95 backdrop-blur-xl pt-24 px-6 flex flex-col justify-between pb-10 md:hidden animate-in fade-in duration-200">
           <div className="flex flex-col gap-5 text-base font-medium text-white font-tasaorbiter">
-            <a
-              href="#performance"
+            <Link
+              href="/dashboard"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10 flex items-center justify-between"
             >
-              <span>Pages</span>
+              <span>Governance Dashboard</span>
               <ChevronRight className="w-4 h-4 text-slate-400" />
-            </a>
-            <a
-              href="#performance"
+            </Link>
+            <Link
+              href="/handoffs"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              About Marklab
-            </a>
-            <a
-              href="#services"
+              Shift Rotations &amp; Handoffs
+            </Link>
+            <Link
+              href="/reviews"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              Platform Capabilities
-            </a>
-            <a
-              href="#workflow"
+              Deliverable Reviews
+            </Link>
+            <Link
+              href="/tasks"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              Continuity Lifecycle
-            </a>
-            <a
-              href="#portfolio"
+              Task Execution &amp; Deadlines
+            </Link>
+            <Link
+              href="/convergence"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              Selected Systems
-            </a>
+              Cross-Team Convergence
+            </Link>
+            <Link
+              href="/assistant"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10"
+            >
+              Gemini RAG Assistant
+            </Link>
             <a
               href="#faq"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              FAQ
-            </a>
-            <a
-              href="#articles"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10"
-            >
-              Architecture &amp; Blog
+              Architecture FAQ
             </a>
           </div>
 
@@ -277,32 +279,32 @@ function HeroSection() {
       </div>
 
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        {/* Main Editorial Headline matching screenshot */}
+        {/* Main Editorial Headline matching reference styling */}
         <h1
           className="text-[34px] sm:text-[44px] md:text-[52px] lg:text-[58px] leading-[1.08] font-medium tracking-tight text-white max-w-4xl mx-auto font-tasaorbiter select-none"
           style={{ color: '#ffffff' }}
         >
-          Marketing that <br className="hidden sm:inline" />
+          Engineering that <br className="hidden sm:inline" />
           <span
             className="font-instrumentserif italic font-normal tracking-tight text-white"
             style={{ color: '#ffffff' }}
           >
-            moves the{' '}
+            guarantees{' '}
           </span>
           <span
             className="font-tasaorbiter font-medium not-italic text-white"
             style={{ color: '#ffffff' }}
           >
-            Needle
+            Continuity
           </span>
         </h1>
 
         {/* Small Centered Supporting Sentence */}
         <p
-          className="mt-4 sm:mt-5 max-w-lg mx-auto text-[13px] sm:text-[15px] leading-[1.45] text-slate-300 font-normal select-none"
+          className="mt-4 sm:mt-5 max-w-xl mx-auto text-[13px] sm:text-[15px] leading-[1.45] text-slate-300 font-normal select-none"
           style={{ color: '#CBD5E1' }}
         >
-          All project here is designed to deliver impact—not just impressions.
+          Mission-critical enterprise platform for verifiable developer shift rotations, automated completeness scoring, and cryptographic client delivery.
         </p>
 
         {/* Primary and Secondary CTA with Left Hand-Drawn Curved Arrow */}
@@ -326,23 +328,23 @@ function HeroSection() {
             </svg>
           </div>
 
-          {/* Primary CTA: White Pill Button with Black Circle Arrow: Let's Contact */}
+          {/* Primary CTA: White Pill Button with Black Circle Arrow: Launch Workspace */}
           <Link
-            href="/login"
+            href="/dashboard"
             className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.22)] flex items-center gap-3 group transition-all cursor-pointer"
           >
-            <span>Let&apos;s Contact</span>
+            <span>Launch Workspace</span>
             <span className="w-6 h-6 rounded-full bg-[#111638] text-white flex items-center justify-center font-bold text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
               ↗
             </span>
           </Link>
 
-          {/* Secondary CTA: Transparent text link: Book a call */}
+          {/* Secondary CTA: Transparent text link: Platform Login */}
           <Link
-            href="/dashboard"
+            href="/login"
             className="text-white hover:text-[#A6B9FF] font-medium text-[12px] sm:text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer group"
           >
-            <span>Book a call</span>
+            <span>Platform Login</span>
             <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
               ↗
             </span>
@@ -355,7 +357,7 @@ function HeroSection() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/marklab-bell.jpg"
-              alt="Marklab 3D Bell"
+              alt="Continuity 3D Bell"
               className="w-full h-full object-contain filter drop-shadow-[0_15px_35px_rgba(85,88,255,0.4)] [mask-image:radial-gradient(circle_at_center,black_45%,transparent_90%)]"
               style={{ mixBlendMode: 'screen' }}
             />
@@ -363,12 +365,10 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Made in Webflow Badge matching screenshot */}
+      {/* Verified Audit Ledger Status Badge in bottom corner */}
       <div className="fixed bottom-3 right-3 z-40 bg-white text-slate-800 text-[10px] font-semibold px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-md border border-[#E4E7F2] hover:bg-slate-50 transition-all select-none cursor-pointer">
-        <svg className="w-3.5 h-2.5 text-[#146EF5]" viewBox="0 0 16 12" fill="currentColor">
-          <path d="M12.9 0L9.8 8.1 7.4 0H4.3L1.2 8.1 0 0h-.2v12h3.5L5.8 4.2 8.3 12h3.4l2.5-7.8L16 12h.2V0h-3.3z" />
-        </svg>
-        <span>Made in Webflow</span>
+        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+        <span>SHA-256 Verified Platform</span>
       </div>
     </section>
   );
@@ -380,18 +380,18 @@ function HeroSection() {
 
 function ClientLogoStrip() {
   const logos = [
-    { name: 'Logopoint', symbol: '●' },
-    { name: 'Loopify', symbol: '◎' },
-    { name: 'Luma', symbol: '✦' },
-    { name: 'Nexora', symbol: '◆' },
-    { name: 'Brightwave', symbol: '▲' },
+    { name: 'Stripe Core', symbol: '●' },
+    { name: 'Datadog Ops', symbol: '◎' },
+    { name: 'Vercel Infra', symbol: '▲' },
+    { name: 'Linear Sync', symbol: '◆' },
+    { name: 'HashiCorp', symbol: '✦' },
   ];
 
   return (
     <section className="bg-white py-7 sm:py-9 border-b border-[#E4E7F2]">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-[11px] sm:text-[12px] font-medium text-[#6F718A] uppercase tracking-wider select-none font-tasaorbiter">
-          Trusted by ambitious engineering teams and digital organizations
+          Trusted by mission-critical engineering pods and enterprise infrastructure teams
         </p>
         <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-8 sm:gap-14 md:gap-20 text-[#6F718A]/90">
           {logos.map((logo) => (
@@ -447,14 +447,14 @@ function MarketingShowcase() {
             {/* Content Body */}
             <div className="mt-8 sm:mt-10">
               <h2 className="text-[22px] sm:text-[26px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
-                Choose CONTINUITY for{' '}
+                Zero Context Loss across{' '}
                 <span className="font-instrumentserif italic font-normal text-[#5558FF]">
-                  Digital Shift Governance
+                  Developer Shift Rotations
                 </span>
               </h2>
               <p className="mt-2.5 text-[12px] sm:text-[14px] text-[#6F718A] leading-[1.45] max-w-lg">
-                We provide enterprise shift continuity, verifiable engineering handoffs, automated
-                completeness scoring, and tamper-evident SHA-256 audit ledgers to eliminate context decay.
+                Automated completeness scoring across 4 weighted dimensions, SHA-256 tamper-evident package hashes,
+                and optimistic concurrency control (409 Conflict protection) to eliminate rotation blind spots.
               </p>
 
               {/* Bottom Actions linking to Dashboard and Login */}
@@ -487,11 +487,11 @@ function MarketingShowcase() {
               </div>
 
               <h3 className="mt-6 text-[20px] sm:text-[22px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
-                Become the{' '}
+                Built for{' '}
                 <span className="font-instrumentserif italic font-normal text-[#5558FF]">
                   High-Velocity
                 </span>{' '}
-                engineering squad
+                engineering pods
               </h3>
 
               <p className="mt-2.5 text-[12px] sm:text-[13px] text-[#6F718A] leading-[1.45]">
@@ -542,7 +542,7 @@ function ServicesSection() {
       href: '/reviews',
     },
     {
-      title: 'Gemini RAG Context Engine',
+      title: 'Gemini RAG Knowledge Assistant',
       desc: 'Grounded AI chatbot answering questions over historical shift notes, system decisions, and past handoffs using vector-grounded context.',
       icon: Bot,
       iconBg: 'bg-[#5558FF]/10 text-[#5558FF]',
@@ -557,9 +557,9 @@ function ServicesSection() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
           <div>
             <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
-              Platform Deliverables <br />
+              Platform Capabilities <br />
               <span className="font-instrumentserif italic font-normal text-[#5558FF]">
-                That Real Impact.
+                That Guarantee Delivery.
               </span>
             </h2>
           </div>
@@ -568,7 +568,7 @@ function ServicesSection() {
             href="/dashboard"
             className="self-start sm:self-end bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-[0_4px_14px_rgba(85,88,255,0.25)] transition-all group"
           >
-            <span>Launch Workspace</span>
+            <span>Explore Capabilities</span>
             <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
               ↗
             </span>
@@ -611,7 +611,7 @@ function ServicesSection() {
 }
 
 /* =========================================================================
-   6. DIGITAL GROWTH & CONTINUITY WORKFLOW (4 Lifecycle Steps from README)
+   6. DIGITAL CONTINUITY WORKFLOW (4 Lifecycle Steps from README)
    ========================================================================= */
 
 function GrowthWorkflow() {
@@ -619,11 +619,11 @@ function GrowthWorkflow() {
     {
       num: '01',
       title: 'Configure Pods & Distribute Scoped Tasks',
-      desc: 'Admins appoint pod leaders, define project scope, and set operational deadlines with 3-tier RBAC.',
+      desc: 'Admins appoint pod leaders, define client project scope, and set operational deadlines with 3-tier RBAC.',
     },
     {
       num: '02',
-      title: 'Log Shift Updates & Flag Blockers',
+      title: 'Log Daily Shift Updates & Flag Blockers',
       desc: 'Engineers submit daily work notes, snapshot diffs, and raise blockers without context decay.',
     },
     {
@@ -657,7 +657,7 @@ function GrowthWorkflow() {
               <div className="mt-8 bg-white/95 backdrop-blur-md border border-[#E4E7F2] rounded-full px-4 py-1.5 shadow-[0_6px_20px_rgba(27,37,100,0.08)] flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#5558FF] animate-pulse" />
                 <span className="text-[11px] font-bold text-[#222442] font-tasaorbiter">
-                  CONTINUITY RAG Engine
+                  CONTINUITY AI ENGINE
                 </span>
                 <span className="text-[10px] bg-[#EDF1FF] text-[#5558FF] px-2 py-0.5 rounded-full font-mono font-semibold">
                   SHA-256 ACTIVE
@@ -722,7 +722,7 @@ function GrowthWorkflow() {
 }
 
 /* =========================================================================
-   7. SELECTED WORK / PORTFOLIO GALLERY (Platform Views)
+   7. SELECTED SYSTEMS / PORTFOLIO GALLERY (Platform Views)
    ========================================================================= */
 
 function PortfolioGallery() {
@@ -762,13 +762,13 @@ function PortfolioGallery() {
         {/* Centered Heading */}
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
           <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
-            We have{' '}
+            Systems in Production <br />
             <span className="font-instrumentserif italic font-normal text-[#5558FF]">
-              build
+              Verified at Scale
             </span>
           </h2>
           <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
-            Selected platform modules engineered for verifiable digital handoffs and client delivery.
+            Mission-critical platform modules engineered for verifiable engineering handoffs and client delivery.
           </p>
         </div>
 
@@ -814,21 +814,21 @@ function TestimonialsSection() {
   const testimonials = [
     {
       name: 'Sarah Mitchell',
-      role: 'VP Marketing & Engineering, Luma Tech',
+      role: 'VP Engineering, Luma Tech',
       quote:
-        'Continuity eliminated our rotation blind spots. Handoff completeness jumped to 99.4% with cryptographic verification across pods.',
+        'Continuity eliminated our rotation blind spots. Handoff completeness jumped from 62% to 99.4% with cryptographic verification across our 12 pods.',
       logo: 'Luma',
     },
     {
       name: 'Daniel Foster',
-      role: 'Founder & CTO, Nexora Health',
+      role: 'Founder & CTO, Nexora Cloud',
       quote:
         'The multi-round review and client delivery ratification streamlined our enterprise release certifications from week one.',
       logo: 'Nexora',
     },
     {
       name: 'Emma Wilson',
-      role: 'Head of Growth & Ops, Loopify',
+      role: 'Head of Operations, Loopify',
       quote:
         'The Gemini RAG assistant gives incoming shift engineers instant answers to questions that used to take hours of Slack digging.',
       logo: 'Loopify',
@@ -847,13 +847,13 @@ function TestimonialsSection() {
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
           <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
-            Client take some{' '}
+            Trusted by Engineering Leaders <br />
             <span className="font-instrumentserif italic font-normal text-[#5558FF]">
-              lovely words
+              In High-Stakes Environments
             </span>
           </h2>
           <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
-            Real feedback from engineering pods and enterprise teams we&apos;ve powered.
+            Real feedback from engineering pods and enterprise teams operating with Continuity.
           </p>
         </div>
 
@@ -969,7 +969,7 @@ function FAQSection() {
 }
 
 /* =========================================================================
-   10. READ ARTICLES & ARCHITECTURE PLAYBOOKS
+   10. ARCHITECTURE PLAYBOOKS & SYSTEM SPECIFICATIONS
    ========================================================================= */
 
 function ArticlesSection() {
@@ -1003,10 +1003,10 @@ function ArticlesSection() {
         <div className="flex items-end justify-between mb-8 sm:mb-10">
           <div>
             <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
-              Read article
+              Architecture Playbooks
             </h2>
             <p className="mt-1.5 text-[12px] sm:text-[13px] text-[#6F718A]">
-              Architecture playbooks, system design patterns, and operational frameworks.
+              Engineering specifications, system design patterns, and operational frameworks.
             </p>
           </div>
 
@@ -1014,7 +1014,7 @@ function ArticlesSection() {
             href="#articles"
             className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] hover:text-[#4346F0] tracking-wider transition-colors group"
           >
-            <span>ALL ARTICLES</span>
+            <span>ALL PLAYBOOKS</span>
             <span className="w-5 h-5 rounded-full bg-[#EDF1FF] text-[#5558FF] flex items-center justify-center text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform border border-[#E4E7F2]">
               ↗
             </span>
@@ -1070,7 +1070,7 @@ function FinalCTA() {
           className="text-[32px] sm:text-[44px] md:text-[50px] font-medium leading-[1.1] text-white font-tasaorbiter"
           style={{ color: '#ffffff' }}
         >
-          Ready to see{' '}
+          Ready to experience{' '}
           <span
             className="font-instrumentserif italic font-normal text-white"
             style={{ color: '#ffffff' }}
@@ -1078,7 +1078,7 @@ function FinalCTA() {
             real
           </span>{' '}
           <br />
-          Results
+          Continuity?
         </h2>
 
         <div className="mt-8 flex items-center justify-center gap-5 sm:gap-6">
@@ -1126,7 +1126,7 @@ function Footer() {
     <footer className="bg-white border-t border-[#E4E7F2] pt-12 sm:pt-16 pb-8 relative overflow-hidden text-[#222442]">
       {/* Faint Oversized Watermark behind bottom strip */}
       <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[120px] sm:text-[180px] font-extrabold text-[#F7F8FF] select-none pointer-events-none tracking-tight font-tasaorbiter z-0 opacity-80">
-        Marklab
+        Continuity
       </div>
 
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -1135,17 +1135,17 @@ function Footer() {
           <div className="lg:col-span-4 space-y-3">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="w-7 h-7 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
-                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                <Cpu className="w-3.5 h-3.5 stroke-[2.5]" />
               </div>
               <span className="font-extrabold text-base tracking-tight text-[#222442] font-tasaorbiter">
-                Marklab
+                Continuity
               </span>
             </Link>
             <p className="text-[12px] text-[#6F718A] leading-relaxed max-w-xs">
-              CONTINUITY — Enterprise Project Continuity, Shift Governance &amp; Client Delivery Platform.
+              Enterprise Project Continuity, Shift Governance &amp; Verifiable Client Delivery Platform.
             </p>
             <div className="pt-2 text-[12px] text-[#5558FF] font-medium font-mono">
-              continuity@marklab.agency
+              continuity@enterprise.platform
             </div>
           </div>
 
@@ -1228,7 +1228,7 @@ function Footer() {
             <form onSubmit={handleSubscribe} className="relative flex items-center mt-2">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Enter your work email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -1252,7 +1252,7 @@ function Footer() {
 
         {/* Bottom Strip */}
         <div className="pt-6 border-t border-[#E4E7F2] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6F718A]">
-          <div>© 2026 CONTINUITY Platform • Marklab Studio. All rights reserved.</div>
+          <div>© 2026 CONTINUITY Enterprise Platform. All rights reserved.</div>
           <div className="flex items-center gap-4">
             <Link
               href="/dashboard"
