@@ -2,1378 +2,1297 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useApp } from '@/context/AppContext';
 import {
   ArrowRight,
   ArrowUpRight,
+  Check,
   CheckCircle2,
-  Clock,
-  ShieldCheck,
-  Sparkles,
+  ChevronDown,
+  ChevronRight,
+  Plus,
+  Minus,
+  Menu,
+  X,
+  Search,
+  Mail,
+  Globe,
+  ChartNoAxesCombined,
+  MousePointerClick,
+  Megaphone,
   Layers,
   FileText,
-  Users,
-  CheckSquare,
-  Activity,
-  Bot,
-  GitCommit,
-  GitPullRequest,
-  Lock,
-  ChevronRight,
-  Terminal,
-  Zap,
-  CornerDownRight,
-  ShieldAlert,
-  FolderGit2,
-  PackageCheck,
-  Check,
-  Sun,
-  Moon,
+  Sparkles,
   ShoppingBag,
-  Plus,
-  ChevronDown,
+  ExternalLink,
+  Shield,
+  Zap,
+  TrendingUp,
+  Target,
+  BarChart3,
+  Send,
 } from 'lucide-react';
 
-export function LandingPage() {
-  const { isAuthenticated, currentUser, logout, theme, toggleTheme } = useApp();
-  const isLight = theme === 'light';
-  const [copiedCmd, setCopiedCmd] = useState(false);
+/* =========================================================================
+   REUSABLE UI ATOMS & TYPOGRAPHY
+   ========================================================================= */
 
-  const handleCopy = () => {
-    navigator.clipboard?.writeText('./bin/ctl cluster status --verify-linearizability');
-    setCopiedCmd(true);
-    setTimeout(() => setCopiedCmd(false), 2000);
+interface PillButtonProps {
+  children: React.ReactNode;
+  variant?: 'primary' | 'white' | 'ghost' | 'outline';
+  href?: string;
+  onClick?: () => void;
+  className?: string;
+  icon?: React.ReactNode;
+}
+
+function PillButton({
+  children,
+  variant = 'primary',
+  href,
+  onClick,
+  className = '',
+  icon,
+}: PillButtonProps) {
+  const baseClasses =
+    'inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 select-none text-[12px] sm:text-[13px] px-4 sm:px-5 py-2 sm:py-2.5 active:scale-[0.98] cursor-pointer';
+
+  const variants = {
+    primary:
+      'bg-[#5558FF] text-white hover:bg-[#4346F0] shadow-[0_4px_16px_rgba(85,88,255,0.25)] hover:shadow-[0_6px_22px_rgba(85,88,255,0.35)]',
+    white:
+      'bg-white text-[#111638] hover:bg-[#F7F8FF] shadow-[0_4px_18px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_24px_rgba(255,255,255,0.3)]',
+    ghost:
+      'bg-transparent text-white hover:text-[#A6B9FF] hover:bg-white/5',
+    outline:
+      'bg-white text-[#222442] border border-[#E4E7F2] hover:bg-[#F7F8FF] hover:border-[#CCD2E3]',
   };
 
+  const content = (
+    <>
+      <span>{children}</span>
+      {icon && (
+        <span className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+          {icon}
+        </span>
+      )}
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link href={href} className={`group ${baseClasses} ${variants[variant]} ${className}`}>
+        {content}
+      </Link>
+    );
+  }
+
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 font-sans antialiased overflow-x-hidden selection:bg-indigo-500/20 selection:text-indigo-900 ${
-        isLight
-          ? 'bg-[#F8FAFC] text-[#0B132B]'
-          : 'bg-[#070914] text-[#F3F4F6] selection:text-white selection:bg-indigo-500/40'
-      }`}
-    >
-      {/* =========================================================================
-          1. FLOATING PILL NAVBAR (Marklab Exact Screenshot Match)
-         ========================================================================= */}
-      <header className="fixed top-5 left-0 right-0 z-50 px-4 sm:px-6">
-        <nav className="max-w-4xl mx-auto backdrop-blur-2xl bg-[#111428]/80 hover:bg-[#111428]/90 border border-white/10 rounded-full px-5 py-2.5 flex items-center justify-between shadow-[0_16px_36px_rgba(0,0,0,0.5)] transition-all">
-          {/* Logo Brand: Lilac circle with plus + Marklab */}
+    <button onClick={onClick} className={`group ${baseClasses} ${variants[variant]} ${className}`}>
+      {content}
+    </button>
+  );
+}
+
+/* =========================================================================
+   1. NAVBAR COMPONENT
+   ========================================================================= */
+
+function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <>
+      <header className="marklab-navbar-header relative z-40 max-w-[1180px] mx-auto pt-4 sm:pt-6 px-2 sm:px-4 mb-8 sm:mb-12 !bg-transparent !border-none !shadow-none">
+        <nav className="backdrop-blur-2xl bg-[#111638]/85 hover:bg-[#111638]/95 border border-white/10 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between shadow-[0_16px_36px_rgba(17,22,56,0.45)] transition-all">
+          {/* Brandmark: Lilac circle with plus + Marklab */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-7 h-7 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-              <Plus className="w-4 h-4 stroke-[2.5]" />
+              <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
             </div>
-            <span className="font-extrabold text-base tracking-tight text-white font-sans-clean">
+            <span className="font-extrabold text-[15px] sm:text-base tracking-tight text-white font-tasaorbiter" style={{ color: '#ffffff' }}>
               Marklab
             </span>
           </Link>
 
-          {/* Desktop Navigation Links: Pages v, About, Works, Pricing, Blog */}
-          <div className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-200/90 hover:text-white transition-colors">
-            <a href="#pages" className="hover:text-white flex items-center gap-1 transition-colors">
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] lg:text-[13px] font-medium text-slate-200/90 font-tasaorbiter">
+            <a href="#performance" className="hover:text-white flex items-center gap-1 transition-colors">
               <span>Pages</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-300" />
+              <ChevronDown className="w-3 h-3 text-slate-400" />
             </a>
-            <a href="#about" className="hover:text-white transition-colors">
+            <a href="#performance" className="hover:text-white transition-colors">
               About
             </a>
-            <a href="#works" className="hover:text-white transition-colors">
-              Works
+            <a href="#services" className="hover:text-white transition-colors">
+              Work
             </a>
-            <a href="#pricing" className="hover:text-white transition-colors">
+            <a href="#workflow" className="hover:text-white transition-colors">
               Pricing
             </a>
-            <a href="#blog" className="hover:text-white transition-colors">
+            <a href="#articles" className="hover:text-white transition-colors">
               Blog
             </a>
           </div>
 
-          {/* Right Action: Cart with 0 badge + Send Inquary button */}
-          <div className="flex items-center gap-4">
+          {/* Right Action Group */}
+          <div className="flex items-center gap-3 sm:gap-4">
             {/* Cart Icon with Notification Badge */}
-            <div className="relative text-slate-200 hover:text-white cursor-pointer transition-colors" title="Cart (0 items)">
+            <div
+              className="relative text-slate-200 hover:text-white cursor-pointer transition-colors p-1"
+              title="Cart (0 items)"
+            >
               <ShoppingBag className="w-4 h-4" />
-              <span className="absolute -top-1.5 -right-2 w-4 h-4 bg-[#6366F1] text-white text-[9px] font-bold rounded-full flex items-center justify-center font-mono">
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#5558FF] text-white text-[9px] font-bold rounded-full flex items-center justify-center font-mono">
                 0
               </span>
             </div>
 
-            {/* Send Inquary Button */}
+            {/* Pill CTA */}
             <Link
-              href={isAuthenticated ? "/dashboard" : "/login"}
-              className="bg-[#2A314A]/90 hover:bg-[#353D5C] border border-white/10 text-white text-xs sm:text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full flex items-center gap-2.5 shadow-sm transition-all group cursor-pointer"
+              href="/login"
+              className="hidden sm:inline-flex items-center gap-2 bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold text-[11px] sm:text-[12px] px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-[0_4px_16px_rgba(255,255,255,0.18)] transition-all group"
             >
-              <span>{isAuthenticated ? 'Dashboard' : 'Send Inquary'}</span>
-              <span className="w-6 h-6 rounded-full bg-white text-[#0B0D17] flex items-center justify-center font-bold text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              <span>Book a Strategy</span>
+              <span className="w-5 h-5 rounded-full bg-[#111638] text-white flex items-center justify-center text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                 ↗
               </span>
             </Link>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </nav>
       </header>
 
-      {/* =========================================================================
-          2. HERO SECTION (Exact Screenshot Match: Marketing that moves the Needle)
-         ========================================================================= */}
-      <section
-        className="relative min-h-[92vh] flex flex-col justify-center items-center pt-36 pb-24 sm:pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden text-center"
-        style={{
-          background: 'radial-gradient(circle at 18% 45%, rgba(68, 51, 239, 0.9) 0%, rgba(35, 25, 140, 0.55) 40%, rgba(10, 13, 30, 0.98) 75%), radial-gradient(circle at 82% 35%, rgba(85, 45, 210, 0.45) 0%, rgba(10, 13, 30, 0.92) 70%), #0A0D1E',
-        }}
-      >
-        {/* Atmospheric Glowing Light Meshes */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[950px] h-[450px] bg-gradient-to-tr from-indigo-600/35 via-purple-600/25 to-blue-500/15 blur-[140px] pointer-events-none rounded-full" />
-        <div className="absolute top-16 left-10 w-80 h-80 bg-blue-600/25 blur-[120px] pointer-events-none rounded-full" />
-        <div className="absolute bottom-24 right-10 w-[420px] h-[420px] bg-purple-600/20 blur-[130px] pointer-events-none rounded-full" />
-
-        {/* Ethereal bottom lavender-white ambient mist matching screenshot */}
-        <div className="absolute bottom-0 left-0 right-0 h-64 sm:h-80 bg-gradient-to-t from-[#DDE3FD]/90 via-[#9BA3FB]/25 to-transparent blur-2xl pointer-events-none" />
-        <div className="absolute -bottom-10 left-1/4 -translate-x-1/2 w-[550px] h-[280px] bg-white/70 blur-[90px] pointer-events-none rounded-full" />
-
-        <div className="max-w-6xl mx-auto relative z-10 text-center w-full">
-          {/* Main Editorial Headline: Marketing that moves the Needle */}
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[110px] lg:leading-[121px] font-medium tracking-tight text-white text-center max-w-5xl mx-auto font-tasaorbiter select-none">
-            Marketing that <br />
-            <span className="font-instrumentserif italic font-normal tracking-tight text-white text-5xl sm:text-7xl md:text-8xl lg:text-[110px] lg:leading-[121px]">
-              moves the{' '}
-            </span>
-            <span className="font-tasaorbiter font-medium not-italic text-white">Needle</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="mt-6 sm:mt-8 max-w-xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed text-slate-300 font-normal text-center select-none">
-            All project here is designed to deliver impact—not just impressions.
-          </p>
-
-          {/* Action Buttons with Left Curved Arrow Annotation */}
-          <div className="mt-10 sm:mt-12 flex items-center justify-center gap-6 sm:gap-8 relative z-20">
-            {/* Hand-drawn White Curved Arrow pointing up-right at the button */}
-            <div className="hidden sm:block absolute -left-20 lg:-left-24 top-1/2 -translate-y-1/2 pointer-events-none select-none">
-              <svg className="w-16 h-12 text-white/90 drop-shadow-sm" viewBox="0 0 65 45" fill="none">
-                <path d="M12 36 C 20 20, 38 14, 54 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-                <path d="M45 11 L 54 18 L 47 25" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-
-            {/* Primary "Let's Contact" White Pill Button with Black Circle Arrow */}
-            <Link
-              href="/login"
-              className="bg-white hover:bg-slate-100 text-[#0B0D17] font-semibold pl-6 pr-2 py-2.5 sm:py-3 text-sm sm:text-base rounded-full shadow-[0_12px_32px_rgba(255,255,255,0.25)] flex items-center gap-3.5 group transition-all cursor-pointer"
-            >
-              <span>Let&apos;s Contact</span>
-              <span className="w-8 h-8 rounded-full bg-[#141724] text-white flex items-center justify-center font-bold text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                ↗
-              </span>
-            </Link>
-
-            {/* Secondary "Book a call ↗" Link */}
+      {/* Mobile Sliding Navigation Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-[#111638]/95 backdrop-blur-xl pt-24 px-6 flex flex-col justify-between pb-10 md:hidden animate-in fade-in duration-200">
+          <div className="flex flex-col gap-5 text-base font-medium text-white font-tasaorbiter">
             <a
-              href="#continuity-showcase"
-              className="text-white hover:text-indigo-200 font-medium text-sm sm:text-base flex items-center gap-1.5 transition-colors cursor-pointer group"
+              href="#performance"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10 flex items-center justify-between"
             >
-              <span>Book a call</span>
-              <span className="text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+              <span>Pages</span>
+              <ChevronRight className="w-4 h-4 text-slate-400" />
+            </a>
+            <a
+              href="#performance"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10"
+            >
+              About Marklab
+            </a>
+            <a
+              href="#services"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10"
+            >
+              Services & Capabilities
+            </a>
+            <a
+              href="#workflow"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10"
+            >
+              Growth Workflow
+            </a>
+            <a
+              href="#portfolio"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10"
+            >
+              Selected Work
+            </a>
+            <a
+              href="#faq"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10"
+            >
+              FAQ
+            </a>
+            <a
+              href="#articles"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-2 border-b border-white/10"
+            >
+              Blog & Insights
             </a>
           </div>
 
-          {/* 3D Ambient Bell Floating on Right (Screenshot Exact Match) */}
-          <div className="hidden md:block absolute right-6 lg:right-16 bottom-6 lg:bottom-12 select-none pointer-events-none animate-float z-20">
-            <div className="relative w-32 h-32 lg:w-44 lg:h-44 drop-shadow-[0_25px_45px_rgba(0,0,0,0.6)]">
-              <img
-                src="/marklab-bell.jpg"
-                alt="Marklab Notification Bell"
-                className="w-full h-full object-contain rounded-3xl"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Fixed "Made in Webflow" Badge on Bottom Right */}
-        <div className="fixed bottom-4 right-4 z-40 bg-white text-slate-800 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-lg border border-slate-200/80 hover:bg-slate-50 transition-all select-none cursor-pointer">
-          <svg className="w-4 h-3 text-[#146EF5]" viewBox="0 0 16 12" fill="currentColor">
-            <path d="M12.9 0L9.8 8.1 7.4 0H4.3L1.2 8.1 0 0h-.2v12h3.5L5.8 4.2 8.3 12h3.4l2.5-7.8L16 12h.2V0h-3.3z" />
-          </svg>
-          <span>Made in Webflow</span>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          CONTINUITY PLATFORM EXPANSION & INTERACTIVE HANDOVER SHOWCASE
-         ========================================================================= */}
-      <section
-        id="continuity-showcase"
-        className={`py-20 sm:py-28 px-4 sm:px-6 lg:px-8 border-t transition-colors duration-300 ${
-          isLight
-            ? 'bg-[#F8FAFC] border-slate-200/80 text-[#0B132B]'
-            : 'bg-[#090C1A] border-white/10 text-white'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto">
-          {/* Transition Header */}
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono backdrop-blur-md ${
-                isLight
-                  ? 'bg-blue-50 border border-blue-200 text-blue-700'
-                  : 'bg-white/5 border border-white/10 text-indigo-300'
-              }`}
+          <div className="flex flex-col gap-3 pt-6">
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center bg-[#5558FF] text-white py-3 rounded-full font-medium text-sm shadow-md"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Continuity Engineering Platform &bull; Zero-Loss Shift Handovers</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
-              Work moves forward. <br />
-              <span className="font-editorial italic font-normal tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-200 dark:via-indigo-100 dark:to-purple-200">
-                Knowledge stays.
-              </span>
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-              Every handover should move work forward, not send teams back to square one. Continuity preserves project history, decisions, files, and pending tasks so the next person can continue without starting from scratch.
-            </p>
+              Book a Strategy Call ↗
+            </Link>
+            <Link
+              href="/dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center bg-white/10 text-white py-3 rounded-full font-medium text-sm border border-white/15"
+            >
+              Open Workspace Platform
+            </Link>
           </div>
+        </div>
+      )}
+    </>
+  );
+}
 
-          {/* Handover Centerpiece Card */}
-          <div
-            className={`rounded-[2rem] p-4 sm:p-7 md:p-8 relative overflow-hidden backdrop-blur-xl transition-all duration-300 ${
-              isLight
-                ? 'bg-white/95 border border-slate-200/90 shadow-[0_20px_60px_rgba(15,23,42,0.08)] text-slate-800'
-                : 'bg-[#0E1326]/90 border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.6)] text-slate-200'
-            }`}
+/* =========================================================================
+   2. HERO SECTION
+   ========================================================================= */
+
+function HeroSection() {
+  return (
+    <section className="relative w-full pt-4 sm:pt-6 pb-20 sm:pb-24 overflow-hidden bg-[#111638] text-white">
+      {/* 1. Integrated Floating Pill Navbar */}
+      <Navbar />
+
+      {/* Vivid Atmospheric Radial Gradients matching reference screenshot */}
+      <div className="absolute inset-0 pointer-events-none select-none">
+        {/* Core Electric Blue & Soft Periwinkle Center Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[800px] h-[450px] bg-gradient-to-tr from-[#5558FF]/55 via-[#A6B9FF]/35 to-[#B39BFF]/25 blur-[120px] rounded-full" />
+        {/* Left Side Violet Pool */}
+        <div className="absolute -top-10 left-10 w-[420px] h-[340px] bg-[#5558FF]/30 blur-[110px] rounded-full" />
+        {/* Right Side Periwinkle Glow */}
+        <div className="absolute top-10 right-10 w-[500px] h-[400px] bg-[#A6B9FF]/25 blur-[130px] rounded-full" />
+        {/* Subtle Vertical Light Rays near right edge */}
+        <div className="absolute top-0 right-12 w-32 h-full bg-gradient-to-b from-white/10 via-transparent to-transparent opacity-40 blur-lg" />
+        {/* Soft Lavender Gradient Fade to White Page Background at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none" />
+      </div>
+
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        {/* Main Editorial Headline */}
+        <h1
+          className="text-[34px] sm:text-[44px] md:text-[52px] lg:text-[58px] leading-[1.08] font-medium tracking-tight text-white max-w-4xl mx-auto font-tasaorbiter select-none"
+          style={{ color: '#ffffff' }}
+        >
+          Marketing that <br className="hidden sm:inline" />
+          <span
+            className="font-instrumentserif italic font-normal tracking-tight text-white"
+            style={{ color: '#ffffff' }}
           >
-            {/* Top Meta Bar */}
+            moves the{' '}
+          </span>
+          <span
+            className="font-tasaorbiter font-medium not-italic text-white"
+            style={{ color: '#ffffff' }}
+          >
+            Needle
+          </span>
+        </h1>
+
+        {/* Small Centered Supporting Sentence */}
+        <p
+          className="mt-4 sm:mt-5 max-w-lg mx-auto text-[13px] sm:text-[15px] leading-[1.45] text-slate-300 font-normal select-none"
+          style={{ color: '#CBD5E1' }}
+        >
+          All project here is designed to deliver impact—not just impressions.
+        </p>
+
+        {/* Primary and Secondary CTA with Left Hand-Drawn Curved Arrow */}
+        <div className="mt-8 sm:mt-9 flex items-center justify-center gap-5 sm:gap-7 relative z-20">
+          {/* Hand-drawn White Curved Arrow pointing up-right to the button */}
+          <div className="hidden sm:block absolute -left-12 lg:-left-16 top-1/2 -translate-y-1/2 pointer-events-none select-none opacity-85">
+            <svg className="w-12 h-10 text-white drop-shadow-sm" viewBox="0 0 65 45" fill="none">
+              <path
+                d="M12 36 C 20 20, 38 14, 54 18"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M45 11 L 54 18 L 47 25"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+          {/* Primary CTA: White Pill Button with Black Circle Arrow */}
+          <Link
+            href="/login"
+            className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.22)] flex items-center gap-3 group transition-all cursor-pointer"
+          >
+            <span>Let&apos;s Get Started</span>
+            <span className="w-6 h-6 rounded-full bg-[#111638] text-white flex items-center justify-center font-bold text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              ↗
+            </span>
+          </Link>
+
+          {/* Secondary CTA: Transparent text link */}
+          <a
+            href="#performance"
+            className="text-white hover:text-[#A6B9FF] font-medium text-[12px] sm:text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer group"
+          >
+            <span>Book a call</span>
+            <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              ↗
+            </span>
+          </a>
+        </div>
+
+        {/* 3D Floating Notification Bell Artwork on Right */}
+        <div className="hidden md:block absolute right-4 lg:right-12 bottom-2 lg:bottom-6 select-none pointer-events-none z-20">
+          <div className="relative w-28 h-28 lg:w-36 lg:h-36 drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/marklab-bell.jpg"
+              alt="Marklab 3D Bell"
+              className="w-full h-full object-contain rounded-3xl"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Made in Webflow Badge */}
+      <div className="fixed bottom-3 right-3 z-40 bg-white text-slate-800 text-[10px] font-semibold px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-md border border-[#E4E7F2] hover:bg-slate-50 transition-all select-none cursor-pointer">
+        <svg className="w-3.5 h-2.5 text-[#146EF5]" viewBox="0 0 16 12" fill="currentColor">
+          <path d="M12.9 0L9.8 8.1 7.4 0H4.3L1.2 8.1 0 0h-.2v12h3.5L5.8 4.2 8.3 12h3.4l2.5-7.8L16 12h.2V0h-3.3z" />
+        </svg>
+        <span>Made in Webflow</span>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   3. TRUSTED BY / CLIENT LOGOS STRIP
+   ========================================================================= */
+
+function ClientLogoStrip() {
+  const logos = [
+    { name: 'Logopoint', symbol: '●' },
+    { name: 'Loopify', symbol: '◎' },
+    { name: 'Luma', symbol: '✦' },
+    { name: 'Nexora', symbol: '◆' },
+    { name: 'Brightwave', symbol: '▲' },
+  ];
+
+  return (
+    <section className="bg-white py-7 sm:py-9 border-b border-[#E4E7F2]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p className="text-[11px] sm:text-[12px] font-medium text-[#6F718A] uppercase tracking-wider select-none font-tasaorbiter">
+          Trusted by ambitious brands and growing teams
+        </p>
+        <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-8 sm:gap-14 md:gap-20 text-[#6F718A]/90">
+          {logos.map((logo) => (
             <div
-              className={`flex flex-wrap items-center justify-between gap-3 border-b pb-4 mb-6 text-xs font-mono ${
-                isLight ? 'border-slate-200/80 text-slate-500' : 'border-white/[0.08] text-slate-400'
-              }`}
+              key={logo.name}
+              className="flex items-center gap-2 hover:text-[#222442] transition-colors select-none"
             >
-                <div className="flex items-center gap-3">
-                  <span className="px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-semibold">
-                    PROJECT: APOLLO-CORE
+              <span className="text-[12px] text-[#5558FF]">{logo.symbol}</span>
+              <span className="text-[13px] sm:text-[14px] font-bold tracking-tight font-tasaorbiter">
+                {logo.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   4. PERFORMANCE MARKETING SHOWCASE (2-Column Grid)
+   ========================================================================= */
+
+function MarketingShowcase() {
+  return (
+    <section id="performance" className="py-12 sm:py-16 bg-[#F7F8FF]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
+          {/* Left Panel: Wider Card (~2:1 ratio) with Dashboard Floating Metric */}
+          <div className="lg:col-span-8 bg-gradient-to-br from-[#EDF1FF] via-white to-[#F7F8FF] border border-[#E4E7F2] rounded-[14px] p-6 sm:p-8 flex flex-col justify-between shadow-[0_6px_24px_rgba(27,37,100,0.05)] relative overflow-hidden group hover:shadow-[0_10px_32px_rgba(27,37,100,0.08)] transition-all">
+            {/* Top Floating White Metric Card */}
+            <div className="flex items-start justify-between">
+              <div className="bg-white border border-[#E4E7F2] rounded-xl px-4 py-3 shadow-[0_4px_16px_rgba(27,37,100,0.06)] flex items-center gap-4">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-[#6F718A] tracking-wider block font-tasaorbiter">
+                    Revenue Growth
                   </span>
-                  <span className="hidden sm:inline">·</span>
-                  <span className="hidden sm:inline">
-                    Version Pin: <strong className={isLight ? 'text-slate-900' : 'text-white'}>v2.4.0 (Active)</strong>
-                  </span>
+                  <div className="text-[26px] sm:text-[28px] font-bold text-[#222442] leading-none mt-0.5 font-tasaorbiter">
+                    99%
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-emerald-600 dark:text-emerald-400 font-medium">Atomic Custody Handover</span>
+                <div className="w-8 h-8 rounded-full bg-[#5558FF]/10 text-[#5558FF] flex items-center justify-center font-bold text-xs">
+                  <Check className="w-4 h-4 stroke-[2.5]" />
                 </div>
               </div>
 
-              {/* Main Handover Transfer Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-11 gap-6 items-center">
-                {/* 1. SENDER CARD (Outgoing Custodian) - 5 Cols */}
-                <div
-                  className={`lg:col-span-5 rounded-2xl p-5 space-y-4 relative ${
-                    isLight
-                      ? 'bg-gradient-to-br from-[#F5F8FF] to-[#FAF5FF] border border-slate-200/90 shadow-sm'
-                      : 'bg-white/[0.03] border border-white/10'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 text-white font-bold flex items-center justify-center text-sm shadow-md">
-                        JC
-                      </div>
-                      <div>
-                        <div className={`text-sm font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                          Jessica Chauhan
-                        </div>
-                        <div className={`text-[11px] font-mono ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-                          Senior Distributed Systems Engineer
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20">
-                      Outgoing Custodian
-                    </span>
-                  </div>
-
-                  <div
-                    className={`p-3 rounded-xl border space-y-2 ${
-                      isLight ? 'bg-white border-slate-200/80 text-slate-700' : 'bg-[#090C1A] border-white/5 text-slate-300'
-                    }`}
-                  >
-                    <div className="text-xs font-mono text-indigo-600 dark:text-indigo-400 font-semibold">
-                      TASK-102 · Raft Split-Brain Chaos Simulation
-                    </div>
-                    <div className="text-xs leading-relaxed font-normal">
-                      Shift rotation handover: Chaos Mesh 4-node split-brain test suite ready for staging cluster execution.
-                    </div>
-                  </div>
-
-                  {/* Completed Items */}
-                  <div>
-                    <div
-                      className={`text-[11px] font-mono uppercase tracking-wider mb-2 ${
-                        isLight ? 'text-slate-500' : 'text-slate-400'
-                      }`}
-                    >
-                      Completed Work Context
-                    </div>
-                    <div className={`space-y-1.5 text-xs ${isLight ? 'text-slate-700' : 'text-slate-300'}`}>
-                      <div className="flex items-center gap-2">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                        <span>Verified io_uring WAL flush persistence on node-04</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                        <span>Automated blackbox linearizability verification test</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                        <span>Compiled chaos partition manifest (yaml)</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Readiness Badge */}
-                  <div
-                    className={`pt-2 border-t flex items-center justify-between text-xs font-mono ${
-                      isLight ? 'border-slate-200/80 text-slate-500' : 'border-white/5 text-slate-400'
-                    }`}
-                  >
-                    <span>Readiness Score</span>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                      100% Ready (6/6 Checks Passed)
-                    </span>
-                  </div>
-                </div>
-
-                {/* 2. TRANSFER CONDUIT (Center Bridge) - 1 Col */}
-                <div className="lg:col-span-1 flex lg:flex-col items-center justify-center gap-2 py-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center shadow-md shadow-indigo-500/30 text-white animate-pulse">
-                    <ArrowRight className="w-5 h-5 text-white" />
-                  </div>
-                  <div
-                    className={`text-[10px] font-mono uppercase tracking-widest text-center hidden lg:block ${
-                      isLight ? 'text-indigo-600 font-semibold' : 'text-indigo-300'
-                    }`}
-                  >
-                    Lossless
-                  </div>
-                </div>
-
-                {/* 3. RECIPIENT CARD (Incoming Custodian) - 5 Cols */}
-                <div
-                  className={`lg:col-span-5 rounded-2xl p-5 space-y-4 relative ${
-                    isLight
-                      ? 'bg-gradient-to-br from-[#F5F8FF] to-[#FAF5FF] border border-slate-200/90 shadow-sm'
-                      : 'bg-white/[0.03] border border-white/10'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-md">
-                        MV
-                      </div>
-                      <div>
-                        <div className={`text-sm font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                          Marcus Vance
-                        </div>
-                        <div className={`text-[11px] font-mono ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-                          Lead Infrastructure Architect
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/20">
-                      Incoming Custodian
-                    </span>
-                  </div>
-
-                  {/* Next Steps */}
-                  <div>
-                    <div
-                      className={`text-[11px] font-mono uppercase tracking-wider mb-2 ${
-                        isLight ? 'text-slate-500' : 'text-slate-400'
-                      }`}
-                    >
-                      Immediate Next Steps
-                    </div>
-                    <div
-                      className={`p-3 rounded-xl border space-y-1.5 text-xs ${
-                        isLight ? 'bg-white border-slate-200/80 text-slate-700' : 'bg-[#090C1A] border-white/5 text-slate-200'
-                      }`}
-                    >
-                      <div className="flex items-start gap-2">
-                        <span className="text-blue-600 dark:text-blue-400 font-mono">01.</span>
-                        <span>Execute 4-node network partition test during off-peak window</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <span className="text-blue-600 dark:text-blue-400 font-mono">02.</span>
-                        <span>Verify leader election failover latency under 80k rps</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Runbook Command */}
-                  <div className="space-y-1">
-                    <div className={`text-[11px] font-mono ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-                      Runbook Execution:
-                    </div>
-                    <div
-                      onClick={handleCopy}
-                      className={`p-2.5 rounded-lg border font-mono text-xs flex items-center justify-between cursor-pointer transition-colors ${
-                        isLight
-                          ? 'bg-slate-100/90 border-slate-300 text-slate-800 hover:border-indigo-400'
-                          : 'bg-black/60 border-white/10 text-indigo-200 hover:border-indigo-400/50'
-                      }`}
-                      title="Click to copy command"
-                    >
-                      <span className="truncate">./bin/ctl cluster status --verify</span>
-                      <span className={`text-[10px] shrink-0 ml-2 ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-                        {copiedCmd ? 'Copied!' : 'Copy'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Acceptance Action Buttons */}
-                  <div className="pt-2 flex items-center gap-3">
-                    <Link
-                      href="/login"
-                      className="flex-1 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-medium text-xs text-center shadow-md transition-all flex items-center justify-center gap-1.5"
-                    >
-                      <span>Accept Handover</span>
-                      <span>↗</span>
-                    </Link>
-                    <Link
-                      href="/login"
-                      className={`py-2 px-3 rounded-xl text-xs text-center border transition-colors ${
-                        isLight
-                          ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200'
-                          : 'bg-white/[0.05] hover:bg-white/10 text-slate-300 border border-white/10'
-                      }`}
-                    >
-                      Ask Clarification
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Invariant Banner */}
-              <div
-                className={`mt-6 pt-4 border-t flex flex-wrap items-center justify-between gap-3 text-xs font-mono ${
-                  isLight ? 'border-slate-200/80 text-slate-500' : 'border-white/[0.08] text-slate-400'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>
-                    Core Guarantee: Handover dispatch preserves sender ownership until recipient acceptance.
-                  </span>
-                </div>
-                <span className={isLight ? 'text-indigo-600 font-semibold' : 'text-indigo-300'}>
-                  SHA-256 Chained Integrity Verified
-                </span>
+              {/* Decorative Blue Floating Bubble */}
+              <div className="w-8 h-8 rounded-full bg-[#5558FF] text-white flex items-center justify-center shadow-md">
+                <TrendingUp className="w-4 h-4" />
               </div>
             </div>
-          </div>
-        </section>
 
-      {/* =========================================================================
-          3. PRODUCT INTRODUCTION (Spacious Split Layout, Screenshot 2 Style)
-         ========================================================================= */}
-      <section
-        id="product"
-        className={`py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300 ${
-          isLight ? 'bg-white' : 'bg-[#090C1A]'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto space-y-12">
-          {/* Section Header */}
-          <div className="max-w-3xl">
-            <span
-              className={`text-xs font-mono uppercase tracking-widest font-semibold ${
-                isLight ? 'text-blue-600' : 'text-indigo-400'
-              }`}
-            >
-              The Continuity Advantage
-            </span>
-            <h2
-              className={`text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mt-3 ${
-                isLight ? 'text-[#0B132B]' : 'text-white'
-              }`}
-            >
-              The context behind every project,{' '}
-              <span
-                className={`font-serif italic font-normal text-transparent bg-clip-text ${
-                  isLight
-                    ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600'
-                    : 'bg-gradient-to-r from-blue-300 via-indigo-200 to-purple-300'
-                }`}
-              >
-                finally connected.
-              </span>
-            </h2>
-            <p
-              className={`mt-5 text-base sm:text-lg leading-relaxed font-normal ${
-                isLight ? 'text-slate-600' : 'text-slate-300/90'
-              }`}
-            >
-              When engineers rotate shifts, take leave, or transfer projects, critical tribal
-              knowledge disappears in fragmented chat channels and undocumented commits. Continuity
-              brings tasks, decisions, files, updates, and project history together to prevent
-              knowledge loss.
-            </p>
-          </div>
+            {/* Content Body */}
+            <div className="mt-8 sm:mt-10">
+              <h2 className="text-[22px] sm:text-[26px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
+                Choose Sailment Agency for{' '}
+                <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+                  Digital Growth
+                </span>
+              </h2>
+              <p className="mt-2.5 text-[12px] sm:text-[14px] text-[#6F718A] leading-[1.45] max-w-lg">
+                We provide strategic performance marketing to scale customer acquisition, boost ROI,
+                and convert traffic into long-term revenue.
+              </p>
 
-          {/* Spacious Split Layout (Matching Screenshot 2) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Left Big Panel (7 Cols) */}
-            <div
-              className={`lg:col-span-7 rounded-[2.5rem] p-8 sm:p-10 border shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[420px] transition-all ${
-                isLight
-                  ? 'bg-gradient-to-br from-[#EEF2FC] via-[#F4F8FE] to-[#FDF8FE] border-indigo-100/90 shadow-slate-200/60 text-slate-800'
-                  : 'bg-gradient-to-br from-[#10142C] via-[#141838] to-[#1C163C] border-white/10 shadow-2xl text-slate-200'
-              }`}
-            >
-              {/* Floating Metric Badge (Screenshot 2 Match) */}
-              <div
-                className={`inline-flex items-center gap-3 p-3 px-4 rounded-2xl backdrop-blur-md border shadow-md w-fit ${
-                  isLight ? 'bg-white/95 border-slate-200/80 text-slate-800' : 'bg-white/[0.08] border-white/10 text-white'
-                }`}
-              >
-                <div>
-                  <div className={`text-[11px] font-mono ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-                    Context Retention
-                  </div>
-                  <div
-                    className={`text-2xl sm:text-3xl font-extrabold font-mono ${
-                      isLight ? 'text-[#0B132B]' : 'text-white'
-                    }`}
-                  >
-                    99.8%
-                  </div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold text-xs shadow-md">
-                  ↗
-                </div>
-              </div>
-
-              {/* Editorial Headline */}
-              <div className="my-8 space-y-3">
-                <h3
-                  className={`text-2xl sm:text-4xl font-bold tracking-tight leading-snug ${
-                    isLight ? 'text-[#0B132B]' : 'text-white'
-                  }`}
-                >
-                  Choose Continuity for{' '}
-                  <span
-                    className={`font-serif italic font-normal text-transparent bg-clip-text ${
-                      isLight
-                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600'
-                        : 'bg-gradient-to-r from-indigo-200 to-purple-200'
-                    }`}
-                  >
-                    Lossless Engineering
-                  </span>
-                </h3>
-                <p className={`text-sm sm:text-base leading-relaxed max-w-lg ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  We go beyond standard issue trackers. Every task carries architectural decisions,
-                  runbook commands, historical handoffs, and verification evidence so anyone can
-                  pick up where you left off.
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div
-                className={`flex items-center gap-4 pt-4 border-t ${
-                  isLight ? 'border-slate-200/80' : 'border-white/10'
-                }`}
-              >
+              {/* Bottom Actions */}
+              <div className="mt-6 flex items-center gap-4">
                 <Link
                   href="/login"
-                  className={`text-xs sm:text-sm font-semibold pl-4 pr-1.5 py-1.5 rounded-full flex items-center gap-2 transition-all shadow-md group ${
-                    isLight ? 'bg-[#0B132B] text-white hover:bg-slate-800' : 'bg-white text-[#0B0E1E] hover:bg-slate-100'
-                  }`}
+                  className="bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-[0_4px_14px_rgba(85,88,255,0.3)] transition-all group"
                 >
-                  <span>Explore Platform</span>
-                  <span
-                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform ${
-                      isLight ? 'bg-white text-[#0B132B]' : 'bg-[#0B0E1E] text-white'
-                    }`}
-                  >
+                  <span>Get Started</span>
+                  <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                     ↗
                   </span>
                 </Link>
                 <a
-                  href="#features"
-                  className={`text-xs sm:text-sm transition-colors ${
-                    isLight ? 'text-slate-600 hover:text-blue-600' : 'text-slate-300 hover:text-white'
-                  }`}
+                  href="#workflow"
+                  className="text-[#5558FF] hover:text-[#4346F0] font-medium text-[12px] flex items-center gap-1 transition-colors group"
                 >
-                  Learn more ↗
+                  <span>Book a call</span>
+                  <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">↗</span>
                 </a>
               </div>
             </div>
-
-            {/* Right Big Panel (5 Cols) */}
-            <div
-              className={`lg:col-span-5 rounded-[2.5rem] p-8 sm:p-10 border shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[420px] transition-all ${
-                isLight
-                  ? 'bg-gradient-to-br from-[#F0EDFC] via-[#F6F4FD] to-[#FCF8FE] border-purple-100/90 shadow-slate-200/60 text-slate-800'
-                  : 'bg-gradient-to-br from-[#121633] via-[#161C40] to-[#1F173D] border-white/10 shadow-2xl text-slate-200'
-              }`}
-            >
-              <div>
-                <span
-                  className={`text-[11px] font-mono uppercase tracking-widest font-semibold ${
-                    isLight ? 'text-purple-600' : 'text-indigo-400'
-                  }`}
-                >
-                  Unified Source of Truth
-                </span>
-                <h3
-                  className={`text-2xl sm:text-3xl font-bold tracking-tight mt-2 leading-snug ${
-                    isLight ? 'text-[#0B132B]' : 'text-white'
-                  }`}
-                >
-                  Become the{' '}
-                  <span
-                    className={`font-serif italic font-normal ${
-                      isLight ? 'text-purple-600' : 'text-indigo-200'
-                    }`}
-                  >
-                    Resilient
-                  </span>{' '}
-                  engineering squad
-                </h3>
-                <p className={`mt-4 text-xs sm:text-sm leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Eliminate single points of failure in your personnel. With Continuity, every
-                  critical technical decision is indexed, signed, and instantly accessible to the
-                  entire pod.
-                </p>
-              </div>
-
-              {/* Connected Nodes Visual */}
-              <div className="space-y-2.5 my-6">
-                <div
-                  className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
-                    isLight ? 'bg-white border-slate-200/80 text-slate-700' : 'bg-white/[0.04] border-white/5 text-slate-300'
-                  }`}
-                >
-                  <span className="font-medium">Architecture Decisions (ADRs)</span>
-                  <span className="text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-semibold">
-                    Indexed &amp; Cited
-                  </span>
-                </div>
-                <div
-                  className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
-                    isLight ? 'bg-white border-slate-200/80 text-slate-700' : 'bg-white/[0.04] border-white/5 text-slate-300'
-                  }`}
-                >
-                  <span className="font-medium">Daily Work Journal Updates</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-mono text-[11px] font-semibold">
-                    Active
-                  </span>
-                </div>
-                <div
-                  className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
-                    isLight ? 'bg-white border-slate-200/80 text-slate-700' : 'bg-white/[0.04] border-white/5 text-slate-300'
-                  }`}
-                >
-                  <span className="font-medium">Pinned Version Snapshots</span>
-                  <span className="text-purple-600 dark:text-purple-400 font-mono text-[11px] font-semibold">
-                    SHA-256 Sealed
-                  </span>
-                </div>
-              </div>
-
-              <div
-                className={`text-[11px] font-mono pt-2 border-t ${
-                  isLight ? 'border-slate-200/80 text-slate-500' : 'border-white/10 text-slate-400'
-                }`}
-              >
-                100% Verifiable · Cryptographic Chained Audit
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          4. FEATURES SECTION (Four Elegant Cards, Screenshot 3 Match)
-         ========================================================================= */}
-      <section
-        id="features"
-        className={`py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300 ${
-          isLight ? 'bg-[#F8FAFC]' : 'bg-[#070914]'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto space-y-14">
-          {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto">
-            <span
-              className={`text-xs font-mono uppercase tracking-widest font-semibold ${
-                isLight ? 'text-blue-600' : 'text-indigo-400'
-              }`}
-            >
-              Core Capabilities
-            </span>
-            <h2
-              className={`text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mt-3 ${
-                isLight ? 'text-[#0B132B]' : 'text-white'
-              }`}
-            >
-              Smart{' '}
-              <span
-                className={`font-serif italic font-normal text-transparent bg-clip-text ${
-                  isLight
-                    ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600'
-                    : 'bg-gradient-to-r from-blue-300 via-indigo-200 to-purple-300'
-                }`}
-              >
-                Handover Architecture
-              </span>{' '}
-              Built for Velocity.
-            </h2>
-            <p className={`mt-4 text-base sm:text-lg leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-              Four purpose-built systems engineered to safeguard momentum across rotations and milestone deliveries.
-            </p>
           </div>
 
-          {/* 4 Elegant Cards Row (Matching Screenshot 3) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1: Smart Handovers */}
-            <div
-              className={`rounded-[2rem] p-7 border shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between min-h-[340px] ${
-                isLight
-                  ? 'bg-gradient-to-b from-[#F5F8FF] to-[#FFFFFF] border-slate-200/90 hover:border-blue-400 hover:shadow-blue-500/10 text-slate-800'
-                  : 'bg-gradient-to-b from-[#10142C] to-[#0D1022] border-white/10 hover:border-indigo-500/40 hover:shadow-indigo-500/20 text-slate-200'
-              }`}
-            >
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 p-0.5 shadow-lg shadow-cyan-500/25 mb-6 group-hover:scale-105 transition-transform flex items-center justify-center">
-                  <div
-                    className={`w-full h-full rounded-2xl flex items-center justify-center ${
-                      isLight ? 'bg-white' : 'bg-[#0E1326]'
-                    }`}
-                  >
-                    <CheckSquare className="w-7 h-7 text-cyan-600 dark:text-cyan-400" />
-                  </div>
-                </div>
-
-                <h3
-                  className={`text-xl font-bold transition-colors ${
-                    isLight ? 'text-slate-900 group-hover:text-blue-600' : 'text-white group-hover:text-cyan-300'
-                  }`}
-                >
-                  Smart Handovers
-                </h3>
-                <p className={`text-xs sm:text-sm mt-3 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Transfer work with context, blockers, setup instructions, and next steps before signing off. Live
-                  6-point readiness checker ensures nothing is missed.
-                </p>
+          {/* Right Panel: Narrower Pale Blue Card */}
+          <div className="lg:col-span-4 bg-[#EDF1FF] border border-[#E4E7F2] rounded-[14px] p-6 sm:p-8 flex flex-col justify-between shadow-[0_6px_24px_rgba(27,37,100,0.05)] hover:shadow-[0_10px_32px_rgba(27,37,100,0.08)] transition-all">
+            <div>
+              <div className="w-8 h-8 rounded-full bg-white text-[#5558FF] flex items-center justify-center shadow-xs border border-[#E4E7F2]">
+                <Target className="w-4 h-4 stroke-[2]" />
               </div>
 
-              <div
-                className={`pt-4 border-t text-[11px] font-mono flex items-center gap-1.5 font-semibold ${
-                  isLight ? 'border-slate-200/80 text-cyan-600' : 'border-white/5 text-cyan-400'
-                }`}
-              >
-                <span>0–100% Readiness Scoring</span>
-              </div>
-            </div>
-
-            {/* Card 2: AI Project Assistant */}
-            <div
-              className={`rounded-[2rem] p-7 border shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between min-h-[340px] ${
-                isLight
-                  ? 'bg-gradient-to-b from-[#FAF5FF] to-[#FFFFFF] border-slate-200/90 hover:border-purple-400 hover:shadow-purple-500/10 text-slate-800'
-                  : 'bg-gradient-to-b from-[#10142C] to-[#0D1022] border-white/10 hover:border-purple-500/40 hover:shadow-purple-500/20 text-slate-200'
-              }`}
-            >
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-600 p-0.5 shadow-lg shadow-purple-500/25 mb-6 group-hover:scale-105 transition-transform flex items-center justify-center">
-                  <div
-                    className={`w-full h-full rounded-2xl flex items-center justify-center ${
-                      isLight ? 'bg-white' : 'bg-[#0E1326]'
-                    }`}
-                  >
-                    <Bot className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-                  </div>
-                </div>
-
-                <h3
-                  className={`text-xl font-bold transition-colors ${
-                    isLight ? 'text-slate-900 group-hover:text-purple-600' : 'text-white group-hover:text-purple-300'
-                  }`}
-                >
-                  AI Project Assistant
-                </h3>
-                <p className={`text-xs sm:text-sm mt-3 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Ask questions about project history, ADRs, runbooks, and available files. Grounded in authorized
-                  files, cites verified sources, and never fabricates.
-                </p>
-              </div>
-
-              <div
-                className={`pt-4 border-t text-[11px] font-mono flex items-center gap-1.5 font-semibold ${
-                  isLight ? 'border-slate-200/80 text-purple-600' : 'border-white/5 text-purple-400'
-                }`}
-              >
-                <span>Zero Hallucination Grounded</span>
-              </div>
-            </div>
-
-            {/* Card 3: Version History */}
-            <div
-              className={`rounded-[2rem] p-7 border shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between min-h-[340px] ${
-                isLight
-                  ? 'bg-gradient-to-b from-[#FFFDF5] to-[#FFFFFF] border-slate-200/90 hover:border-amber-400 hover:shadow-amber-500/10 text-slate-800'
-                  : 'bg-gradient-to-b from-[#10142C] to-[#0D1022] border-white/10 hover:border-amber-500/40 hover:shadow-amber-500/20 text-slate-200'
-              }`}
-            >
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-600 p-0.5 shadow-lg shadow-amber-500/25 mb-6 group-hover:scale-105 transition-transform flex items-center justify-center">
-                  <div
-                    className={`w-full h-full rounded-2xl flex items-center justify-center ${
-                      isLight ? 'bg-white' : 'bg-[#0E1326]'
-                    }`}
-                  >
-                    <GitCommit className="w-7 h-7 text-amber-600 dark:text-amber-400" />
-                  </div>
-                </div>
-
-                <h3
-                  className={`text-xl font-bold transition-colors ${
-                    isLight ? 'text-slate-900 group-hover:text-amber-600' : 'text-white group-hover:text-amber-300'
-                  }`}
-                >
-                  Version History
-                </h3>
-                <p className={`text-xs sm:text-sm mt-3 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Preserve project snapshots and track changes. Pin stable releases, inspect changelog deltas, and
-                  maintain an uninterrupted line of progression.
-                </p>
-              </div>
-
-              <div
-                className={`pt-4 border-t text-[11px] font-mono flex items-center gap-1.5 font-semibold ${
-                  isLight ? 'border-slate-200/80 text-amber-600' : 'border-white/5 text-amber-400'
-                }`}
-              >
-                <span>Immutable Version Snapshots</span>
-              </div>
-            </div>
-
-            {/* Card 4: Ownership Timeline */}
-            <div
-              className={`rounded-[2rem] p-7 border shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between min-h-[340px] ${
-                isLight
-                  ? 'bg-gradient-to-b from-[#F5FFF9] to-[#FFFFFF] border-slate-200/90 hover:border-emerald-400 hover:shadow-emerald-500/10 text-slate-800'
-                  : 'bg-gradient-to-b from-[#10142C] to-[#0D1022] border-white/10 hover:border-emerald-500/40 hover:shadow-emerald-500/20 text-slate-200'
-              }`}
-            >
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 p-0.5 shadow-lg shadow-emerald-500/25 mb-6 group-hover:scale-105 transition-transform flex items-center justify-center">
-                  <div
-                    className={`w-full h-full rounded-2xl flex items-center justify-center ${
-                      isLight ? 'bg-white' : 'bg-[#0E1326]'
-                    }`}
-                  >
-                    <Clock className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                </div>
-
-                <h3
-                  className={`text-xl font-bold transition-colors ${
-                    isLight ? 'text-slate-900 group-hover:text-emerald-600' : 'text-white group-hover:text-emerald-300'
-                  }`}
-                >
-                  Ownership Timeline
-                </h3>
-                <p className={`text-xs sm:text-sm mt-3 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Track responsibility and handover history. Timestamped custody trail records previous owners,
-                  acceptance signatures, and transfer methods.
-                </p>
-              </div>
-
-              <div
-                className={`pt-4 border-t text-[11px] font-mono flex items-center gap-1.5 font-semibold ${
-                  isLight ? 'border-slate-200/80 text-emerald-600' : 'border-white/5 text-emerald-400'
-                }`}
-              >
-                <span>SHA-256 Audit Chained</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          5. HOW IT WORKS (Split Layout with 3D Glyph, Screenshot 4 Match)
-         ========================================================================= */}
-      <section
-        id="how-it-works"
-        className={`py-24 sm:py-32 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${
-          isLight ? 'bg-white' : 'bg-[#090C1A]'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto space-y-12">
-          {/* Section Header */}
-          <div className="max-w-3xl">
-            <span
-              className={`text-xs font-mono uppercase tracking-widest font-semibold ${
-                isLight ? 'text-blue-600' : 'text-indigo-400'
-              }`}
-            >
-              The 3-Step Lifecycle
-            </span>
-            <h2
-              className={`text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mt-3 ${
-                isLight ? 'text-[#0B132B]' : 'text-white'
-              }`}
-            >
-              Keep projects moving in{' '}
-              <span
-                className={`font-serif italic font-normal text-transparent bg-clip-text ${
-                  isLight
-                    ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600'
-                    : 'bg-gradient-to-r from-blue-300 via-indigo-200 to-purple-300'
-                }`}
-              >
-                three simple
-              </span>{' '}
-              steps.
-            </h2>
-          </div>
-
-          {/* Split Layout (Screenshot 4 Match) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left 3D Prism Artwork Panel (5 Cols) */}
-            <div
-              className={`lg:col-span-5 rounded-[2.5rem] p-8 sm:p-10 border shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[460px] transition-all ${
-                isLight
-                  ? 'bg-gradient-to-br from-[#E2ECFE] via-[#EAE5FC] to-[#F6EDFC] border-blue-200/70 shadow-indigo-100/60'
-                  : 'bg-gradient-to-br from-[#121634] via-[#161B42] to-[#251740] border-white/10 shadow-2xl'
-              }`}
-            >
-              {/* Background Glow */}
-              <div
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 blur-[70px] pointer-events-none rounded-full ${
-                  isLight ? 'bg-indigo-300/35' : 'bg-indigo-500/20'
-                }`}
-              />
-
-              {/* 3D Stylized Lightning Bolt Prism Artwork (Matching Screenshot 4) */}
-              <div className="flex-1 flex items-center justify-center py-6 relative z-10">
-                <div className="w-36 h-48 sm:w-44 sm:h-56 relative animate-float">
-                  <div
-                    className={`absolute inset-0 blur-2xl rounded-3xl ${
-                      isLight ? 'bg-gradient-to-tr from-pink-400 to-purple-500 opacity-30' : 'bg-gradient-to-tr from-pink-500 to-purple-600 opacity-40'
-                    }`}
-                  />
-                  <svg viewBox="0 0 100 140" className="w-full h-full drop-shadow-xl">
-                    <defs>
-                      <linearGradient id="prismLight1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#FFA4E8" />
-                        <stop offset="50%" stopColor="#A855F7" />
-                        <stop offset="100%" stopColor="#3B82F6" />
-                      </linearGradient>
-                      <linearGradient id="prismLight2" x1="100%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#EC4899" />
-                        <stop offset="100%" stopColor="#6366F1" />
-                      </linearGradient>
-                    </defs>
-                    <polygon points="55,5 20,70 50,70 40,135 85,60 55,60" fill="url(#prismLight1)" />
-                    <polygon points="55,5 50,70 40,135 55,85" fill="url(#prismLight2)" opacity="0.75" />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Floating Badge (Screenshot 4 Match: '4.9 Rated agency' vibe) */}
-              <div
-                className={`relative z-10 p-3 px-5 rounded-2xl backdrop-blur-md border flex items-center justify-between w-fit shadow-md ${
-                  isLight ? 'bg-white/95 border-slate-200/90 text-slate-800' : 'bg-white/[0.08] border-white/10 text-white'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-300" />
-                  <span className="text-xs font-semibold">
-                    100%{' '}
-                    <span
-                      className={`font-serif italic font-normal ${
-                        isLight ? 'text-indigo-700' : 'text-indigo-200'
-                      }`}
-                    >
-                      Lossless Standard
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Stacked Step Cards (7 Cols) */}
-            <div className="lg:col-span-7 space-y-4">
-              {/* Step 1: Work */}
-              <div
-                className={`rounded-[2rem] p-6 sm:p-7 border transition-all duration-300 flex items-start gap-5 group shadow-sm ${
-                  isLight
-                    ? 'bg-white hover:bg-slate-50/90 border-slate-200/90 text-slate-800'
-                    : 'bg-white/[0.03] hover:bg-white/[0.05] border-white/10 text-slate-200'
-                }`}
-              >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-mono font-bold flex items-center justify-center text-sm shadow-md shrink-0 group-hover:scale-105 transition-transform">
-                  01
-                </div>
-                <div className="space-y-1.5 flex-1">
-                  <div
-                    className={`text-lg sm:text-xl font-bold flex items-center justify-between ${
-                      isLight ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    <span>Work</span>
-                    <span className="text-xs font-mono text-indigo-600 dark:text-indigo-400 uppercase font-semibold">
-                      Execution
-                    </span>
-                  </div>
-                  <p className={`text-xs sm:text-sm leading-relaxed font-normal ${isLight ? 'text-slate-600' : 'text-slate-300'}`}>
-                    Employees manage tasks, track deadlines, update statuses, and document daily progress, blockers,
-                    and next steps directly in their personal workbench.
-                  </p>
-                </div>
-              </div>
-
-              {/* Step 2: Handover */}
-              <div
-                className={`rounded-[2rem] p-6 sm:p-7 border transition-all duration-300 flex items-start gap-5 group shadow-sm ${
-                  isLight
-                    ? 'bg-white hover:bg-slate-50/90 border-slate-200/90 text-slate-800'
-                    : 'bg-white/[0.03] hover:bg-white/[0.05] border-white/10 text-slate-200'
-                }`}
-              >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 text-white font-mono font-bold flex items-center justify-center text-sm shadow-md shrink-0 group-hover:scale-105 transition-transform">
-                  02
-                </div>
-                <div className="space-y-1.5 flex-1">
-                  <div
-                    className={`text-lg sm:text-xl font-bold flex items-center justify-between ${
-                      isLight ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    <span>Handover</span>
-                    <span className="text-xs font-mono text-purple-600 dark:text-purple-400 uppercase font-semibold">
-                      Synthesis
-                    </span>
-                  </div>
-                  <p className={`text-xs sm:text-sm leading-relaxed font-normal ${isLight ? 'text-slate-600' : 'text-slate-300'}`}>
-                    Continuity organizes project context, files, decisions, and pending work. The smart readiness
-                    checker evaluates completeness before dispatch.
-                  </p>
-                </div>
-              </div>
-
-              {/* Step 3: Continue */}
-              <div
-                className={`rounded-[2rem] p-6 sm:p-7 border transition-all duration-300 flex items-start gap-5 group shadow-sm ${
-                  isLight
-                    ? 'bg-white hover:bg-slate-50/90 border-slate-200/90 text-slate-800'
-                    : 'bg-white/[0.03] hover:bg-white/[0.05] border-white/10 text-slate-200'
-                }`}
-              >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-pink-600 text-white font-mono font-bold flex items-center justify-center text-sm shadow-md shrink-0 group-hover:scale-105 transition-transform">
-                  03
-                </div>
-                <div className="space-y-1.5 flex-1">
-                  <div
-                    className={`text-lg sm:text-xl font-bold flex items-center justify-between ${
-                      isLight ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    <span>Continue</span>
-                    <span className="text-xs font-mono text-pink-600 dark:text-pink-400 uppercase font-semibold">
-                      Seamless
-                    </span>
-                  </div>
-                  <p className={`text-xs sm:text-sm leading-relaxed font-normal ${isLight ? 'text-slate-600' : 'text-slate-300'}`}>
-                    The next employee reviews the handover, asks questions, accepts responsibility, and continues.
-                    Ownership transfers atomically upon acceptance.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          6. TEAM COLLABORATION (Three Distinct Roles)
-         ========================================================================= */}
-      <section
-        id="collaboration"
-        className={`py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300 ${
-          isLight ? 'bg-[#F8FAFC]' : 'bg-[#070914]'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto space-y-14">
-          <div className="text-center max-w-3xl mx-auto">
-            <span
-              className={`text-xs font-mono uppercase tracking-widest font-semibold ${
-                isLight ? 'text-blue-600' : 'text-indigo-400'
-              }`}
-            >
-              Role-Based Governance
-            </span>
-            <h2
-              className={`text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mt-3 ${
-                isLight ? 'text-[#0B132B]' : 'text-white'
-              }`}
-            >
-              One workspace.{' '}
-              <span
-                className={`font-serif italic font-normal text-transparent bg-clip-text ${
-                  isLight
-                    ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600'
-                    : 'bg-gradient-to-r from-blue-300 via-indigo-200 to-purple-300'
-                }`}
-              >
-                Clear responsibility.
-              </span>
-            </h2>
-            <p className={`mt-4 text-base sm:text-lg leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-              Enforce strict accountability across all three tiers of your engineering organization.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Role 1: Admins */}
-            <div
-              className={`rounded-[2.2rem] p-8 border shadow-xl space-y-5 flex flex-col justify-between transition-all ${
-                isLight
-                  ? 'bg-white border-slate-200/90 shadow-slate-200/50 text-slate-800'
-                  : 'bg-gradient-to-b from-[#11152E] to-[#0D1022] border-white/10 text-slate-200'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-300 border border-rose-500/20">
-                    Executive Tier
-                  </span>
-                  <Users className="w-5 h-5 text-rose-600 dark:text-rose-400" />
-                </div>
-                <h3 className={`text-2xl font-bold mt-4 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  Admins
-                </h3>
-                <p className={`text-xs sm:text-sm mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Manage engineering teams, appoint pod leaders, assign projects, monitor 10 real-time KPI pulses,
-                  review milestone deliverables, and ratify final client delivery.
-                </p>
-              </div>
-
-              <div
-                className={`space-y-2 pt-4 border-t text-xs ${
-                  isLight ? 'border-slate-200/80 text-slate-700' : 'border-white/5 text-slate-300'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
-                  <span>Team pod &amp; leader appointments</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
-                  <span>Multi-round deliverable review</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
-                  <span>Client release sign-off</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Role 2: Team Leaders */}
-            <div
-              className={`rounded-[2.2rem] p-8 border shadow-xl space-y-5 flex flex-col justify-between transition-all ${
-                isLight
-                  ? 'bg-white border-slate-200/90 shadow-slate-200/50 text-slate-800'
-                  : 'bg-gradient-to-b from-[#11152E] to-[#0D1022] border-white/10 text-slate-200'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/20">
-                    Execution Tier
-                  </span>
-                  <Activity className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                </div>
-                <h3 className={`text-2xl font-bold mt-4 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  Team Leaders
-                </h3>
-                <p className={`text-xs sm:text-sm mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Coordinate pod execution, distribute tasks, clear employee blockers, review daily work updates,
-                  and submit consolidated sprint progress reports to Admins.
-                </p>
-              </div>
-
-              <div
-                className={`space-y-2 pt-4 border-t text-xs ${
-                  isLight ? 'border-slate-200/80 text-slate-700' : 'border-white/5 text-slate-300'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                  <span>Task assignment &amp; deadlines</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                  <span>Blocker acknowledgement &amp; clearing</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                  <span>Weekly progress reports</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Role 3: Employees */}
-            <div
-              className={`rounded-[2.2rem] p-8 border shadow-xl space-y-5 flex flex-col justify-between transition-all ${
-                isLight
-                  ? 'bg-white border-slate-200/90 shadow-slate-200/50 text-slate-800'
-                  : 'bg-gradient-to-b from-[#11152E] to-[#0D1022] border-white/10 text-slate-200'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20">
-                    Engineering Tier
-                  </span>
-                  <CheckSquare className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                </div>
-                <h3 className={`text-2xl font-bold mt-4 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                  Employees
-                </h3>
-                <p className={`text-xs sm:text-sm mt-2 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
-                  Manage assigned tasks, log daily progress journals, raise operational blockers, and send verifiable
-                  task handovers with full context and instructions.
-                </p>
-              </div>
-
-              <div
-                className={`space-y-2 pt-4 border-t text-xs ${
-                  isLight ? 'border-slate-200/80 text-slate-700' : 'border-white/5 text-slate-300'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  <span>Daily work journal logging</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  <span>Context-rich task handovers</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  <span>Incoming handover review &amp; accept</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          7. FINAL CALL TO ACTION (CTA)
-         ========================================================================= */}
-      <section
-        className={`py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300 ${
-          isLight ? 'bg-white' : 'bg-[#090C1A]'
-        }`}
-      >
-        <div className="max-w-5xl mx-auto">
-          <div
-            className={`rounded-[2.8rem] p-10 sm:p-16 md:p-20 text-center relative overflow-hidden shadow-2xl ${
-              isLight
-                ? 'bg-gradient-to-br from-[#0B132B] via-[#121A3B] to-[#1F184A] text-white shadow-[0_25px_60px_rgba(15,23,42,0.25)] border border-slate-700/50'
-                : 'bg-gradient-to-br from-[#121838] via-[#1A1F4A] to-[#251542] text-white shadow-[0_30px_90px_rgba(0,0,0,0.8)] border border-white/15'
-            }`}
-          >
-            {/* Atmospheric Glowing Light Mesh */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-gradient-to-tr from-indigo-500/25 via-purple-500/20 to-pink-500/20 blur-[90px] pointer-events-none rounded-full" />
-
-            <div className="relative z-10 max-w-3xl mx-auto space-y-6">
-              <span className="inline-block text-xs font-mono uppercase tracking-widest text-indigo-300 font-semibold px-3 py-1 rounded-full bg-white/10 border border-white/15">
-                Continuity Standard
-              </span>
-
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                Never let a project{' '}
-                <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200">
-                  start from zero
+              <h3 className="mt-6 text-[20px] sm:text-[22px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
+                Become the{' '}
+                <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+                  B2B Marketing
                 </span>{' '}
-                again.
-              </h2>
+                squad
+              </h3>
 
-              <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed max-w-2xl mx-auto">
-                Keep knowledge connected, simplify handovers, and help every teammate move forward.
+              <p className="mt-2.5 text-[12px] sm:text-[13px] text-[#6F718A] leading-[1.45]">
+                Build a predictable acquisition pipeline with targeted multichannel campaigns
+                engineered specifically for enterprise pipeline velocity.
               </p>
+            </div>
 
-              <div className="pt-6 flex flex-wrap items-center justify-center gap-4">
-                <Link
-                  href="/login"
-                  className="bg-white text-[#0B0E1E] text-base font-semibold pl-6 pr-2.5 py-3 rounded-full flex items-center gap-3 hover:bg-slate-100 hover:scale-[1.03] active:scale-[0.98] transition-all shadow-[0_15px_30px_rgba(255,255,255,0.2)] group"
-                >
-                  <span>Get Started</span>
-                  <span className="w-8 h-8 rounded-full bg-[#0B0E1E] text-white flex items-center justify-center text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                    ↗
-                  </span>
-                </Link>
+            <div className="mt-6 pt-5 border-t border-[#E4E7F2]/80 flex items-center justify-between text-[11px] font-semibold text-[#5558FF]">
+              <span>FULL-FUNNEL AUDIT INCLUDED</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-                <Link
-                  href={isAuthenticated ? '/dashboard' : '/login'}
-                  className="px-6 py-3 rounded-full text-base font-medium text-white/90 hover:text-white border border-white/20 hover:border-white/40 bg-white/[0.06] transition-all"
-                >
-                  {isAuthenticated ? 'Open Dashboard ↗' : 'Log In to Workspace'}
-                </Link>
+/* =========================================================================
+   5. SMART SERVICE / SERVICE CARDS
+   ========================================================================= */
+
+function ServicesSection() {
+  const services = [
+    {
+      title: 'Search Engine Optimization',
+      desc: 'Improve search visibility and organic traffic through deep technical audits and semantic authority.',
+      icon: Search,
+      iconBg: 'bg-[#5558FF]/10 text-[#5558FF]',
+    },
+    {
+      title: 'Pay-Per-Click Advertising',
+      desc: 'Run targeted campaigns with measurable returns across Google, Meta, and LinkedIn networks.',
+      icon: MousePointerClick,
+      iconBg: 'bg-[#B39BFF]/20 text-[#5558FF]',
+    },
+    {
+      title: 'Social Media Marketing',
+      desc: 'Grow audience engagement, brand authority, and community-driven conversions across channels.',
+      icon: Megaphone,
+      iconBg: 'bg-[#A6B9FF]/20 text-[#5558FF]',
+    },
+    {
+      title: 'Content Marketing',
+      desc: 'Create valuable editorial content that attracts high-intent buyers and builds industry leadership.',
+      icon: FileText,
+      iconBg: 'bg-[#5558FF]/10 text-[#5558FF]',
+    },
+  ];
+
+  return (
+    <section id="services" className="py-12 sm:py-16 bg-white">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
+          <div>
+            <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+              Smart Service <br />
+              <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+                That Real Impact.
+              </span>
+            </h2>
+          </div>
+
+          <Link
+            href="/login"
+            className="self-start sm:self-end bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-[0_4px_14px_rgba(85,88,255,0.25)] transition-all group"
+          >
+            <span>Let&apos;s Collaborate</span>
+            <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              ↗
+            </span>
+          </Link>
+        </div>
+
+        {/* 4 Equal-Width Service Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+          {services.map((service) => {
+            const Icon = service.icon;
+            return (
+              <div
+                key={service.title}
+                className="bg-[#EDF1FF] hover:bg-white border border-[#E4E7F2] rounded-[12px] p-5 sm:p-6 flex flex-col justify-between shadow-[0_4px_16px_rgba(27,37,100,0.04)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.08)] hover:-translate-y-0.5 transition-all duration-200 group"
+              >
+                <div>
+                  <div className={`w-9 h-9 rounded-xl ${service.iconBg} flex items-center justify-center mb-5`}>
+                    <Icon className="w-4 h-4 stroke-[2]" />
+                  </div>
+                  <h3 className="text-[16px] font-medium text-[#222442] leading-[1.2] font-tasaorbiter">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 text-[12px] text-[#6F718A] leading-[1.45]">
+                    {service.desc}
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-[#E4E7F2]/60 flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] group-hover:text-[#4346F0] transition-colors">
+                  <span>Explore Service</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   6. DIGITAL GROWTH FEATURE & WORKFLOW
+   ========================================================================= */
+
+function GrowthWorkflow() {
+  const steps = [
+    {
+      num: '01',
+      title: 'Start Your Digital Journey With Confidence',
+      desc: 'Align business objectives, audit existing funnels, and benchmark conversion KPIs.',
+    },
+    {
+      num: '02',
+      title: 'Connect For A Strategy Call That Sets Direction',
+      desc: 'Map target personas, establish attribution models, and pinpoint high-leverage growth channels.',
+    },
+    {
+      num: '03',
+      title: 'Receive A Tailored Plan Built For Your Success',
+      desc: 'Get a full omnichannel marketing architecture with concrete timelines and projected pipeline metrics.',
+    },
+    {
+      num: '04',
+      title: 'Launch, Measure, And Optimize For Growth',
+      desc: 'Deploy agile multivariate campaigns, track performance telemetry, and continuously optimize CPA.',
+    },
+  ];
+
+  return (
+    <section id="workflow" className="py-12 sm:py-16 bg-[#F7F8FF]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+          {/* Left Visual Panel: Abstract Sculpture + Floating Pill */}
+          <div className="lg:col-span-6 bg-gradient-to-tr from-[#EDF1FF] via-[#E4E7F2] to-[#EDF1FF] border border-[#E4E7F2] rounded-[14px] p-8 h-[360px] sm:h-[420px] flex flex-col items-center justify-center relative overflow-hidden shadow-[0_6px_24px_rgba(27,37,100,0.05)]">
+            {/* Background Radial Glow */}
+            <div className="absolute w-[280px] h-[280px] bg-[#5558FF]/20 rounded-full blur-[80px] pointer-events-none" />
+
+            {/* Geometric Lightning-Bolt / Ribbon Sculpture in Center */}
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-24 h-32 sm:w-28 sm:h-36 bg-gradient-to-b from-[#B39BFF] via-[#5558FF] to-[#111638] rounded-2xl shadow-[0_20px_40px_rgba(85,88,255,0.35)] transform rotate-12 flex items-center justify-center relative border border-white/30 backdrop-blur-sm">
+                <Zap className="w-12 h-12 text-white fill-white/20 stroke-[1.5]" />
+              </div>
+
+              {/* Floating Pill beneath sculpture */}
+              <div className="mt-8 bg-white/95 backdrop-blur-md border border-[#E4E7F2] rounded-full px-4 py-1.5 shadow-[0_6px_20px_rgba(27,37,100,0.08)] flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#5558FF] animate-pulse" />
+                <span className="text-[11px] font-bold text-[#222442] font-tasaorbiter">
+                  AI Email Engine
+                </span>
+                <span className="text-[10px] bg-[#EDF1FF] text-[#5558FF] px-2 py-0.5 rounded-full font-mono font-semibold">
+                  ACTIVE
+                </span>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* =========================================================================
-          8. FOOTER
-         ========================================================================= */}
-      <footer
-        className={`py-12 border-t px-4 sm:px-6 lg:px-8 text-xs transition-colors duration-300 ${
-          isLight ? 'bg-white border-slate-200 text-slate-500' : 'bg-[#060810] border-white/[0.08] text-slate-400'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold">
-              C
+          {/* Right Content: 4 Step Workflow */}
+          <div className="lg:col-span-6">
+            <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
+              Digital Growth in{' '}
+              <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+                quick 4
+              </span>{' '}
+              Simple Steps
+            </h2>
+
+            {/* Workflow Card with 4 Stacked Rows */}
+            <div className="mt-6 bg-white border border-[#E4E7F2] rounded-[14px] p-5 sm:p-6 shadow-[0_6px_24px_rgba(27,37,100,0.05)] divide-y divide-[#E4E7F2]">
+              {steps.map((step) => (
+                <div key={step.num} className="py-3.5 first:pt-0 last:pb-0 flex items-start gap-3.5">
+                  <div className="w-7 h-7 rounded-full bg-[#EDF1FF] text-[#5558FF] font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5 font-tasaorbiter border border-[#E4E7F2]">
+                    {step.num}
+                  </div>
+                  <div>
+                    <h4 className="text-[13px] sm:text-[14px] font-semibold text-[#222442] leading-snug font-tasaorbiter">
+                      {step.title}
+                    </h4>
+                    <p className="mt-1 text-[11px] sm:text-[12px] text-[#6F718A] leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <span className={`font-bold text-sm ${isLight ? 'text-[#0B132B]' : 'text-white'}`}>
-              Continuity Platform
-            </span>
-          </div>
 
-          <div
-            className={`flex items-center gap-6 font-medium ${
-              isLight ? 'text-slate-600' : 'text-slate-400'
-            }`}
-          >
-            <a href="#product" className={`transition-colors ${isLight ? 'hover:text-blue-600' : 'hover:text-white'}`}>
-              Product
-            </a>
-            <a href="#features" className={`transition-colors ${isLight ? 'hover:text-blue-600' : 'hover:text-white'}`}>
-              Features
-            </a>
-            <a href="#how-it-works" className={`transition-colors ${isLight ? 'hover:text-blue-600' : 'hover:text-white'}`}>
-              How It Works
-            </a>
-            <Link href="/login" className={`transition-colors ${isLight ? 'hover:text-blue-600' : 'hover:text-white'}`}>
-              Login
-            </Link>
-          </div>
-
-          <div className="font-mono text-slate-400">
-            © {new Date().getFullYear()} Continuity. Lossless Project Continuity.
+            {/* Action CTA */}
+            <div className="mt-6">
+              <Link
+                href="/login"
+                className="bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-5 py-2.5 rounded-full inline-flex items-center gap-2 shadow-[0_4px_16px_rgba(85,88,255,0.25)] transition-all group"
+              >
+                <span>Start Journey</span>
+                <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+                  ↗
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
-      </footer>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   7. SELECTED WORK / PORTFOLIO GALLERY
+   ========================================================================= */
+
+function PortfolioGallery() {
+  const portfolio = [
+    {
+      id: 1,
+      image:
+        'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80',
+      title: 'Nurture leads with personalized email marketing automation.',
+      category: 'Email Automation',
+      isWide: true,
+    },
+    {
+      id: 2,
+      image:
+        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80',
+      title: 'Generate demand through targeted LinkedIn ad campaigns.',
+      category: 'Paid Acquisition',
+      isWide: false,
+    },
+    {
+      id: 3,
+      image:
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+      title: 'Capture leads with high-converting website experiences.',
+      category: 'Conversion Optimization',
+      isWide: false,
+    },
+  ];
+
+  return (
+    <section id="portfolio" className="py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Centered Heading */}
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+          <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+            We have{' '}
+            <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+              build
+            </span>
+          </h2>
+          <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
+            Selected case studies demonstrating commercial impact across digital brands.
+          </p>
+        </div>
+
+        {/* 3-Column Image Gallery with First Card Approximately 1.4x Wider */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-3.5 sm:gap-4 items-start">
+          {portfolio.map((item) => (
+            <div
+              key={item.id}
+              className={`${
+                item.isWide ? 'md:col-span-2 lg:col-span-1' : 'md:col-span-1'
+              } flex flex-col group cursor-pointer`}
+            >
+              <div className="relative aspect-[1.3] w-full rounded-[10px] overflow-hidden bg-[#EDF1FF] border border-[#E4E7F2]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+              </div>
+              <div className="mt-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5558FF] font-tasaorbiter block">
+                  {item.category}
+                </span>
+                <p className="mt-1 text-[12px] sm:text-[13px] font-medium text-[#222442] leading-snug group-hover:text-[#5558FF] transition-colors">
+                  {item.title}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   8. CLIENT TESTIMONIALS
+   ========================================================================= */
+
+function TestimonialsSection() {
+  const testimonials = [
+    {
+      name: 'Sarah Mitchell',
+      role: 'VP Marketing, Luma Technologies',
+      quote:
+        'Marklab transformed our acquisition funnel within 60 days. Our organic inbound pipeline increased by 140% while slashing cost-per-acquisition.',
+      logo: 'Luma',
+    },
+    {
+      name: 'Daniel Foster',
+      role: 'Founder, Nexora Health',
+      quote:
+        'Their targeted PPC and editorial content strategy delivered predictable high-intent enterprise demos from week one.',
+      logo: 'Nexora',
+    },
+    {
+      name: 'Emma Wilson',
+      role: 'Head of Growth, Loopify',
+      quote:
+        'The data-first approach and lightning-fast optimization gave our product launch the velocity and visibility it needed.',
+      logo: 'Loopify',
+    },
+    {
+      name: 'James Carter',
+      role: 'CMO, Brightwave Media',
+      quote:
+        'An indispensable growth partner. They do not just run ads—they architect full-funnel digital dominance with flawless execution.',
+      logo: 'Brightwave',
+    },
+  ];
+
+  return (
+    <section className="py-12 sm:py-16 bg-[#F7F8FF]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+          <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+            Client take some{' '}
+            <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+              lovely words
+            </span>
+          </h2>
+          <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
+            Real feedback from brands we&apos;ve helped
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+          {testimonials.map((t) => (
+            <div
+              key={t.name}
+              className="bg-[#EDF1FF] border border-[#E4E7F2] rounded-[12px] p-5 sm:p-6 flex flex-col justify-between shadow-[0_4px_16px_rgba(27,37,100,0.03)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.06)] transition-all"
+            >
+              <div>
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#6F718A] uppercase tracking-wider mb-3">
+                  <span className="text-[#5558FF]">●</span>
+                  <span>{t.logo}</span>
+                </div>
+                <p className="text-[12px] text-[#222442] leading-[1.45] italic">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+              </div>
+
+              <div className="mt-5 pt-3.5 border-t border-[#E4E7F2]/80">
+                <div className="text-[12px] font-bold text-[#222442] font-tasaorbiter">{t.name}</div>
+                <div className="text-[10px] text-[#6F718A]">{t.role}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   9. FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION)
+   ========================================================================= */
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const faqs = [
+    {
+      q: 'What makes Marklab different from other digital marketing agencies?',
+      a: 'We combine performance growth engineering with bespoke editorial creative. Instead of vanity metrics, every campaign is tied to revenue linearizability, unit economics, and pipeline acceleration.',
+    },
+    {
+      q: 'Which industries do you specialize in?',
+      a: 'We specialize in high-growth B2B SaaS, enterprise technology platforms, fintech, and modern digital commerce brands seeking predictable, profitable market expansion.',
+    },
+    {
+      q: 'How can we get started with your team?',
+      a: 'Book an introductory strategy call. We perform a zero-commitment growth and funnel audit, identifying immediate friction points and high-leverage acquisition opportunities.',
+    },
+    {
+      q: 'Does your service include marketing analytics?',
+      a: 'Yes. Every engagement includes end-to-end multi-touch attribution modeling, live telemetry dashboards, cohort analysis, and automated weekly performance briefs.',
+    },
+    {
+      q: 'Do you offer customized marketing plans?',
+      a: 'All our plans are custom engineered. We tailor channel allocation, creative production, and bidding strategies to match your specific sales cycle and customer lifetime value.',
+    },
+    {
+      q: 'What services does Marklab offer?',
+      a: 'Our core capabilities encompass technical SEO, paid search & social acquisition (PPC), automated email lifecycle marketing, conversion rate optimization (CRO), and strategic brand positioning.',
+    },
+  ];
+
+  const toggle = (idx: number) => {
+    setOpenIndex(openIndex === idx ? null : idx);
+  };
+
+  return (
+    <section id="faq" className="py-12 sm:py-16 bg-white">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+          <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+            Frequently asked <br />
+            questions
+          </h2>
+        </div>
+
+        {/* Accordion Container (~650px wide) */}
+        <div className="max-w-[650px] mx-auto space-y-2.5">
+          {faqs.map((faq, idx) => {
+            const isOpen = openIndex === idx;
+            return (
+              <div
+                key={faq.q}
+                className="bg-[#EDF1FF] border border-[#E4E7F2] rounded-[8px] overflow-hidden transition-colors"
+              >
+                <button
+                  onClick={() => toggle(idx)}
+                  className="w-full text-left px-4 sm:px-5 py-3.5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
+                  aria-expanded={isOpen}
+                >
+                  <span className="text-[12px] sm:text-[13px] font-medium text-[#222442] font-tasaorbiter">
+                    {faq.q}
+                  </span>
+                  <span className="w-5 h-5 rounded-full bg-white text-[#5558FF] flex items-center justify-center shrink-0 border border-[#E4E7F2] text-xs">
+                    {isOpen ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                  </span>
+                </button>
+
+                {isOpen && (
+                  <div className="px-4 sm:px-5 pb-4 pt-1 text-[12px] text-[#6F718A] leading-relaxed border-t border-[#E4E7F2]/60 animate-in fade-in duration-200">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   10. READ ARTICLES / BLOG SECTION
+   ========================================================================= */
+
+function ArticlesSection() {
+  const articles = [
+    {
+      title: 'How to get more leads from Google ads',
+      tag: 'PAID ACQUISITION',
+      readTime: '5 MIN READ',
+      image:
+        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      title: 'Easy ways to improve your email open rates',
+      tag: 'RETENTION',
+      readTime: '4 MIN READ',
+      image:
+        'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      title: 'Simple tips to boost your website traffic',
+      tag: 'ORGANIC GROWTH',
+      readTime: '6 MIN READ',
+      image:
+        'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+    },
+  ];
+
+  return (
+    <section id="articles" className="py-12 sm:py-16 bg-[#F7F8FF]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end justify-between mb-8 sm:mb-10">
+          <div>
+            <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+              Read article
+            </h2>
+            <p className="mt-1.5 text-[12px] sm:text-[13px] text-[#6F718A]">
+              Insights, playbooks, and tactical frameworks from our growth strategists.
+            </p>
+          </div>
+
+          <a
+            href="#articles"
+            className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] hover:text-[#4346F0] tracking-wider transition-colors group"
+          >
+            <span>ALL ARTICLES</span>
+            <span className="w-5 h-5 rounded-full bg-[#EDF1FF] text-[#5558FF] flex items-center justify-center text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform border border-[#E4E7F2]">
+              ↗
+            </span>
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+          {articles.map((art) => (
+            <div
+              key={art.title}
+              className="bg-white border border-[#E4E7F2] rounded-[12px] overflow-hidden shadow-[0_4px_16px_rgba(27,37,100,0.04)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.08)] transition-all group cursor-pointer"
+            >
+              <div className="relative aspect-[1.3] w-full overflow-hidden bg-[#EDF1FF]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={art.image}
+                  alt={art.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+              </div>
+
+              <div className="p-4 sm:p-5">
+                <div className="flex items-center justify-between text-[10px] font-bold tracking-wider text-[#6F718A] mb-2 font-mono">
+                  <span className="text-[#5558FF]">{art.tag}</span>
+                  <span>{art.readTime}</span>
+                </div>
+                <h3 className="text-[14px] sm:text-[15px] font-semibold text-[#222442] leading-snug group-hover:text-[#5558FF] transition-colors font-tasaorbiter">
+                  {art.title}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   11. FINAL DRAMATIC CTA SECTION
+   ========================================================================= */
+
+function FinalCTA() {
+  return (
+    <section className="relative w-full py-16 sm:py-24 bg-[#111638] text-white overflow-hidden text-center">
+      {/* Vivid Blue and Lavender Radial Gradient Glow */}
+      <div className="absolute inset-0 pointer-events-none select-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#5558FF]/50 via-[#A6B9FF]/30 to-[#B39BFF]/20 blur-[110px] rounded-full" />
+      </div>
+
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <h2
+          className="text-[32px] sm:text-[44px] md:text-[50px] font-medium leading-[1.1] text-white font-tasaorbiter"
+          style={{ color: '#ffffff' }}
+        >
+          Ready to{' '}
+          <span
+            className="font-instrumentserif italic font-normal text-white"
+            style={{ color: '#ffffff' }}
+          >
+            see
+          </span>{' '}
+          <br />
+          <span
+            className="font-instrumentserif italic font-normal text-white"
+            style={{ color: '#ffffff' }}
+          >
+            real
+          </span>{' '}
+          Results
+        </h2>
+
+        <div className="mt-8 flex items-center justify-center gap-5 sm:gap-6">
+          <Link
+            href="/login"
+            className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.2)] flex items-center gap-3 group transition-all cursor-pointer"
+          >
+            <span>Let&apos;s Get Started</span>
+            <span className="w-6 h-6 rounded-full bg-[#111638] text-white flex items-center justify-center font-bold text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              ↗
+            </span>
+          </Link>
+
+          <a
+            href="#faq"
+            className="text-white hover:text-[#A6B9FF] font-medium text-[12px] sm:text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer group"
+          >
+            <span>Book a call</span>
+            <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =========================================================================
+   12. FOOTER COMPONENT
+   ========================================================================= */
+
+function Footer() {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim() && email.includes('@')) {
+      setSubscribed(true);
+      setTimeout(() => setSubscribed(false), 3000);
+      setEmail('');
+    }
+  };
+
+  return (
+    <footer className="bg-white border-t border-[#E4E7F2] pt-12 sm:pt-16 pb-8 relative overflow-hidden text-[#222442]">
+      {/* Faint Oversized Watermark behind bottom strip */}
+      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[120px] sm:text-[180px] font-extrabold text-[#F7F8FF] select-none pointer-events-none tracking-tight font-tasaorbiter z-0 opacity-80">
+        Marklab
+      </div>
+
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-12">
+          {/* Column 1: Brand & Contact */}
+          <div className="lg:col-span-4 space-y-3">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-7 h-7 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+              </div>
+              <span className="font-extrabold text-base tracking-tight text-[#222442] font-tasaorbiter">
+                Marklab
+              </span>
+            </Link>
+            <p className="text-[12px] text-[#6F718A] leading-relaxed max-w-xs">
+              Premium digital marketing and growth agency architecting full-funnel customer acquisition.
+            </p>
+            <div className="pt-2 text-[12px] text-[#5558FF] font-medium font-mono">
+              hello@marklab.agency
+            </div>
+          </div>
+
+          {/* Column 2: Menu */}
+          <div className="lg:col-span-2 space-y-2.5">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
+              Menu
+            </div>
+            <ul className="space-y-1.5 text-[12px] text-[#6F718A]">
+              <li>
+                <a href="#" className="hover:text-[#5558FF] transition-colors">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#performance" className="hover:text-[#5558FF] transition-colors">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#portfolio" className="hover:text-[#5558FF] transition-colors">
+                  Work
+                </a>
+              </li>
+              <li>
+                <a href="#articles" className="hover:text-[#5558FF] transition-colors">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="#workflow" className="hover:text-[#5558FF] transition-colors">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Quick Links */}
+          <div className="lg:col-span-2 space-y-2.5">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
+              Quick Links
+            </div>
+            <ul className="space-y-1.5 text-[12px] text-[#6F718A]">
+              <li>
+                <a href="#services" className="hover:text-[#5558FF] transition-colors">
+                  SEO
+                </a>
+              </li>
+              <li>
+                <a href="#services" className="hover:text-[#5558FF] transition-colors">
+                  PPC Advertising
+                </a>
+              </li>
+              <li>
+                <a href="#services" className="hover:text-[#5558FF] transition-colors">
+                  Social Media
+                </a>
+              </li>
+              <li>
+                <a href="#services" className="hover:text-[#5558FF] transition-colors">
+                  Web Design
+                </a>
+              </li>
+              <li>
+                <a href="#faq" className="hover:text-[#5558FF] transition-colors">
+                  Resources
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Newsletter */}
+          <div className="lg:col-span-4 space-y-3">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
+              Newsletter for updates
+            </div>
+            <p className="text-[12px] text-[#6F718A]">
+              Receive our bi-weekly breakdown of conversion funnels, paid media, and growth tactics.
+            </p>
+
+            <form onSubmit={handleSubscribe} className="flex items-center gap-2 max-w-sm">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="flex-1 bg-[#F7F8FF] border border-[#E4E7F2] rounded-full px-4 py-2 text-[12px] text-[#222442] placeholder-[#6F718A] focus:outline-none focus:border-[#5558FF] transition-colors"
+              />
+              <button
+                type="submit"
+                className="w-9 h-9 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center shrink-0 shadow-sm transition-transform active:scale-95"
+                title="Subscribe"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </form>
+            {subscribed && (
+              <span className="text-[11px] font-medium text-emerald-600">
+                ✓ Thank you for subscribing!
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom Strip */}
+        <div className="pt-6 border-t border-[#E4E7F2] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6F718A]">
+          <div>© 2026 Marklab Agency. All rights reserved.</div>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/dashboard"
+              className="text-[#5558FF] hover:underline font-semibold flex items-center gap-1"
+            >
+              <span>Continuity Workspace Platform</span>
+              <ExternalLink className="w-3 h-3" />
+            </Link>
+            <span>•</span>
+            <span>Design &amp; Development by Marklab Studio</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* =========================================================================
+   MAIN EXPORTED LANDING PAGE
+   ========================================================================= */
+
+export function LandingPage() {
+  return (
+    <div className="min-h-screen bg-white text-[#222442] font-sans antialiased selection:bg-[#5558FF]/20 selection:text-[#111638]">
+      {/* 1 & 2. Hero Section with Integrated Floating Pill Navbar */}
+      <HeroSection />
+
+      {/* 3. Trusted By / Client Logos Strip */}
+      <ClientLogoStrip />
+
+      {/* 4. Performance Marketing Showcase */}
+      <MarketingShowcase />
+
+      {/* 5. Smart Service / Service Cards */}
+      <ServicesSection />
+
+      {/* 6. Digital Growth Feature & Workflow */}
+      <GrowthWorkflow />
+
+      {/* 7. Selected Work / Portfolio Gallery */}
+      <PortfolioGallery />
+
+      {/* 8. Client Testimonials */}
+      <TestimonialsSection />
+
+      {/* 9. Frequently Asked Questions (FAQ) */}
+      <FAQSection />
+
+      {/* 10. Read Articles */}
+      <ArticlesSection />
+
+      {/* 11. Final Dramatic CTA */}
+      <FinalCTA />
+
+      {/* 12. Footer */}
+      <Footer />
     </div>
   );
 }

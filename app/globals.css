@@ -57,6 +57,15 @@
   background: rgba(255, 255, 255, 0.35);
 }
 
+/* Self-hosted Tasaorbiterdeck Font Declaration */
+@font-face {
+  font-family: "Tasaorbiterdeck";
+  src: url("/fonts/Tasaorbiterdeck.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Exact Marklab Headline Fonts */
 .font-tasaorbiter {
   font-family: 'Tasaorbiterdeck', 'TASA Orbiter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -297,24 +306,36 @@ html.light .bg-amber-500\/25 {
 }
 
 /* Headings and non-button white text in light mode */
-html.light h1:not([class*="bg-"]):not(button *),
-html.light h2:not([class*="bg-"]):not(button *),
-html.light h3:not([class*="bg-"]):not(button *),
-html.light h4:not([class*="bg-"]):not(button *) {
+html.light h1:not([class*="bg-"]):not(button *):not([class*="bg-[#111638]"] *):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *),
+html.light h2:not([class*="bg-"]):not(button *):not([class*="bg-[#111638]"] *):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *),
+html.light h3:not([class*="bg-"]):not(button *):not([class*="bg-[#111638]"] *):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *),
+html.light h4:not([class*="bg-"]):not(button *):not([class*="bg-[#111638]"] *):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *) {
   color: #0F172A !important;
 }
 
-html.light :not(button):not(button *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *).text-white {
+html.light :not(button):not(button *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-[#111638]"] *):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *).text-white {
   color: #0F172A !important;
 }
 
 /* Explicitly preserve crisp white text inside dark cards and landing sections */
+html.light [class*="bg-[#111638]"] h1,
+html.light [class*="bg-[#111638]"] h1 *,
+html.light [class*="bg-[#111638]"] h2,
+html.light [class*="bg-[#111638]"] h2 *,
+html.light [class*="bg-[#111638]"] h3,
+html.light [class*="bg-[#111638]"] .text-white,
 html.light [class*="bg-[#070914]"] .text-white,
 html.light [class*="bg-[#070914]"] h1,
 html.light [class*="bg-[#090C1A]"] .text-white,
 html.light [class*="bg-[#111428]"] .text-white,
 html.light [class*="bg-[#1E1B4B]"] .text-white {
   color: #FFFFFF !important;
+}
+
+html.light [class*="bg-[#111638]"] p.text-slate-300,
+html.light [class*="bg-[#111638]"] span.text-slate-300,
+html.light [class*="bg-[#111638]"] nav a {
+  color: #E2E8F0 !important;
 }
 
 /* Blue primary action buttons ALWAYS keep pure white text */
@@ -448,9 +469,15 @@ html.light .hover\:border-white\/20:hover {
 }
 
 /* TopBar & Sidebar light mode headers */
-html.light header {
+html.light header:not(.marklab-navbar-header) {
   background-color: rgba(255, 255, 255, 0.88) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+html.light header.marklab-navbar-header,
+html.light [class*="bg-[#111638]"] header {
+  background-color: transparent !important;
+  border-color: transparent !important;
 }
 
 html.light aside,
