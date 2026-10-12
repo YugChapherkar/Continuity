@@ -238,6 +238,37 @@ npm run build
 
 ---
 
+---
+
+## 🗺️ Interactive Platform Tour & Page Directory
+
+| Route | View Name | Key Operational Purpose |
+| :--- | :--- | :--- |
+| `/` | **Operations Command Center** | Hero metrics, pending action items assigned to you, and fast "+ Start a handoff" CTA. |
+| `/projects` | **Workspace Manager** | Inspect distributed projects (e.g. Apollo Raft Core), code snapshot versions, and ADR decisions. |
+| `/handoffs` | **Handoff Dossiers Directory** | Filter handoffs by Pending, Accepted, or Critical status. |
+| `/handoffs/[id]` | **Dossier Deep Inspection** | Full verification view: check completed milestones, copy runbook diagnostic commands, and execute digital signoff. |
+| `/team` | **Team Directory** | View lead custodians (**Jessicaa Chauhab**, **Yash Lokhande**, **Shruti Patil**), active projects, and shift locations. |
+| `/audit` | **Immutable Audit Trail** | Cryptographic ledger verifying every dispatch, signoff, and task transition with SHA-256 tree hashes. |
+| `/assistant` | **AI Continuity Copilot** | Interactive RAG terminal answering complex architectural and onboarding questions using Google Gemini. |
+
+---
+
+## ❓ Troubleshooting & FAQs
+
+### Q: What if Port 8080 or 3000 is already in use?
+- **Backend (Port 8080):** Set a different port by running `mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8081"`.
+- **Frontend (Port 3000):** Run `npm run dev -- -p 3001` to start Next.js on port 3001.
+
+### Q: Does the frontend work if the backend is restarting?
+- **Yes.** The Next.js frontend has built-in mock fallbacks and optimistic UI updates so the interface remains fully interactive and responsive even during backend maintenance.
+
+### Q: How do I reset the local database?
+- Simply delete the `./backend/storage/db/` directory and restart the backend. Flyway will automatically run migrations `V1` through `V4` to seed a fresh database.
+
+---
+
 ## 🤝 Need Help?
 - Click the **AI Terminal** tab on the left menu inside the app to ask questions about any handoff or project.
 - Click the **Sun / Moon** icon in the top right corner to switch between light and dark modes.
+

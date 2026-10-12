@@ -86,3 +86,167 @@ Runs 19 automated integration tests covering:
 | `POST` | `/api/handoffs/{id}/accept` | Signoff and accept primary custodianship |
 | `GET` | `/api/tasks` | Workspace tasks with deadlines and overdue status |
 | `POST` | `/api/assistant/query` | Gemini RAG query answering across project history |
+
+---
+
+## 🗄️ Database Schema & Entity-Relationship Diagram
+
+```mermaid
+erDiagram
+    USERS ||--o{ HANDOFFS : sends
+    USERS ||--o{ HANDOFFS : receives
+    USERS ||--o{ TASKS : assigned_to
+    PROJECTS ||--o{ VERSIONS : contains
+    PROJECTS ||--o{ TASKS : tracks
+    PROJECTS ||--o{ HANDOFFS : relates_to
+    PROJECTS ||--o{ DECISIONS : documents
+
+    USERS {
+        string id PK
+        string name
+        string email
+        string role
+        string initials
+        string department
+        string location
+    }
+
+    PROJECTS {
+        string id PK
+        string name
+        string description
+        string current_version_id
+        string repository_url
+    }
+
+    VERSIONS {
+        string id PK
+        string project_id FK
+        string version_tag
+        string commit_hash
+        string author
+        string parent_version_id
+        timestamp created_at
+    }
+
+    TASKS {
+        string id PK
+        string project_id FK
+        string title
+        string description
+        string priority
+        string status
+        string assignee
+        timestamp deadline
+        string blockers
+    }
+
+    HANDOFFS {
+        string id PK
+        string project_id FK
+        string sender_id FK
+        string recipient_id FK
+        string status
+        string executive_summary
+        string tree_hash_sha256
+        string note
+        string signoff_note
+        timestamp created_at
+        timestamp accepted_at
+    }
+
+    AUDIT_LOGS {
+        string id PK
+        string event_type
+        string actor_id
+        string target_id
+        string details
+        string sha256_signature
+        timestamp created_at
+    }
+```
+
+---
+
+## 📦 Flyway Database Migrations
+
+| Migration Script | Scope & Description |
+| :--- | :--- |
+| `V1__init_schema.sql` | Creates base tables: `users`, `projects`, `versions`, `tasks`, `decisions`, `handoffs`, `audit_logs`. |
+| `V2__seed_initial_data.sql` | Seeds foundational workspaces, Raft consensus ADRs, and initial roster. |
+| `V3__add_task_deadline.sql` | Adds operational `deadline` (`TIMESTAMP`) column to `tasks` table for overdue tracking. |
+| `V4__add_team_members.sql` | Upserts core leads: `user-jessica` (Jessicaa Chauhab), `user-yash` (Yash Lokhande), and `user-shruti` (Shruti Patil). |
+
+---
+
+## 💻 Sample API Usage (cURL Examples)
+
+### 1. Retrieve Active Team Members
+```bash
+curl -X GET http://localhost:8080/api/users \
+  -H "Accept: application/json"
+```
+
+### 2. Dispatch a Lossless Handoff Dossier
+```bash
+curl -X POST http://localhost:8080/api/handoffs \
+  -H "Content-Type: application/json" \
+  -H "X-User-Id: user-yash" \
+  -d '{
+    "projectId": "proj-apollo",
+    "recipientId": "user-jessica",
+    "note": "APAC to EMEA shift rotation",
+    "executiveSummary": "All Raft consensus nodes are green; staged PR #104 ready for canary deployment.",
+    "completedItems": ["Verified zero packet drop", "Ran automated failover probe"],
+    "nextSteps": ["Monitor p99 latency during 14:00 UTC spike"],
+    "criticalBlockers": [],
+    "runbookCommands": ["./bin/apollo-ctl cluster status"]
+  }'
+```
+
+### 3. Accept Handoff & Sign Off Custodianship
+```bash
+curl -X POST http://localhost:8080/api/handoffs/HO-2026-089/accept \
+  -H "Content-Type: application/json" \
+  -H "X-User-Id: user-jessica" \
+  -d '{
+    "signoffNote": "Attested readiness and assumed primary operational custodianship."
+  }'
+```
+
+### 4. Query AI Continuity Assistant
+```bash
+curl -X POST http://localhost:8080/api/assistant/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "projectId": "proj-apollo",
+    "query": "What are the latest ADR decisions made regarding Raft consensus leases?"
+  }'
+```
+
+---
+
+## ⚙️ Configuration Properties Reference
+
+| Property Key | Default Value | Description |
+| :--- | :--- | :--- |
+| `server.port` | `8080` | HTTP port for the Spring Boot REST API |
+| `spring.datasource.url` | `jdbc:h2:file:./storage/db/continuity_db;...` | Database JDBC URL (PostgreSQL in production) |
+| `spring.jpa.hibernate.ddl-auto` | `validate` | Validates JPA entities against Flyway migrations |
+| `spring.flyway.enabled` | `true` | Automated migration runner |
+| `gemini.api.key` | `${GEMINI_API_KEY:}` | Google Gemini API key for grounded RAG |
+| `continuity.cors.allowed-origins` | `http://localhost:3000` | Allowed CORS origins for Next.js web client |
+
+---
+
+## 🚦 Error Handling & HTTP Status Matrix
+
+| Status Code | Reason | Example Trigger |
+| :--- | :--- | :--- |
+| `200 OK` | Request succeeded | Data fetched or handoff accepted successfully |
+| `201 Created` | Resource created | Handoff dossier dispatched or task registered |
+| `400 Bad Request` | Missing mandatory fields | Empty executive summary or unassigned task |
+| `404 Not Found` | Entity not located | Non-existent handoff ID or user ID |
+| `409 Conflict` | Optimistic Concurrency Conflict | Snapshot uploaded against an outdated `baseVersionId` |
+| `500 Internal Error` | Unhandled runtime exception | Database connection timeout or upstream API failure |
+
