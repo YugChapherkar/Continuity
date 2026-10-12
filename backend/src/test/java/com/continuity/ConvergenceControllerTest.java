@@ -81,4 +81,16 @@ public class ConvergenceControllerTest {
         assertEquals(5000, br.get("totalUnits"));
         assertNotNull(br.get("custodianBreakdown"));
     }
+
+    @Test
+    void testCaseStatusRetrieval() {
+        Map<String, Object> cs = convergenceService.getCaseStatus("TC-1042");
+        assertNotNull(cs);
+        assertEquals("TC-1042", cs.get("caseId"));
+        assertEquals("LOT-A-000123", cs.get("productId"));
+        assertEquals("CLONE_DETECTED", cs.get("verdict"));
+        assertNotNull(cs.get("blockchainProofRef"));
+        assertNotNull(cs.get("inspectionTask"));
+        assertNotNull(cs.get("activityTimeline"));
+    }
 }

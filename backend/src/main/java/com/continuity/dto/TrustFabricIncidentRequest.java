@@ -3,8 +3,8 @@ package com.continuity.dto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 public class TrustFabricIncidentRequest {
+    private String caseId = "TC-1042";
     private String serial = "LOT-A-000123";
     private String lotId = "LOT-A";
     private String verdict = "CLONE_DETECTED";
@@ -15,6 +15,9 @@ public class TrustFabricIncidentRequest {
     private String evidenceBundleUrl = "http://localhost:8000/products/LOT-A-000123/bundle";
 
     public TrustFabricIncidentRequest() {}
+
+    public String getCaseId() { return caseId; }
+    public void setCaseId(String caseId) { this.caseId = caseId; }
 
     public String getSerial() { return serial; }
     public void setSerial(String serial) { this.serial = serial; }

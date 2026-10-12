@@ -57,6 +57,12 @@ public class ConvergenceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(convergenceService.simulateCloneIncident());
     }
 
+    @GetMapping("/cases/{caseId}")
+    @Operation(summary = "Retrieve linked case details, custodian status, blockchain proof, and activity timeline")
+    public ResponseEntity<Map<String, Object>> getCaseStatus(@PathVariable String caseId) {
+        return ResponseEntity.ok(convergenceService.getCaseStatus(caseId));
+    }
+
     @GetMapping("/blast-radius/{lotId}")
     @Operation(summary = "Query lot recall blast radius scope with per-custodian breakdowns")
     public ResponseEntity<Map<String, Object>> getBlastRadius(@PathVariable String lotId) {

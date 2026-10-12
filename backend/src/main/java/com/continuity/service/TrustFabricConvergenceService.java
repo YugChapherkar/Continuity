@@ -251,6 +251,8 @@ public class TrustFabricConvergenceService {
 
         // 6. Assemble response
         TrustFabricIncidentResponse res = new TrustFabricIncidentResponse();
+        String cId = (request.getCaseId() != null && !request.getCaseId().isBlank()) ? request.getCaseId() : "TC-1042";
+        res.setCaseId(cId);
         res.setIncidentId("INC-" + serial);
         res.setHandoffId(createdHandoff.getId());
         res.setSerial(serial);
@@ -268,8 +270,51 @@ public class TrustFabricConvergenceService {
         return res;
     }
 
+    public Map<String, Object> getCaseStatus(String caseId) {
+        String targetCase = (caseId != null && !caseId.isBlank()) ? caseId : "TC-1042";
+        Map<String, Object> res = new LinkedHashMap<>();
+        res.put("caseId", targetCase);
+        res.put("productId", "LOT-A-000123");
+        res.put("lotId", "LOT-A");
+        res.put("verdict", "CLONE_DETECTED");
+        res.put("riskScore", 80);
+        res.put("confidence", "high");
+        res.put("status", "IN_PROGRESS_QUARANTINED");
+        res.put("currentCustodian", "Jessicaa Chauhab (Retailer / did:retailer1)");
+        res.put("previousCustodian", "Shruti Patil (Logistics / did:transporter1)");
+        res.put("manufacturer", "Yash Lokhande (Manufacturer / did:maker1)");
+        res.put("scanHistory", List.of(
+                Map.of("location", "Mumbai Distribution Center", "time", "10:00 AM UTC", "status", "VALID"),
+                Map.of("location", "Delhi Retail Hub", "time", "10:20 AM UTC", "status", "FLAGGED_IMPOSSIBLE_VELOCITY (~3450 km/h)")
+        ));
+        res.put("blockchainProofRef", Map.of(
+                "network", "Hyperledger Besu EVM (Chain ID 1337)",
+                "contractAnchor", "0x22b541d79586461790a346d54ec7b1afc049ec7dcdba4077b67b58f4636f5403",
+                "blockHeight", "0x1ce857",
+                "merkleRoot", "0x89fbc001e9a3b84179e95123fcda1234988771"
+        ));
+        res.put("inspectionTask", Map.of(
+                "taskId", "TSK-RECALL-01",
+                "title", "Physical Package Inspection & Shelf Quarantine (LOT-A-000123)",
+                "assignee", "Jessicaa Chauhab",
+                "status", "In Progress",
+                "deadline", LocalDateTime.now().plusHours(4).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                "deadlineAlert", "ON_TRACK"
+        ));
+        res.put("completenessGate", "ENFORCED (Custodian cannot accept/close case without verified physical package inspection)");
+        res.put("evidenceBundleUrl", "http://localhost:8000/products/LOT-A-000123/bundle");
+        res.put("activityTimeline", List.of(
+                Map.of("step", 1, "action", "CASE_CREATED_BY_TRACECHAIN", "actor", "TraceChain Engine", "detail", "CLONE_DETECTED alert on duplicate QR scan in Mumbai & Delhi."),
+                Map.of("step", 2, "action", "ON_CHAIN_BESU_ANCHOR", "actor", "Besu EVM Smart Contract", "detail", "Anchor tx 0x22b541d... confirmed at block 0x1ce857."),
+                Map.of("step", 3, "action", "RECALL_TASKS_DISPATCHED", "actor", "CONTINUITY Governance", "detail", "Assigned P0 package inspection to Jessicaa Chauhab and transit telemetry audit to Shruti Patil."),
+                Map.of("step", 4, "action", "CUSTODY_HANDOFF_INITIATED", "actor", "Yash Lokhande (Manufacturer)", "detail", "Transferred emergency quarantine custody to distributor and retailer.")
+        ));
+        return res;
+    }
+
     public TrustFabricIncidentResponse simulateCloneIncident() {
         TrustFabricIncidentRequest sim = new TrustFabricIncidentRequest();
+        sim.setCaseId("TC-1042");
         sim.setSerial("LOT-A-000123");
         sim.setLotId("LOT-A");
         sim.setVerdict("CLONE_DETECTED");

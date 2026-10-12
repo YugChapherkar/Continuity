@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrustFabricIncidentResponse {
+    private String caseId;
     private String incidentId;
     private String handoffId;
     private String serial;
@@ -19,6 +20,9 @@ public class TrustFabricIncidentResponse {
     private String completenessGateStatus; // "BLOCKED: Inspection & Recall Tasks Incomplete"
 
     public TrustFabricIncidentResponse() {}
+
+    public String getCaseId() { return caseId; }
+    public void setCaseId(String caseId) { this.caseId = caseId; }
 
     public String getIncidentId() { return incidentId; }
     public void setIncidentId(String incidentId) { this.incidentId = incidentId; }
