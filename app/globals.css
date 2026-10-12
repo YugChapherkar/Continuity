@@ -304,8 +304,17 @@ html.light h4:not([class*="bg-"]):not(button *) {
   color: #0F172A !important;
 }
 
-html.light :not(button):not(button *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]).text-white {
+html.light :not(button):not(button *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *).text-white {
   color: #0F172A !important;
+}
+
+/* Explicitly preserve crisp white text inside dark cards and landing sections */
+html.light [class*="bg-[#070914]"] .text-white,
+html.light [class*="bg-[#070914]"] h1,
+html.light [class*="bg-[#090C1A]"] .text-white,
+html.light [class*="bg-[#111428]"] .text-white,
+html.light [class*="bg-[#1E1B4B]"] .text-white {
+  color: #FFFFFF !important;
 }
 
 /* Blue primary action buttons ALWAYS keep pure white text */

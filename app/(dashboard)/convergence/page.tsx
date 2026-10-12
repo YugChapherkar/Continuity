@@ -434,7 +434,7 @@ export default function ConvergencePage() {
                   <span>Interactive Proof Flow 1 — Clone QR Attack Mitigation</span>
                 </div>
                 <h2 className="text-xl font-bold text-white">
-                  Simulate Trust Fabric Clone Incident $\to$ Fan-out CONTINUITY Recall Tasks
+                  Simulate Trust Fabric Clone Incident → Fan-out CONTINUITY Recall Tasks
                 </h2>
                 <p className="text-xs text-neutral-300 leading-relaxed">
                   Triggers Trust Fabric Clone Detection (<code className="text-red-300 font-mono">LOT-A-000123</code>), anchors the breach hash to the Besu EVM chain, converts the incident into a CONTINUITY Handoff Dossier, fans out 3 per-custodian recall tasks with deadlines, and enforces the physical inspection Completeness Gate.

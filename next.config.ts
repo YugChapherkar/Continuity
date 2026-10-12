@@ -23,6 +23,9 @@ const nextConfig: NextConfig = {
   },
   output: 'standalone',
   transpilePackages: ['motion'],
+  devIndicators: {
+    position: 'bottom-right',
+  },
   async rewrites() {
     return [
       {
