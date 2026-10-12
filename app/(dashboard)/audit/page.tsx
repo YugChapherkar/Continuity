@@ -94,7 +94,7 @@ export default function AuditTrailPage() {
 
       {/* Verification Status Banner if Run */}
       {verificationResult && (
-        <div className="bg-emerald-950/20 border border-emerald-500/30 rounded-2xl p-4 flex items-center justify-between gap-4 animate-fade-in">
+        <div className="bg-emerald-950/15 border border-emerald-500/20 rounded-2xl p-4 flex items-center justify-between gap-4 backdrop-blur-md animate-fade-in">
           <div className="flex items-center gap-3">
             <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
             <div>
@@ -106,7 +106,7 @@ export default function AuditTrailPage() {
               </p>
             </div>
           </div>
-          <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300">
+          <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/20">
             0% DRIFT
           </span>
         </div>
@@ -116,18 +116,18 @@ export default function AuditTrailPage() {
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-neutral-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search by actor, project, hash or details..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#141718] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-[#2563EB]"
+            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-10 pr-4 py-2.5 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-blue-500/50 transition-colors"
           />
         </div>
 
         {/* Action Type Filter */}
-        <div className="flex items-center gap-1.5 p-1 bg-[#141718] border border-white/10 rounded-xl overflow-x-auto">
+        <div className="flex items-center gap-1.5 p-1 bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-x-auto">
           {['ALL', 'HANDOFF_INITIATED', 'HANDOFF_ACCEPTED', 'ADR_REGISTERED', 'VERSION_PINNED'].map((act) => (
             <button
               key={act}
@@ -145,10 +145,10 @@ export default function AuditTrailPage() {
       </div>
 
       {/* Audit Table */}
-      <div className="bg-[#0D0F10] border border-white/10 rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl shadow-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-[#F5F5F2]">
-            <thead className="bg-[#050606] border-b border-white/10 text-neutral-400 uppercase text-[10px] tracking-wider font-mono">
+            <thead className="bg-white/[0.02] border-b border-white/[0.08] text-neutral-400 uppercase text-[10px] tracking-wider font-mono">
               <tr>
                 <th scope="col" className="px-6 py-3.5">Block / Hash</th>
                 <th scope="col" className="px-6 py-3.5">Timestamp</th>
@@ -158,15 +158,15 @@ export default function AuditTrailPage() {
                 <th scope="col" className="px-6 py-3.5 text-right">Integrity</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-white/[0.04]">
               {filteredLogs.map((log) => {
                 const actionBadge = {
-                  HANDOFF_INITIATED: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+                  HANDOFF_INITIATED: 'text-blue-300 bg-blue-500/10 border-blue-500/20',
                   HANDOFF_ACCEPTED: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
                   ADR_REGISTERED: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-                  VERSION_PINNED: 'text-violet-400 bg-violet-500/10 border-violet-500/20',
-                  TASK_STATUS_CHANGED: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
-                  OWNERSHIP_TRANSFERRED: 'text-pink-400 bg-pink-500/10 border-pink-500/20',
+                  VERSION_PINNED: 'text-neutral-300 bg-white/5 border-white/10',
+                  TASK_STATUS_CHANGED: 'text-blue-300 bg-blue-500/10 border-blue-500/20',
+                  OWNERSHIP_TRANSFERRED: 'text-neutral-300 bg-white/5 border-white/10',
                 }[log.action] || 'text-neutral-400 bg-white/5 border-white/10';
 
                 return (

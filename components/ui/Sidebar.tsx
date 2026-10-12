@@ -15,11 +15,13 @@ import {
   Menu,
   X,
   PanelLeftClose,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { currentUser, handoffs, isSidebarOpen, toggleSidebar } = useApp();
+  const { currentUser, handoffs, isSidebarOpen, toggleSidebar, theme, toggleTheme } = useApp();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   // Pending for current user
@@ -90,16 +92,16 @@ export function Sidebar() {
               onClick={() => setIsMobileOpen(false)}
               className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
                 isActive
-                  ? 'bg-[#2563EB]/15 text-[#3B82F6] border border-[#2563EB]/30 shadow-sm'
-                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-white/5'
+                  ? 'bg-white/[0.07] text-[#F5F5F2] border border-white/[0.12] shadow-sm'
+                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-white/[0.04]'
               }`}
             >
               <div className="flex items-center gap-3">
-                <Icon className={`w-4 h-4 ${isActive ? 'text-[#3B82F6]' : 'text-neutral-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-blue-400' : 'text-neutral-400'}`} />
                 <span>{item.label}</span>
               </div>
               {item.badge && (
-                <span className="text-[10px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-mono">
+                <span className="text-[10px] font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/25 px-2 py-0.5 rounded-full font-mono">
                   {item.badge}
                 </span>
               )}
@@ -108,16 +110,30 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Bottom Profile Card */}
+      {/* Bottom Profile Card & Theme Toggle */}
       <div className="p-3 border-t border-white/10 bg-[#050606]/60">
-        <div className="w-full flex items-center gap-3 p-2.5 rounded-xl text-left">
-          <Avatar name={currentUser.name} initials={currentUser.initials} size="sm" showIndicator />
-          <div className="min-w-0">
-            <p className="text-xs font-medium text-[#F5F5F2] truncate">
-              {currentUser.name}
-            </p>
-            <p className="text-[10px] text-neutral-400 truncate">{currentUser.role}</p>
+        <div className="w-full flex items-center justify-between p-2 rounded-xl text-left">
+          <div className="flex items-center gap-3 min-w-0">
+            <Avatar name={currentUser.name} initials={currentUser.initials} size="sm" showIndicator />
+            <div className="min-w-0">
+              <p className="text-xs font-medium text-[#F5F5F2] truncate">
+                {currentUser.name}
+              </p>
+              <p className="text-[10px] text-neutral-400 truncate">{currentUser.role}</p>
+            </div>
           </div>
+          <button
+            onClick={toggleTheme}
+            className="p-1.5 text-neutral-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors shrink-0"
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? (
+              <Sun className="w-3.5 h-3.5 text-amber-400" />
+            ) : (
+              <Moon className="w-3.5 h-3.5 text-blue-600" />
+            )}
+          </button>
         </div>
       </div>
     </div>

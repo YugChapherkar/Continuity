@@ -12,8 +12,6 @@ interface AppContextType {
   handoffs: HandoffPackage[];
   auditLogs: AuditLogEntry[];
   notifications: AppNotification[];
-  isPersonaModalOpen: boolean;
-  setIsPersonaModalOpen: (open: boolean) => void;
   isCreateHandoffModalOpen: boolean;
   setIsCreateHandoffModalOpen: (open: boolean) => void;
   isCommandPaletteOpen: boolean;
@@ -39,6 +37,9 @@ interface AppContextType {
   isSidebarOpen: boolean;
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleSidebar: () => void;
+  theme: 'dark' | 'light';
+  setTheme: (theme: 'dark' | 'light') => void;
+  toggleTheme: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -51,12 +52,28 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(INITIAL_AUDIT_LOGS);
   const [notifications, setNotifications] = useState<AppNotification[]>(INITIAL_NOTIFICATIONS);
 
-  const [isPersonaModalOpen, setIsPersonaModalOpen] = useState(false);
   const [isCreateHandoffModalOpen, setIsCreateHandoffModalOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [theme, setThemeState] = useState<'dark' | 'light'>('dark');
+
+  const applyTheme = (newTheme: 'dark' | 'light') => {
+    setThemeState(newTheme);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('continuity_theme', newTheme);
+      } catch {}
+      document.documentElement.classList.remove('dark', 'light');
+      document.documentElement.classList.add(newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
+    }
+  };
+
+  const toggleTheme = () => {
+    applyTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -90,6 +107,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (savedProjects) setProjects(JSON.parse(savedProjects));
         const savedAuditLogs = localStorage.getItem('continuity_audit_logs');
         if (savedAuditLogs) setAuditLogs(JSON.parse(savedAuditLogs));
+        const savedTheme = localStorage.getItem('continuity_theme') as 'dark' | 'light' | null;
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          applyTheme(savedTheme);
+        } else {
+          applyTheme('dark');
+        }
       } catch {
         // storage disabled or unavailable in sandboxed iframe
       }
@@ -358,8 +381,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         handoffs,
         auditLogs,
         notifications,
-        isPersonaModalOpen,
-        setIsPersonaModalOpen,
         isCreateHandoffModalOpen,
         setIsCreateHandoffModalOpen,
         isCommandPaletteOpen,
@@ -376,6 +397,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         isSidebarOpen,
         setIsSidebarOpen,
         toggleSidebar,
+        theme,
+        setTheme: applyTheme,
+        toggleTheme,
       }}
     >
       {children}

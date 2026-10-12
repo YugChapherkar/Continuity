@@ -7,10 +7,15 @@ import { IridescentWave } from '@/components/ui/IridescentWave';
 import { useApp } from '@/context/AppContext';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { isSidebarOpen } = useApp();
+  const { isSidebarOpen, theme } = useApp();
+  const isLight = theme === 'light';
 
   return (
-    <div className="min-h-screen bg-[#050606] text-[#F5F5F2] flex flex-col md:flex-row relative overflow-x-clip">
+    <div
+      className={`min-h-screen transition-colors duration-300 flex flex-col md:flex-row relative overflow-x-clip ${
+        isLight ? 'bg-[#F8FAFC] text-slate-900' : 'bg-[#050606] text-[#F5F5F2]'
+      }`}
+    >
       <Sidebar />
       <div
         className={`flex-1 flex flex-col min-w-0 relative min-h-screen transition-[padding] duration-300 ease-in-out ${

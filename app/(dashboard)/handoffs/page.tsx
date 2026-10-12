@@ -67,7 +67,7 @@ export default function HandoffsInboxPage() {
       {/* Tabs and Search Controls */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1.5 p-1 bg-[#141718] border border-white/10 rounded-xl overflow-x-auto">
+        <div className="flex items-center gap-1.5 p-1 bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-x-auto">
           {(['All', 'Received', 'Sent', 'Pending', 'Accepted'] as const).map((tab) => {
             const count = {
               All: handoffs.length,
@@ -96,28 +96,28 @@ export default function HandoffsInboxPage() {
 
         {/* Search */}
         <div className="relative max-w-xs w-full">
-          <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-neutral-500 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search dossier ID, project, author..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#141718] border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-[#2563EB]"
+            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-9 pr-4 py-2 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-blue-500/50 transition-colors"
           />
         </div>
       </div>
 
       {/* Attention Callout if user has pending received handoffs */}
       {pendingReceivedCount > 0 && activeTab !== 'Sent' && (
-        <div className="bg-amber-950/20 border border-amber-500/30 rounded-2xl p-4 flex items-center justify-between gap-4">
+        <div className="bg-blue-950/15 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-between gap-4 backdrop-blur-md">
           <div className="flex items-center gap-3">
-            <AlertCircle className="w-5 h-5 text-amber-400 shrink-0" />
+            <AlertCircle className="w-4 h-4 text-blue-400 shrink-0" />
             <div>
-              <p className="text-xs font-semibold text-amber-200">
-                You have {pendingReceivedCount} handoff package awaiting your verified acceptance as {currentUser.name}.
+              <p className="text-xs font-medium text-blue-200">
+                You have {pendingReceivedCount} handoff package awaiting your acceptance as {currentUser.name}.
               </p>
-              <p className="text-[11px] text-amber-300/70 mt-0.5">
-                Review executive briefing, verify runbook commands, and digitally attest responsibility.
+              <p className="text-[11px] text-neutral-400 mt-0.5">
+                Review executive briefing, verify runbook commands, and attest responsibility.
               </p>
             </div>
           </div>
@@ -140,20 +140,20 @@ export default function HandoffsInboxPage() {
           return (
             <div
               key={handoff.id}
-              className={`bg-[#0D0F10] border rounded-2xl p-6 shadow-xl transition-all ${
+              className={`bg-[#0B0D0E]/60 backdrop-blur-md border rounded-2xl p-6 transition-all ${
                 isAssignedToMe
-                  ? 'border-amber-500/40 hover:border-amber-500/60'
-                  : 'border-white/10 hover:border-white/20'
+                  ? 'border-blue-500/30 hover:border-blue-500/50 shadow-lg shadow-blue-500/5'
+                  : 'border-white/[0.08] hover:border-white/20'
               }`}
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="space-y-3 max-w-3xl">
                   {/* Top Badges */}
                   <div className="flex flex-wrap items-center gap-2.5">
-                    <span className="font-mono text-xs font-bold text-blue-400">
+                    <span className="font-mono text-xs font-semibold text-blue-400">
                       {handoff.id}
                     </span>
-                    <span className="text-neutral-500">·</span>
+                    <span className="text-neutral-600">·</span>
                     <span className="font-mono text-xs text-neutral-400">
                       Pinned {handoff.pinnedVersionId} ({handoff.pinnedVersionHash})
                     </span>
@@ -163,20 +163,20 @@ export default function HandoffsInboxPage() {
                           ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
                           : handoff.status === 'Completed'
                           ? 'bg-blue-500/15 text-blue-300 border-blue-500/30'
-                          : 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                          : 'bg-white/5 text-neutral-300 border-white/10'
                       }`}
                     >
                       {handoff.status}
                     </span>
                     {isAssignedToMe && (
-                      <span className="text-[11px] font-semibold bg-amber-500 text-black px-2 py-0.5 rounded-full font-mono">
+                      <span className="text-[11px] font-medium bg-blue-500/15 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full font-mono">
                         ACTION REQUIRED
                       </span>
                     )}
                   </div>
 
                   {/* Title & Note */}
-                  <h2 className="text-lg font-bold text-[#F5F5F2]">{handoff.projectName}</h2>
+                  <h2 className="text-base font-semibold text-[#F5F5F2]">{handoff.projectName}</h2>
                   <p className="text-xs text-[#A0A09D] leading-relaxed line-clamp-2">
                     {handoff.note}
                   </p>
@@ -194,9 +194,9 @@ export default function HandoffsInboxPage() {
                       <Avatar name={recipient?.name || ''} initials={recipient?.initials} size="xs" />
                       <span className="text-neutral-300">{recipient?.name}</span>
                     </div>
-                    <span>·</span>
-                    <div className="flex items-center gap-1.5 font-mono text-[11px]">
-                      <Clock className="w-3.5 h-3.5 text-neutral-500" />
+                    <span className="text-neutral-600">·</span>
+                    <div className="flex items-center gap-1.5 font-mono text-[11px] text-neutral-500">
+                      <Clock className="w-3.5 h-3.5" />
                       <span>{new Date(handoff.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
@@ -206,10 +206,10 @@ export default function HandoffsInboxPage() {
                 <div className="flex items-center gap-3 shrink-0">
                   <Link
                     href={`/handoffs/${handoff.id}`}
-                    className={`px-5 py-2.5 text-xs font-semibold rounded-xl transition-all flex items-center gap-2 shadow-sm ${
+                    className={`px-4 py-2 text-xs font-semibold rounded-xl transition-all flex items-center gap-2 shadow-sm ${
                       isAssignedToMe
                         ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white shadow-[#2563EB]/25'
-                        : 'bg-white/5 hover:bg-white/10 text-neutral-200'
+                        : 'bg-white/5 hover:bg-white/10 text-neutral-200 border border-white/[0.08]'
                     }`}
                   >
                     <span>{isAssignedToMe ? 'Accept Responsibility' : 'Inspect Dossier'}</span>
@@ -222,7 +222,7 @@ export default function HandoffsInboxPage() {
         })}
 
         {filteredHandoffs.length === 0 && (
-          <div className="p-16 text-center text-neutral-500 text-xs bg-[#0D0F10] border border-white/5 rounded-2xl space-y-2">
+          <div className="p-16 text-center text-neutral-500 text-xs bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl space-y-2">
             <Inbox className="w-6 h-6 mx-auto text-neutral-600" />
             <p>No handoff dossiers in this queue.</p>
           </div>
