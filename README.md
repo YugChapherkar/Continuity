@@ -57,6 +57,87 @@ In fast-moving teams, transferring a task or project from one person to another 
 
 ---
 
+## 🏛️ System Design & Architecture Blueprint
+
+### 💡 The Core System Design Prompt
+> **"Design a lossless, tamper-evident Digital Handoff & Continuity Management Platform that eliminates context fragmentation when engineering shifts rotate or task custodianship is transferred. The system must enforce structured pre-dispatch completeness scoring, maintain cryptographic ledger auditability (SHA-256), track task operational deadlines with overdue alerts, provide grounded contextual retrieval (RAG) over past architectural decisions, and guarantee zero information loss during high-stakes operational transfers."**
+
+### 📐 High-Level Architecture
+
+```mermaid
+graph TD
+    Client["Client Tier (Next.js 15 + React 19 + Tailwind v4)"]
+    
+    subgraph SpringBootBackend["Backend Tier (Spring Boot 3.3.5 / Java 21)"]
+        Security["Security & Persona Filter (User Identity Context)"]
+        HandoffCtrl["Handoff & Signoff Controller"]
+        VersionCtrl["Snapshot & Diff Engine"]
+        TaskCtrl["Task & Deadline Controller"]
+        RagCtrl["Gemini AI RAG Controller"]
+        
+        Validator["Pre-Dispatch Readiness Validator (0-100%)"]
+        Hasher["SHA-256 Tree Hash Signing Engine"]
+        Concurrency["Optimistic Locking Guard (409 Conflict)"]
+    end
+    
+    subgraph DataTier["Data & AI Tier"]
+        DB[("Database (PostgreSQL / H2 File DB - Flyway V1-V4)")]
+        Gemini["Google Gemini GenAI SDK / Embeddings"]
+    end
+
+    Client -->|REST API / JSON| Security
+    Security --> HandoffCtrl
+    Security --> VersionCtrl
+    Security --> TaskCtrl
+    Security --> RagCtrl
+
+    HandoffCtrl --> Validator
+    HandoffCtrl --> Hasher
+    VersionCtrl --> Concurrency
+    RagCtrl --> Gemini
+
+    HandoffCtrl --> DB
+    VersionCtrl --> DB
+    TaskCtrl --> DB
+```
+
+### 🔄 End-to-End Handover Data Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Sender as Outgoing Engineer
+    participant UI as Next.js Dashboard
+    participant API as Spring Boot API
+    participant Validator as Readiness Engine
+    participant Hasher as SHA-256 Hasher
+    participant DB as Database Ledger
+    actor Recipient as Incoming Engineer
+
+    Sender->>UI: Compiles Handoff (Summary, Runbook, Next Steps)
+    UI->>Validator: Pre-submission readiness scoring (0-100%)
+    alt Score < 75%
+        Validator-->>UI: Warns missing runbook commands or short summary
+    end
+    Sender->>UI: Dispatches handoff package
+    UI->>API: POST /api/handoffs
+    API->>Hasher: Generate SHA-256 cryptographic signature
+    API->>DB: Store immutable Handoff Dossier + Audit Log entry
+    API-->>Recipient: Operational Alert / Notification dispatched
+    Recipient->>UI: Inspects dossier, executes runbook commands
+    Recipient->>UI: Attests operational readiness & signs off
+    UI->>API: POST /api/handoffs/{id}/accept
+    API->>DB: Record signoff attestation, transfer primary custodianship
+```
+
+### 📋 Key System Design Pillars
+1. **Lossless Context Bundling:** Combines code version hashes, runbook diagnostic probes, ADR decisions, and immediate blockers into a unified transfer package.
+2. **Automated Quality Gate (Readiness Validator):** Algorithmic scoring (+30% Summary, +25% Milestones, +25% Runbooks, +20% Next Steps) preventing incomplete handovers.
+3. **Concurrency Conflict Prevention:** Optimistic locking guards against concurrent state overwrite (`409 Conflict`).
+4. **Cryptographic Proof of Handover:** Verifiable SHA-256 tree hashing generates digital receipts proving who handed what to whom at any point in time.
+
+---
+
 ## 🛠️ Tech Stack Made Easy
 
 | Part | Technology | What it does |
