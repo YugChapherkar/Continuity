@@ -25,6 +25,7 @@ public class HandoffService {
     private final ArchitectureDecisionRepository decisionRepository;
     private final VersionFileRepository fileRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
     private final ActivityService activityService;
     private final NotificationService notificationService;
     private final ObjectMapper objectMapper;
@@ -36,6 +37,7 @@ public class HandoffService {
                           ArchitectureDecisionRepository decisionRepository,
                           VersionFileRepository fileRepository,
                           UserRepository userRepository,
+                          TaskRepository taskRepository,
                           ActivityService activityService,
                           NotificationService notificationService,
                           ObjectMapper objectMapper) {
@@ -46,6 +48,7 @@ public class HandoffService {
         this.decisionRepository = decisionRepository;
         this.fileRepository = fileRepository;
         this.userRepository = userRepository;
+        this.taskRepository = taskRepository;
         this.activityService = activityService;
         this.notificationService = notificationService;
         this.objectMapper = objectMapper;
@@ -261,6 +264,57 @@ public class HandoffService {
         }
 
         return Math.min(100, score);
+    }
+
+    public HandoffReadinessDto validateHandoffReadiness(String projectId, CreateHandoffRequest request) {
+        int score = calculateCompletenessScore(request);
+        List<String> warnings = new ArrayList<>();
+        List<String> satisfiedChecks = new ArrayList<>();
+
+        if (request.getExecutiveSummary() == null || request.getExecutiveSummary().trim().length() < 20) {
+            warnings.add("Executive summary is under 20 characters; detailed operational context recommended.");
+        } else {
+            satisfiedChecks.add("Executive briefing depth verified (" + request.getExecutiveSummary().trim().length() + " chars).");
+        }
+
+        if (request.getCompletedItems() == null || request.getCompletedItems().isEmpty()) {
+            warnings.add("Completed milestones or verified tests are missing.");
+        } else {
+            satisfiedChecks.add("Completed milestones verified (" + request.getCompletedItems().size() + " items).");
+        }
+
+        if (request.getRunbookCommands() == null || request.getRunbookCommands().isEmpty()) {
+            warnings.add("Runbook verification commands are missing. Recipient lacks immediate diagnostic tools.");
+        } else {
+            satisfiedChecks.add("Runbook commands verified (" + request.getRunbookCommands().size() + " commands).");
+        }
+
+        if (request.getNextSteps() == null || request.getNextSteps().isEmpty()) {
+            warnings.add("Immediate next steps are missing. Shift continuity may stall.");
+        } else {
+            satisfiedChecks.add("Immediate next steps defined (" + request.getNextSteps().size() + " steps).");
+        }
+
+        // Project-level checks: unassigned or critical blockers
+        List<TaskEntity> projectTasks = taskRepository.findByProjectId(projectId);
+        long unresolvedP0 = projectTasks.stream()
+                .filter(t -> ("P0".equalsIgnoreCase(t.getPriority()) || "Critical".equalsIgnoreCase(t.getStatus())) && !"Done".equalsIgnoreCase(t.getStatus()))
+                .count();
+        if (unresolvedP0 > 0) {
+            warnings.add(unresolvedP0 + " critical P0 task(s) currently unresolved in project workspace.");
+        } else {
+            satisfiedChecks.add("All P0 critical tasks in project workspace resolved or verified.");
+        }
+
+        long unassigned = projectTasks.stream()
+                .filter(t -> t.getAssignee() == null || t.getAssignee().trim().isEmpty() || "Unassigned".equalsIgnoreCase(t.getAssignee()))
+                .count();
+        if (unassigned > 0) {
+            warnings.add(unassigned + " task(s) in workspace are currently unassigned.");
+        }
+
+        boolean ready = score >= 75 && unresolvedP0 == 0;
+        return new HandoffReadinessDto(score, ready, warnings, satisfiedChecks);
     }
 
     public HandoffDto toDto(HandoffEntity entity) {

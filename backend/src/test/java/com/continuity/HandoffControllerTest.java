@@ -88,4 +88,21 @@ public class HandoffControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.ownerId").value("user-jessica"));
     }
+
+    @Test
+    void testValidateHandoffReadiness() throws Exception {
+        CreateHandoffRequest req = new CreateHandoffRequest();
+        req.setExecutiveSummary("Complete lossless handoff for Apollo Core consensus engine.");
+        req.setCompletedItems(List.of("Tested io_uring journals"));
+        req.setRunbookCommands(List.of("./bin/apollo-ctl status"));
+        req.setNextSteps(List.of("Deploy canary node"));
+
+        mockMvc.perform(post("/api/projects/apollo-core/handoffs/validate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.score").isNumber())
+                .andExpect(jsonPath("$.ready").isBoolean())
+                .andExpect(jsonPath("$.satisfiedChecks").isArray());
+    }
 }

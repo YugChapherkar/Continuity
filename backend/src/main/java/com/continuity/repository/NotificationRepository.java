@@ -10,4 +10,5 @@ import java.util.List;
 public interface NotificationRepository extends JpaRepository<NotificationEntity, String> {
     List<NotificationEntity> findByRecipientIdOrderByTimestampDesc(String recipientId);
     List<NotificationEntity> findAllByOrderByTimestampDesc();
+    boolean existsByRecipientIdAndTitle(String recipientId, String title);
 }

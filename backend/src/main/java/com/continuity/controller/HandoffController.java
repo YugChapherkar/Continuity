@@ -38,6 +38,13 @@ public class HandoffController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
+    @PostMapping("/api/projects/{projectId}/handoffs/validate")
+    @Operation(summary = "Evaluate pre-submission completeness and identify operational readiness gaps")
+    public ResponseEntity<HandoffReadinessDto> validateHandoff(@PathVariable String projectId,
+                                                               @RequestBody CreateHandoffRequest request) {
+        return ResponseEntity.ok(handoffService.validateHandoffReadiness(projectId, request));
+    }
+
     @GetMapping("/api/handoffs/{handoffId}")
     @Operation(summary = "Get handoff dossier details")
     public ResponseEntity<HandoffDto> getHandoffById(@PathVariable String handoffId) {

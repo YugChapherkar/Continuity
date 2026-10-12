@@ -25,6 +25,10 @@ UPDATE tasks SET deadline = '2026-10-10' WHERE id = 'task-1'; -- OVERDUE!
 UPDATE tasks SET deadline = '2026-10-15' WHERE id = 'task-2';
 UPDATE tasks SET deadline = '2026-10-18' WHERE id = 'task-3';
 UPDATE tasks SET deadline = '2026-10-22' WHERE id = 'task-4';
+UPDATE tasks SET deadline = '2026-10-10' WHERE id = 'TSK-101'; -- OVERDUE!
+UPDATE tasks SET deadline = '2026-10-15' WHERE id = 'TSK-102';
+UPDATE tasks SET deadline = '2026-10-18' WHERE id = 'TSK-103';
+UPDATE tasks SET deadline = '2026-10-22' WHERE id = 'TSK-104';
 
 -- 5. Seed initial operational alerts and notifications
 INSERT INTO notifications (id, recipient_id, title, message, type, read, timestamp, link)

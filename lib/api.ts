@@ -196,6 +196,31 @@ export const api = {
     return handleResponse(res);
   },
 
+  async validateHandoff(
+    projectId: string,
+    payload: {
+      recipientId?: string;
+      note?: string;
+      executiveSummary?: string;
+      completedItems?: string[];
+      nextSteps?: string[];
+      criticalBlockers?: string[];
+      runbookCommands?: string[];
+    }
+  ): Promise<{
+    score: number;
+    ready: boolean;
+    warnings: string[];
+    satisfiedChecks: string[];
+  }> {
+    const res = await fetch(`${API_BASE_URL}/api/projects/${projectId}/handoffs/validate`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    return handleResponse(res);
+  },
+
   async acceptHandoff(
     handoffId: string,
     signoffNote: string

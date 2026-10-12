@@ -55,6 +55,62 @@ export function CreateHandoffModal() {
     (hasRunbook ? 25 : 0) +
     (hasNextSteps ? 20 : 0);
 
+  // Automated Pre-Submission Validation Warnings
+  const validationWarnings: string[] = [];
+  const validationSuccesses: string[] = [];
+
+  // 1. Task blockers & unassigned tasks check in selected project
+  const unresolvedP0Tasks =
+    selectedProject?.tasks.filter(
+      (t) => (t.priority === 'P0' || t.status === 'Critical') && t.status !== 'Done'
+    ) || [];
+  if (unresolvedP0Tasks.length > 0) {
+    validationWarnings.push(
+      `${unresolvedP0Tasks.length} critical P0 task(s) unresolved: ${unresolvedP0Tasks
+        .map((t) => t.title)
+        .join(', ')}`
+    );
+  } else {
+    validationSuccesses.push('All critical P0 tasks in workspace resolved');
+  }
+
+  const unassignedTasks =
+    selectedProject?.tasks.filter(
+      (t) => !t.assignee || t.assignee.trim() === '' || t.assignee.toLowerCase() === 'unassigned'
+    ) || [];
+  if (unassignedTasks.length > 0) {
+    validationWarnings.push(
+      `${unassignedTasks.length} task(s) are unassigned; pending receiver triage`
+    );
+  }
+
+  // 2. Executive summary depth check
+  if (!hasValidSummary) {
+    if (executiveSummary.trim().length === 0) {
+      validationWarnings.push('Executive briefing is empty (mandatory)');
+    } else {
+      validationWarnings.push(
+        `Executive briefing is under 20 characters (${executiveSummary.trim().length} chars entered)`
+      );
+    }
+  } else {
+    validationSuccesses.push('Executive briefing meets depth threshold');
+  }
+
+  // 3. Runbook commands check
+  if (!hasRunbook) {
+    validationWarnings.push('Runbook commands missing; recipient cannot run diagnostic probes');
+  } else {
+    validationSuccesses.push(`${runbookCommands.length} runbook command(s) ready`);
+  }
+
+  // 4. Next steps check
+  if (!hasNextSteps) {
+    validationWarnings.push('Immediate next steps missing; shift transition continuity at risk');
+  } else {
+    validationSuccesses.push(`${nextSteps.length} immediate next step(s) specified`);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!executiveSummary.trim()) {
@@ -483,6 +539,46 @@ export function CreateHandoffModal() {
                 <Plus className="w-4 h-4" />
               </button>
             </div>
+          </div>
+
+          {/* Automated Pre-Submission Validation Warnings Card */}
+          <div className="p-4 rounded-xl border transition-all text-xs space-y-2.5 bg-[var(--surface-secondary)] border-[var(--border-subtle)]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-semibold text-[var(--text-primary)]">
+                {validationWarnings.length > 0 ? (
+                  <AlertCircle className="w-4 h-4 text-amber-500" />
+                ) : (
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                )}
+                <span>Automated Pre-Submission Readiness Audit</span>
+              </div>
+              <span
+                className={`font-mono text-[11px] px-2 py-0.5 rounded-full ${
+                  validationWarnings.length > 0
+                    ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
+                    : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                }`}
+              >
+                {validationWarnings.length > 0
+                  ? `${validationWarnings.length} Warnings Detected`
+                  : 'All Checks Verified'}
+              </span>
+            </div>
+
+            {validationWarnings.length > 0 ? (
+              <ul className="space-y-1.5 pt-1 text-[var(--text-secondary)]">
+                {validationWarnings.map((warn, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold shrink-0 mt-0.5">⚠</span>
+                    <span className="leading-relaxed">{warn}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-emerald-600 dark:text-emerald-400 text-[11px] pt-1">
+                ✓ Ready for safe lossless handover. Target commit pinned, runbook verification commands attached, and critical blockers verified.
+              </p>
+            )}
           </div>
         </form>
 
