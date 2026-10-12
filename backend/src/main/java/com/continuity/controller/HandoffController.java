@@ -38,6 +38,18 @@ public class HandoffController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
+    @PostMapping("/api/handoffs")
+    @Operation(summary = "Create handoff directly with projectId in payload (Trust Fabric Convergence)")
+    public ResponseEntity<HandoffDto> createDirectHandoff(@Valid @RequestBody CreateHandoffRequest request,
+                                                          @RequestHeader(value = "X-User-Id", required = false) String userId) {
+        String projectId = (request.getProjectId() != null && !request.getProjectId().isBlank())
+                ? request.getProjectId()
+                : "apollo-core";
+        String currentUserId = userId != null ? userId : (request.getSenderId() != null ? request.getSenderId() : SecurityUtils.getCurrentUserId());
+        HandoffDto created = handoffService.createHandoff(projectId, request, currentUserId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
     @PostMapping("/api/projects/{projectId}/handoffs/validate")
     @Operation(summary = "Evaluate pre-submission completeness and identify operational readiness gaps")
     public ResponseEntity<HandoffReadinessDto> validateHandoff(@PathVariable String projectId,

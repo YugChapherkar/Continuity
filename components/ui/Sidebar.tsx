@@ -17,6 +17,7 @@ import {
   PanelLeftClose,
   Sun,
   Moon,
+  Network,
 } from 'lucide-react';
 
 export function Sidebar() {
@@ -40,6 +41,7 @@ export function Sidebar() {
     { label: 'Team Directory', href: '/team', icon: Users },
     { label: 'Audit Trail', href: '/audit', icon: ShieldCheck },
     { label: 'AI Terminal', href: '/assistant', icon: Terminal },
+    { label: 'Convergence Hub', href: '/convergence', icon: Network, badge: 'Live' },
   ];
 
   const sidebarContent = (

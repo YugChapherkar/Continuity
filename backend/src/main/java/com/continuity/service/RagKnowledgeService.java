@@ -79,6 +79,10 @@ public class RagKnowledgeService {
         return new KnowledgeStatusDto(resolvedProjectId, versionId != null ? versionId : "latest", "READY", files.size(), LocalDateTime.now().toString(), null);
     }
 
+    public KnowledgeStatusDto indexVersionFiles(String projectId, String versionId, List<VersionFileEntity> files) {
+        return reindexProject(projectId, versionId);
+    }
+
     public KnowledgeStatusDto reindexProject(String projectId, String versionId) {
         String resolvedProjectId = resolveProjectId(projectId);
         String targetVersion = (versionId != null && !versionId.isBlank()) ? versionId : "v2.4.0";

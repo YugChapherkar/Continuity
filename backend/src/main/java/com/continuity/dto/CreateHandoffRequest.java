@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateHandoffRequest {
+    private String projectId;
+    private String senderId;
+
     @NotBlank(message = "Recipient ID is required")
     private String recipientId;
 
@@ -20,6 +23,10 @@ public class CreateHandoffRequest {
 
     public CreateHandoffRequest() {}
 
+    public String getProjectId() { return projectId; }
+    public void setProjectId(String projectId) { this.projectId = projectId; }
+    public String getSenderId() { return senderId; }
+    public void setSenderId(String senderId) { this.senderId = senderId; }
     public String getRecipientId() { return recipientId; }
     public void setRecipientId(String recipientId) { this.recipientId = recipientId; }
     public String getNote() { return note; }

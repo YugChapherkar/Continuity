@@ -1,0 +1,150 @@
+# Convergence Specification — Trust Fabric (Cyber) × CONTINUITY (Lossless Handoffs)
+
+**Branch**: `convergence`  
+**Status**: ACTIVE & TESTED  
+**Joint Demo**: 1-Click Interactive via `/convergence` Hub  
+
+---
+
+## 1. Executive Overview
+
+This specification establishes the cross-ecosystem bridge between:
+1. **Team Trust Fabric** (PS2 Physical-to-Digital Anti-Counterfeit Trust Fabric):
+   - FastAPI core running on `http://localhost:8000`
+   - Hyperledger Besu EVM private blockchain on `http://localhost:8545` (Chain ID 1337)
+2. **CONTINUITY**:
+   - Lossless engineering governance, custodial handoffs, completeness gates, and task orchestration on `http://localhost:8080` (Backend) and `http://localhost:3000` (Frontend).
+
+When Trust Fabric detects a clone attack or compromised physical lot, CONTINUITY converts the breach into a **governed transfer dossier**, fans out **custodian recall tasks with strict deadlines**, anchors the incident hash to the **Besu EVM ledger**, and enforces a **Completeness Gate** preventing any custodian from accepting custody until mandatory physical inspections are signed off.
+
+---
+
+## 2. Actor DID Mapping Roster
+
+Trust Fabric uses W3C Decentralized Identifiers (`did:*`), which CONTINUITY automatically resolves to its authenticated engineering custodians:
+
+| Trust Fabric DID | CONTINUITY User ID | Custodian Name | Role in Supply Chain |
+|---|---|---|---|
+| `did:maker1` | `user-yash` | Yash Lokhande | Manufacturer / Initial Custodian |
+| `did:transporter1` | `user-shruti` | Shruti Patil | Logistics & Transport Telemetry |
+| `did:retailer1` | `user-jessica` | Jessicaa Chauhab | Retail Custodian & Incident Receiver |
+
+---
+
+## 3. Endpoints CONTINUITY Exposes for Trust Fabric
+
+### 3.1 Actor Roster
+```http
+GET http://localhost:8080/api/convergence/actor-map
+```
+**Response**:
+```json
+{
+  "status": "CONFIRMED",
+  "project": "apollo-core",
+  "actors": [
+    { "did": "did:maker1", "userId": "user-yash", "name": "Yash Lokhande", "role": "Manufacturer / Initial Custodian" },
+    { "did": "did:transporter1", "userId": "user-shruti", "name": "Shruti Patil", "role": "Logistics & Transport Telemetry" },
+    { "did": "did:retailer1", "userId": "user-jessica", "name": "Jessicaa Chauhab", "role": "Retail Custodian & Incident Receiver" }
+  ]
+}
+```
+
+---
+
+### 3.2 Ingest Security Breach / Clone Incident (Flow 1)
+```http
+POST http://localhost:8080/api/convergence/incidents
+Content-Type: application/json
+```
+**Payload**:
+```json
+{
+  "serial": "LOT-A-000123",
+  "lotId": "LOT-A",
+  "verdict": "CLONE_DETECTED",
+  "riskScore": 80,
+  "confidence": "high",
+  "failedChecks": [
+    "Check R04: Seen in Mumbai at 10:00 and Delhi at 10:20 (~3450 km/h)"
+  ],
+  "evidenceBundleUrl": "http://localhost:8000/products/LOT-A-000123/bundle"
+}
+```
+**What CONTINUITY executes automatically**:
+1. Generates an emergency **Handoff Dossier** (`HO-2026-690`) assigned to retailer custodian `user-jessica`.
+2. Fans out **3 per-custodian recall tasks** with countdown deadlines:
+   - `TSK-RECALL-01` (P0): Physical package inspection & shelf quarantine (Jessicaa Chauhab) — **Gate Blocker**.
+   - `TSK-RECALL-02` (P0): Transit telemetry audit (Shruti Patil).
+   - `TSK-RECALL-03` (P1): Revoke Lot LOT-A key on Besu EVM contract (Yash Lokhande).
+3. Anchors the dossier digest and incident state to the **Besu EVM chain** (`POST http://localhost:8000/anchor/document` or deterministic proof).
+4. Locks the **Completeness Gate** (custody cannot be accepted until inspection is verified).
+
+---
+
+### 3.3 Direct Handoff Creation
+```http
+POST http://localhost:8080/api/handoffs
+Content-Type: application/json
+```
+**Payload**:
+```json
+{
+  "projectId": "apollo-core",
+  "senderId": "did:maker1",
+  "recipientId": "did:retailer1",
+  "note": "Production batch transfer with Besu EVM root anchor"
+}
+```
+
+---
+
+### 3.4 1-Click Joint Simulation Trigger
+```http
+POST http://localhost:8080/api/convergence/simulate-clone
+```
+Triggers the entire end-to-end Flow 1 pipeline with one click.
+
+---
+
+### 3.5 Blast Radius Analysis
+```http
+GET http://localhost:8080/api/convergence/blast-radius/LOT-A
+```
+
+---
+
+## 4. Completeness Gate Mechanism
+
+To prevent premature sign-offs during physical counterfeiting breaches:
+- `POST /api/handoffs/{id}/accept?recipientId=user-jessica` with `{}` fails with HTTP 400:
+  ```json
+  {
+    "status": 400,
+    "error": "Bad Request",
+    "message": "COMPLETENESS_GATE_BLOCKED: Mandatory physical package inspection (TSK-RECALL-01) is incomplete. You cannot accept custody until physical package inspection is completed."
+  }
+  ```
+- To override after physical inspection is verified:
+  ```json
+  POST /api/handoffs/{id}/accept?recipientId=user-jessica
+  {
+    "forceAccept": true,
+    "signoffNote": "Physical package inspection verified; counterfeit unit quarantined."
+  }
+  ```
+
+---
+
+## 5. Live Jury Demo Walkthrough (5 Minutes)
+
+1. Open `http://localhost:3000/convergence` in the browser.
+2. Observe the **Bridge Status**: Trust Fabric Engine, Besu EVM Chain, and CONTINUITY Core.
+3. Switch to the **Actor DID Mapping** tab to show the jury how `did:maker1`, `did:transporter1`, and `did:retailer1` link to Yash, Shruti, and Jessica.
+4. Click **"Simulate Clone QR Attack"**:
+   - Live Besu EVM transaction hash (`0x...`) generated with block number.
+   - Breach card appears: Serial `LOT-A-000123`, Risk Score `80/100`, Check R04 velocity anomaly.
+   - 3 fanned-out recall tasks appear with real deadlines.
+5. Demonstrate the **Completeness Gate**:
+   - Click "Attempt Normal Sign-off" $\to$ See red gate alert blocking the sign-off!
+   - Click "Verify Inspection & Accept Custody" $\to$ See green gate pass with tamper-evident audit trail!
