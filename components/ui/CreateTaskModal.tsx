@@ -10,19 +10,26 @@ interface CreateTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
   onTaskCreated?: (task: Task) => void;
+  initialAssignee?: string;
 }
 
-export function CreateTaskModal({ projectId, isOpen, onClose, onTaskCreated }: CreateTaskModalProps) {
+export function CreateTaskModal({ projectId, isOpen, onClose, onTaskCreated, initialAssignee }: CreateTaskModalProps) {
   const { users, currentUser, showToast, refreshData } = useApp();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<'P0' | 'P1' | 'P2'>('P1');
   const [status, setStatus] = useState<Task['status']>('In Progress');
-  const [assignee, setAssignee] = useState(currentUser.name || users[0]?.name || 'Jessicaa Chauhab');
+  const [assignee, setAssignee] = useState(initialAssignee || currentUser.name || users[0]?.name || 'Jessicaa Chauhab');
   const [deadline, setDeadline] = useState('');
   const [blockers, setBlockers] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  React.useEffect(() => {
+    if (initialAssignee) {
+      setAssignee(initialAssignee);
+    }
+  }, [initialAssignee]);
 
   if (!isOpen) return null;
 

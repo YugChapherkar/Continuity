@@ -105,16 +105,16 @@ How can I assist your engineering shift handover today? Select an inquiry below 
   return (
     <div className="space-y-6 max-w-5xl mx-auto flex flex-col h-[calc(100vh-8rem)]">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4 shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-4 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center text-blue-400 shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/15 border border-blue-200 dark:border-blue-500/25 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
             <Terminal className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-[#F5F5F2]">
-              AI Knowledge Query Terminal
+            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-[#F5F5F2]">
+              AI Knowledge <span className="font-serif italic text-blue-600 dark:text-blue-400 font-normal">Query Terminal</span>
             </h1>
-            <p className="text-xs text-[#A0A09D]">
+            <p className="text-xs text-slate-500 dark:text-[#A0A09D]">
               Context-anchored citations to ratified ADRs, runbook commands, and handoff invariants.
             </p>
           </div>
@@ -124,7 +124,7 @@ How can I assist your engineering shift handover today? Select an inquiry below 
           <select
             value={selectedProjectId}
             onChange={(e) => setSelectedProjectId(e.target.value)}
-            className="bg-[#141718] border border-white/10 rounded-lg text-xs text-[#F5F5F2] px-3 py-1.5 focus:outline-none focus:border-blue-500 font-mono"
+            className="bg-white dark:bg-[#141718] border border-slate-200 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-[#F5F5F2] px-3 py-2 focus:outline-none focus:border-blue-500 font-mono shadow-sm"
           >
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
@@ -133,8 +133,8 @@ How can I assist your engineering shift handover today? Select an inquiry below 
             ))}
           </select>
 
-          <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full shrink-0">
-            <ShieldCheck className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 px-3 py-1.5 rounded-full shrink-0 shadow-sm">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             <span>Spring Boot RAG</span>
           </div>
         </div>
@@ -145,36 +145,36 @@ How can I assist your engineering shift handover today? Select an inquiry below 
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`p-5 rounded-2xl border transition-all backdrop-blur-md ${
+            className={`p-5 rounded-2xl border transition-all backdrop-blur-md shadow-sm ${
               msg.role === 'assistant'
-                ? 'bg-[#0B0D0E]/60 border-white/[0.08] text-neutral-200'
-                : 'bg-blue-600/10 border-blue-500/25 text-white ml-8 sm:ml-16'
+                ? 'bg-white dark:bg-[#0B0D0E]/60 border-slate-200 dark:border-white/[0.08] text-slate-800 dark:text-neutral-200'
+                : 'bg-blue-50 dark:bg-blue-600/10 border-blue-200 dark:border-blue-500/25 text-slate-900 dark:text-white ml-8 sm:ml-16'
             }`}
           >
             <div className="flex items-center justify-between mb-3 text-xs">
               <div className="flex items-center gap-2 font-semibold">
                 {msg.role === 'assistant' ? (
                   <>
-                    <Bot className="w-4 h-4 text-blue-400" />
-                    <span className="text-blue-400 font-mono">CONTINUITY SYNTHESIZER</span>
+                    <Bot className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <span className="text-blue-600 dark:text-blue-400 font-mono font-bold">CONTINUITY SYNTHESIZER</span>
                   </>
                 ) : (
                   <>
-                    <User className="w-4 h-4 text-neutral-400" />
-                    <span className="text-neutral-300">ENGINEER QUERY</span>
+                    <User className="w-4 h-4 text-slate-500 dark:text-neutral-400" />
+                    <span className="text-slate-700 dark:text-neutral-300 font-bold">ENGINEER QUERY</span>
                   </>
                 )}
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-neutral-500">{msg.timestamp}</span>
+                <span className="font-mono text-[10px] text-slate-500 dark:text-neutral-500">{msg.timestamp}</span>
                 {msg.role === 'assistant' && (
                   <button
                     onClick={() => copyText(msg.content, i)}
-                    className="p-1 text-neutral-500 hover:text-white rounded hover:bg-white/5 transition-colors"
+                    className="p-1 text-slate-400 hover:text-slate-700 dark:text-neutral-500 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer"
                     title="Copy response"
                   >
                     {copiedIndex === i ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
@@ -183,18 +183,18 @@ How can I assist your engineering shift handover today? Select an inquiry below 
               </div>
             </div>
 
-            <div className="text-xs leading-relaxed whitespace-pre-wrap font-mono text-neutral-300">
+            <div className="text-xs leading-relaxed whitespace-pre-wrap font-mono text-slate-700 dark:text-neutral-300">
               {msg.content}
             </div>
 
             {/* Citations Footer */}
             {msg.citations && msg.citations.length > 0 && (
-              <div className="mt-4 pt-3 border-t border-white/[0.06] flex flex-wrap items-center gap-2 text-[11px]">
-                <span className="text-neutral-500 font-mono">Grounding Citations:</span>
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/[0.06] flex flex-wrap items-center gap-2 text-[11px]">
+                <span className="text-slate-500 dark:text-neutral-500 font-mono font-semibold">Grounding Citations:</span>
                 {msg.citations.map((cite, cIdx) => (
                   <span
                     key={cIdx}
-                    className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono"
+                    className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/20 font-mono"
                   >
                     {cite}
                   </span>
@@ -205,8 +205,8 @@ How can I assist your engineering shift handover today? Select an inquiry below 
         ))}
 
         {isLoading && (
-          <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-5 text-xs text-neutral-400 font-mono flex items-center gap-3">
-            <RefreshCw className="w-4 h-4 text-blue-400 animate-spin" />
+          <div className="bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 text-xs text-slate-500 dark:text-neutral-400 font-mono flex items-center gap-3 shadow-sm">
+            <RefreshCw className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-spin" />
             <span>Parsing repository trees, ADR decision matrices, and handoff dossiers...</span>
           </div>
         )}
@@ -214,14 +214,14 @@ How can I assist your engineering shift handover today? Select an inquiry below 
 
       {/* Suggested Queries Strip */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 shrink-0">
-        <span className="text-[11px] text-neutral-500 shrink-0 flex items-center gap-1 font-mono">
-          <Sparkles className="w-3 h-3 text-blue-400" /> Prompt:
+        <span className="text-[11px] text-slate-500 dark:text-neutral-500 shrink-0 flex items-center gap-1 font-mono font-semibold">
+          <Sparkles className="w-3 h-3 text-blue-600 dark:text-blue-400" /> Prompt:
         </span>
         {PROMPT_SUGGESTIONS.map((s, idx) => (
           <button
             key={idx}
             onClick={() => handleSend(s)}
-            className="px-3 py-1.5 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] rounded-xl text-[11px] text-neutral-300 whitespace-nowrap transition-colors"
+            className="px-3.5 py-1.5 bg-white dark:bg-white/[0.03] hover:bg-slate-50 dark:hover:bg-white/[0.08] border border-slate-200 dark:border-white/[0.08] rounded-xl text-[11px] text-slate-700 dark:text-neutral-300 whitespace-nowrap transition-colors shadow-sm cursor-pointer"
           >
             {s}
           </button>
@@ -229,7 +229,7 @@ How can I assist your engineering shift handover today? Select an inquiry below 
       </div>
 
       {/* Chat Input Bar */}
-      <div className="shrink-0 bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-2.5 flex items-center gap-3">
+      <div className="shrink-0 bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl p-2.5 flex items-center gap-3 shadow-sm">
         <input
           type="text"
           placeholder="Ask anything about architecture decisions, runbook commands, or shift handover..."
@@ -238,12 +238,12 @@ How can I assist your engineering shift handover today? Select an inquiry below 
           onKeyDown={(e) => {
             if (e.key === 'Enter') handleSend();
           }}
-          className="flex-1 bg-transparent px-3 py-2 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none font-mono"
+          className="flex-1 bg-transparent px-3 py-2 text-xs text-slate-900 dark:text-[#F5F5F2] placeholder-slate-400 dark:placeholder-neutral-500 focus:outline-none font-mono"
         />
         <button
           onClick={() => handleSend()}
           disabled={isLoading || !input.trim()}
-          className="px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold rounded-xl shadow-md shadow-[#2563EB]/25 transition-all flex items-center gap-1.5 disabled:opacity-50"
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md shadow-blue-600/25 transition-all flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
         >
           <span>Send</span>
           <Send className="w-3.5 h-3.5" />

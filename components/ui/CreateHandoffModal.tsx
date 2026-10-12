@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/context/AppContext';
-import { X, Send, AlertCircle, Plus, Trash2, ShieldCheck, CheckCircle2, Clock, Terminal, Check } from 'lucide-react';
+import { X, Send, AlertCircle, Plus, Trash2, ShieldCheck, CheckCircle2, Clock, Terminal, Check, Users } from 'lucide-react';
 
 export function CreateHandoffModal() {
   const {
     isCreateHandoffModalOpen,
     setIsCreateHandoffModalOpen,
+    handoffTarget,
+    setHandoffTarget,
     projects,
     users,
     currentUser,
@@ -19,6 +21,17 @@ export function CreateHandoffModal() {
   const [recipientId, setRecipientId] = useState(
     users.find((u) => u.id !== currentUser.id)?.id || users[0]?.id || ''
   );
+
+  useEffect(() => {
+    if (handoffTarget) {
+      if (handoffTarget.projectId) {
+        setProjectId(handoffTarget.projectId);
+      }
+      if (handoffTarget.recipientId) {
+        setRecipientId(handoffTarget.recipientId);
+      }
+    }
+  }, [handoffTarget]);
   const [note, setNote] = useState('');
   const [executiveSummary, setExecutiveSummary] = useState('');
   const [completedItems, setCompletedItems] = useState<string[]>([
@@ -37,6 +50,9 @@ export function CreateHandoffModal() {
     './bin/ctl cluster status',
   ]);
   const [newCommand, setNewCommand] = useState('');
+  const [taskId, setTaskId] = useState('');
+  const [setupInstructions, setSetupInstructions] = useState('./bin/ctl cluster status --verify');
+  const [filesInput, setFilesInput] = useState('src/consensus/raft_state.rs');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isCreateHandoffModalOpen) return null;
@@ -62,7 +78,10 @@ export function CreateHandoffModal() {
   // 1. Task blockers & unassigned tasks check in selected project
   const unresolvedP0Tasks =
     selectedProject?.tasks.filter(
-      (t) => (t.priority === 'P0' || t.status === 'Critical') && t.status !== 'Done'
+      (t) =>
+        (t.priority === 'P0' || (t.status as string) === 'Critical' || t.status === 'Blocked') &&
+        t.status !== 'Done' &&
+        t.status !== 'Completed'
     ) || [];
   if (unresolvedP0Tasks.length > 0) {
     validationWarnings.push(
@@ -129,6 +148,7 @@ export function CreateHandoffModal() {
     try {
       await createHandoff({
         projectId,
+        taskId: taskId || undefined,
         recipientId,
         note: note || `Engineering handoff for ${selectedProject?.name}`,
         executiveSummary,
@@ -136,6 +156,8 @@ export function CreateHandoffModal() {
         nextSteps,
         criticalBlockers,
         runbookCommands,
+        setupInstructions,
+        files: filesInput ? filesInput.split(',').map((f) => f.trim()).filter(Boolean) : [],
       });
       setIsCreateHandoffModalOpen(false);
     } finally {
@@ -255,20 +277,31 @@ export function CreateHandoffModal() {
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 sm:space-y-6 bg-white dark:bg-[#0D0F11]">
-          {/* Project & Recipient Pickers */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Lossless Handover Notice */}
+          <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 flex items-start gap-2.5">
+            <ShieldCheck className="w-4 h-4 shrink-0 text-blue-400 mt-0.5" />
+            <span>
+              <strong>Lossless Custodianship Invariant:</strong> Dispatching this handover does <em>not</em> transfer ownership. Primary ownership transfers atomically only after recipient acceptance or an authorized manager override.
+            </span>
+          </div>
+
+          {/* Project, Task & Recipient Pickers */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                 Target Project Workspace
               </label>
               <select
                 value={projectId}
-                onChange={(e) => setProjectId(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-[#14171A] border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                onChange={(e) => {
+                  setProjectId(e.target.value);
+                  setTaskId('');
+                }}
+                className="w-full bg-slate-50 dark:bg-[#14171A] border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-all"
               >
                 {projects.map((p) => (
                   <option key={p.id} value={p.id}>
-                    {p.name} ({p.currentVersionId})
+                    {p.name}
                   </option>
                 ))}
               </select>
@@ -276,19 +309,85 @@ export function CreateHandoffModal() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                Designated Recipient (Assuming Ownership)
+                Specific Task (Optional)
               </label>
+              <select
+                value={taskId}
+                onChange={(e) => setTaskId(e.target.value)}
+                className="w-full bg-slate-50 dark:bg-[#14171A] border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-all font-mono"
+              >
+                <option value="">Full Project Scope</option>
+                {selectedProject?.tasks?.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.id}: {t.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  Designated Recipient (Assuming Ownership)
+                </label>
+                {selectedProject?.team && (
+                  <span className="text-[10px] text-blue-500 font-mono">
+                    {selectedProject.team}
+                  </span>
+                )}
+              </div>
               <select
                 value={recipientId}
                 onChange={(e) => setRecipientId(e.target.value)}
                 className="w-full bg-slate-50 dark:bg-[#14171A] border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
               >
-                {users.map((u) => (
-                  <option key={u.id} value={u.id}>
-                    {u.name} — {u.role}
-                  </option>
-                ))}
+                {selectedProject?.teamMembers && selectedProject.teamMembers.length > 0 && (
+                  <optgroup label="👥 Project Team Members (Recommended)">
+                    {selectedProject.teamMembers.map((tm) => {
+                      const u = users.find((x) => x.id === tm.userId);
+                      if (!u) return null;
+                      return (
+                        <option key={u.id} value={u.id}>
+                          ⭐ {u.name} — {tm.role} ({u.employeeId || 'Team'})
+                        </option>
+                      );
+                    })}
+                  </optgroup>
+                )}
+                <optgroup label="🏢 All Engineering Teammates">
+                  {users.map((u) => (
+                    <option key={u.id} value={u.id}>
+                      {u.name} — {u.role}
+                    </option>
+                  ))}
+                </optgroup>
               </select>
+
+              {/* Quick Select Teammate Chips */}
+              {selectedProject?.teamMembers && selectedProject.teamMembers.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                  <span className="text-[10px] text-neutral-400">Team:</span>
+                  {selectedProject.teamMembers.map((tm) => {
+                    const u = users.find((x) => x.id === tm.userId);
+                    if (!u) return null;
+                    const isSelected = recipientId === u.id;
+                    return (
+                      <button
+                        key={u.id}
+                        type="button"
+                        onClick={() => setRecipientId(u.id)}
+                        className={`text-[10px] px-2 py-0.5 rounded-lg border transition-all cursor-pointer ${
+                          isSelected
+                            ? 'bg-blue-600 text-white border-blue-600 font-semibold shadow-sm'
+                            : 'bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-neutral-300 hover:border-blue-400'
+                        }`}
+                      >
+                        {u.name.split(' ')[0]} ({tm.role.split(' ')[0]})
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
 

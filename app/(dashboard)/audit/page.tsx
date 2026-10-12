@@ -16,7 +16,8 @@ import {
 } from 'lucide-react';
 
 export default function AuditTrailPage() {
-  const { auditLogs, showToast } = useApp();
+  const { auditLogs, showToast, theme } = useApp();
+  const isLight = theme === 'light';
   const [search, setSearch] = useState('');
   const [actionFilter, setActionFilter] = useState('ALL');
   const [isVerifying, setIsVerifying] = useState(false);
@@ -30,7 +31,7 @@ export default function AuditTrailPage() {
     const q = search.toLowerCase();
     const matchesSearch =
       log.actorName.toLowerCase().includes(q) ||
-      log.projectName.toLowerCase().includes(q) ||
+      (log.projectName ? log.projectName.toLowerCase().includes(q) : false) ||
       log.detail.toLowerCase().includes(q) ||
       log.hash.toLowerCase().includes(q);
     const matchesAction = actionFilter === 'ALL' || log.action === actionFilter;
@@ -67,10 +68,10 @@ export default function AuditTrailPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-[#F5F5F2]">
-            Tamper-Evident Activity Audit Trail
+            Activity Audit Trail
           </h1>
           <p className="text-xs text-[#A0A09D] mt-1">
-            Immutable SHA-256 cryptographic chain recording handoff state transitions, ADR ratifications, and custody assumptions.
+            Complete log of project updates, shift handoffs, and team actions.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -116,31 +117,48 @@ export default function AuditTrailPage() {
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-neutral-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className={`w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 ${isLight ? 'text-slate-400' : 'text-neutral-400'}`} />
           <input
             type="text"
             placeholder="Search by actor, project, hash or details..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl pl-10 pr-4 py-2.5 text-xs text-[#F5F5F2] placeholder-neutral-500 focus:outline-none focus:border-blue-500/50 transition-colors"
+            className={`w-full rounded-xl pl-10 pr-4 py-2.5 text-xs transition-colors shadow-md border focus:outline-none focus:border-blue-500 ${
+              isLight
+                ? 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'
+                : 'bg-[#0E1116] border-white/15 text-[#F5F5F2] placeholder-neutral-400'
+            }`}
+            style={{ backgroundColor: isLight ? '#FFFFFF' : '#0E1116' }}
           />
         </div>
 
         {/* Action Type Filter */}
-        <div className="flex items-center gap-1.5 p-1 bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-x-auto">
-          {['ALL', 'HANDOFF_INITIATED', 'HANDOFF_ACCEPTED', 'ADR_REGISTERED', 'VERSION_PINNED'].map((act) => (
-            <button
-              key={act}
-              onClick={() => setActionFilter(act)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap font-mono ${
-                actionFilter === act
-                  ? 'bg-[#2563EB] text-white shadow-sm'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              {act === 'ALL' ? 'All Events' : act.replace('_', ' ')}
-            </button>
-          ))}
+        <div
+          className={`flex items-center gap-1 p-1 rounded-xl overflow-x-auto shadow-lg border transition-all ${
+            isLight
+              ? 'bg-white border-slate-200 shadow-slate-200/50'
+              : 'bg-[#0E1116] border-white/15 shadow-black/50'
+          }`}
+          style={{ backgroundColor: isLight ? '#FFFFFF' : '#0E1116' }}
+        >
+          {['ALL', 'HANDOFF_INITIATED', 'HANDOFF_ACCEPTED', 'ADR_REGISTERED', 'VERSION_PINNED'].map((act) => {
+            const isSelected = actionFilter === act;
+            return (
+              <button
+                key={act}
+                onClick={() => setActionFilter(act)}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap font-mono cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/40 font-bold'
+                    : isLight
+                    ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium'
+                    : 'text-neutral-200 hover:text-white hover:bg-white/10 font-medium'
+                }`}
+              >
+                {act === 'ALL' ? 'All Events' : act.replace('_', ' ')}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -160,14 +178,15 @@ export default function AuditTrailPage() {
             </thead>
             <tbody className="divide-y divide-white/[0.04]">
               {filteredLogs.map((log) => {
-                const actionBadge = {
+                const actionBadge: Record<string, string> = {
                   HANDOFF_INITIATED: 'text-blue-300 bg-blue-500/10 border-blue-500/20',
                   HANDOFF_ACCEPTED: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
                   ADR_REGISTERED: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
                   VERSION_PINNED: 'text-neutral-300 bg-white/5 border-white/10',
                   TASK_STATUS_CHANGED: 'text-blue-300 bg-blue-500/10 border-blue-500/20',
                   OWNERSHIP_TRANSFERRED: 'text-neutral-300 bg-white/5 border-white/10',
-                }[log.action] || 'text-neutral-400 bg-white/5 border-white/10';
+                };
+                const badgeStyle = actionBadge[log.action] || 'text-neutral-400 bg-white/5 border-white/10';
 
                 return (
                   <tr key={log.id} className="hover:bg-white/[0.02] transition-colors">
@@ -181,7 +200,7 @@ export default function AuditTrailPage() {
                       {log.timestamp}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-2 py-0.5 rounded-full border text-[10px] font-mono font-medium ${actionBadge}`}>
+                      <span className={`px-2 py-0.5 rounded-full border text-[10px] font-mono font-medium ${badgeStyle}`}>
                         {log.action}
                       </span>
                     </td>

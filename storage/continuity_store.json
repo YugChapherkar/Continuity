@@ -1,0 +1,4424 @@
+{
+  "users": [
+    {
+      "id": "user-admin",
+      "name": "Alexander Ward",
+      "email": "admin@continuity.internal",
+      "employeeId": "ADM-0001",
+      "role": "System Administrator & Executive Sponsor",
+      "systemRole": "Admin",
+      "accountStatus": "Active",
+      "avatar": "",
+      "initials": "AW",
+      "department": "Platform Administration & Executive Leadership",
+      "bio": "Executive platform administrator overseeing enterprise governance, team orchestration, deliverable sign-offs, and final client release delivery.",
+      "location": "San Francisco, CA (HQ)",
+      "activeProjectsCount": 4,
+      "pendingHandoffsCount": 0,
+      "isAdmin": true,
+      "createdAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "user-marcus",
+      "name": "Marcus Vance",
+      "email": "m.vance@continuity.internal",
+      "employeeId": "CNT-1004",
+      "role": "Staff Systems Architect & Team Leader",
+      "systemRole": "Team Leader",
+      "accountStatus": "Active",
+      "teamId": "team-delta-rapid-deployment-5ed",
+      "avatar": "",
+      "initials": "MV",
+      "department": "Distributed Storage & Consensus",
+      "bio": "Author of Apollo Raft consensus engine and WAL persistence tier. Leads execution across core replication components.",
+      "location": "Zurich, Switzerland (CET)",
+      "activeProjectsCount": 2,
+      "pendingHandoffsCount": 0,
+      "createdAt": "2026-01-15T00:00:00Z"
+    },
+    {
+      "id": "user-sarah",
+      "name": "Sarah Lin",
+      "email": "s.lin@continuity.internal",
+      "employeeId": "CNT-1005",
+      "role": "Principal Reliability Engineer & Team Leader",
+      "systemRole": "Team Leader",
+      "accountStatus": "Active",
+      "teamId": "team-observability",
+      "avatar": "",
+      "initials": "SL",
+      "department": "Cloud & Edge Observability",
+      "bio": "Directs edge telemetry, zero-loss SLO guardrails, and automated failover orchestration.",
+      "location": "New York, NY (EST)",
+      "activeProjectsCount": 2,
+      "pendingHandoffsCount": 1,
+      "createdAt": "2026-02-01T00:00:00Z"
+    },
+    {
+      "id": "user-elena",
+      "name": "Elena Rostova",
+      "email": "e.rostova@continuity.internal",
+      "employeeId": "CNT-1006",
+      "role": "Staff Security Engineer & Team Leader",
+      "systemRole": "Team Leader",
+      "accountStatus": "Active",
+      "teamId": "team-security",
+      "avatar": "",
+      "initials": "ER",
+      "department": "Auth & Zero-Trust Cryptography",
+      "bio": "Oversees root certificate rotation, HSM key orchestration, and zero-knowledge identity protocols.",
+      "location": "London, UK (GMT)",
+      "activeProjectsCount": 1,
+      "pendingHandoffsCount": 1,
+      "createdAt": "2026-02-15T00:00:00Z"
+    },
+    {
+      "id": "user-jessica",
+      "name": "Jessica Chauhan",
+      "email": "chauhanjessicaa27@gmail.com",
+      "employeeId": "CNT-1001",
+      "role": "Senior Distributed Systems Engineer",
+      "systemRole": "Employee",
+      "accountStatus": "Active",
+      "teamId": "team-delta-rapid-deployment-5ed",
+      "avatar": "",
+      "initials": "JC",
+      "department": "Platform Architecture & Core Infrastructure",
+      "bio": "Core contributor to consensus replication, zero-copy kernel I/O, and rotation resilience.",
+      "location": "San Francisco, CA (PST)",
+      "activeProjectsCount": 2,
+      "pendingHandoffsCount": 1,
+      "createdAt": "2026-03-01T00:00:00Z"
+    },
+    {
+      "id": "user-yash",
+      "name": "Yash Lokhande",
+      "email": "yash.lokhande@continuity.internal",
+      "employeeId": "CNT-1002",
+      "role": "Principal Systems Architect",
+      "systemRole": "Employee",
+      "accountStatus": "Active",
+      "teamId": "team-storage",
+      "avatar": "",
+      "initials": "YL",
+      "department": "Distributed Systems & Consensus Core",
+      "bio": "Author of Apollo Raft consensus engine and WAL persistence tier. Rotating across APAC & EMEA timezones.",
+      "location": "Mumbai, IN (IST)",
+      "activeProjectsCount": 2,
+      "pendingHandoffsCount": 1,
+      "createdAt": "2026-03-15T00:00:00Z"
+    },
+    {
+      "id": "user-shruti",
+      "name": "Shruti Patil",
+      "email": "shruti.patil@continuity.internal",
+      "employeeId": "CNT-1003",
+      "role": "Lead Site Reliability Engineer",
+      "systemRole": "Employee",
+      "accountStatus": "Active",
+      "teamId": "team-observability",
+      "avatar": "",
+      "initials": "SP",
+      "department": "Cloud & Edge Reliability Infrastructure",
+      "bio": "Specialist in zero-loss shift rotations, kernel observability guardrails, and automated failover orchestration.",
+      "location": "Pune, IN (IST)",
+      "activeProjectsCount": 2,
+      "pendingHandoffsCount": 1,
+      "createdAt": "2026-04-01T00:00:00Z"
+    },
+    {
+      "id": "user-david",
+      "name": "David Kim",
+      "email": "d.kim@continuity.internal",
+      "employeeId": "CNT-1007",
+      "role": "Senior Security & Cryptography Engineer",
+      "systemRole": "Employee",
+      "accountStatus": "Active",
+      "teamId": "team-security",
+      "avatar": "",
+      "initials": "DK",
+      "department": "Auth & Zero-Trust Cryptography",
+      "bio": "Specialist in WebAuthn hardware token attestation and public key infrastructure hardening.",
+      "location": "Seattle, WA (PST)",
+      "activeProjectsCount": 1,
+      "pendingHandoffsCount": 0,
+      "createdAt": "2026-04-15T00:00:00Z"
+    },
+    {
+      "id": "user-alex",
+      "name": "Alex Chen",
+      "email": "a.chen@continuity.internal",
+      "employeeId": "CNT-1008",
+      "role": "Senior Observability Systems Engineer",
+      "systemRole": "Employee",
+      "accountStatus": "Active",
+      "teamId": "team-observability",
+      "avatar": "",
+      "initials": "AC",
+      "department": "Cloud & Edge Observability",
+      "bio": "High-performance eBPF probes, kernel telemetry exporters, and distributed trace aggregators.",
+      "location": "Austin, TX (CST)",
+      "activeProjectsCount": 1,
+      "pendingHandoffsCount": 0,
+      "createdAt": "2026-05-01T00:00:00Z"
+    }
+  ],
+  "teams": [
+    {
+      "id": "team-storage",
+      "name": "Consensus & Distributed Storage Pod",
+      "description": "Distributed systems engineers responsible for Raft state machine replication, WAL disk persistence, and cross-datacenter linearizability.",
+      "department": "Core Infrastructure",
+      "status": "Active",
+      "leaderId": "user-marcus",
+      "leaderName": "Marcus Vance",
+      "memberIds": [
+        "user-marcus",
+        "user-jessica",
+        "user-yash"
+      ],
+      "createdAt": "2026-01-15T08:00:00Z",
+      "updatedAt": "2026-10-10T12:00:00Z"
+    },
+    {
+      "id": "team-observability",
+      "name": "Edge Reliability & Telemetry Fleet",
+      "description": "Site reliability engineers managing real-time eBPF trace mesh, kernel health probes, and automated disaster failover circuits.",
+      "department": "Site Reliability",
+      "status": "Active",
+      "leaderId": "user-sarah",
+      "leaderName": "Sarah Lin",
+      "memberIds": [
+        "user-sarah",
+        "user-shruti",
+        "user-alex"
+      ],
+      "createdAt": "2026-02-01T09:00:00Z",
+      "updatedAt": "2026-10-11T14:30:00Z"
+    },
+    {
+      "id": "team-security",
+      "name": "Zero-Trust Identity & Crypto Guard",
+      "description": "Security engineers building WebAuthn attestation, cryptographic audit ledgers, and automated mTLS root certificate rotations.",
+      "department": "Security & Compliance",
+      "status": "Active",
+      "leaderId": "user-elena",
+      "leaderName": "Elena Rostova",
+      "memberIds": [
+        "user-elena",
+        "user-david"
+      ],
+      "createdAt": "2026-02-15T10:00:00Z",
+      "updatedAt": "2026-10-09T18:00:00Z"
+    },
+    {
+      "id": "team-delta-rapid-deployment-5ed",
+      "name": "Delta Rapid Deployment",
+      "description": "Special forces pod for rapid continuous delivery",
+      "department": "Platform Architecture & Core Infrastructure",
+      "status": "Active",
+      "leaderId": "user-marcus",
+      "leaderName": "Marcus Vance",
+      "memberIds": [
+        "user-marcus",
+        "user-jessica"
+      ],
+      "createdAt": "2026-10-12T15:19:06.076Z",
+      "updatedAt": "2026-10-12T15:19:06.076Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": "apollo-core",
+      "name": "Apollo Core Distributed Consensus",
+      "description": "High-throughput Raft state machine and distributed write-ahead log (WAL) powering multi-region state synchronization.",
+      "client": "Apex Financial Technologies LLC",
+      "scope": "Multi-datacenter zero-loss consensus engine with sub-2ms commit latency under high transaction volume.",
+      "expectedDeliverables": [
+        "Production Raft consensus binary with io_uring WAL flush engine",
+        "Failover testing report demonstrating zero data loss at 100k writes/sec",
+        "Operational runbook, deployment Helm charts, and Prometheus dashboards"
+      ],
+      "startDate": "2026-06-01",
+      "deadline": "2026-11-15",
+      "priority": "P0",
+      "budget": "$240,000",
+      "teamId": "team-storage",
+      "teamLeaderId": "user-marcus",
+      "stakeholders": [
+        "Dr. Arthur Hayes (CTO, Apex Financial)",
+        "Alexander Ward (Admin)"
+      ],
+      "acceptanceCriteria": "Linearizable reads verified via Jepsen test suite; p99 write latency <= 2ms; automated failover under 500ms.",
+      "status": "Active",
+      "health": "Green",
+      "healthReasons": [
+        "All 4 milestone targets on schedule",
+        "No unresolved critical blockers"
+      ],
+      "currentVersionId": "v2.4.0",
+      "ownerId": "user-marcus",
+      "team": "Consensus & Distributed Storage Pod",
+      "teamDescription": "Distributed systems engineers responsible for Raft state machine replication and WAL disk persistence.",
+      "teamChannel": "#team-apollo-consensus",
+      "teamMembers": [
+        {
+          "userId": "user-marcus",
+          "role": "Lead",
+          "responsibility": "Author of Apollo Raft consensus engine & WAL persistence layer",
+          "joinedAt": "2026-01-15"
+        },
+        {
+          "userId": "user-jessica",
+          "role": "Member",
+          "responsibility": "Zero-loss rotation custodian & kernel IO verification",
+          "joinedAt": "2026-03-20",
+          "isPrimaryOnCall": true
+        },
+        {
+          "userId": "user-yash",
+          "role": "Member",
+          "responsibility": "WAL memory-mapped IO and replication throughput benchmarks",
+          "joinedAt": "2026-05-10"
+        }
+      ],
+      "repositoryUrl": "github.com/internal-corp/apollo-core",
+      "architectureSummary": "Apollo Core is a linearizable quorum-based replicated log engine written in Rust with C-bindings for node telemetry.",
+      "quickstartGuide": "./bin/apollo-node --cluster-id 0x9F4 --raft-port 9090",
+      "milestones": [
+        {
+          "id": "m-1",
+          "projectId": "apollo-core",
+          "title": "Phase 1: io_uring WAL Pipeline Implementation",
+          "deadline": "2026-08-30",
+          "status": "Completed",
+          "order": 1
+        },
+        {
+          "id": "m-2",
+          "projectId": "apollo-core",
+          "title": "Phase 2: Chaos Mesh Partition & Split-Brain Validation",
+          "deadline": "2026-10-20",
+          "status": "In Progress",
+          "order": 2
+        },
+        {
+          "id": "m-3",
+          "projectId": "apollo-core",
+          "title": "Phase 3: Production Hardening & Multi-DC Benchmarking",
+          "deadline": "2026-11-10",
+          "status": "Planned",
+          "order": 3
+        }
+      ],
+      "decisions": [
+        {
+          "id": "ADR-041",
+          "title": "Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "date": "2026-09-28",
+          "context": "Under high geographical latency, linearizable reads required full round-trip consensus to the leader, creating an artificial p99 spike.",
+          "decision": "Implemented monotonic read-lease epochs verified locally on follower nodes using synchronized monotonic clock drifts bounded by Chrony NTP.",
+          "consequences": "Read throughput increased by 310%. Follower leases expire in 80ms if heartbeat is missed.",
+          "status": "Accepted"
+        },
+        {
+          "id": "ADR-039",
+          "title": "Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring",
+          "date": "2026-08-14",
+          "context": "Fsync syscall locks on high NVMe contention were stalling log replication threads during bursts.",
+          "decision": "Replaced synchronous thread pool with dedicated submission and completion rings in Linux io_uring kernel subsystem.",
+          "consequences": "Eliminated thread context switches. Maximum throughput increased to 125k ops/sec.",
+          "status": "Accepted"
+        }
+      ],
+      "versions": [
+        {
+          "id": "v2.4.0",
+          "hash": "a9f82c1",
+          "timestamp": "2026-10-10 22:15 UTC",
+          "author": {
+            "name": "Marcus Vance",
+            "avatar": ""
+          },
+          "commitMessage": "feat(consensus): implement epoch-based monotonic read barrier & io_uring flush",
+          "changedFilesCount": 14,
+          "changedFiles": [
+            {
+              "path": "src/consensus/raft_state.rs",
+              "insertions": 142,
+              "deletions": 38
+            },
+            {
+              "path": "src/wal/journal_uring.rs",
+              "insertions": 310,
+              "deletions": 12
+            }
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "id": "TASK-826",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "title": "Validate Chaos Mesh partition suite for Raft nodes",
+          "description": "Test 4-node split-brain simulation",
+          "status": "In Progress",
+          "priority": "P1",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "assigneeName": "Marcus Vance",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-10-30",
+          "deadline": "2026-10-30",
+          "dependencies": [],
+          "acceptanceCriteria": "Deliverable meets project standards.",
+          "latestUpdate": "Executed Chaos Mesh 4-node split-brain simulation | Next: Compile final benchmark report for release review",
+          "history": [
+            {
+              "timestamp": "2026-10-12T19:17:42.769Z",
+              "actorId": "user-marcus",
+              "actorName": "Marcus Vance",
+              "fromStatus": "None",
+              "toStatus": "To Do",
+              "note": "Created and assigned to Jessica Chauhan by Marcus Vance"
+            }
+          ],
+          "createdAt": "2026-10-12T19:17:42.769Z",
+          "updatedAt": "2026-10-12T19:17:57.389Z",
+          "ownershipTimeline": [
+            {
+              "id": "own-1791832677389-v7a1",
+              "previousOwnerId": "user-jessica",
+              "previousOwnerName": "Jessica Chauhan",
+              "newOwnerId": "user-marcus",
+              "newOwnerName": "Marcus Vance",
+              "transferredAt": "2026-10-12T19:17:57.389Z",
+              "transferredBy": "user-marcus",
+              "transferredByName": "Marcus Vance",
+              "handoffId": "HO-2026-517",
+              "reason": "Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+              "method": "Recipient Acceptance"
+            }
+          ],
+          "comments": [
+            {
+              "id": "cmt-1791832688323-gjv4",
+              "authorId": "user-marcus",
+              "authorName": "Marcus Vance",
+              "authorRole": "Team Leader",
+              "text": "Chaos Mesh partition script executed. Zero split-brain discrepancies observed during 48-minute injection test.",
+              "createdAt": "2026-10-12T19:18:08.323Z"
+            }
+          ],
+          "blockerDetails": {
+            "id": "blk-1791832693383-j353",
+            "reportedBy": "user-marcus",
+            "reportedByName": "Marcus Vance",
+            "reportedAt": "2026-10-12T19:18:13.383Z",
+            "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.",
+            "severity": "High",
+            "status": "Resolved",
+            "acknowledgedBy": "user-marcus",
+            "acknowledgedByName": "Marcus Vance",
+            "acknowledgedAt": "2026-10-12T19:18:14.197Z",
+            "escalatedAt": "2026-10-12T19:18:14.523Z",
+            "escalationReason": "Cross-team platform infrastructure dependency on SRE",
+            "escalatedTo": "user-admin",
+            "escalatedToName": "Alexander Ward",
+            "resolvedBy": "user-admin",
+            "resolvedByName": "Alexander Ward",
+            "resolvedAt": "2026-10-12T19:18:15.211Z",
+            "resolutionNotes": "Systemd limits updated; memlock verified unlimited on all nodes."
+          }
+        },
+        {
+          "id": "TASK-226",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "title": "Validate Chaos Mesh partition suite for Raft nodes",
+          "description": "Test 4-node split-brain simulation",
+          "status": "In Progress",
+          "priority": "P1",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "assigneeName": "Marcus Vance",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-10-30",
+          "deadline": "2026-10-30",
+          "dependencies": [],
+          "acceptanceCriteria": "Deliverable meets project standards.",
+          "latestUpdate": "Executed Chaos Mesh 4-node split-brain simulation | Next: Compile final benchmark report for release review",
+          "history": [
+            {
+              "timestamp": "2026-10-12T17:58:53.180Z",
+              "actorId": "user-marcus",
+              "actorName": "Marcus Vance",
+              "fromStatus": "None",
+              "toStatus": "To Do",
+              "note": "Created and assigned to Jessica Chauhan by Marcus Vance"
+            }
+          ],
+          "createdAt": "2026-10-12T17:58:53.180Z",
+          "updatedAt": "2026-10-12T17:59:01.881Z",
+          "ownershipTimeline": [
+            {
+              "id": "own-1791827941881-kf3b",
+              "previousOwnerId": "user-jessica",
+              "previousOwnerName": "Jessica Chauhan",
+              "newOwnerId": "user-marcus",
+              "newOwnerName": "Marcus Vance",
+              "transferredAt": "2026-10-12T17:59:01.881Z",
+              "transferredBy": "user-marcus",
+              "transferredByName": "Marcus Vance",
+              "handoffId": "HO-2026-650",
+              "reason": "Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+              "method": "Recipient Acceptance"
+            }
+          ],
+          "comments": [
+            {
+              "id": "cmt-1791827945367-cc0p",
+              "authorId": "user-marcus",
+              "authorName": "Marcus Vance",
+              "authorRole": "Team Leader",
+              "text": "Chaos Mesh partition script executed. Zero split-brain discrepancies observed during 48-minute injection test.",
+              "createdAt": "2026-10-12T17:59:05.367Z"
+            }
+          ],
+          "blockerDetails": {
+            "id": "blk-1791827948627-ph96",
+            "reportedBy": "user-marcus",
+            "reportedByName": "Marcus Vance",
+            "reportedAt": "2026-10-12T17:59:08.627Z",
+            "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.",
+            "severity": "High",
+            "status": "Resolved",
+            "acknowledgedBy": "user-marcus",
+            "acknowledgedByName": "Marcus Vance",
+            "acknowledgedAt": "2026-10-12T17:59:09.675Z",
+            "escalatedAt": "2026-10-12T17:59:10.527Z",
+            "escalationReason": "Cross-team platform infrastructure dependency on SRE",
+            "escalatedTo": "user-admin",
+            "escalatedToName": "Alexander Ward",
+            "resolvedBy": "user-admin",
+            "resolvedByName": "Alexander Ward",
+            "resolvedAt": "2026-10-12T17:59:24.080Z",
+            "resolutionNotes": "Systemd limits updated; memlock verified unlimited on all nodes."
+          }
+        },
+        {
+          "id": "TASK-793",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "title": "Validate Chaos Mesh partition suite for Raft nodes",
+          "description": "Test 4-node split-brain simulation",
+          "status": "To Do",
+          "priority": "P1",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "assigneeName": "Marcus Vance",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-10-30",
+          "deadline": "2026-10-30",
+          "dependencies": [],
+          "acceptanceCriteria": "Deliverable meets project standards.",
+          "latestUpdate": "Task created and assigned.",
+          "history": [
+            {
+              "timestamp": "2026-10-12T17:56:36.584Z",
+              "actorId": "user-marcus",
+              "actorName": "Marcus Vance",
+              "fromStatus": "None",
+              "toStatus": "To Do",
+              "note": "Created and assigned to Jessica Chauhan by Marcus Vance"
+            }
+          ],
+          "createdAt": "2026-10-12T17:56:36.584Z",
+          "updatedAt": "2026-10-12T17:56:50.209Z",
+          "ownershipTimeline": [
+            {
+              "id": "own-1791827810210-i01r",
+              "previousOwnerId": "user-jessica",
+              "previousOwnerName": "Jessica Chauhan",
+              "newOwnerId": "user-marcus",
+              "newOwnerName": "Marcus Vance",
+              "transferredAt": "2026-10-12T17:56:50.210Z",
+              "transferredBy": "user-marcus",
+              "transferredByName": "Marcus Vance",
+              "handoffId": "HO-2026-318",
+              "reason": "Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+              "method": "Recipient Acceptance"
+            }
+          ],
+          "comments": [
+            {
+              "id": "cmt-1791827812117-4ea4",
+              "authorId": "user-marcus",
+              "authorName": "Marcus Vance",
+              "authorRole": "Team Leader",
+              "text": "Chaos Mesh partition script executed. Zero split-brain discrepancies observed during 48-minute injection test.",
+              "createdAt": "2026-10-12T17:56:52.117Z"
+            }
+          ]
+        },
+        {
+          "id": "TASK-548",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "title": "Validate Chaos Mesh partition suite for Raft nodes",
+          "description": "Test 4-node split-brain simulation",
+          "status": "In Progress",
+          "priority": "P1",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "assigneeName": "Marcus Vance",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-10-30",
+          "deadline": "2026-10-30",
+          "dependencies": [],
+          "acceptanceCriteria": "Deliverable meets project standards.",
+          "latestUpdate": "Executed Chaos Mesh 4-node split-brain simulation | Next: Compile final benchmark report for release review",
+          "history": [
+            {
+              "timestamp": "2026-10-12T16:30:17.231Z",
+              "actorId": "user-marcus",
+              "actorName": "Marcus Vance",
+              "fromStatus": "None",
+              "toStatus": "To Do",
+              "note": "Created and assigned to Jessica Chauhan by Marcus Vance"
+            }
+          ],
+          "createdAt": "2026-10-12T16:30:17.231Z",
+          "updatedAt": "2026-10-12T16:30:23.675Z",
+          "ownershipTimeline": [
+            {
+              "id": "own-1791822623675-si4z",
+              "previousOwnerId": "user-jessica",
+              "previousOwnerName": "Jessica Chauhan",
+              "newOwnerId": "user-marcus",
+              "newOwnerName": "Marcus Vance",
+              "transferredAt": "2026-10-12T16:30:23.675Z",
+              "transferredBy": "user-marcus",
+              "transferredByName": "Marcus Vance",
+              "handoffId": "HO-2026-697",
+              "reason": "Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+              "method": "Recipient Acceptance"
+            }
+          ],
+          "comments": [
+            {
+              "id": "cmt-1791822624890-7s3w",
+              "authorId": "user-marcus",
+              "authorName": "Marcus Vance",
+              "authorRole": "Team Leader",
+              "text": "Chaos Mesh partition script executed. Zero split-brain discrepancies observed during 48-minute injection test.",
+              "createdAt": "2026-10-12T16:30:24.890Z"
+            }
+          ],
+          "blockerDetails": {
+            "id": "blk-1791822626630-laps",
+            "reportedBy": "user-marcus",
+            "reportedByName": "Marcus Vance",
+            "reportedAt": "2026-10-12T16:30:26.630Z",
+            "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.",
+            "severity": "High",
+            "status": "Resolved",
+            "acknowledgedBy": "user-marcus",
+            "acknowledgedByName": "Marcus Vance",
+            "acknowledgedAt": "2026-10-12T16:30:27.040Z",
+            "escalatedAt": "2026-10-12T16:30:27.287Z",
+            "escalationReason": "Cross-team platform infrastructure dependency on SRE",
+            "escalatedTo": "user-admin",
+            "escalatedToName": "Alexander Ward",
+            "resolvedBy": "user-admin",
+            "resolvedByName": "Alexander Ward",
+            "resolvedAt": "2026-10-12T16:30:27.663Z",
+            "resolutionNotes": "Systemd limits updated; memlock verified unlimited on all nodes."
+          }
+        },
+        {
+          "id": "TASK-101",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "milestoneId": "m-2",
+          "milestoneTitle": "Phase 2: Chaos Mesh Partition & Split-Brain Validation",
+          "title": "Verify io_uring kernel compatibility on staging-us-west fleet",
+          "description": "Ensure kernel 6.1 LTS is active and user-space memlock limits are raised to unlimited in systemd service definitions.",
+          "status": "In Progress",
+          "priority": "P0",
+          "assignee": "Jessica Chauhan",
+          "assigneeId": "user-jessica",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-08",
+          "dueDate": "2026-10-15",
+          "deadline": "2026-10-15",
+          "estimatedEffortHours": 16,
+          "dependencies": [],
+          "acceptanceCriteria": "Systemd memlock configured; zero io_uring registration errors observed during 48h soak test.",
+          "evidenceUrls": [
+            "https://monitoring.internal/dashboards/io-uring-fleet"
+          ],
+          "latestUpdate": "Tested 3 nodes in us-west-1. Registration successful. Running 48h soak test.",
+          "history": [
+            {
+              "timestamp": "2026-10-08T10:00:00Z",
+              "actorId": "user-marcus",
+              "actorName": "Marcus Vance",
+              "fromStatus": "To Do",
+              "toStatus": "In Progress",
+              "note": "Assigned to Jessica for validation"
+            }
+          ],
+          "createdAt": "2026-10-08T09:30:00Z",
+          "updatedAt": "2026-10-11T16:00:00Z"
+        },
+        {
+          "id": "TASK-102",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "milestoneId": "m-2",
+          "milestoneTitle": "Phase 2: Chaos Mesh Partition & Split-Brain Validation",
+          "title": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+          "description": "Verify cluster drops stale leader and elects new leader in < 350ms during asymmetric packet drops.",
+          "status": "In Progress",
+          "priority": "P1",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-09",
+          "dueDate": "2026-10-18",
+          "deadline": "2026-10-18",
+          "estimatedEffortHours": 24,
+          "dependencies": [
+            "TASK-101"
+          ],
+          "acceptanceCriteria": "No dirty reads or phantom writes during 10 consecutive simulated partition injections.",
+          "latestUpdate": "Executed Chaos Mesh 4-node split-brain simulation | Next: Compile final benchmark report for release review",
+          "history": [],
+          "createdAt": "2026-10-09T11:00:00Z",
+          "assigneeName": "Marcus Vance",
+          "updatedAt": "2026-10-12T16:10:58.369Z",
+          "ownershipTimeline": [
+            {
+              "id": "own-1791821458369-ix48",
+              "previousOwnerId": "user-jessica",
+              "previousOwnerName": "Jessica Chauhan",
+              "newOwnerId": "user-marcus",
+              "newOwnerName": "Marcus Vance",
+              "transferredAt": "2026-10-12T16:10:58.369Z",
+              "transferredBy": "user-marcus",
+              "transferredByName": "Marcus Vance",
+              "handoffId": "HO-2026-829",
+              "reason": "Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+              "method": "Recipient Acceptance"
+            }
+          ],
+          "comments": [
+            {
+              "id": "cmt-1791821460263-00vz",
+              "authorId": "user-marcus",
+              "authorName": "Marcus Vance",
+              "authorRole": "Team Leader",
+              "text": "Chaos Mesh partition script executed. Zero split-brain discrepancies observed during 48-minute injection test.",
+              "createdAt": "2026-10-12T16:11:00.263Z"
+            }
+          ],
+          "blockerDetails": {
+            "id": "blk-1791821462261-tebp",
+            "reportedBy": "user-marcus",
+            "reportedByName": "Marcus Vance",
+            "reportedAt": "2026-10-12T16:11:02.261Z",
+            "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.",
+            "severity": "High",
+            "status": "Resolved",
+            "acknowledgedBy": "user-marcus",
+            "acknowledgedByName": "Marcus Vance",
+            "acknowledgedAt": "2026-10-12T16:11:02.571Z",
+            "escalatedAt": "2026-10-12T16:11:02.788Z",
+            "escalationReason": "Cross-team platform infrastructure dependency on SRE",
+            "escalatedTo": "user-admin",
+            "escalatedToName": "Alexander Ward",
+            "resolvedBy": "user-admin",
+            "resolvedByName": "Alexander Ward",
+            "resolvedAt": "2026-10-12T16:11:03.179Z",
+            "resolutionNotes": "Systemd limits updated; memlock verified unlimited on all nodes."
+          }
+        },
+        {
+          "id": "TASK-103",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "milestoneId": "m-2",
+          "milestoneTitle": "Phase 2: Chaos Mesh Partition & Split-Brain Validation",
+          "title": "Benchmark follower read barrier latency under 80k rps load",
+          "description": "Waiting for staging load balancer VIP provisioning in VPC-04.",
+          "status": "Blocked",
+          "priority": "P1",
+          "assignee": "Yash Lokhande",
+          "assigneeId": "user-yash",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-07",
+          "dueDate": "2026-10-16",
+          "deadline": "2026-10-16",
+          "estimatedEffortHours": 20,
+          "dependencies": [],
+          "acceptanceCriteria": "P99 read latency under 1.5ms across 80k requests/sec.",
+          "latestUpdate": "Blocked on staging load balancer DNS propagation. Escalated to networking team.",
+          "history": [
+            {
+              "timestamp": "2026-10-10T14:00:00Z",
+              "actorId": "user-yash",
+              "actorName": "Yash Lokhande",
+              "fromStatus": "In Progress",
+              "toStatus": "Blocked",
+              "note": "Awaiting VIP routing"
+            }
+          ],
+          "createdAt": "2026-10-07T08:00:00Z",
+          "updatedAt": "2026-10-10T14:00:00Z"
+        },
+        {
+          "id": "TASK-104",
+          "projectId": "apollo-core",
+          "projectName": "Apollo Core Distributed Consensus",
+          "milestoneId": "m-1",
+          "milestoneTitle": "Phase 1: io_uring WAL Pipeline Implementation",
+          "title": "Update Prometheus alerting rule for apollo_wal_flush_p99_micros",
+          "description": "Threshold adjusted from 5000us to 2500us following io_uring upgrade.",
+          "status": "Completed",
+          "priority": "P2",
+          "assignee": "Jessica Chauhan",
+          "assigneeId": "user-jessica",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-05",
+          "dueDate": "2026-10-07",
+          "deadline": "2026-10-07",
+          "estimatedEffortHours": 4,
+          "dependencies": [],
+          "acceptanceCriteria": "Prometheus rule deployed to production Alertmanager cluster.",
+          "evidenceUrls": [
+            "https://git.internal/infra/alerts/commit/9f01bc4"
+          ],
+          "latestUpdate": "Alert rule active in production and verified via blackbox test.",
+          "history": [
+            {
+              "timestamp": "2026-10-07T16:00:00Z",
+              "actorId": "user-jessica",
+              "actorName": "Jessica Chauhan",
+              "fromStatus": "In Progress",
+              "toStatus": "Completed",
+              "note": "Prometheus alert deployed"
+            }
+          ],
+          "createdAt": "2026-10-05T10:00:00Z",
+          "updatedAt": "2026-10-07T16:00:00Z"
+        }
+      ],
+      "files": [
+        {
+          "name": "raft_state.rs",
+          "path": "src/consensus/raft_state.rs",
+          "size": "14.2 KB",
+          "type": "code",
+          "contentSnippet": "// Apollo Raft Node Core State Machine\npub struct RaftStateMachine {\n    current_term: u64,\n    commit_index: CommitIndex,\n}"
+        }
+      ],
+      "updatedAt": "2026-10-11T05:30:00Z"
+    },
+    {
+      "id": "chronos-ledger",
+      "name": "Chronos Immutable Audit Ledger",
+      "description": "Zero-knowledge verifiable append-only ledger for cryptographic proof of platform operations and rotation sign-offs.",
+      "client": "Global HealthMesh Alliance",
+      "scope": "Tamper-evident regulatory audit trail compliance with HIPAA and ISO 27001 requirements.",
+      "expectedDeliverables": [
+        "Immutable cryptographic ledger cluster with Merkle root verification",
+        "REST & gRPC proof verification APIs",
+        "Third-party security audit certification documentation"
+      ],
+      "startDate": "2026-05-15",
+      "deadline": "2026-10-25",
+      "priority": "P0",
+      "budget": "$310,000",
+      "teamId": "team-observability",
+      "teamLeaderId": "user-sarah",
+      "stakeholders": [
+        "Dr. Evelyn Vance (Chief Compliance Officer)",
+        "Alexander Ward (Admin)"
+      ],
+      "acceptanceCriteria": "Merkle inclusion proofs verified under 15ms; tamper detection instantaneous; 100% test coverage on cryptographic signature verification.",
+      "status": "Changes Requested",
+      "health": "At Risk",
+      "healthReasons": [
+        "Admin requested security revisions on Round 1 deliverable submission",
+        "Deadline approaching in 13 days"
+      ],
+      "currentVersionId": "v1.2.0-rc3",
+      "ownerId": "user-sarah",
+      "team": "Edge Reliability & Telemetry Fleet",
+      "teamDescription": "Site reliability engineers managing real-time eBPF trace mesh and automated disaster failover.",
+      "teamChannel": "#team-chronos-audit",
+      "teamMembers": [
+        {
+          "userId": "user-sarah",
+          "role": "Lead",
+          "responsibility": "Ledger architecture and zero-knowledge proof generation",
+          "joinedAt": "2026-02-01"
+        },
+        {
+          "userId": "user-shruti",
+          "role": "Member",
+          "responsibility": "Merkle root verification & distributed storage replication",
+          "joinedAt": "2026-04-01"
+        },
+        {
+          "userId": "user-alex",
+          "role": "Member",
+          "responsibility": "High-throughput append logging & telemetry exporters",
+          "joinedAt": "2026-05-01"
+        }
+      ],
+      "repositoryUrl": "github.com/internal-corp/chronos-ledger",
+      "architectureSummary": "Chronos utilizes SHA-256 Merkle mountain ranges backed by append-only memory-mapped journal blocks.",
+      "quickstartGuide": "./bin/chronos-server --data-dir /var/lib/chronos --merkle-depth 32",
+      "milestones": [
+        {
+          "id": "m-ch-1",
+          "projectId": "chronos-ledger",
+          "title": "Merkle Mountain Range Core Engine",
+          "deadline": "2026-07-30",
+          "status": "Completed",
+          "order": 1
+        },
+        {
+          "id": "m-ch-2",
+          "projectId": "chronos-ledger",
+          "title": "Cryptographic Proof Verifier Service",
+          "deadline": "2026-09-30",
+          "status": "Completed",
+          "order": 2
+        },
+        {
+          "id": "m-ch-3",
+          "projectId": "chronos-ledger",
+          "title": "Security Hardening & Revision Remediation",
+          "deadline": "2026-10-20",
+          "status": "In Progress",
+          "order": 3
+        }
+      ],
+      "decisions": [],
+      "versions": [
+        {
+          "id": "v1.2.0-rc3",
+          "hash": "c891e42",
+          "timestamp": "2026-10-09 18:30 UTC",
+          "author": {
+            "name": "Sarah Lin",
+            "avatar": ""
+          },
+          "commitMessage": "fix(crypto): remediate Merkle leaf edge padding ambiguity",
+          "changedFilesCount": 6,
+          "changedFiles": [
+            {
+              "path": "src/merkle/mmr.rs",
+              "insertions": 84,
+              "deletions": 22
+            }
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "id": "TASK-201",
+          "projectId": "chronos-ledger",
+          "projectName": "Chronos Immutable Audit Ledger",
+          "milestoneId": "m-ch-3",
+          "milestoneTitle": "Security Hardening & Revision Remediation",
+          "title": "Remediate Admin Revision: Add zero-knowledge boundary proof for client tenant isolation",
+          "description": "Alexander Ward requested explicit boundary verification in Round 1 final review before client delivery signoff.",
+          "status": "In Progress",
+          "priority": "P0",
+          "assignee": "Shruti Patil",
+          "assigneeId": "user-shruti",
+          "creatorId": "user-sarah",
+          "creatorName": "Sarah Lin",
+          "startDate": "2026-10-10",
+          "dueDate": "2026-10-17",
+          "deadline": "2026-10-17",
+          "estimatedEffortHours": 20,
+          "acceptanceCriteria": "Zero-knowledge tenant isolation proof passes automated test suite with zero cross-tenant key leakage.",
+          "latestUpdate": "Drafting zk-SNARK verification circuit with Shruti.",
+          "history": [],
+          "createdAt": "2026-10-10T11:00:00Z"
+        },
+        {
+          "id": "TASK-202",
+          "projectId": "chronos-ledger",
+          "projectName": "Chronos Immutable Audit Ledger",
+          "milestoneId": "m-ch-3",
+          "milestoneTitle": "Security Hardening & Revision Remediation",
+          "title": "Remediate Admin Revision: Produce automated disaster recovery drill report",
+          "description": "Deliverable must include proof of cold-boot Merkle state reconstruction from raw S3 block storage.",
+          "status": "To Do",
+          "priority": "P1",
+          "assignee": "Alex Chen",
+          "assigneeId": "user-alex",
+          "creatorId": "user-sarah",
+          "creatorName": "Sarah Lin",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-10-19",
+          "deadline": "2026-10-19",
+          "estimatedEffortHours": 12,
+          "acceptanceCriteria": "Automated script reconstructs 10 million transactions in under 60 seconds with 100% hash consistency.",
+          "latestUpdate": "Task created from Admin revision feedback.",
+          "history": [],
+          "createdAt": "2026-10-10T11:15:00Z"
+        }
+      ],
+      "files": [],
+      "reviewSubmission": {
+        "id": "rev-sub-chronos",
+        "projectId": "chronos-ledger",
+        "projectName": "Chronos Immutable Audit Ledger",
+        "status": "Changes Requested",
+        "currentRound": 1,
+        "rounds": [
+          {
+            "roundNumber": 1,
+            "submittedAt": "2026-10-09T19:00:00Z",
+            "submittedBy": "user-sarah",
+            "submittedByName": "Sarah Lin",
+            "releaseVersion": "v1.2.0-rc2",
+            "completionSummary": "Complete implementation of append-only Merkle ledger with high-throughput API endpoints and telemetry exporter.",
+            "setupInstructions": "Deploy via Helm chart `charts/chronos-cluster` with minimum 3 replica nodes.",
+            "knownLimitations": "Cross-tenant boundary proofs require dedicated verification step during multi-tenant queries.",
+            "testEvidence": "Passed 480 unit tests and 48-hour load test at 50,000 writes/sec without memory leaks.",
+            "outstandingIssues": "Disaster recovery cold-boot drill needs final documented test execution run.",
+            "reviewerId": "user-admin",
+            "reviewerName": "Alexander Ward",
+            "reviewedAt": "2026-10-10T10:30:00Z",
+            "decision": "Changes Requested",
+            "comments": "Strong foundational release. However, before approving client delivery to Global HealthMesh, two items must be resolved: 1) explicit zero-knowledge tenant isolation boundary proof, and 2) cold-boot disaster recovery runbook validation.",
+            "revisionItems": [
+              {
+                "id": "rev-item-1",
+                "description": "Add zero-knowledge boundary proof for client tenant isolation",
+                "priority": "P0",
+                "deadline": "2026-10-17",
+                "completed": false
+              },
+              {
+                "id": "rev-item-2",
+                "description": "Execute and document cold-boot disaster recovery simulation from S3 backup",
+                "priority": "P1",
+                "deadline": "2026-10-19",
+                "completed": false
+              }
+            ]
+          }
+        ],
+        "updatedAt": "2026-10-10T10:30:00Z"
+      },
+      "updatedAt": "2026-10-10T10:30:00Z"
+    },
+    {
+      "id": "krypton-auth",
+      "name": "Krypton WebAuthn Identity Authority",
+      "description": "Zero-trust cryptographic identity service featuring hardware token attestation, ephemeral session tokens, and automated rotation.",
+      "client": "Nova Telecom Networks",
+      "scope": "FIDO2 WebAuthn authentication backbone securing 12,000 carrier edge technicians.",
+      "expectedDeliverables": [
+        "WebAuthn server binary with FIDO2 Level 3 attestation support",
+        "Hardware token lifecycle management dashboard",
+        "mTLS certificate auto-rotation agent"
+      ],
+      "startDate": "2026-04-01",
+      "deadline": "2026-10-14",
+      "priority": "P0",
+      "budget": "$195,000",
+      "teamId": "team-security",
+      "teamLeaderId": "user-elena",
+      "stakeholders": [
+        "Marcus Thorne (VP Security, Nova Telecom)",
+        "Alexander Ward (Admin)"
+      ],
+      "acceptanceCriteria": "Sub-50ms token generation; zero plain-text credential storage; FIDO2 compliance passed.",
+      "status": "Approved for Delivery",
+      "health": "Green",
+      "healthReasons": [
+        "Admin approved final release v2.0.0 on 2026-10-11",
+        "Ready for formal client delivery recording"
+      ],
+      "currentVersionId": "v2.0.0",
+      "ownerId": "user-elena",
+      "team": "Zero-Trust Identity & Crypto Guard",
+      "teamDescription": "Security engineers building WebAuthn attestation and cryptographic audit ledgers.",
+      "teamChannel": "#team-krypton-auth",
+      "teamMembers": [
+        {
+          "userId": "user-elena",
+          "role": "Lead",
+          "responsibility": "WebAuthn protocol implementation and HSM orchestration",
+          "joinedAt": "2026-02-15"
+        },
+        {
+          "userId": "user-david",
+          "role": "Member",
+          "responsibility": "Hardware token attestation and CLI integration",
+          "joinedAt": "2026-04-15"
+        }
+      ],
+      "repositoryUrl": "github.com/internal-corp/krypton-auth",
+      "architectureSummary": "FIDO2 Level 3 compliant server utilizing YubiKey & Apple Secure Enclave attestation with PKI backend.",
+      "quickstartGuide": "./bin/krypton-server --fido2-keystore /etc/krypton/keys",
+      "milestones": [
+        {
+          "id": "m-kr-1",
+          "projectId": "krypton-auth",
+          "title": "FIDO2 Level 3 Attestation Engine",
+          "deadline": "2026-07-15",
+          "status": "Completed",
+          "order": 1
+        },
+        {
+          "id": "m-kr-2",
+          "projectId": "krypton-auth",
+          "title": "Security Audit & Penetration Testing",
+          "deadline": "2026-09-15",
+          "status": "Completed",
+          "order": 2
+        },
+        {
+          "id": "m-kr-3",
+          "projectId": "krypton-auth",
+          "title": "Final Delivery Preparation & Validation",
+          "deadline": "2026-10-10",
+          "status": "Completed",
+          "order": 3
+        }
+      ],
+      "decisions": [],
+      "versions": [
+        {
+          "id": "v2.0.0",
+          "hash": "e921fa0",
+          "timestamp": "2026-10-10 12:00 UTC",
+          "author": {
+            "name": "Elena Rostova",
+            "avatar": ""
+          },
+          "commitMessage": "release: official v2.0.0 release build for Nova Telecom deployment",
+          "changedFilesCount": 22,
+          "changedFiles": [
+            {
+              "path": "src/fido2/attestation.rs",
+              "insertions": 190,
+              "deletions": 4
+            }
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "id": "TASK-301",
+          "projectId": "krypton-auth",
+          "projectName": "Krypton WebAuthn Identity Authority",
+          "title": "Final cryptographic verification and signed release build v2.0.0",
+          "description": "Package binaries, sign SHA256 checksums with internal release key, verify hardware token support.",
+          "status": "Completed",
+          "priority": "P0",
+          "assignee": "Elena Rostova",
+          "assigneeId": "user-elena",
+          "creatorId": "user-elena",
+          "creatorName": "Elena Rostova",
+          "startDate": "2026-10-08",
+          "dueDate": "2026-10-10",
+          "deadline": "2026-10-10",
+          "estimatedEffortHours": 12,
+          "acceptanceCriteria": "Binaries signed; checksums published; audit validation passed.",
+          "evidenceUrls": [
+            "https://releases.internal/krypton/v2.0.0/signatures.asc"
+          ],
+          "latestUpdate": "Release signed and approved by Admin. Pending client delivery execution.",
+          "history": [],
+          "createdAt": "2026-10-08T08:00:00Z",
+          "updatedAt": "2026-10-10T14:00:00Z"
+        }
+      ],
+      "files": [],
+      "reviewSubmission": {
+        "id": "rev-sub-krypton",
+        "projectId": "krypton-auth",
+        "projectName": "Krypton WebAuthn Identity Authority",
+        "status": "Approved for Delivery",
+        "currentRound": 1,
+        "rounds": [
+          {
+            "roundNumber": 1,
+            "submittedAt": "2026-10-10T15:00:00Z",
+            "submittedBy": "user-elena",
+            "submittedByName": "Elena Rostova",
+            "releaseVersion": "v2.0.0",
+            "completionSummary": "Delivering complete FIDO2 WebAuthn identity authority with 100% test passing rate and zero known security flaws.",
+            "setupInstructions": "Deploy using `helm upgrade --install krypton-auth ./deploy/helm/krypton` with injected Vault secrets.",
+            "knownLimitations": "Requires iOS >= 16 or Android >= 13 for biometric passkey roaming authentication.",
+            "testEvidence": "Comprehensive penetration test report attached. 0 High/Critical findings. FIDO alliance test suite verified.",
+            "outstandingIssues": "None. All acceptance criteria fulfilled.",
+            "reviewerId": "user-admin",
+            "reviewerName": "Alexander Ward",
+            "reviewedAt": "2026-10-11T16:00:00Z",
+            "decision": "Approved",
+            "comments": "Outstanding work Elena and team. All acceptance criteria and FIDO2 compliance tests verified. Approved for formal client delivery handover.",
+            "revisionItems": []
+          }
+        ],
+        "updatedAt": "2026-10-11T16:00:00Z"
+      },
+      "updatedAt": "2026-10-11T16:00:00Z"
+    },
+    {
+      "id": "solaris-gateway",
+      "name": "Solaris Edge Routing Mesh",
+      "description": "Zero-downtime BGP anycast edge proxy with automated TLS termination and distributed denial-of-service mitigation.",
+      "client": "Starlight Defense Aerospace",
+      "scope": "Hardened edge routing layer across 18 worldwide satellite ground stations.",
+      "expectedDeliverables": [
+        "Custom Envoy/eBPF routing proxy image",
+        "Automated DDoS rate-limiting engine",
+        "Certified client delivery package and cryptographic handoff dossier"
+      ],
+      "startDate": "2026-03-01",
+      "deadline": "2026-09-30",
+      "priority": "P0",
+      "budget": "$450,000",
+      "teamId": "team-observability",
+      "teamLeaderId": "user-sarah",
+      "stakeholders": [
+        "General Frank Mercer (Starlight Aerospace)",
+        "Alexander Ward (Admin)"
+      ],
+      "acceptanceCriteria": "Sub-millisecond packet routing; automated failover under 100ms; validated customer delivery signoff.",
+      "status": "Delivered",
+      "health": "Green",
+      "healthReasons": [
+        "Project successfully delivered to client on 2026-09-30",
+        "Client signed formal handover acknowledgment"
+      ],
+      "currentVersionId": "v1.4.2-prod",
+      "ownerId": "user-sarah",
+      "team": "Edge Reliability & Telemetry Fleet",
+      "teamDescription": "Site reliability engineers managing edge telemetry and routing.",
+      "teamChannel": "#team-solaris-mesh",
+      "teamMembers": [
+        {
+          "userId": "user-sarah",
+          "role": "Lead",
+          "responsibility": "Edge proxy architecture & BGP anycast tuning",
+          "joinedAt": "2026-02-01"
+        },
+        {
+          "userId": "user-alex",
+          "role": "Member",
+          "responsibility": "eBPF packet filtering & automated rate limiter",
+          "joinedAt": "2026-05-01"
+        }
+      ],
+      "repositoryUrl": "github.com/internal-corp/solaris-mesh",
+      "architectureSummary": "eBPF-accelerated proxy providing sub-millisecond layer 4 and layer 7 packet inspection.",
+      "quickstartGuide": "./bin/solaris-edge --config /etc/solaris/mesh.yaml",
+      "milestones": [
+        {
+          "id": "m-sol-1",
+          "projectId": "solaris-gateway",
+          "title": "Anycast Core Engine",
+          "deadline": "2026-06-01",
+          "status": "Completed",
+          "order": 1
+        },
+        {
+          "id": "m-sol-2",
+          "projectId": "solaris-gateway",
+          "title": "DDoS Mitigation Verification",
+          "deadline": "2026-08-15",
+          "status": "Completed",
+          "order": 2
+        },
+        {
+          "id": "m-sol-3",
+          "projectId": "solaris-gateway",
+          "title": "Client Handover & Delivery",
+          "deadline": "2026-09-30",
+          "status": "Completed",
+          "order": 3
+        }
+      ],
+      "decisions": [],
+      "versions": [
+        {
+          "id": "v1.4.2-prod",
+          "hash": "710cb99",
+          "timestamp": "2026-09-28 14:00 UTC",
+          "author": {
+            "name": "Sarah Lin",
+            "avatar": ""
+          },
+          "commitMessage": "release(client): signed release candidate for Starlight Aerospace delivery",
+          "changedFilesCount": 18,
+          "changedFiles": [
+            {
+              "path": "src/ebpf/filter.c",
+              "insertions": 154,
+              "deletions": 12
+            }
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "id": "TASK-401",
+          "projectId": "solaris-gateway",
+          "projectName": "Solaris Edge Routing Mesh",
+          "title": "Deploy edge proxy clusters to Starlight Ground Station VPCs",
+          "description": "Complete production deployment across primary telemetry centers.",
+          "status": "Completed",
+          "priority": "P0",
+          "assignee": "Sarah Lin",
+          "assigneeId": "user-sarah",
+          "creatorId": "user-sarah",
+          "creatorName": "Sarah Lin",
+          "startDate": "2026-09-20",
+          "dueDate": "2026-09-28",
+          "deadline": "2026-09-28",
+          "estimatedEffortHours": 40,
+          "acceptanceCriteria": "18 satellite centers active and passing health checks.",
+          "evidenceUrls": [
+            "https://delivery.internal/starlight/handover-evidence.pdf"
+          ],
+          "latestUpdate": "Handover complete and ratified by client.",
+          "history": [],
+          "createdAt": "2026-09-20T08:00:00Z",
+          "updatedAt": "2026-09-28T16:00:00Z"
+        }
+      ],
+      "files": [],
+      "reviewSubmission": {
+        "id": "rev-sub-solaris",
+        "projectId": "solaris-gateway",
+        "projectName": "Solaris Edge Routing Mesh",
+        "status": "Delivered",
+        "currentRound": 1,
+        "rounds": [
+          {
+            "roundNumber": 1,
+            "submittedAt": "2026-09-26T10:00:00Z",
+            "submittedBy": "user-sarah",
+            "submittedByName": "Sarah Lin",
+            "releaseVersion": "v1.4.2-prod",
+            "completionSummary": "Final production deliverable with eBPF DDOS protection and ground-station failover telemetry.",
+            "setupInstructions": "Deploy via Starlight Aerospace air-gapped container runner.",
+            "knownLimitations": "Requires Linux kernel >= 5.15 on ground-station terminal blades.",
+            "testEvidence": "Signed air-gap soak test report and automated failover verification logs.",
+            "outstandingIssues": "None.",
+            "reviewerId": "user-admin",
+            "reviewerName": "Alexander Ward",
+            "reviewedAt": "2026-09-28T15:00:00Z",
+            "decision": "Approved",
+            "comments": "All requirements exceeded. Approved for client delivery.",
+            "revisionItems": []
+          }
+        ],
+        "updatedAt": "2026-09-30T17:00:00Z"
+      },
+      "deliveryRecord": {
+        "id": "DELIV-2026-001",
+        "projectId": "solaris-gateway",
+        "projectName": "Solaris Edge Routing Mesh",
+        "approvedVersion": "v1.4.2-prod",
+        "deliveredAt": "2026-09-30T16:45:00Z",
+        "recipientContact": "Col. Raymond Vance (Dir. Operations, Starlight Defense Aerospace)",
+        "deliveryChannel": "Encrypted GPG Key Delivery & Secure Air-Gapped S3 Repository (Ref: STA-SEC-9921)",
+        "deliveryNotes": "Production binary bundle, signed GPG checksums, deployment documentation, and 24/7 on-call escalation matrix transferred.",
+        "deliverablesList": [
+          "solaris-edge-v1.4.2.tar.gz (SHA256: 710cb99a...)",
+          "Air-gapped deployment playbook v1.4",
+          "Signed Penetration Test Certification",
+          "Operational handover dossier HO-2026-074"
+        ],
+        "recordedBy": "user-admin",
+        "recordedByName": "Alexander Ward",
+        "clientAcknowledged": true,
+        "clientAcknowledgmentNotes": "Acknowledged by Col. Raymond Vance on 2026-09-30 17:30 UTC via verified PGP digital receipt.",
+        "createdAt": "2026-09-30T16:45:00Z"
+      },
+      "updatedAt": "2026-09-30T17:30:00Z"
+    },
+    {
+      "id": "project-orion-edge",
+      "name": "Project Orion Edge",
+      "description": "Next-generation distributed edge runtime",
+      "client": "Starlight Global",
+      "scope": "Next-generation distributed edge runtime",
+      "expectedDeliverables": [],
+      "startDate": "2026-10-12",
+      "deadline": "2026-11-30",
+      "priority": "P1",
+      "budget": "$150,000",
+      "teamId": "team-delta-rapid-deployment-5ed",
+      "teamLeaderId": "user-marcus",
+      "stakeholders": [],
+      "acceptanceCriteria": "All deliverables meet engineering standards and pass QA validation.",
+      "status": "Delivered",
+      "health": "Green",
+      "healthReasons": [
+        "Delivered to Starlight Global (v1.0.0) on 2026-10-12"
+      ],
+      "currentVersionId": "v1.0.0-rc2",
+      "ownerId": "user-marcus",
+      "team": "Delta Rapid Deployment",
+      "teamDescription": "Special forces pod for rapid continuous delivery",
+      "teamChannel": "#team-team-delta-rapid-deployment-5ed",
+      "teamMembers": [
+        {
+          "userId": "user-marcus",
+          "role": "Lead",
+          "responsibility": "Project technical lead & execution manager",
+          "joinedAt": "2026-10-12",
+          "isPrimaryOnCall": true
+        },
+        {
+          "userId": "user-jessica",
+          "role": "Member",
+          "responsibility": "Assigned engineering contributor",
+          "joinedAt": "2026-10-12",
+          "isPrimaryOnCall": false
+        }
+      ],
+      "repositoryUrl": "github.com/internal-corp/project-orion-edge",
+      "architectureSummary": "Project Orion Edge engineering architecture specification and execution blueprint.",
+      "quickstartGuide": "# Bootstrap Project Orion Edge\n./bin/setup-dev-environment.sh",
+      "milestones": [
+        {
+          "id": "m-project-orion-edge-1",
+          "projectId": "project-orion-edge",
+          "title": "Milestone 1: Architecture Specification & Core Prototype",
+          "deadline": "2026-11-30",
+          "status": "In Progress",
+          "order": 1
+        }
+      ],
+      "decisions": [],
+      "versions": [
+        {
+          "id": "v1.0.0",
+          "hash": "1a2b3c4",
+          "timestamp": "2026-10-12T15:19:06.776Z",
+          "author": {
+            "name": "Alexander Ward",
+            "avatar": ""
+          },
+          "commitMessage": "Initial project architecture repository skeleton",
+          "changedFilesCount": 3,
+          "changedFiles": [
+            {
+              "path": "README.md",
+              "insertions": 25,
+              "deletions": 0
+            }
+          ]
+        }
+      ],
+      "tasks": [
+        {
+          "id": "TASK-REV-776",
+          "projectId": "project-orion-edge",
+          "projectName": "Project Orion Edge",
+          "title": "[Revision Request]: Enforce TLS 1.3 only cipher suites",
+          "description": "Deliverable revision requested by Admin Alexander Ward on Round 1: Edge node failover latency must be under 25ms and cipher suite needs updating.",
+          "status": "To Do",
+          "priority": "P1",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "creatorId": "user-admin",
+          "creatorName": "Alexander Ward",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-11-30",
+          "deadline": "2026-11-30",
+          "estimatedEffortHours": 16,
+          "acceptanceCriteria": "Satisfy revision item: Enforce TLS 1.3 only cipher suites",
+          "latestUpdate": "Generated from Admin revision request.",
+          "history": [],
+          "createdAt": "2026-10-12T15:19:31.859Z"
+        },
+        {
+          "id": "TASK-REV-443",
+          "projectId": "project-orion-edge",
+          "projectName": "Project Orion Edge",
+          "title": "[Revision Request]: Optimize edge failover heartbeat interval to under 25ms",
+          "description": "Deliverable revision requested by Admin Alexander Ward on Round 1: Edge node failover latency must be under 25ms and cipher suite needs updating.",
+          "status": "To Do",
+          "priority": "P0",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "creatorId": "user-admin",
+          "creatorName": "Alexander Ward",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-11-30",
+          "deadline": "2026-11-30",
+          "estimatedEffortHours": 16,
+          "acceptanceCriteria": "Satisfy revision item: Optimize edge failover heartbeat interval to under 25ms",
+          "latestUpdate": "Generated from Admin revision request.",
+          "history": [],
+          "createdAt": "2026-10-12T15:19:31.859Z"
+        },
+        {
+          "id": "TASK-230",
+          "projectId": "project-orion-edge",
+          "projectName": "Project Orion Edge",
+          "title": "Implement TLS Termination Gateway",
+          "description": "Configure mutual TLS with cryptographic audit validation",
+          "status": "Blocked",
+          "priority": "P1",
+          "assignee": "Jessica Chauhan",
+          "assigneeId": "user-jessica",
+          "assigneeName": "Jessica Chauhan",
+          "creatorId": "user-marcus",
+          "creatorName": "Marcus Vance",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-11-05",
+          "deadline": "2026-11-05",
+          "estimatedEffortHours": 16,
+          "dependencies": [],
+          "acceptanceCriteria": "Deliverable meets project standards.",
+          "latestUpdate": "Root CA generation and TLS socket listeners | Next: Integration testing on edge cluster",
+          "history": [
+            {
+              "timestamp": "2026-10-12T15:19:17.419Z",
+              "actorId": "user-jessica",
+              "actorName": "Jessica Chauhan",
+              "fromStatus": "To Do",
+              "toStatus": "In Progress",
+              "note": "Started configuring mTLS certificates"
+            },
+            {
+              "timestamp": "2026-10-12T15:19:12.430Z",
+              "actorId": "user-marcus",
+              "actorName": "Marcus Vance",
+              "fromStatus": "None",
+              "toStatus": "To Do",
+              "note": "Created and assigned to Jessica Chauhan by Marcus Vance"
+            }
+          ],
+          "createdAt": "2026-10-12T15:19:12.430Z",
+          "updatedAt": "2026-10-12T15:19:17.420Z"
+        },
+        {
+          "id": "TASK-481",
+          "projectId": "project-orion-edge",
+          "projectName": "Project Orion Edge",
+          "title": "Initial architecture review and kickoff for Project Orion Edge",
+          "description": "Kickoff meeting with Delta Rapid Deployment and deliverable sprint planning.",
+          "status": "To Do",
+          "priority": "P1",
+          "assignee": "Marcus Vance",
+          "assigneeId": "user-marcus",
+          "creatorId": "user-admin",
+          "creatorName": "Alexander Ward",
+          "startDate": "2026-10-12",
+          "dueDate": "2026-11-30",
+          "deadline": "2026-11-30",
+          "estimatedEffortHours": 8,
+          "createdAt": "2026-10-12T15:19:06.777Z",
+          "history": []
+        }
+      ],
+      "files": [],
+      "updatedAt": "2026-10-12T15:19:34.490Z",
+      "reviewSubmission": {
+        "id": "rev-sub-project-orion-edge",
+        "projectId": "project-orion-edge",
+        "projectName": "Project Orion Edge",
+        "status": "Delivered",
+        "currentRound": 2,
+        "rounds": [
+          {
+            "roundNumber": 1,
+            "submittedAt": "2026-10-12T15:19:31.223Z",
+            "submittedBy": "user-marcus",
+            "submittedByName": "Marcus Vance",
+            "releaseVersion": "v1.0.0-rc1",
+            "completionSummary": "Full production bundle with automated test suite and compliance checklist.",
+            "setupInstructions": "Run docker compose -f edge.yml up -d and verify health probe at :8443/health.",
+            "knownLimitations": "",
+            "testEvidence": "100% unit and integration test coverage across all edge gateway modules.",
+            "outstandingIssues": "",
+            "revisionItems": [
+              {
+                "id": "rev-item-mv5ee87m-0",
+                "description": "Optimize edge failover heartbeat interval to under 25ms",
+                "priority": "P0",
+                "completed": false
+              },
+              {
+                "id": "rev-item-mv5ee87m-1",
+                "description": "Enforce TLS 1.3 only cipher suites",
+                "priority": "P1",
+                "completed": false
+              }
+            ],
+            "reviewerId": "user-admin",
+            "reviewerName": "Alexander Ward",
+            "reviewedAt": "2026-10-12T15:19:31.858Z",
+            "decision": "Changes Requested",
+            "comments": "Edge node failover latency must be under 25ms and cipher suite needs updating."
+          },
+          {
+            "roundNumber": 2,
+            "submittedAt": "2026-10-12T15:19:32.160Z",
+            "submittedBy": "user-marcus",
+            "submittedByName": "Marcus Vance",
+            "releaseVersion": "v1.0.0-rc2",
+            "completionSummary": "Optimized failover latency to 18ms and enforced TLS 1.3 only.",
+            "setupInstructions": "Run docker compose -f edge.yml up -d and verify health probe at :8443/health.",
+            "knownLimitations": "",
+            "testEvidence": "Failover latency verified at 18ms under 10k req/s load test.",
+            "outstandingIssues": "",
+            "revisionItems": [],
+            "reviewerId": "user-admin",
+            "reviewerName": "Alexander Ward",
+            "reviewedAt": "2026-10-12T15:19:32.832Z",
+            "decision": "Approved",
+            "comments": "All performance benchmarks and security invariants verified."
+          }
+        ],
+        "updatedAt": "2026-10-12T15:19:34.490Z"
+      },
+      "deliveryRecord": {
+        "id": "DELIV-MV5EEA8Q-BDA",
+        "projectId": "project-orion-edge",
+        "projectName": "Project Orion Edge",
+        "approvedVersion": "v1.0.0",
+        "deliveredAt": "2026-10-12T20:49:32Z",
+        "recipientContact": "elena.vance@starlightglobal.example.com",
+        "deliveryChannel": "Secure SFTP and Artifact Repository",
+        "deliveryNotes": "Complete turn-key edge runtime with certified failover and cryptographic receipts.",
+        "deliverablesList": [
+          "Runtime binaries",
+          "Docker images",
+          "Runbooks",
+          "Audit attestation"
+        ],
+        "recordedBy": "user-admin",
+        "recordedByName": "Alexander Ward",
+        "clientAcknowledged": true,
+        "clientAcknowledgmentNotes": "Elena Vance (CTO) ratified receipt and staging deployment acceptance.",
+        "createdAt": "2026-10-12T15:19:34.490Z"
+      }
+    }
+  ],
+  "handoffs": [
+    {
+      "id": "HO-2026-517",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "taskId": "TASK-826",
+      "taskTitle": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "senderId": "user-jessica",
+      "recipientId": "user-marcus",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Accepted",
+      "createdAt": "2026-10-12T19:17:42.941Z",
+      "note": "Shift rotation handoff for Chaos Mesh validation",
+      "completenessScore": 100,
+      "readinessCheck": {
+        "score": 100,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "1 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": true,
+            "suggestion": "Verification artifacts or files linked."
+          }
+        ],
+        "suggestions": []
+      },
+      "setupInstructions": "Deploy to staging cluster via helm chart.",
+      "pendingTasks": [
+        "Execute 4-node network partition test"
+      ],
+      "files": [
+        "src/consensus/raft_state.rs"
+      ],
+      "briefing": {
+        "executiveSummary": "Comprehensive handover of Raft state machine partition testing suite.",
+        "completedItems": [
+          "Verified io_uring journal flush",
+          "Automated linearizability test suite"
+        ],
+        "nextSteps": [
+          "Execute 4-node network partition test"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-12T19:17:42.941Z",
+          "detail": "Handoff dossier created and dispatched to Marcus Vance. Readiness Score: 100%. Ownership remains with Jessica Chauhan until acceptance."
+        },
+        {
+          "action": "HANDOFF_CLARIFICATION_REQUESTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T19:17:53.458Z",
+          "detail": "Recipient requested clarification: \"Which Linux kernel version was verified for io_uring on staging-04?\". Custodianship transfer paused pending response."
+        },
+        {
+          "action": "HANDOFF_ACCEPTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T19:17:57.388Z",
+          "detail": "Handoff verified and accepted. Note: \"Verified Linux kernel 6.5.0-generic and assumed primary custodianship.\". Operational ownership transferred."
+        }
+      ],
+      "clarificationRequest": "Which Linux kernel version was verified for io_uring on staging-04?",
+      "acceptedAt": "2026-10-12T19:17:57.388Z"
+    },
+    {
+      "id": "HO-2026-650",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "taskId": "TASK-226",
+      "taskTitle": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "senderId": "user-jessica",
+      "recipientId": "user-marcus",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Accepted",
+      "createdAt": "2026-10-12T17:58:54.002Z",
+      "note": "Shift rotation handoff for Chaos Mesh validation",
+      "completenessScore": 100,
+      "readinessCheck": {
+        "score": 100,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "1 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": true,
+            "suggestion": "Verification artifacts or files linked."
+          }
+        ],
+        "suggestions": []
+      },
+      "setupInstructions": "Deploy to staging cluster via helm chart.",
+      "pendingTasks": [
+        "Execute 4-node network partition test"
+      ],
+      "files": [
+        "src/consensus/raft_state.rs"
+      ],
+      "briefing": {
+        "executiveSummary": "Comprehensive handover of Raft state machine partition testing suite.",
+        "completedItems": [
+          "Verified io_uring journal flush",
+          "Automated linearizability test suite"
+        ],
+        "nextSteps": [
+          "Execute 4-node network partition test"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-12T17:58:54.002Z",
+          "detail": "Handoff dossier created and dispatched to Marcus Vance. Readiness Score: 100%. Ownership remains with Jessica Chauhan until acceptance."
+        },
+        {
+          "action": "HANDOFF_CLARIFICATION_REQUESTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T17:58:58.499Z",
+          "detail": "Recipient requested clarification: \"Which Linux kernel version was verified for io_uring on staging-04?\". Custodianship transfer paused pending response."
+        },
+        {
+          "action": "HANDOFF_ACCEPTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T17:59:01.880Z",
+          "detail": "Handoff verified and accepted. Note: \"Verified Linux kernel 6.5.0-generic and assumed primary custodianship.\". Operational ownership transferred."
+        }
+      ],
+      "clarificationRequest": "Which Linux kernel version was verified for io_uring on staging-04?",
+      "acceptedAt": "2026-10-12T17:59:01.880Z"
+    },
+    {
+      "id": "HO-2026-318",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "taskId": "TASK-793",
+      "taskTitle": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "senderId": "user-jessica",
+      "recipientId": "user-marcus",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Accepted",
+      "createdAt": "2026-10-12T17:56:44.547Z",
+      "note": "Shift rotation handoff for Chaos Mesh validation",
+      "completenessScore": 100,
+      "readinessCheck": {
+        "score": 100,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "1 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": true,
+            "suggestion": "Verification artifacts or files linked."
+          }
+        ],
+        "suggestions": []
+      },
+      "setupInstructions": "Deploy to staging cluster via helm chart.",
+      "pendingTasks": [
+        "Execute 4-node network partition test"
+      ],
+      "files": [
+        "src/consensus/raft_state.rs"
+      ],
+      "briefing": {
+        "executiveSummary": "Comprehensive handover of Raft state machine partition testing suite.",
+        "completedItems": [
+          "Verified io_uring journal flush",
+          "Automated linearizability test suite"
+        ],
+        "nextSteps": [
+          "Execute 4-node network partition test"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-12T17:56:44.547Z",
+          "detail": "Handoff dossier created and dispatched to Marcus Vance. Readiness Score: 100%. Ownership remains with Jessica Chauhan until acceptance."
+        },
+        {
+          "action": "HANDOFF_CLARIFICATION_REQUESTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T17:56:47.987Z",
+          "detail": "Recipient requested clarification: \"Which Linux kernel version was verified for io_uring on staging-04?\". Custodianship transfer paused pending response."
+        },
+        {
+          "action": "HANDOFF_ACCEPTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T17:56:50.209Z",
+          "detail": "Handoff verified and accepted. Note: \"Verified Linux kernel 6.5.0-generic and assumed primary custodianship.\". Operational ownership transferred."
+        }
+      ],
+      "clarificationRequest": "Which Linux kernel version was verified for io_uring on staging-04?",
+      "acceptedAt": "2026-10-12T17:56:50.209Z"
+    },
+    {
+      "id": "HO-2026-697",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "taskId": "TASK-548",
+      "taskTitle": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "senderId": "user-jessica",
+      "recipientId": "user-marcus",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Accepted",
+      "createdAt": "2026-10-12T16:30:17.717Z",
+      "note": "Shift rotation handoff for Chaos Mesh validation",
+      "completenessScore": 100,
+      "readinessCheck": {
+        "score": 100,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "1 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": true,
+            "suggestion": "Verification artifacts or files linked."
+          }
+        ],
+        "suggestions": []
+      },
+      "setupInstructions": "Deploy to staging cluster via helm chart.",
+      "pendingTasks": [
+        "Execute 4-node network partition test"
+      ],
+      "files": [
+        "src/consensus/raft_state.rs"
+      ],
+      "briefing": {
+        "executiveSummary": "Comprehensive handover of Raft state machine partition testing suite.",
+        "completedItems": [
+          "Verified io_uring journal flush",
+          "Automated linearizability test suite"
+        ],
+        "nextSteps": [
+          "Execute 4-node network partition test"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-12T16:30:17.717Z",
+          "detail": "Handoff dossier created and dispatched to Marcus Vance. Readiness Score: 100%. Ownership remains with Jessica Chauhan until acceptance."
+        },
+        {
+          "action": "HANDOFF_CLARIFICATION_REQUESTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T16:30:21.274Z",
+          "detail": "Recipient requested clarification: \"Which Linux kernel version was verified for io_uring on staging-04?\". Custodianship transfer paused pending response."
+        },
+        {
+          "action": "HANDOFF_ACCEPTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T16:30:23.674Z",
+          "detail": "Handoff verified and accepted. Note: \"Verified Linux kernel 6.5.0-generic and assumed primary custodianship.\". Operational ownership transferred."
+        }
+      ],
+      "clarificationRequest": "Which Linux kernel version was verified for io_uring on staging-04?",
+      "acceptedAt": "2026-10-12T16:30:23.674Z"
+    },
+    {
+      "id": "HO-2026-926",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "taskId": "TASK-102",
+      "taskTitle": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "senderId": "user-jessica",
+      "recipientId": "user-marcus",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Pending",
+      "createdAt": "2026-10-12T16:25:55.738Z",
+      "note": "Shift rotation handoff for Chaos Mesh validation",
+      "completenessScore": 100,
+      "readinessCheck": {
+        "score": 100,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "1 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": true,
+            "suggestion": "Verification artifacts or files linked."
+          }
+        ],
+        "suggestions": []
+      },
+      "setupInstructions": "Deploy to staging cluster via helm chart.",
+      "pendingTasks": [
+        "Execute 4-node network partition test"
+      ],
+      "files": [
+        "src/consensus/raft_state.rs"
+      ],
+      "briefing": {
+        "executiveSummary": "Comprehensive handover of Raft state machine partition testing suite.",
+        "completedItems": [
+          "Verified io_uring journal flush",
+          "Automated linearizability test suite"
+        ],
+        "nextSteps": [
+          "Execute 4-node network partition test"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-12T16:25:55.738Z",
+          "detail": "Handoff dossier created and dispatched to Marcus Vance. Readiness Score: 100%. Ownership remains with Jessica Chauhan until acceptance."
+        }
+      ]
+    },
+    {
+      "id": "HO-2026-829",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "taskId": "TASK-102",
+      "taskTitle": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "senderId": "user-jessica",
+      "recipientId": "user-marcus",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Accepted",
+      "createdAt": "2026-10-12T16:10:45.735Z",
+      "note": "Shift rotation handoff for Chaos Mesh validation",
+      "completenessScore": 100,
+      "readinessCheck": {
+        "score": 100,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "1 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": true,
+            "suggestion": "Verification artifacts or files linked."
+          }
+        ],
+        "suggestions": []
+      },
+      "setupInstructions": "Deploy to staging cluster via helm chart.",
+      "pendingTasks": [
+        "Execute 4-node network partition test"
+      ],
+      "files": [
+        "src/consensus/raft_state.rs"
+      ],
+      "briefing": {
+        "executiveSummary": "Comprehensive handover of Raft state machine partition testing suite.",
+        "completedItems": [
+          "Verified io_uring journal flush",
+          "Automated linearizability test suite"
+        ],
+        "nextSteps": [
+          "Execute 4-node network partition test"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-12T16:10:45.736Z",
+          "detail": "Handoff dossier created and dispatched to Marcus Vance. Readiness Score: 100%. Ownership remains with Jessica Chauhan until acceptance."
+        },
+        {
+          "action": "HANDOFF_CLARIFICATION_REQUESTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T16:10:56.543Z",
+          "detail": "Recipient requested clarification: \"Which Linux kernel version was verified for io_uring on staging-04?\". Custodianship transfer paused pending response."
+        },
+        {
+          "action": "HANDOFF_ACCEPTED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-12T16:10:58.368Z",
+          "detail": "Handoff verified and accepted. Note: \"Verified Linux kernel 6.5.0-generic and assumed primary custodianship.\". Operational ownership transferred."
+        }
+      ],
+      "clarificationRequest": "Which Linux kernel version was verified for io_uring on staging-04?",
+      "acceptedAt": "2026-10-12T16:10:58.368Z"
+    },
+    {
+      "id": "HO-2026-089",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "senderId": "user-yash",
+      "recipientId": "user-jessica",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Pending",
+      "createdAt": "2026-10-11T12:00:00Z",
+      "note": "Rotation handover for Apollo Core io_uring WAL verification during APAC to US-West shift handover.",
+      "completenessScore": 94,
+      "briefing": {
+        "executiveSummary": "Apollo Core Raft consensus engine v2.4.0 with monotonic read barriers. Kernel io_uring flush verification underway.",
+        "completedItems": [
+          "Implemented epoch-based monotonic read barrier",
+          "Configured io_uring submission queues in Linux kernel 6.1 LTS"
+        ],
+        "nextSteps": [
+          "Monitor memory lock allocations during 48h soak test",
+          "Execute Chaos Mesh 4-node split-brain simulation"
+        ],
+        "criticalBlockers": [
+          "TASK-103: Staging VIP DNS propagation pending in VPC-04"
+        ],
+        "architecturalDecisions": [
+          "ADR-041: Speculative read barriers to eliminate leader round-trips",
+          "ADR-039: POSIX sync to io_uring async ring migration"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs",
+          "src/wal/journal_uring.rs"
+        ],
+        "runbookCommands": [
+          "./bin/apollo-ctl cluster status --json",
+          "curl -s http://localhost:9091/metrics | grep apollo_raft_commit_index"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Yash Lokhande",
+          "timestamp": "2026-10-11 12:00 UTC",
+          "detail": "Handoff dossier created and dispatched to Jessica Chauhan with pinned version v2.4.0."
+        }
+      ]
+    }
+  ],
+  "updates": [
+    {
+      "id": "upd-mv5mx8qi-x80",
+      "employeeId": "user-jessica",
+      "employeeName": "Jessica Chauhan",
+      "employeeRole": "Senior Distributed Systems Engineer",
+      "taskId": "TASK-826",
+      "taskTitle": "Validate Chaos Mesh partition suite for Raft nodes",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "completedWork": "Executed Chaos Mesh 4-node split-brain simulation",
+      "inProgress": "Analyzing read-barrier p99 latency under 80k rps",
+      "nextSteps": "Compile final benchmark report for release review",
+      "blockers": "",
+      "dependencies": "",
+      "evidenceUrls": [],
+      "status": "Submitted",
+      "createdAt": "2026-10-12T19:18:15.930Z"
+    },
+    {
+      "id": "upd-mv5k3vxr-4w1",
+      "employeeId": "user-jessica",
+      "employeeName": "Jessica Chauhan",
+      "employeeRole": "Senior Distributed Systems Engineer",
+      "taskId": "TASK-226",
+      "taskTitle": "Validate Chaos Mesh partition suite for Raft nodes",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "completedWork": "Executed Chaos Mesh 4-node split-brain simulation",
+      "inProgress": "Analyzing read-barrier p99 latency under 80k rps",
+      "nextSteps": "Compile final benchmark report for release review",
+      "blockers": "",
+      "dependencies": "",
+      "evidenceUrls": [],
+      "status": "Submitted",
+      "createdAt": "2026-10-12T17:59:27.087Z"
+    },
+    {
+      "id": "upd-mv5gxgak-psh",
+      "employeeId": "user-jessica",
+      "employeeName": "Jessica Chauhan",
+      "employeeRole": "Senior Distributed Systems Engineer",
+      "taskId": "TASK-548",
+      "taskTitle": "Validate Chaos Mesh partition suite for Raft nodes",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "completedWork": "Executed Chaos Mesh 4-node split-brain simulation",
+      "inProgress": "Analyzing read-barrier p99 latency under 80k rps",
+      "nextSteps": "Compile final benchmark report for release review",
+      "blockers": "",
+      "dependencies": "",
+      "evidenceUrls": [],
+      "status": "Submitted",
+      "createdAt": "2026-10-12T16:30:28.028Z"
+    },
+    {
+      "id": "upd-mv5g8ibj-9gx",
+      "employeeId": "user-jessica",
+      "employeeName": "Jessica Chauhan",
+      "employeeRole": "Senior Distributed Systems Engineer",
+      "taskId": "TASK-102",
+      "taskTitle": "Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "completedWork": "Executed Chaos Mesh 4-node split-brain simulation",
+      "inProgress": "Analyzing read-barrier p99 latency under 80k rps",
+      "nextSteps": "Compile final benchmark report for release review",
+      "blockers": "",
+      "dependencies": "",
+      "evidenceUrls": [],
+      "status": "Submitted",
+      "createdAt": "2026-10-12T16:11:04.255Z"
+    },
+    {
+      "id": "upd-mv5ee1x8-3no",
+      "employeeId": "user-jessica",
+      "employeeName": "Jessica Chauhan",
+      "employeeRole": "Senior Distributed Systems Engineer",
+      "taskId": "TASK-230",
+      "taskTitle": "Implement TLS Termination Gateway",
+      "projectId": "project-orion-edge",
+      "projectName": "Project Orion Edge",
+      "completedWork": "Root CA generation and TLS socket listeners",
+      "inProgress": "Wiring up client certificate authentication handlers",
+      "nextSteps": "Integration testing on edge cluster",
+      "blockers": "Awaiting final IP whitelist confirmation from client",
+      "dependencies": "HSM key initialization",
+      "evidenceUrls": [],
+      "status": "Reviewed",
+      "createdAt": "2026-10-12T15:19:23.708Z",
+      "leaderId": "user-marcus",
+      "reviewedAt": "2026-10-12T15:19:24.859Z"
+    },
+    {
+      "id": "upd-101",
+      "employeeId": "user-jessica",
+      "employeeName": "Jessica Chauhan",
+      "employeeRole": "Senior Distributed Systems Engineer",
+      "taskId": "TASK-101",
+      "taskTitle": "Verify io_uring kernel compatibility on staging-us-west fleet",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "completedWork": "Provisioned 3 staging nodes on kernel 6.1 LTS. Raised user-space memlock parameters to unlimited in systemd service definitions.",
+      "inProgress": "Running 48-hour continuous io_uring submit/reap soak test with synthetic load.",
+      "nextSteps": "Check completion queue ring overflow metrics tomorrow morning and report to Team Leader Marcus.",
+      "blockers": "None currently. Fleet latency steady at 1.1ms.",
+      "dependencies": "Requires staging fleet access (granted).",
+      "evidenceUrls": [
+        "https://monitoring.internal/dashboards/io-uring-fleet"
+      ],
+      "status": "Reviewed",
+      "leaderComment": "Excellent progress Jessica. Keep an eye on p99 memory lock allocations during peak hours.",
+      "leaderId": "user-marcus",
+      "createdAt": "2026-10-11T17:30:00Z",
+      "reviewedAt": "2026-10-11T18:15:00Z"
+    },
+    {
+      "id": "upd-102",
+      "employeeId": "user-yash",
+      "employeeName": "Yash Lokhande",
+      "employeeRole": "Principal Systems Architect",
+      "taskId": "TASK-103",
+      "taskTitle": "Benchmark follower read barrier latency under 80k rps load",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "completedWork": "Drafted k6 benchmark script to simulate 80k rps distributed read traffic.",
+      "inProgress": "Waiting on staging VIP DNS resolution to execute full benchmark suite.",
+      "nextSteps": "Run benchmark as soon as networking team unblocks the internal DNS record.",
+      "blockers": "Blocked on staging load balancer DNS propagation in VPC-04.",
+      "dependencies": "Network infrastructure team ticket NET-4091.",
+      "status": "Submitted",
+      "createdAt": "2026-10-12T09:15:00Z"
+    },
+    {
+      "id": "upd-103",
+      "employeeId": "user-shruti",
+      "employeeName": "Shruti Patil",
+      "employeeRole": "Lead Site Reliability Engineer",
+      "taskId": "TASK-201",
+      "taskTitle": "Remediate Admin Revision: Add zero-knowledge boundary proof for client tenant isolation",
+      "projectId": "chronos-ledger",
+      "projectName": "Chronos Immutable Audit Ledger",
+      "completedWork": "Analyzed Admin revision comments from Alexander Ward. Mapped out constraint circuit for tenant isolation.",
+      "inProgress": "Coding Rust integration tests for cross-tenant boundary verification.",
+      "nextSteps": "Benchmark proof generation time to ensure it remains under the 15ms acceptance limit.",
+      "blockers": "None.",
+      "dependencies": "Chronos core crate v1.2.0-rc3.",
+      "status": "Submitted",
+      "createdAt": "2026-10-12T11:45:00Z"
+    }
+  ],
+  "reports": [
+    {
+      "id": "rep-project-orion-edge-mv5ee4eu",
+      "projectId": "project-orion-edge",
+      "projectName": "Project Orion Edge",
+      "teamId": "team-delta-rapid-deployment-5ed",
+      "teamName": "Delta Rapid Deployment",
+      "leaderId": "user-marcus",
+      "leaderName": "Marcus Vance",
+      "reportingPeriod": "Sprint 42 (Oct 06 - Oct 12, 2026)",
+      "progressPercentage": 85,
+      "milestonesCompleted": [],
+      "workCompleted": "Completed CA generation, mTLS listeners, and initial failover benchmarks",
+      "tasksRemaining": "Final cipher suite restriction and documentation",
+      "blockedTasks": "",
+      "risks": "Client whitelist delay",
+      "deadlineConfidence": "High",
+      "helpNeededFromAdmin": "",
+      "nextPeriodPlan": "Deploy to staging cluster and run automated penetration test",
+      "evidenceUrls": [],
+      "status": "Submitted",
+      "createdAt": "2026-10-12T15:19:26.934Z"
+    },
+    {
+      "id": "rep-storage-oct11",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "teamId": "team-storage",
+      "teamName": "Consensus & Distributed Storage Pod",
+      "leaderId": "user-marcus",
+      "leaderName": "Marcus Vance",
+      "reportingPeriod": "Sprint 41 (Oct 01 - Oct 15, 2026)",
+      "progressPercentage": 78,
+      "milestonesCompleted": [
+        "Phase 1: io_uring WAL Pipeline Implementation"
+      ],
+      "workCompleted": "Successfully implemented io_uring kernel submission ring. p99 WAL commit latency lowered from 4.2ms to 1.1ms across staging clusters.",
+      "tasksRemaining": "Chaos Mesh partition validation (TASK-102) and 80k rps load benchmarking (TASK-103).",
+      "blockedTasks": "TASK-103 temporarily waiting on staging load balancer DNS routing in VPC-04.",
+      "risks": "Minor staging network routing delay; no impact on production delivery deadline.",
+      "deadlineConfidence": "High",
+      "helpNeededFromAdmin": "Please help expedite Network Infrastructure ticket NET-4091 with IT SecOps if VIP routing is not resolved by tomorrow.",
+      "nextPeriodPlan": "Complete 48h soak test, execute 4-node split-brain simulation, and compile final Phase 2 delivery artifact.",
+      "evidenceUrls": [
+        "https://monitoring.internal/dashboards/apollo-sprint41-metrics"
+      ],
+      "status": "Acknowledged",
+      "adminFeedback": "Great momentum Marcus. I will follow up with IT SecOps regarding NET-4091 today. Proceed with Phase 2 validation.",
+      "adminId": "user-admin",
+      "createdAt": "2026-10-11T18:45:00Z",
+      "reviewedAt": "2026-10-11T20:00:00Z"
+    },
+    {
+      "id": "rep-obs-oct10",
+      "projectId": "chronos-ledger",
+      "projectName": "Chronos Immutable Audit Ledger",
+      "teamId": "team-observability",
+      "teamName": "Edge Reliability & Telemetry Fleet",
+      "leaderId": "user-sarah",
+      "leaderName": "Sarah Lin",
+      "reportingPeriod": "Sprint 20 (Sep 25 - Oct 10, 2026)",
+      "progressPercentage": 88,
+      "milestonesCompleted": [
+        "Merkle Mountain Range Core Engine",
+        "Cryptographic Proof Verifier Service"
+      ],
+      "workCompleted": "Completed initial release candidate v1.2.0-rc2 and submitted for final review.",
+      "tasksRemaining": "Remediating Admin revision requests: zero-knowledge tenant isolation proof and cold-boot disaster recovery drill.",
+      "blockedTasks": "None.",
+      "risks": "Deadline proximity (Oct 25, 2026); team is actively addressing revision tasks.",
+      "deadlineConfidence": "Medium",
+      "helpNeededFromAdmin": "Admin guidance received during Round 1 review. Team is now executing required remediation tasks.",
+      "nextPeriodPlan": "Deliver updated release candidate v1.2.0-rc4 with passing tenant isolation suite and resubmit for final review.",
+      "evidenceUrls": [],
+      "status": "Submitted",
+      "createdAt": "2026-10-10T11:30:00Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-sub-project-orion-edge",
+      "projectId": "project-orion-edge",
+      "projectName": "Project Orion Edge",
+      "status": "Approved for Delivery",
+      "currentRound": 2,
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "submittedAt": "2026-10-12T15:19:31.223Z",
+          "submittedBy": "user-marcus",
+          "submittedByName": "Marcus Vance",
+          "releaseVersion": "v1.0.0-rc1",
+          "completionSummary": "Full production bundle with automated test suite and compliance checklist.",
+          "setupInstructions": "Run docker compose -f edge.yml up -d and verify health probe at :8443/health.",
+          "knownLimitations": "",
+          "testEvidence": "100% unit and integration test coverage across all edge gateway modules.",
+          "outstandingIssues": "",
+          "revisionItems": [
+            {
+              "id": "rev-item-mv5ee87m-0",
+              "description": "Optimize edge failover heartbeat interval to under 25ms",
+              "priority": "P0",
+              "completed": false
+            },
+            {
+              "id": "rev-item-mv5ee87m-1",
+              "description": "Enforce TLS 1.3 only cipher suites",
+              "priority": "P1",
+              "completed": false
+            }
+          ],
+          "reviewerId": "user-admin",
+          "reviewerName": "Alexander Ward",
+          "reviewedAt": "2026-10-12T15:19:31.858Z",
+          "decision": "Changes Requested",
+          "comments": "Edge node failover latency must be under 25ms and cipher suite needs updating."
+        },
+        {
+          "roundNumber": 2,
+          "submittedAt": "2026-10-12T15:19:32.160Z",
+          "submittedBy": "user-marcus",
+          "submittedByName": "Marcus Vance",
+          "releaseVersion": "v1.0.0-rc2",
+          "completionSummary": "Optimized failover latency to 18ms and enforced TLS 1.3 only.",
+          "setupInstructions": "Run docker compose -f edge.yml up -d and verify health probe at :8443/health.",
+          "knownLimitations": "",
+          "testEvidence": "Failover latency verified at 18ms under 10k req/s load test.",
+          "outstandingIssues": "",
+          "revisionItems": [],
+          "reviewerId": "user-admin",
+          "reviewerName": "Alexander Ward",
+          "reviewedAt": "2026-10-12T15:19:32.832Z",
+          "decision": "Approved",
+          "comments": "All performance benchmarks and security invariants verified."
+        }
+      ],
+      "updatedAt": "2026-10-12T15:19:32.832Z"
+    },
+    {
+      "id": "rev-sub-chronos",
+      "projectId": "chronos-ledger",
+      "projectName": "Chronos Immutable Audit Ledger",
+      "status": "Changes Requested",
+      "currentRound": 1,
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "submittedAt": "2026-10-09T19:00:00Z",
+          "submittedBy": "user-sarah",
+          "submittedByName": "Sarah Lin",
+          "releaseVersion": "v1.2.0-rc2",
+          "completionSummary": "Complete implementation of append-only Merkle ledger with high-throughput API endpoints and telemetry exporter.",
+          "setupInstructions": "Deploy via Helm chart `charts/chronos-cluster` with minimum 3 replica nodes.",
+          "knownLimitations": "Cross-tenant boundary proofs require dedicated verification step during multi-tenant queries.",
+          "testEvidence": "Passed 480 unit tests and 48-hour load test at 50,000 writes/sec without memory leaks.",
+          "outstandingIssues": "Disaster recovery cold-boot drill needs final documented test execution run.",
+          "reviewerId": "user-admin",
+          "reviewerName": "Alexander Ward",
+          "reviewedAt": "2026-10-10T10:30:00Z",
+          "decision": "Changes Requested",
+          "comments": "Strong foundational release. However, before approving client delivery to Global HealthMesh, two items must be resolved: 1) explicit zero-knowledge tenant isolation boundary proof, and 2) cold-boot disaster recovery runbook validation.",
+          "revisionItems": [
+            {
+              "id": "rev-item-1",
+              "description": "Add zero-knowledge boundary proof for client tenant isolation",
+              "priority": "P0",
+              "deadline": "2026-10-17",
+              "completed": false
+            },
+            {
+              "id": "rev-item-2",
+              "description": "Execute and document cold-boot disaster recovery simulation from S3 backup",
+              "priority": "P1",
+              "deadline": "2026-10-19",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "updatedAt": "2026-10-10T10:30:00Z"
+    },
+    {
+      "id": "rev-sub-krypton",
+      "projectId": "krypton-auth",
+      "projectName": "Krypton WebAuthn Identity Authority",
+      "status": "Approved for Delivery",
+      "currentRound": 1,
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "submittedAt": "2026-10-10T15:00:00Z",
+          "submittedBy": "user-elena",
+          "submittedByName": "Elena Rostova",
+          "releaseVersion": "v2.0.0",
+          "completionSummary": "Delivering complete FIDO2 WebAuthn identity authority with 100% test passing rate and zero known security flaws.",
+          "setupInstructions": "Deploy using `helm upgrade --install krypton-auth ./deploy/helm/krypton` with injected Vault secrets.",
+          "knownLimitations": "Requires iOS >= 16 or Android >= 13 for biometric passkey roaming authentication.",
+          "testEvidence": "Comprehensive penetration test report attached. 0 High/Critical findings. FIDO alliance test suite verified.",
+          "outstandingIssues": "None. All acceptance criteria fulfilled.",
+          "reviewerId": "user-admin",
+          "reviewerName": "Alexander Ward",
+          "reviewedAt": "2026-10-11T16:00:00Z",
+          "decision": "Approved",
+          "comments": "Outstanding work Elena and team. All acceptance criteria and FIDO2 compliance tests verified. Approved for formal client delivery handover.",
+          "revisionItems": []
+        }
+      ],
+      "updatedAt": "2026-10-11T16:00:00Z"
+    },
+    {
+      "id": "rev-sub-solaris",
+      "projectId": "solaris-gateway",
+      "projectName": "Solaris Edge Routing Mesh",
+      "status": "Delivered",
+      "currentRound": 1,
+      "rounds": [
+        {
+          "roundNumber": 1,
+          "submittedAt": "2026-09-26T10:00:00Z",
+          "submittedBy": "user-sarah",
+          "submittedByName": "Sarah Lin",
+          "releaseVersion": "v1.4.2-prod",
+          "completionSummary": "Final production deliverable with eBPF DDOS protection and ground-station failover telemetry.",
+          "setupInstructions": "Deploy via Starlight Aerospace air-gapped container runner.",
+          "knownLimitations": "Requires Linux kernel >= 5.15 on ground-station terminal blades.",
+          "testEvidence": "Signed air-gap soak test report and automated failover verification logs.",
+          "outstandingIssues": "None.",
+          "reviewerId": "user-admin",
+          "reviewerName": "Alexander Ward",
+          "reviewedAt": "2026-09-28T15:00:00Z",
+          "decision": "Approved",
+          "comments": "All requirements exceeded. Approved for client delivery.",
+          "revisionItems": []
+        }
+      ],
+      "updatedAt": "2026-09-30T17:00:00Z"
+    }
+  ],
+  "deliveries": [
+    {
+      "id": "DELIV-MV5EEA8Q-BDA",
+      "projectId": "project-orion-edge",
+      "projectName": "Project Orion Edge",
+      "approvedVersion": "v1.0.0",
+      "deliveredAt": "2026-10-12T20:49:32Z",
+      "recipientContact": "elena.vance@starlightglobal.example.com",
+      "deliveryChannel": "Secure SFTP and Artifact Repository",
+      "deliveryNotes": "Complete turn-key edge runtime with certified failover and cryptographic receipts.",
+      "deliverablesList": [
+        "Runtime binaries",
+        "Docker images",
+        "Runbooks",
+        "Audit attestation"
+      ],
+      "recordedBy": "user-admin",
+      "recordedByName": "Alexander Ward",
+      "clientAcknowledged": true,
+      "clientAcknowledgmentNotes": "Elena Vance (CTO) ratified receipt and staging deployment acceptance.",
+      "createdAt": "2026-10-12T15:19:34.490Z"
+    },
+    {
+      "id": "DELIV-2026-001",
+      "projectId": "solaris-gateway",
+      "projectName": "Solaris Edge Routing Mesh",
+      "approvedVersion": "v1.4.2-prod",
+      "deliveredAt": "2026-09-30T16:45:00Z",
+      "recipientContact": "Col. Raymond Vance (Dir. Operations, Starlight Defense Aerospace)",
+      "deliveryChannel": "Encrypted GPG Key Delivery & Secure Air-Gapped S3 Repository (Ref: STA-SEC-9921)",
+      "deliveryNotes": "Production binary bundle, signed GPG checksums, deployment documentation, and 24/7 on-call escalation matrix transferred.",
+      "deliverablesList": [
+        "solaris-edge-v1.4.2.tar.gz (SHA256: 710cb99a...)",
+        "Air-gapped deployment playbook v1.4",
+        "Signed Penetration Test Certification",
+        "Operational handover dossier HO-2026-074"
+      ],
+      "recordedBy": "user-admin",
+      "recordedByName": "Alexander Ward",
+      "clientAcknowledged": true,
+      "clientAcknowledgmentNotes": "Acknowledged by Col. Raymond Vance on 2026-09-30 17:30 UTC via verified PGP digital receipt.",
+      "createdAt": "2026-09-30T16:45:00Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "AUDIT-MV5MX8QJ-TJZX",
+      "timestamp": "2026-10-12T19:18:15.931Z",
+      "hash": "188ab77127e129e6194e662317eb97798e371fb50340f8b865429600d3676a82",
+      "prevHash": "b0f38d17cab5b966558cd9e967d245afcaa6dbc0579776fd9eff771b4370bfd6",
+      "action": "UPDATE_SUBMITTED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Jessica Chauhan submitted progress update on Apollo Core Distributed Consensus (Task: Validate Chaos Mesh partition suite for Raft nodes).",
+      "metadata": {
+        "updateId": "upd-mv5mx8qi-x80",
+        "projectId": "apollo-core",
+        "taskId": "TASK-826"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MX86J-RNSE",
+      "timestamp": "2026-10-12T19:18:15.211Z",
+      "hash": "b0f38d17cab5b966558cd9e967d245afcaa6dbc0579776fd9eff771b4370bfd6",
+      "prevHash": "118852c8eee415c8a29df0540b7583f737f11423f2639ede5a92457773fcc8e5",
+      "action": "BLOCKER_RESOLVED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" resolved by Alexander Ward: Systemd limits updated; memlock verified unlimited on all nodes.",
+      "metadata": {
+        "taskId": "TASK-826"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MX7NG-S4KY",
+      "timestamp": "2026-10-12T19:18:14.524Z",
+      "hash": "118852c8eee415c8a29df0540b7583f737f11423f2639ede5a92457773fcc8e5",
+      "prevHash": "b44d24fec3897cff4a2a5e3b1d7a20bbe34defd2a6262bbad21fcd53ef8bfbda",
+      "action": "BLOCKER_ESCALATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" escalated by Marcus Vance: Cross-team platform infrastructure dependency on SRE",
+      "metadata": {
+        "taskId": "TASK-826"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MX7EE-X8KX",
+      "timestamp": "2026-10-12T19:18:14.197Z",
+      "hash": "b44d24fec3897cff4a2a5e3b1d7a20bbe34defd2a6262bbad21fcd53ef8bfbda",
+      "prevHash": "0711c4ea6469f162383bb489d83ee21324006c9d7d831c0a4dca1ee91be0823f",
+      "action": "BLOCKER_ACKNOWLEDGED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" acknowledged by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-826"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MX6RR-TJL4",
+      "timestamp": "2026-10-12T19:18:13.383Z",
+      "hash": "0711c4ea6469f162383bb489d83ee21324006c9d7d831c0a4dca1ee91be0823f",
+      "prevHash": "474d58630d8209e440a6319d0033b98a23aac992b709d6d2aa5e0bc491fab8d2",
+      "action": "BLOCKER_REPORTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker reported on task \"Validate Chaos Mesh partition suite for Raft nodes\" by Marcus Vance: Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team. (High)",
+      "metadata": {
+        "taskId": "TASK-826",
+        "severity": "High",
+        "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team."
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MX2V7-BZAF",
+      "timestamp": "2026-10-12T19:18:08.323Z",
+      "hash": "474d58630d8209e440a6319d0033b98a23aac992b709d6d2aa5e0bc491fab8d2",
+      "prevHash": "4495adf32ab30b3a1f9c176f9f4d9fc6dbbf3724992435b4510d399aaec08013",
+      "action": "TASK_COMMENT_ADDED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Comment added on task \"Validate Chaos Mesh partition suite for Raft nodes\" by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-826",
+        "commentId": "cmt-1791832688323-gjv4"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MWUFH-1C95",
+      "timestamp": "2026-10-12T19:17:57.389Z",
+      "hash": "4495adf32ab30b3a1f9c176f9f4d9fc6dbbf3724992435b4510d399aaec08013",
+      "prevHash": "2ec18ecd89bb74ce39ccc6c3d32e8a4340e00abdfb24872efdda063ba299e2ad",
+      "action": "OWNERSHIP_TRANSFERRED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-826) ownership transferred from Jessica Chauhan to Marcus Vance via Recipient Acceptance. Reason: Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+      "metadata": {
+        "taskId": "TASK-826",
+        "prevOwnerId": "user-jessica",
+        "newOwnerId": "user-marcus",
+        "method": "Recipient Acceptance",
+        "handoffId": "HO-2026-517"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MWUFH-UEJM",
+      "timestamp": "2026-10-12T19:17:57.389Z",
+      "hash": "2ec18ecd89bb74ce39ccc6c3d32e8a4340e00abdfb24872efdda063ba299e2ad",
+      "prevHash": "8dd5219121a950a6a1e029eab984063e01245721b4eefa1035b399bd680568db",
+      "action": "HANDOFF_ACCEPTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff HO-2026-517 accepted by Marcus Vance for \"Apollo Core Distributed Consensus\". Custodianship transferred.",
+      "metadata": {
+        "handoffId": "HO-2026-517",
+        "taskId": "TASK-826",
+        "recipientId": "user-marcus"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MWREB-YCCJ",
+      "timestamp": "2026-10-12T19:17:53.458Z",
+      "hash": "8dd5219121a950a6a1e029eab984063e01245721b4eefa1035b399bd680568db",
+      "prevHash": "08e3a6ec737223ad2517b3a25cc073523f4afc4b853538a5f365c78400cc4afa",
+      "action": "HANDOFF_CLARIFICATION_REQUESTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Clarification requested on handoff HO-2026-517 by Marcus Vance: \"Which Linux kernel version was verified for io_uring on staging-04?\".",
+      "metadata": {
+        "handoffId": "HO-2026-517",
+        "taskId": "TASK-826",
+        "question": "Which Linux kernel version was verified for io_uring on staging-04?"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MWJA5-IVJT",
+      "timestamp": "2026-10-12T19:17:42.941Z",
+      "hash": "08e3a6ec737223ad2517b3a25cc073523f4afc4b853538a5f365c78400cc4afa",
+      "prevHash": "944fa0d1c93b6a38a38b3fb7e499199f14cb12c61ebb73f2a1bbe33c3b9f63a6",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-517 initiated for \"Apollo Core Distributed Consensus\" (Task: Validate Chaos Mesh partition suite for Raft nodes) to Marcus Vance. Readiness: 100%.",
+      "metadata": {
+        "handoffId": "HO-2026-517",
+        "taskId": "TASK-826",
+        "senderId": "user-jessica",
+        "recipientId": "user-marcus",
+        "score": 100
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5MWJ5G-1ZU8",
+      "timestamp": "2026-10-12T19:17:42.769Z",
+      "hash": "944fa0d1c93b6a38a38b3fb7e499199f14cb12c61ebb73f2a1bbe33c3b9f63a6",
+      "prevHash": "8788e4b18df9a922e305f41f05123cb10e4e5b23fbe21d0c8dfd122b0f01bdf0",
+      "action": "TASK_CREATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Marcus Vance created task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-826) and assigned to Jessica Chauhan in Apollo Core Distributed Consensus.",
+      "metadata": {
+        "taskId": "TASK-826",
+        "projectId": "apollo-core",
+        "assigneeId": "user-jessica",
+        "priority": "P1"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3VXS-6M25",
+      "timestamp": "2026-10-12T17:59:27.087Z",
+      "hash": "8788e4b18df9a922e305f41f05123cb10e4e5b23fbe21d0c8dfd122b0f01bdf0",
+      "prevHash": "69fc3f3fa4bb11c0c3317e5fb84a82e5e5e426786e41d56ceedfa994e29ad032",
+      "action": "UPDATE_SUBMITTED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Jessica Chauhan submitted progress update on Apollo Core Distributed Consensus (Task: Validate Chaos Mesh partition suite for Raft nodes).",
+      "metadata": {
+        "updateId": "upd-mv5k3vxr-4w1",
+        "projectId": "apollo-core",
+        "taskId": "TASK-226"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3TM9-PQC0",
+      "timestamp": "2026-10-12T17:59:24.081Z",
+      "hash": "69fc3f3fa4bb11c0c3317e5fb84a82e5e5e426786e41d56ceedfa994e29ad032",
+      "prevHash": "2de83583aced2ae10d323c177256b068aab652118eeb3f920d1a7bd81de35596",
+      "action": "BLOCKER_RESOLVED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" resolved by Alexander Ward: Systemd limits updated; memlock verified unlimited on all nodes.",
+      "metadata": {
+        "taskId": "TASK-226"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3J5R-7X59",
+      "timestamp": "2026-10-12T17:59:10.527Z",
+      "hash": "2de83583aced2ae10d323c177256b068aab652118eeb3f920d1a7bd81de35596",
+      "prevHash": "175e4132676d23211813b27b69457168c2eb2e2e194159bba567bc84d1e92582",
+      "action": "BLOCKER_ESCALATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" escalated by Marcus Vance: Cross-team platform infrastructure dependency on SRE",
+      "metadata": {
+        "taskId": "TASK-226"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3II4-AMFJ",
+      "timestamp": "2026-10-12T17:59:09.675Z",
+      "hash": "175e4132676d23211813b27b69457168c2eb2e2e194159bba567bc84d1e92582",
+      "prevHash": "78e039f9f0aac1da9aefa6276936b39397a88dde9c6fb76e98b1fc533024b238",
+      "action": "BLOCKER_ACKNOWLEDGED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" acknowledged by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-226"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3HOZ-ABVK",
+      "timestamp": "2026-10-12T17:59:08.627Z",
+      "hash": "78e039f9f0aac1da9aefa6276936b39397a88dde9c6fb76e98b1fc533024b238",
+      "prevHash": "ddc9fdd80ca8e34acaac146b9f9d49b95824dfa493c10a2122aed2aa3ba96cbd",
+      "action": "BLOCKER_REPORTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker reported on task \"Validate Chaos Mesh partition suite for Raft nodes\" by Marcus Vance: Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team. (High)",
+      "metadata": {
+        "taskId": "TASK-226",
+        "severity": "High",
+        "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team."
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3F6F-6FWS",
+      "timestamp": "2026-10-12T17:59:05.367Z",
+      "hash": "ddc9fdd80ca8e34acaac146b9f9d49b95824dfa493c10a2122aed2aa3ba96cbd",
+      "prevHash": "e11cdac23c7a22276c99ea095c2884aa34d68b9e57a2d92d38149555ecc66ae6",
+      "action": "TASK_COMMENT_ADDED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Comment added on task \"Validate Chaos Mesh partition suite for Raft nodes\" by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-226",
+        "commentId": "cmt-1791827945367-cc0p"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3CHL-RQCK",
+      "timestamp": "2026-10-12T17:59:01.881Z",
+      "hash": "e11cdac23c7a22276c99ea095c2884aa34d68b9e57a2d92d38149555ecc66ae6",
+      "prevHash": "8bd82d9a1ba66b10af75c019801e7bbc9d458cb553acf88d4b5e973c5f0ac5de",
+      "action": "OWNERSHIP_TRANSFERRED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-226) ownership transferred from Jessica Chauhan to Marcus Vance via Recipient Acceptance. Reason: Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+      "metadata": {
+        "taskId": "TASK-226",
+        "prevOwnerId": "user-jessica",
+        "newOwnerId": "user-marcus",
+        "method": "Recipient Acceptance",
+        "handoffId": "HO-2026-650"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K3CHK-LA0W",
+      "timestamp": "2026-10-12T17:59:01.880Z",
+      "hash": "8bd82d9a1ba66b10af75c019801e7bbc9d458cb553acf88d4b5e973c5f0ac5de",
+      "prevHash": "59aa783dfea3a43ceb4ba7077354644ff62e1795d5ccd8e2649c035622ba4828",
+      "action": "HANDOFF_ACCEPTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff HO-2026-650 accepted by Marcus Vance for \"Apollo Core Distributed Consensus\". Custodianship transferred.",
+      "metadata": {
+        "handoffId": "HO-2026-650",
+        "taskId": "TASK-226",
+        "recipientId": "user-marcus"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K39VO-MKML",
+      "timestamp": "2026-10-12T17:58:58.500Z",
+      "hash": "59aa783dfea3a43ceb4ba7077354644ff62e1795d5ccd8e2649c035622ba4828",
+      "prevHash": "4ac9f63db09845e63da7633620f1b9f379e719d74919b05224ebfbe96fe0aba0",
+      "action": "HANDOFF_CLARIFICATION_REQUESTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Clarification requested on handoff HO-2026-650 by Marcus Vance: \"Which Linux kernel version was verified for io_uring on staging-04?\".",
+      "metadata": {
+        "handoffId": "HO-2026-650",
+        "taskId": "TASK-226",
+        "question": "Which Linux kernel version was verified for io_uring on staging-04?"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K36EQ-ML4X",
+      "timestamp": "2026-10-12T17:58:54.002Z",
+      "hash": "4ac9f63db09845e63da7633620f1b9f379e719d74919b05224ebfbe96fe0aba0",
+      "prevHash": "a11f86aa6f2d50e66ee6e6a26b454a90b0d1c45755e1ca69098fffa54550030a",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-650 initiated for \"Apollo Core Distributed Consensus\" (Task: Validate Chaos Mesh partition suite for Raft nodes) to Marcus Vance. Readiness: 100%.",
+      "metadata": {
+        "handoffId": "HO-2026-650",
+        "taskId": "TASK-226",
+        "senderId": "user-jessica",
+        "recipientId": "user-marcus",
+        "score": 100
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K35RW-XTYT",
+      "timestamp": "2026-10-12T17:58:53.180Z",
+      "hash": "a11f86aa6f2d50e66ee6e6a26b454a90b0d1c45755e1ca69098fffa54550030a",
+      "prevHash": "4a79f9a611d37016083395627e5df209ec94807ca89dcd6c5ca84f1ee9cc2bab",
+      "action": "TASK_CREATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Marcus Vance created task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-226) and assigned to Jessica Chauhan in Apollo Core Distributed Consensus.",
+      "metadata": {
+        "taskId": "TASK-226",
+        "projectId": "apollo-core",
+        "assigneeId": "user-jessica",
+        "priority": "P1"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K0KD2-4S5K",
+      "timestamp": "2026-10-12T17:56:52.118Z",
+      "hash": "4a79f9a611d37016083395627e5df209ec94807ca89dcd6c5ca84f1ee9cc2bab",
+      "prevHash": "6445a9100c6d34f12460f276f2679db4f25b8e9656d82c67d5de03f4988c1985",
+      "action": "TASK_COMMENT_ADDED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Comment added on task \"Validate Chaos Mesh partition suite for Raft nodes\" by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-793",
+        "commentId": "cmt-1791827812117-4ea4"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K0IW2-I4XN",
+      "timestamp": "2026-10-12T17:56:50.210Z",
+      "hash": "6445a9100c6d34f12460f276f2679db4f25b8e9656d82c67d5de03f4988c1985",
+      "prevHash": "ee62249b1a5cda5053a961ae6afb6c44314422ac5921ee8d3a90c9aeb28d6712",
+      "action": "OWNERSHIP_TRANSFERRED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-793) ownership transferred from Jessica Chauhan to Marcus Vance via Recipient Acceptance. Reason: Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+      "metadata": {
+        "taskId": "TASK-793",
+        "prevOwnerId": "user-jessica",
+        "newOwnerId": "user-marcus",
+        "method": "Recipient Acceptance",
+        "handoffId": "HO-2026-318"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K0IW1-DDH7",
+      "timestamp": "2026-10-12T17:56:50.209Z",
+      "hash": "ee62249b1a5cda5053a961ae6afb6c44314422ac5921ee8d3a90c9aeb28d6712",
+      "prevHash": "b1c0f5e4dfcdb6b65fac4af40084b2c76ddfe459df87688f86b7928c56ad43c1",
+      "action": "HANDOFF_ACCEPTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff HO-2026-318 accepted by Marcus Vance for \"Apollo Core Distributed Consensus\". Custodianship transferred.",
+      "metadata": {
+        "handoffId": "HO-2026-318",
+        "taskId": "TASK-793",
+        "recipientId": "user-marcus"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K0H6B-PFGM",
+      "timestamp": "2026-10-12T17:56:47.987Z",
+      "hash": "b1c0f5e4dfcdb6b65fac4af40084b2c76ddfe459df87688f86b7928c56ad43c1",
+      "prevHash": "e95fbc6a08421bdd0f37693187c351110f325e857578c3f41bb7573ec4554fef",
+      "action": "HANDOFF_CLARIFICATION_REQUESTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Clarification requested on handoff HO-2026-318 by Marcus Vance: \"Which Linux kernel version was verified for io_uring on staging-04?\".",
+      "metadata": {
+        "handoffId": "HO-2026-318",
+        "taskId": "TASK-793",
+        "question": "Which Linux kernel version was verified for io_uring on staging-04?"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K0EIR-X75T",
+      "timestamp": "2026-10-12T17:56:44.547Z",
+      "hash": "e95fbc6a08421bdd0f37693187c351110f325e857578c3f41bb7573ec4554fef",
+      "prevHash": "5c27691fb8eed1cd3984dccc876afc0dc424bc124849c36bc2c4002daf90bfe0",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-318 initiated for \"Apollo Core Distributed Consensus\" (Task: Validate Chaos Mesh partition suite for Raft nodes) to Marcus Vance. Readiness: 100%.",
+      "metadata": {
+        "handoffId": "HO-2026-318",
+        "taskId": "TASK-793",
+        "senderId": "user-jessica",
+        "recipientId": "user-marcus",
+        "score": 100
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5K08DN-92B2",
+      "timestamp": "2026-10-12T17:56:36.585Z",
+      "hash": "5c27691fb8eed1cd3984dccc876afc0dc424bc124849c36bc2c4002daf90bfe0",
+      "prevHash": "8b1cd318e234eba61b518ce86de1fe899993c2de829f29ed82661aae509bddc6",
+      "action": "TASK_CREATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Marcus Vance created task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-793) and assigned to Jessica Chauhan in Apollo Core Distributed Consensus.",
+      "metadata": {
+        "taskId": "TASK-793",
+        "projectId": "apollo-core",
+        "assigneeId": "user-jessica",
+        "priority": "P1"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXGAK-4IP5",
+      "timestamp": "2026-10-12T16:30:28.028Z",
+      "hash": "8b1cd318e234eba61b518ce86de1fe899993c2de829f29ed82661aae509bddc6",
+      "prevHash": "1d34f9fc9b52cc468c92957025a186e1001592543d3d7e727b21cf46dd574672",
+      "action": "UPDATE_SUBMITTED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Jessica Chauhan submitted progress update on Apollo Core Distributed Consensus (Task: Validate Chaos Mesh partition suite for Raft nodes).",
+      "metadata": {
+        "updateId": "upd-mv5gxgak-psh",
+        "projectId": "apollo-core",
+        "taskId": "TASK-548"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXG0F-N7T2",
+      "timestamp": "2026-10-12T16:30:27.663Z",
+      "hash": "1d34f9fc9b52cc468c92957025a186e1001592543d3d7e727b21cf46dd574672",
+      "prevHash": "4e8ae6d91e06cc3191cd26d9da462a9bf03a53ed4a5f7c43197b0a0a8c561958",
+      "action": "BLOCKER_RESOLVED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" resolved by Alexander Ward: Systemd limits updated; memlock verified unlimited on all nodes.",
+      "metadata": {
+        "taskId": "TASK-548"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXFPZ-H5R8",
+      "timestamp": "2026-10-12T16:30:27.287Z",
+      "hash": "4e8ae6d91e06cc3191cd26d9da462a9bf03a53ed4a5f7c43197b0a0a8c561958",
+      "prevHash": "4bf5210804e7b560906df096a20c6882ced585cce605e63c4eedc529fe8ffa99",
+      "action": "BLOCKER_ESCALATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" escalated by Marcus Vance: Cross-team platform infrastructure dependency on SRE",
+      "metadata": {
+        "taskId": "TASK-548"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXFJ5-D2N8",
+      "timestamp": "2026-10-12T16:30:27.041Z",
+      "hash": "4bf5210804e7b560906df096a20c6882ced585cce605e63c4eedc529fe8ffa99",
+      "prevHash": "a6c15d5990b4c47c55d658627853c20eaa755f87967176a9fa0349f759a441ec",
+      "action": "BLOCKER_ACKNOWLEDGED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Validate Chaos Mesh partition suite for Raft nodes\" acknowledged by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-548"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXF7Q-7Q4O",
+      "timestamp": "2026-10-12T16:30:26.630Z",
+      "hash": "a6c15d5990b4c47c55d658627853c20eaa755f87967176a9fa0349f759a441ec",
+      "prevHash": "f64c3088718cb92fc46f7441472e64b858886b0272da94c5a6982ac519b9002b",
+      "action": "BLOCKER_REPORTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker reported on task \"Validate Chaos Mesh partition suite for Raft nodes\" by Marcus Vance: Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team. (High)",
+      "metadata": {
+        "taskId": "TASK-548",
+        "severity": "High",
+        "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team."
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXDVE-XL0S",
+      "timestamp": "2026-10-12T16:30:24.890Z",
+      "hash": "f64c3088718cb92fc46f7441472e64b858886b0272da94c5a6982ac519b9002b",
+      "prevHash": "6984ec49371146023890aef0aeacaa5af92b8ffe74ed12ca9b0944c5a3124b84",
+      "action": "TASK_COMMENT_ADDED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Comment added on task \"Validate Chaos Mesh partition suite for Raft nodes\" by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-548",
+        "commentId": "cmt-1791822624890-7s3w"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXCXN-AAWG",
+      "timestamp": "2026-10-12T16:30:23.675Z",
+      "hash": "6984ec49371146023890aef0aeacaa5af92b8ffe74ed12ca9b0944c5a3124b84",
+      "prevHash": "64f2ac29039694cde44d9cba27867170f725493b7b51b2b17c40f411b91ff826",
+      "action": "OWNERSHIP_TRANSFERRED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-548) ownership transferred from Jessica Chauhan to Marcus Vance via Recipient Acceptance. Reason: Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+      "metadata": {
+        "taskId": "TASK-548",
+        "prevOwnerId": "user-jessica",
+        "newOwnerId": "user-marcus",
+        "method": "Recipient Acceptance",
+        "handoffId": "HO-2026-697"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXCXM-PYX6",
+      "timestamp": "2026-10-12T16:30:23.674Z",
+      "hash": "64f2ac29039694cde44d9cba27867170f725493b7b51b2b17c40f411b91ff826",
+      "prevHash": "2d162e36b3e83e26482d78d9d1361d4119be0d65fc73936316781ecc6aa31583",
+      "action": "HANDOFF_ACCEPTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff HO-2026-697 accepted by Marcus Vance for \"Apollo Core Distributed Consensus\". Custodianship transferred.",
+      "metadata": {
+        "handoffId": "HO-2026-697",
+        "taskId": "TASK-548",
+        "recipientId": "user-marcus"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GXB2Y-AUVY",
+      "timestamp": "2026-10-12T16:30:21.274Z",
+      "hash": "2d162e36b3e83e26482d78d9d1361d4119be0d65fc73936316781ecc6aa31583",
+      "prevHash": "6598af32ec1bf56d002ef66e1f545afaaf6e55937160a24ebf9669c47bba3e4e",
+      "action": "HANDOFF_CLARIFICATION_REQUESTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Clarification requested on handoff HO-2026-697 by Marcus Vance: \"Which Linux kernel version was verified for io_uring on staging-04?\".",
+      "metadata": {
+        "handoffId": "HO-2026-697",
+        "taskId": "TASK-548",
+        "question": "Which Linux kernel version was verified for io_uring on staging-04?"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GX8C5-9IFI",
+      "timestamp": "2026-10-12T16:30:17.717Z",
+      "hash": "6598af32ec1bf56d002ef66e1f545afaaf6e55937160a24ebf9669c47bba3e4e",
+      "prevHash": "57a496f1ff399af42aac3d29c99dc7df1d36db2ea858d5a26498b22d530b906f",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-697 initiated for \"Apollo Core Distributed Consensus\" (Task: Validate Chaos Mesh partition suite for Raft nodes) to Marcus Vance. Readiness: 100%.",
+      "metadata": {
+        "handoffId": "HO-2026-697",
+        "taskId": "TASK-548",
+        "senderId": "user-jessica",
+        "recipientId": "user-marcus",
+        "score": 100
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GX7YP-N4OK",
+      "timestamp": "2026-10-12T16:30:17.231Z",
+      "hash": "57a496f1ff399af42aac3d29c99dc7df1d36db2ea858d5a26498b22d530b906f",
+      "prevHash": "2bb07321a8bb69bb61067499ec2c4c4180ecb3bafcadfe4fa3596c93992570a9",
+      "action": "TASK_CREATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Marcus Vance created task \"Validate Chaos Mesh partition suite for Raft nodes\" (TASK-548) and assigned to Jessica Chauhan in Apollo Core Distributed Consensus.",
+      "metadata": {
+        "taskId": "TASK-548",
+        "projectId": "apollo-core",
+        "assigneeId": "user-jessica",
+        "priority": "P1"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5GRM70-F5CA",
+      "timestamp": "2026-10-12T16:25:55.739Z",
+      "hash": "2bb07321a8bb69bb61067499ec2c4c4180ecb3bafcadfe4fa3596c93992570a9",
+      "prevHash": "e68433eebb56ea95406d3fcc33f1c1661fd316e0c0ba388fb24a29b3b531232a",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-926 initiated for \"Apollo Core Distributed Consensus\" (Task: Run Chaos Mesh partition test for 4-node split-brain simulation) to Marcus Vance. Readiness: 100%.",
+      "metadata": {
+        "handoffId": "HO-2026-926",
+        "taskId": "TASK-102",
+        "senderId": "user-jessica",
+        "recipientId": "user-marcus",
+        "score": 100
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8IBJ-87GI",
+      "timestamp": "2026-10-12T16:11:04.255Z",
+      "hash": "e68433eebb56ea95406d3fcc33f1c1661fd316e0c0ba388fb24a29b3b531232a",
+      "prevHash": "bcd3350c650260354982505cad2b9e34db74297a3337b1b1782a92538358baab",
+      "action": "UPDATE_SUBMITTED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Jessica Chauhan submitted progress update on Apollo Core Distributed Consensus (Task: Run Chaos Mesh partition test for 4-node split-brain simulation).",
+      "metadata": {
+        "updateId": "upd-mv5g8ibj-9gx",
+        "projectId": "apollo-core",
+        "taskId": "TASK-102"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8HHN-GUML",
+      "timestamp": "2026-10-12T16:11:03.179Z",
+      "hash": "bcd3350c650260354982505cad2b9e34db74297a3337b1b1782a92538358baab",
+      "prevHash": "b77f8707ef428fd48456bbd828bb7079be8ab72a5a29fdb7217be42a2543dc2f",
+      "action": "BLOCKER_RESOLVED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Run Chaos Mesh partition test for 4-node split-brain simulation\" resolved by Alexander Ward: Systemd limits updated; memlock verified unlimited on all nodes.",
+      "metadata": {
+        "taskId": "TASK-102"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8H6S-H9HV",
+      "timestamp": "2026-10-12T16:11:02.788Z",
+      "hash": "b77f8707ef428fd48456bbd828bb7079be8ab72a5a29fdb7217be42a2543dc2f",
+      "prevHash": "dd72e31bcc73b33ab8b4c7c7581099a051fbfba11e2211bfdb2c05a76f0b80f9",
+      "action": "BLOCKER_ESCALATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Run Chaos Mesh partition test for 4-node split-brain simulation\" escalated by Marcus Vance: Cross-team platform infrastructure dependency on SRE",
+      "metadata": {
+        "taskId": "TASK-102"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8H0R-J3NU",
+      "timestamp": "2026-10-12T16:11:02.571Z",
+      "hash": "dd72e31bcc73b33ab8b4c7c7581099a051fbfba11e2211bfdb2c05a76f0b80f9",
+      "prevHash": "817c7262257f46df6149ffa0b77c39dcf6089c87e4f32c5be59362579bc0f848",
+      "action": "BLOCKER_ACKNOWLEDGED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker on task \"Run Chaos Mesh partition test for 4-node split-brain simulation\" acknowledged by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-102"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8GS5-75HO",
+      "timestamp": "2026-10-12T16:11:02.261Z",
+      "hash": "817c7262257f46df6149ffa0b77c39dcf6089c87e4f32c5be59362579bc0f848",
+      "prevHash": "78b893563bc192468a7c132ee386d750f257ba66d833cdb6b94319effc9dd5d7",
+      "action": "BLOCKER_REPORTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Blocker reported on task \"Run Chaos Mesh partition test for 4-node split-brain simulation\" by Marcus Vance: Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team. (High)",
+      "metadata": {
+        "taskId": "TASK-102",
+        "severity": "High",
+        "description": "Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team."
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8F8N-2MWU",
+      "timestamp": "2026-10-12T16:11:00.263Z",
+      "hash": "78b893563bc192468a7c132ee386d750f257ba66d833cdb6b94319effc9dd5d7",
+      "prevHash": "9298ad560648bafc9f8428aa1f263357934bf2baea8c5f0d749bcd97eb392628",
+      "action": "TASK_COMMENT_ADDED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Comment added on task \"Run Chaos Mesh partition test for 4-node split-brain simulation\" by Marcus Vance.",
+      "metadata": {
+        "taskId": "TASK-102",
+        "commentId": "cmt-1791821460263-00vz"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8DS1-A2HL",
+      "timestamp": "2026-10-12T16:10:58.369Z",
+      "hash": "9298ad560648bafc9f8428aa1f263357934bf2baea8c5f0d749bcd97eb392628",
+      "prevHash": "fe64f80ca54b2c9a92648bc20866a7c7db6a3e98f983a300203e57f388dcc8b6",
+      "action": "OWNERSHIP_TRANSFERRED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Task \"Run Chaos Mesh partition test for 4-node split-brain simulation\" (TASK-102) ownership transferred from Jessica Chauhan to Marcus Vance via Recipient Acceptance. Reason: Verified Linux kernel 6.5.0-generic and assumed primary custodianship.",
+      "metadata": {
+        "taskId": "TASK-102",
+        "prevOwnerId": "user-jessica",
+        "newOwnerId": "user-marcus",
+        "method": "Recipient Acceptance",
+        "handoffId": "HO-2026-829"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8DS0-241U",
+      "timestamp": "2026-10-12T16:10:58.368Z",
+      "hash": "fe64f80ca54b2c9a92648bc20866a7c7db6a3e98f983a300203e57f388dcc8b6",
+      "prevHash": "b43380a2cf26dd2dc8be636014a5fa12a4cf52d14f5b11bd74e8088046fa5955",
+      "action": "HANDOFF_ACCEPTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff HO-2026-829 accepted by Marcus Vance for \"Apollo Core Distributed Consensus\". Custodianship transferred.",
+      "metadata": {
+        "handoffId": "HO-2026-829",
+        "taskId": "TASK-102",
+        "recipientId": "user-marcus"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8CDB-8LS4",
+      "timestamp": "2026-10-12T16:10:56.543Z",
+      "hash": "b43380a2cf26dd2dc8be636014a5fa12a4cf52d14f5b11bd74e8088046fa5955",
+      "prevHash": "7df7cb9d81817f275d7c2232dae5c260bd300aa71ef0a80b2809dc2e60f223a1",
+      "action": "HANDOFF_CLARIFICATION_REQUESTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Clarification requested on handoff HO-2026-829 by Marcus Vance: \"Which Linux kernel version was verified for io_uring on staging-04?\".",
+      "metadata": {
+        "handoffId": "HO-2026-829",
+        "taskId": "TASK-102",
+        "question": "Which Linux kernel version was verified for io_uring on staging-04?"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5G8415-HLDB",
+      "timestamp": "2026-10-12T16:10:45.736Z",
+      "hash": "7df7cb9d81817f275d7c2232dae5c260bd300aa71ef0a80b2809dc2e60f223a1",
+      "prevHash": "1ec66b7412ac7e3599bf0c292acb9bef9bcbedc509cc8d44242351eb55eb2923",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-829 initiated for \"Apollo Core Distributed Consensus\" (Task: Run Chaos Mesh partition test for 4-node split-brain simulation) to Marcus Vance. Readiness: 100%.",
+      "metadata": {
+        "handoffId": "HO-2026-829",
+        "taskId": "TASK-102",
+        "senderId": "user-jessica",
+        "recipientId": "user-marcus",
+        "score": 100
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EEALE-CX2Z",
+      "timestamp": "2026-10-12T15:19:34.946Z",
+      "hash": "1ec66b7412ac7e3599bf0c292acb9bef9bcbedc509cc8d44242351eb55eb2923",
+      "prevHash": "72b72800d9946549cc621ccce34fbf14597851bd0227c5570899f454129ef94a",
+      "action": "CLIENT_DELIVERY_RECORDED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Project Orion Edge",
+      "detail": "Admin Alexander Ward updated client acknowledgment for \"Project Orion Edge\" (Acknowledged: true).",
+      "metadata": {
+        "deliveryId": "DELIV-MV5EEA8Q-BDA",
+        "clientAcknowledged": true
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EEA8Q-MMD0",
+      "timestamp": "2026-10-12T15:19:34.490Z",
+      "hash": "72b72800d9946549cc621ccce34fbf14597851bd0227c5570899f454129ef94a",
+      "prevHash": "d97c587de8418b127448855fad309bb8a68bf60cc41ad29e560fb2324222edbb",
+      "action": "CLIENT_DELIVERY_RECORDED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Project Orion Edge",
+      "detail": "Admin Alexander Ward recorded client release delivery for \"Project Orion Edge\" (Version: v1.0.0, Recipient: elena.vance@starlightglobal.example.com, Channel: Secure SFTP and Artifact Repository).",
+      "metadata": {
+        "deliveryId": "DELIV-MV5EEA8Q-BDA",
+        "projectId": "project-orion-edge",
+        "approvedVersion": "v1.0.0",
+        "recipientContact": "elena.vance@starlightglobal.example.com",
+        "clientAcknowledged": false
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EE8YO-ON5Z",
+      "timestamp": "2026-10-12T15:19:32.832Z",
+      "hash": "d97c587de8418b127448855fad309bb8a68bf60cc41ad29e560fb2324222edbb",
+      "prevHash": "dbd61223eee84e8c97b062fce663d1010ee7272b3afc5672cdda8299b58b5526",
+      "action": "DELIVERY_APPROVED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Project Orion Edge",
+      "detail": "Admin Alexander Ward approved deliverable version v1.0.0-rc2 for project \"Project Orion Edge\". Ready for client release delivery.",
+      "metadata": {
+        "projectId": "project-orion-edge",
+        "releaseVersion": "v1.0.0-rc2",
+        "roundNumber": 2
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EE8G0-A9K4",
+      "timestamp": "2026-10-12T15:19:32.160Z",
+      "hash": "dbd61223eee84e8c97b062fce663d1010ee7272b3afc5672cdda8299b58b5526",
+      "prevHash": "4e94fdc3c0ef76d8891df05633a5d1a83e2c1b59a477a263f20a341beb794b76",
+      "action": "FINAL_REVIEW_SUBMITTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Project Orion Edge",
+      "detail": "Team Leader Marcus Vance submitted project \"Project Orion Edge\" (Round 2, Release v1.0.0-rc2) for final client delivery review.",
+      "metadata": {
+        "projectId": "project-orion-edge",
+        "roundNumber": 2,
+        "releaseVersion": "v1.0.0-rc2"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EE87N-7JBX",
+      "timestamp": "2026-10-12T15:19:31.859Z",
+      "hash": "4e94fdc3c0ef76d8891df05633a5d1a83e2c1b59a477a263f20a341beb794b76",
+      "prevHash": "bd849f0236b4c35a2626f9a0c3f71fbfa13801c89cdefa615b0469dd1463c609",
+      "action": "CHANGES_REQUESTED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Project Orion Edge",
+      "detail": "Admin Alexander Ward requested changes on deliverable v1.0.0-rc1 for project \"Project Orion Edge\" (2 revision items).",
+      "metadata": {
+        "projectId": "project-orion-edge",
+        "releaseVersion": "v1.0.0-rc1",
+        "revisionCount": 2
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EE7PZ-2SK4",
+      "timestamp": "2026-10-12T15:19:31.223Z",
+      "hash": "bd849f0236b4c35a2626f9a0c3f71fbfa13801c89cdefa615b0469dd1463c609",
+      "prevHash": "af38ff8efc24d92f349212fe82a4e8440834e8320cdbcc4dbf74584f61314d9f",
+      "action": "FINAL_REVIEW_SUBMITTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Project Orion Edge",
+      "detail": "Team Leader Marcus Vance submitted project \"Project Orion Edge\" (Round 1, Release v1.0.0-rc1) for final client delivery review.",
+      "metadata": {
+        "projectId": "project-orion-edge",
+        "roundNumber": 1,
+        "releaseVersion": "v1.0.0-rc1"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EE4EU-JZG2",
+      "timestamp": "2026-10-12T15:19:26.934Z",
+      "hash": "af38ff8efc24d92f349212fe82a4e8440834e8320cdbcc4dbf74584f61314d9f",
+      "prevHash": "1964e2605eb6e03cf5a0284dd0ad63361cf3b67979ebc527d8813d51c16a495b",
+      "action": "REPORT_SUBMITTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Project Orion Edge",
+      "detail": "Team Leader Marcus Vance submitted progress report for Project Orion Edge (Sprint 42 (Oct 06 - Oct 12, 2026), 85% complete).",
+      "metadata": {
+        "reportId": "rep-project-orion-edge-mv5ee4eu",
+        "projectId": "project-orion-edge",
+        "progressPercentage": 85
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EE2T7-RPPE",
+      "timestamp": "2026-10-12T15:19:24.859Z",
+      "hash": "1964e2605eb6e03cf5a0284dd0ad63361cf3b67979ebc527d8813d51c16a495b",
+      "prevHash": "19496aafda2583cde3d4e98be5e0e762b8c70dfa2f4d3d65f170241ac0be044d",
+      "action": "UPDATE_REVIEWED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Project Orion Edge",
+      "detail": "Marcus Vance reviewed update by Jessica Chauhan on Project Orion Edge (Reviewed).",
+      "metadata": {
+        "updateId": "upd-mv5ee1x8-3no",
+        "status": "Reviewed"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EE1X9-E471",
+      "timestamp": "2026-10-12T15:19:23.709Z",
+      "hash": "19496aafda2583cde3d4e98be5e0e762b8c70dfa2f4d3d65f170241ac0be044d",
+      "prevHash": "081ab44a66837af87997a0cb6a71eb524e1d156d8e2a3f9fe5cb1c732437daaf",
+      "action": "UPDATE_SUBMITTED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Project Orion Edge",
+      "detail": "Jessica Chauhan submitted progress update on Project Orion Edge (Task: Implement TLS Termination Gateway).",
+      "metadata": {
+        "updateId": "upd-mv5ee1x8-3no",
+        "projectId": "project-orion-edge",
+        "taskId": "TASK-230"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EDX2K-1TLQ",
+      "timestamp": "2026-10-12T15:19:17.420Z",
+      "hash": "081ab44a66837af87997a0cb6a71eb524e1d156d8e2a3f9fe5cb1c732437daaf",
+      "prevHash": "67d48132df378e8b6b8e6ce0c754626a991af8d28a1853b52059df4983bf4aa8",
+      "action": "TASK_STATUS_CHANGED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Project Orion Edge",
+      "detail": "Jessica Chauhan changed status of task \"Implement TLS Termination Gateway\" (TASK-230) from To Do to In Progress in Project Orion Edge.",
+      "metadata": {
+        "taskId": "TASK-230",
+        "fromStatus": "To Do",
+        "toStatus": "In Progress"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EDT7Z-F154",
+      "timestamp": "2026-10-12T15:19:12.431Z",
+      "hash": "67d48132df378e8b6b8e6ce0c754626a991af8d28a1853b52059df4983bf4aa8",
+      "prevHash": "6983ab2df30b7a6ef650d798b7d40aab3a8744b1d806ed06d99cde29b9797105",
+      "action": "TASK_CREATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Project Orion Edge",
+      "detail": "Marcus Vance created task \"Implement TLS Termination Gateway\" (TASK-230) and assigned to Jessica Chauhan in Project Orion Edge.",
+      "metadata": {
+        "taskId": "TASK-230",
+        "projectId": "project-orion-edge",
+        "assigneeId": "user-jessica",
+        "priority": "P1"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EDOUX-BI9S",
+      "timestamp": "2026-10-12T15:19:06.777Z",
+      "hash": "6983ab2df30b7a6ef650d798b7d40aab3a8744b1d806ed06d99cde29b9797105",
+      "prevHash": "f673ca52c7843171ca1fb4b3c14b899bf0c6ab6f09260a0b405d8b71c53fc433",
+      "action": "PROJECT_CREATED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Project Orion Edge",
+      "detail": "Admin Alexander Ward created project \"Project Orion Edge\" for client \"Starlight Global\", assigned to Delta Rapid Deployment (Lead: Marcus Vance).",
+      "metadata": {
+        "projectId": "project-orion-edge",
+        "client": "Starlight Global",
+        "teamId": "team-delta-rapid-deployment-5ed",
+        "deadline": "2026-11-30"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV5EDOBJ-M47J",
+      "timestamp": "2026-10-12T15:19:06.077Z",
+      "hash": "f673ca52c7843171ca1fb4b3c14b899bf0c6ab6f09260a0b405d8b71c53fc433",
+      "prevHash": "4dcdcc8c0b3b87cdb384795989be4fe5bf813da12f0732b7e16761cc6911b02a",
+      "action": "TEAM_CREATED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Delta Rapid Deployment",
+      "detail": "Admin Alexander Ward created team \"Delta Rapid Deployment\" in Platform Architecture & Core Infrastructure and appointed Marcus Vance as Team Leader.",
+      "metadata": {
+        "teamId": "team-delta-rapid-deployment-5ed",
+        "leaderId": "user-marcus",
+        "memberCount": 2
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-INIT-001",
+      "timestamp": "2026-10-12T08:00:00Z",
+      "hash": "4dcdcc8c0b3b87cdb384795989be4fe5bf813da12f0732b7e16761cc6911b02a",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "action": "TEAM_CREATED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Continuity Enterprise Architecture",
+      "detail": "Admin Alexander Ward created Core Consensus Pod and appointed Marcus Vance as Team Leader.",
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-INIT-002",
+      "timestamp": "2026-10-11T16:00:00Z",
+      "hash": "7b517f798f45f45e8f0abf3074acace662f9556c943776c5663564e02ba1c988",
+      "prevHash": "4dcdcc8c0b3b87cdb384795989be4fe5bf813da12f0732b7e16761cc6911b02a",
+      "action": "DELIVERY_APPROVED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Krypton WebAuthn Identity Authority",
+      "detail": "Admin Alexander Ward reviewed and approved deliverable release v2.0.0 for Nova Telecom Networks.",
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-INIT-003",
+      "timestamp": "2026-09-30T16:45:00Z",
+      "hash": "68b7f4d5b55133b48128e567769f9a4901081f1f0fe336ff315454e5cecb6f47",
+      "prevHash": "7b517f798f45f45e8f0abf3074acace662f9556c943776c5663564e02ba1c988",
+      "action": "CLIENT_DELIVERY_RECORDED",
+      "actorId": "user-admin",
+      "actorName": "Alexander Ward",
+      "projectName": "Solaris Edge Routing Mesh",
+      "detail": "Admin Alexander Ward formally recorded final client delivery to Starlight Defense Aerospace (Recipient: Col. Raymond Vance).",
+      "verifiable": true
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-1791832695931-br0j",
+      "title": "New Progress Update Submitted",
+      "message": "Jessica Chauhan submitted an update on \"Validate Chaos Mesh partition suite for Raft nodes\".",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-marcus",
+      "link": "/updates"
+    },
+    {
+      "id": "notif-1791832695211-w3xb",
+      "title": "Blocker Resolved: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Blocker was marked resolved by Alexander Ward: \"Systemd limits updated; memlock verified unlimited on all nodes.\". Task is back In Progress.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791832694524-1su3",
+      "title": "Critical Blocker Escalated: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Marcus Vance escalated blocker: \"Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.\". Reason: Cross-team platform infrastructure dependency on SRE",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-admin",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791832694197-x8ie",
+      "title": "Blocker Acknowledged: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Team Leader Marcus Vance acknowledged your reported blocker.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791832677392-htso",
+      "title": "Handover Accepted: HO-2026-517",
+      "message": "Marcus Vance accepted the handover for \"Apollo Core Distributed Consensus\" (Run Chaos Mesh partition test for 4-node split-brain simulation). Custodianship transfer complete.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-517"
+    },
+    {
+      "id": "notif-1791832677389-3zm4",
+      "title": "Task Ownership Transferred",
+      "message": "Ownership of task \"Validate Chaos Mesh partition suite for Raft nodes\" was transferred to Marcus Vance via Recipient Acceptance.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791832673459-1r01",
+      "title": "Clarification Requested: HO-2026-517",
+      "message": "Marcus Vance requested clarification on \"Apollo Core Distributed Consensus\": \"Which Linux kernel version was verified for io_uring on staging-04?\". Please provide details before handoff can proceed.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-517"
+    },
+    {
+      "id": "notif-1791832662941-swry",
+      "title": "Incoming Handover Package: HO-2026-517",
+      "message": "Jessica Chauhan dispatched a handover dossier for \"Apollo Core Distributed Consensus\" (Validate Chaos Mesh partition suite for Raft nodes). Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-517"
+    },
+    {
+      "id": "notif-1791832662769-s8cg",
+      "title": "New Task Assigned",
+      "message": "Marcus Vance assigned you \"Validate Chaos Mesh partition suite for Raft nodes\" in Apollo Core Distributed Consensus (Priority: P1).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/projects/apollo-core"
+    },
+    {
+      "id": "notif-1791827967087-dsp9",
+      "title": "New Progress Update Submitted",
+      "message": "Jessica Chauhan submitted an update on \"Validate Chaos Mesh partition suite for Raft nodes\".",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-marcus",
+      "link": "/updates"
+    },
+    {
+      "id": "notif-1791827964081-kwb5",
+      "title": "Blocker Resolved: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Blocker was marked resolved by Alexander Ward: \"Systemd limits updated; memlock verified unlimited on all nodes.\". Task is back In Progress.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791827950527-sp7d",
+      "title": "Critical Blocker Escalated: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Marcus Vance escalated blocker: \"Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.\". Reason: Cross-team platform infrastructure dependency on SRE",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-admin",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791827949675-7iwd",
+      "title": "Blocker Acknowledged: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Team Leader Marcus Vance acknowledged your reported blocker.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791827941884-nxus",
+      "title": "Handover Accepted: HO-2026-650",
+      "message": "Marcus Vance accepted the handover for \"Apollo Core Distributed Consensus\" (Run Chaos Mesh partition test for 4-node split-brain simulation). Custodianship transfer complete.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-650"
+    },
+    {
+      "id": "notif-1791827941881-36zv",
+      "title": "Task Ownership Transferred",
+      "message": "Ownership of task \"Validate Chaos Mesh partition suite for Raft nodes\" was transferred to Marcus Vance via Recipient Acceptance.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791827938500-2004",
+      "title": "Clarification Requested: HO-2026-650",
+      "message": "Marcus Vance requested clarification on \"Apollo Core Distributed Consensus\": \"Which Linux kernel version was verified for io_uring on staging-04?\". Please provide details before handoff can proceed.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-650"
+    },
+    {
+      "id": "notif-1791827934003-4a7r",
+      "title": "Incoming Handover Package: HO-2026-650",
+      "message": "Jessica Chauhan dispatched a handover dossier for \"Apollo Core Distributed Consensus\" (Validate Chaos Mesh partition suite for Raft nodes). Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-650"
+    },
+    {
+      "id": "notif-1791827933180-905r",
+      "title": "New Task Assigned",
+      "message": "Marcus Vance assigned you \"Validate Chaos Mesh partition suite for Raft nodes\" in Apollo Core Distributed Consensus (Priority: P1).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/projects/apollo-core"
+    },
+    {
+      "id": "notif-1791827810213-fd22",
+      "title": "Handover Accepted: HO-2026-318",
+      "message": "Marcus Vance accepted the handover for \"Apollo Core Distributed Consensus\" (Run Chaos Mesh partition test for 4-node split-brain simulation). Custodianship transfer complete.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-318"
+    },
+    {
+      "id": "notif-1791827810210-r8za",
+      "title": "Task Ownership Transferred",
+      "message": "Ownership of task \"Validate Chaos Mesh partition suite for Raft nodes\" was transferred to Marcus Vance via Recipient Acceptance.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791827807988-fhr1",
+      "title": "Clarification Requested: HO-2026-318",
+      "message": "Marcus Vance requested clarification on \"Apollo Core Distributed Consensus\": \"Which Linux kernel version was verified for io_uring on staging-04?\". Please provide details before handoff can proceed.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-318"
+    },
+    {
+      "id": "notif-1791827804547-54qc",
+      "title": "Incoming Handover Package: HO-2026-318",
+      "message": "Jessica Chauhan dispatched a handover dossier for \"Apollo Core Distributed Consensus\" (Validate Chaos Mesh partition suite for Raft nodes). Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-318"
+    },
+    {
+      "id": "notif-1791827796585-o7eq",
+      "title": "New Task Assigned",
+      "message": "Marcus Vance assigned you \"Validate Chaos Mesh partition suite for Raft nodes\" in Apollo Core Distributed Consensus (Priority: P1).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/projects/apollo-core"
+    },
+    {
+      "id": "notif-1791822628028-jn1t",
+      "title": "New Progress Update Submitted",
+      "message": "Jessica Chauhan submitted an update on \"Validate Chaos Mesh partition suite for Raft nodes\".",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-marcus",
+      "link": "/updates"
+    },
+    {
+      "id": "notif-1791822627663-j8kd",
+      "title": "Blocker Resolved: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Blocker was marked resolved by Alexander Ward: \"Systemd limits updated; memlock verified unlimited on all nodes.\". Task is back In Progress.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791822627287-87pa",
+      "title": "Critical Blocker Escalated: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Marcus Vance escalated blocker: \"Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.\". Reason: Cross-team platform infrastructure dependency on SRE",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-admin",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791822627041-tgte",
+      "title": "Blocker Acknowledged: Validate Chaos Mesh partition suite for Raft nodes",
+      "message": "Team Leader Marcus Vance acknowledged your reported blocker.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791822623677-ci5f",
+      "title": "Handover Accepted: HO-2026-697",
+      "message": "Marcus Vance accepted the handover for \"Apollo Core Distributed Consensus\" (Run Chaos Mesh partition test for 4-node split-brain simulation). Custodianship transfer complete.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-697"
+    },
+    {
+      "id": "notif-1791822623675-4hmc",
+      "title": "Task Ownership Transferred",
+      "message": "Ownership of task \"Validate Chaos Mesh partition suite for Raft nodes\" was transferred to Marcus Vance via Recipient Acceptance.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791822621274-yhwu",
+      "title": "Clarification Requested: HO-2026-697",
+      "message": "Marcus Vance requested clarification on \"Apollo Core Distributed Consensus\": \"Which Linux kernel version was verified for io_uring on staging-04?\". Please provide details before handoff can proceed.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-697"
+    },
+    {
+      "id": "notif-1791822617717-bk7d",
+      "title": "Incoming Handover Package: HO-2026-697",
+      "message": "Jessica Chauhan dispatched a handover dossier for \"Apollo Core Distributed Consensus\" (Validate Chaos Mesh partition suite for Raft nodes). Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-697"
+    },
+    {
+      "id": "notif-1791822617231-dmwh",
+      "title": "New Task Assigned",
+      "message": "Marcus Vance assigned you \"Validate Chaos Mesh partition suite for Raft nodes\" in Apollo Core Distributed Consensus (Priority: P1).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/projects/apollo-core"
+    },
+    {
+      "id": "notif-1791822355740-wx72",
+      "title": "Incoming Handover Package: HO-2026-926",
+      "message": "Jessica Chauhan dispatched a handover dossier for \"Apollo Core Distributed Consensus\" (Run Chaos Mesh partition test for 4-node split-brain simulation). Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-926"
+    },
+    {
+      "id": "notif-1791821464255-uqxq",
+      "title": "New Progress Update Submitted",
+      "message": "Jessica Chauhan submitted an update on \"Run Chaos Mesh partition test for 4-node split-brain simulation\".",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-marcus",
+      "link": "/updates"
+    },
+    {
+      "id": "notif-1791821463179-iitj",
+      "title": "Blocker Resolved: Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "message": "Blocker was marked resolved by Alexander Ward: \"Systemd limits updated; memlock verified unlimited on all nodes.\". Task is back In Progress.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791821462788-x3hl",
+      "title": "Critical Blocker Escalated: Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "message": "Marcus Vance escalated blocker: \"Staging node apollo-staging-04 requires ulimit -l memlock configuration update from SRE team.\". Reason: Cross-team platform infrastructure dependency on SRE",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-admin",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791821462571-d77k",
+      "title": "Blocker Acknowledged: Run Chaos Mesh partition test for 4-node split-brain simulation",
+      "message": "Team Leader Marcus Vance acknowledged your reported blocker.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "blocker",
+      "recipientId": "user-marcus",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791821458370-100i",
+      "title": "Handover Accepted: HO-2026-829",
+      "message": "Marcus Vance accepted the handover for \"Apollo Core Distributed Consensus\" (Run Chaos Mesh partition test for 4-node split-brain simulation). Custodianship transfer complete.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-829"
+    },
+    {
+      "id": "notif-1791821458369-xoni",
+      "title": "Task Ownership Transferred",
+      "message": "Ownership of task \"Run Chaos Mesh partition test for 4-node split-brain simulation\" was transferred to Marcus Vance via Recipient Acceptance.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/tasks"
+    },
+    {
+      "id": "notif-1791821456543-cv00",
+      "title": "Clarification Requested: HO-2026-829",
+      "message": "Marcus Vance requested clarification on \"Apollo Core Distributed Consensus\": \"Which Linux kernel version was verified for io_uring on staging-04?\". Please provide details before handoff can proceed.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-jessica",
+      "link": "/handoffs/HO-2026-829"
+    },
+    {
+      "id": "notif-1791821445738-jbdj",
+      "title": "Incoming Handover Package: HO-2026-829",
+      "message": "Jessica Chauhan dispatched a handover dossier for \"Apollo Core Distributed Consensus\" (Run Chaos Mesh partition test for 4-node split-brain simulation). Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-829"
+    },
+    {
+      "id": "notif-1791818374490-m29n",
+      "title": "Client Delivery Recorded",
+      "message": "Admin Alexander Ward formally recorded client delivery of Project Orion Edge to elena.vance@starlightglobal.example.com.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "delivery",
+      "recipientId": "user-marcus",
+      "link": "/projects/project-orion-edge"
+    },
+    {
+      "id": "notif-1791818372832-y1tx",
+      "title": "Deliverable Approved by Admin",
+      "message": "Admin Alexander Ward approved Project Orion Edge (v1.0.0-rc2) for client delivery!",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "delivery",
+      "recipientId": "user-marcus",
+      "link": "/projects/project-orion-edge"
+    },
+    {
+      "id": "notif-1791818372160-1uki",
+      "title": "Project Submitted for Final Review",
+      "message": "Marcus Vance submitted Project Orion Edge (v1.0.0-rc2) for final deliverable review.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "review",
+      "recipientId": "user-admin",
+      "link": "/admin/reviews"
+    },
+    {
+      "id": "notif-1791818371859-55oi",
+      "title": "Revisions Requested on Deliverable",
+      "message": "Admin Alexander Ward requested 2 change(s) on Project Orion Edge (v1.0.0-rc1).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "review",
+      "recipientId": "user-marcus",
+      "link": "/projects/project-orion-edge"
+    },
+    {
+      "id": "notif-1791818371223-bf0z",
+      "title": "Project Submitted for Final Review",
+      "message": "Marcus Vance submitted Project Orion Edge (v1.0.0-rc1) for final deliverable review.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "review",
+      "recipientId": "user-admin",
+      "link": "/admin/reviews"
+    },
+    {
+      "id": "notif-1791818366934-4h9m",
+      "title": "New Team Leader Progress Report",
+      "message": "Marcus Vance submitted progress report for Project Orion Edge (Sprint 42 (Oct 06 - Oct 12, 2026)).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "report",
+      "recipientId": "user-admin",
+      "link": "/reports"
+    },
+    {
+      "id": "notif-1791818364859-8gkg",
+      "title": "Progress Update Reviewed",
+      "message": "Marcus Vance reviewed your update: Reviewed",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/updates"
+    },
+    {
+      "id": "notif-1791818363709-7qn1",
+      "title": "New Progress Update Submitted",
+      "message": "Jessica Chauhan submitted an update on \"Implement TLS Termination Gateway\".",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-marcus",
+      "link": "/updates"
+    },
+    {
+      "id": "notif-1791818352430-hwz1",
+      "title": "New Task Assigned",
+      "message": "Marcus Vance assigned you \"Implement TLS Termination Gateway\" in Project Orion Edge (Priority: P1).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "task",
+      "recipientId": "user-jessica",
+      "link": "/projects/project-orion-edge"
+    },
+    {
+      "id": "notif-rev-1",
+      "title": "Project Approved for Delivery",
+      "message": "Krypton WebAuthn v2.0.0 was approved by Admin Alexander Ward. Ready for formal client delivery recording.",
+      "timestamp": "1 day ago",
+      "read": false,
+      "type": "delivery",
+      "recipientId": "user-admin",
+      "link": "/admin/deliveries"
+    },
+    {
+      "id": "notif-rev-2",
+      "title": "Revision Requested on Chronos",
+      "message": "Admin Alexander Ward requested changes on Chronos Ledger v1.2.0-rc2 before client delivery approval.",
+      "timestamp": "2 days ago",
+      "read": false,
+      "type": "review",
+      "recipientId": "user-sarah",
+      "link": "/projects/chronos-ledger"
+    },
+    {
+      "id": "notif-rep-1",
+      "title": "Progress Report Submitted",
+      "message": "Marcus Vance submitted Sprint 41 report for Apollo Core Distributed Consensus (78% complete).",
+      "timestamp": "1 day ago",
+      "read": true,
+      "type": "report",
+      "recipientId": "user-admin",
+      "link": "/reports"
+    }
+  ]
+}

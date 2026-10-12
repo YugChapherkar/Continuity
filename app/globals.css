@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=TASA+Orbiter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
@@ -57,14 +57,28 @@
   background: rgba(255, 255, 255, 0.35);
 }
 
+/* Exact Marklab Headline Fonts */
+.font-tasaorbiter {
+  font-family: 'Tasaorbiterdeck', 'TASA Orbiter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.font-instrumentserif {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
 /* Luxury Editorial Serif Display */
 .font-editorial {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
   letter-spacing: -0.02em;
 }
 
 .font-sans-clean {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Tasaorbiterdeck', 'TASA Orbiter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 /* Reference Image Gradient Text: Amber -> Magenta -> Cyan */
