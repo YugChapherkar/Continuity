@@ -69,7 +69,7 @@ interface IncidentResponse {
 }
 
 export default function ConvergencePage() {
-  const { currentUser, setHandoffs } = useApp();
+  const { currentUser, setHandoffs, refreshData } = useApp();
 
   const [statusData, setStatusData] = useState<ConvergenceStatus | null>(null);
   const [actors, setActors] = useState<Actor[]>([]);
@@ -82,16 +82,23 @@ export default function ConvergencePage() {
   const [gateTestStatus, setGateTestStatus] = useState<'idle' | 'blocked' | 'accepted'>('idle');
   const [activeTab, setActiveTab] = useState<'demo' | 'actors' | 'spec'>('demo');
 
-  // Dynamic API base URL: respects domain/environment
+  // Dynamic API base URL: respects domain/environment, zero hardcoded localhost
   const getApiBase = () => {
+    if (process.env.NEXT_PUBLIC_API_BASE_URL) return process.env.NEXT_PUBLIC_API_BASE_URL;
     if (typeof window !== 'undefined') {
-      if (process.env.NEXT_PUBLIC_API_BASE_URL) return process.env.NEXT_PUBLIC_API_BASE_URL;
       const host = window.location.hostname;
       const proto = window.location.protocol;
-      // If deployed or accessed via domain/IP, target port 8080 on the same host
-      return `${proto}//${host}:8080`;
+      const port = window.location.port;
+      // If accessed via custom domain or reverse proxy without port
+      if (!port || port === '80' || port === '443') {
+        return window.location.origin;
+      }
+      if (port === '3000') {
+        return `${proto}//${host}:8080`;
+      }
+      return `${proto}//${host}:${port}`;
     }
-    return process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+    return '';
   };
 
   const apiBase = getApiBase();
@@ -130,9 +137,12 @@ export default function ConvergencePage() {
       if (res.ok) {
         const data: IncidentResponse = await res.json();
         setIncident(data);
-        if (data.handoff) {
+        if (data.handoff && typeof setHandoffs === 'function') {
           // Prepend to active handoffs in context
           setHandoffs((prev) => [data.handoff, ...prev.filter((h) => h.id !== data.handoff.id)]);
+        }
+        if (typeof refreshData === 'function') {
+          refreshData();
         }
       } else {
         alert('Simulation failed: ' + res.statusText);

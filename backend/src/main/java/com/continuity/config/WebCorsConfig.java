@@ -13,7 +13,7 @@ import java.util.List;
 @Configuration
 public class WebCorsConfig {
 
-    @Value("${app.cors.allowed-origins:http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001}")
+    @Value("${app.cors.allowed-origins:*}")
     private String allowedOrigins;
 
     @Bean
@@ -24,7 +24,14 @@ public class WebCorsConfig {
                 .filter(s -> !s.isEmpty())
                 .toList();
 
-        configuration.setAllowedOrigins(origins);
+        if (origins.contains("*") || origins.isEmpty()) {
+            configuration.addAllowedOriginPattern("*");
+        } else {
+            for (String origin : origins) {
+                configuration.addAllowedOriginPattern(origin);
+            }
+            configuration.addAllowedOriginPattern("*");
+        }
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-User-Id", "X-Requested-With", "Accept", "Origin"));
         configuration.setExposedHeaders(List.of("Authorization", "X-User-Id"));

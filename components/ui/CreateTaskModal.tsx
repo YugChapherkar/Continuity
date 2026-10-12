@@ -44,7 +44,8 @@ export function CreateTaskModal({ projectId, isOpen, onClose, onTaskCreated }: C
         deadline: deadline ? deadline : undefined,
       };
 
-      const res = await fetch(`http://localhost:8080/api/projects/${projectId}/tasks`, {
+      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || (typeof window !== 'undefined' ? (window.location.port === '3000' ? `${window.location.protocol}//${window.location.hostname}:8080` : window.location.origin) : '');
+      const res = await fetch(`${apiBase}/api/projects/${projectId}/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

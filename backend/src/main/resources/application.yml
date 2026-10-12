@@ -40,7 +40,7 @@ app:
   storage:
     snapshot-dir: ${SNAPSHOT_DIR:./storage/snapshots}
   cors:
-    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001}
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
 
 gemini:
   api-key: ${GEMINI_API_KEY:}
@@ -55,6 +55,6 @@ springdoc:
 
 trustfabric:
   base-url: ${TRUSTFABRIC_BASE_URL:https://continuity.404piyush.me}
-  besu-url: ${TRUSTFABRIC_BESU_URL:http://localhost:9545}
+  besu-url: ${TRUSTFABRIC_BESU_URL:https://continuity.404piyush.me}
   chain-id: 1338
   contract: "0x02A2A64fE6Bc42d4C27eA834Aac4566Daa126455"

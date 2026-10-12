@@ -34,7 +34,7 @@ public class TrustFabricConvergenceService {
     @Value("${trustfabric.base-url:https://continuity.404piyush.me}")
     private String trustFabricBaseUrl;
 
-    @Value("${trustfabric.besu-url:http://localhost:9545}")
+    @Value("${trustfabric.besu-url:https://continuity.404piyush.me}")
     private String besuUrl;
 
     @Value("${trustfabric.chain-id:1338}")
@@ -70,11 +70,51 @@ public class TrustFabricConvergenceService {
         Map<String, Object> res = new LinkedHashMap<>();
         res.put("status", "CONFIRMED");
         res.put("project", "apollo-core");
-        res.put("actors", List.of(
-                Map.of("did", "did:maker1", "userId", "user-yash", "name", "Yash Lokhande", "role", "Manufacturer / Initial Custodian"),
-                Map.of("did", "did:transporter1", "userId", "user-shruti", "name", "Shruti Patil", "role", "Logistics & Transport Telemetry"),
-                Map.of("did", "did:retailer1", "userId", "user-jessica", "name", "Jessicaa Chauhab", "role", "Retail Custodian & Incident Receiver")
-        ));
+        res.put("endpoint", trustFabricBaseUrl + "/converge/actor-map");
+
+        List<Map<String, String>> actorList = new ArrayList<>();
+        try {
+            ResponseEntity<Map> tfActors = restTemplate.getForEntity(trustFabricBaseUrl + "/converge/actor-map", Map.class);
+            if (tfActors.getStatusCode().is2xxSuccessful() && tfActors.getBody() != null) {
+                Map body = tfActors.getBody();
+                Map<String, Object> map = (Map<String, Object>) body.get("map");
+                if (map != null) {
+                    Map<String, String> names = Map.of(
+                            "did:maker1", "Yash Lokhande",
+                            "did:transporter1", "Shruti Patil",
+                            "did:retailer1", "Jessicaa Chauhab",
+                            "did:attacker", "Shruti Patil (Transit Audit)",
+                            "did:attacker2", "Jessicaa Chauhab (Quarantine Lead)"
+                    );
+                    Map<String, String> roles = Map.of(
+                            "did:maker1", "Manufacturer / Initial Custodian",
+                            "did:transporter1", "Logistics & Transport Telemetry",
+                            "did:retailer1", "Retail Custodian & Incident Receiver",
+                            "did:attacker", "Flagged Non-Custodian Probe (Simulated)",
+                            "did:attacker2", "Secondary Probe (Simulated)"
+                    );
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
+                        actorList.add(Map.of(
+                                "did", entry.getKey(),
+                                "userId", String.valueOf(entry.getValue()),
+                                "name", names.getOrDefault(entry.getKey(), "Custodian " + entry.getKey()),
+                                "role", roles.getOrDefault(entry.getKey(), "Custodial Node")
+                        ));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Failed to fetch live actor map from {}: {}", trustFabricBaseUrl, e.getMessage());
+        }
+
+        if (actorList.isEmpty()) {
+            actorList = List.of(
+                    Map.of("did", "did:maker1", "userId", "user-yash", "name", "Yash Lokhande", "role", "Manufacturer / Initial Custodian"),
+                    Map.of("did", "did:transporter1", "userId", "user-shruti", "name", "Shruti Patil", "role", "Logistics & Transport Telemetry"),
+                    Map.of("did", "did:retailer1", "userId", "user-jessica", "name", "Jessicaa Chauhab", "role", "Retail Custodian & Incident Receiver")
+            );
+        }
+        res.put("actors", actorList);
         return res;
     }
 

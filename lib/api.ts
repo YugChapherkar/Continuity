@@ -9,8 +9,24 @@ import {
   AppNotification,
 } from './types';
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+const getApiBaseUrl = (): string => {
+  if (process.env.NEXT_PUBLIC_API_BASE_URL) return process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    const proto = window.location.protocol;
+    const port = window.location.port;
+    if (!port || port === '80' || port === '443') {
+      return window.location.origin;
+    }
+    if (port === '3000') {
+      return `${proto}//${host}:8080`;
+    }
+    return `${proto}//${host}:${port}`;
+  }
+  return '';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 function getAuthHeaders(): HeadersInit {
   const headers: Record<string, string> = {

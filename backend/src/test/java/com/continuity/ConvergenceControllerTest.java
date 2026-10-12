@@ -33,7 +33,7 @@ public class ConvergenceControllerTest {
         assertEquals("CONFIRMED", map.get("status"));
         List<Map<String, String>> actors = (List<Map<String, String>>) map.get("actors");
         assertNotNull(actors);
-        assertEquals(3, actors.size());
+        assertTrue(actors.size() >= 3);
         assertTrue(actors.stream().anyMatch(a -> a.get("did").equals("did:retailer1") && a.get("userId").equals("user-jessica")));
         assertTrue(actors.stream().anyMatch(a -> a.get("did").equals("did:maker1") && a.get("userId").equals("user-yash")));
         assertTrue(actors.stream().anyMatch(a -> a.get("did").equals("did:transporter1") && a.get("userId").equals("user-shruti")));

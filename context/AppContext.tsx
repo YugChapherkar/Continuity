@@ -11,6 +11,7 @@ interface AppContextType {
   users: User[];
   projects: Project[];
   handoffs: HandoffPackage[];
+  setHandoffs: React.Dispatch<React.SetStateAction<HandoffPackage[]>>;
   auditLogs: AuditLogEntry[];
   notifications: AppNotification[];
   isCreateHandoffModalOpen: boolean;
@@ -430,6 +431,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         users,
         projects,
         handoffs,
+        setHandoffs,
         auditLogs,
         notifications,
         isCreateHandoffModalOpen,
