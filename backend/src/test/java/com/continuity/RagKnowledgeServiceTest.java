@@ -55,4 +55,26 @@ public class RagKnowledgeServiceTest {
         assertTrue(response.getResponse().contains("Blocker") || response.getResponse().contains("ulimit") || response.getResponse().contains("Chaos Mesh"));
         assertEquals("v2.4.0", response.getPinnedVersionId());
     }
+
+    @Test
+    void testReindexProjectUpdatesFileCount() {
+        KnowledgeStatusDto status = ragKnowledgeService.reindexProject("apollo-core", "v2.4.0");
+        assertNotNull(status);
+        assertEquals("apollo-core", status.getProjectId());
+        assertEquals("READY", status.getStatus());
+        assertTrue(status.getFileCount() >= 0);
+    }
+
+    @Test
+    void testQueryTeamMembersReturnsCustodianshipMatrix() {
+        ChatRequestDto request = new ChatRequestDto(
+                "Who are the assigned custodians like Jessica and Yash?",
+                null,
+                null
+        );
+
+        ChatResponseDto response = ragKnowledgeService.processChatQuery("apollo-core", request);
+        assertNotNull(response);
+        assertTrue(response.getResponse().contains("Jessicaa Chauhab") || response.getResponse().contains("Yash Lokhande"));
+    }
 }

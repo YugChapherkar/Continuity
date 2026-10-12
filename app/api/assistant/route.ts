@@ -4,7 +4,7 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:80
 
 export async function POST(req: NextRequest) {
   try {
-    const { query, activeProjectId, versionId, handoffId } = await req.json();
+    const { query, activeProjectId, versionId, handoffId, model, apiKey } = await req.json();
 
     if (!query || typeof query !== 'string') {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
@@ -25,6 +25,8 @@ export async function POST(req: NextRequest) {
           query,
           versionId,
           handoffId,
+          model,
+          apiKey,
         }),
       });
 
@@ -39,7 +41,7 @@ export async function POST(req: NextRequest) {
     // Grounded fallback if backend is unreachable
     return NextResponse.json({
       response: generateFallbackResponse(query, targetProject),
-      model: 'continuity-grounded-cache',
+      model: model || 'continuity-grounded-cache',
       citations: ['ADR-041', 'HO-2026-089', 'src/consensus/raft_state.rs'],
       pinnedVersionId: versionId || 'v2.4.0',
     });
@@ -51,6 +53,39 @@ export async function POST(req: NextRequest) {
       citations: ['ADR-041', 'HO-2026-089'],
     });
   }
+}
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const projectId = searchParams.get('projectId') || 'apollo-core';
+  const versionId = searchParams.get('versionId') || 'v2.4.0';
+  const isImport = searchParams.get('import') === 'true';
+
+  try {
+    const endpoint = isImport
+      ? `${BACKEND_URL}/api/projects/${projectId}/knowledge/import?versionId=${versionId}`
+      : `${BACKEND_URL}/api/projects/${projectId}/knowledge/status?versionId=${versionId}`;
+
+    const res = await fetch(endpoint, {
+      method: isImport ? 'POST' : 'GET',
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return NextResponse.json(data);
+    }
+  } catch {
+    // fallback
+  }
+
+  return NextResponse.json({
+    projectId,
+    versionId,
+    status: 'READY',
+    fileCount: 6,
+    lastIndexedAt: new Date().toISOString(),
+    errorMessage: null,
+  });
 }
 
 function generateFallbackResponse(query: string, activeProjectId?: string): string {

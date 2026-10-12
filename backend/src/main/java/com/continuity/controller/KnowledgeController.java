@@ -31,7 +31,7 @@ public class KnowledgeController {
     @Operation(summary = "Trigger knowledge re-indexing for project")
     public ResponseEntity<KnowledgeStatusDto> triggerKnowledgeImport(@PathVariable String projectId,
                                                                      @RequestParam(value = "versionId", required = false) String versionId) {
-        return ResponseEntity.ok(ragKnowledgeService.getIndexStatus(projectId, versionId));
+        return ResponseEntity.ok(ragKnowledgeService.reindexProject(projectId, versionId));
     }
 
     @PostMapping("/api/projects/{projectId}/chat")

@@ -8,6 +8,8 @@ public class ChatRequestDto {
 
     private String versionId;
     private String handoffId;
+    private String model;
+    private String apiKey;
 
     public ChatRequestDto() {}
 
@@ -23,4 +25,9 @@ public class ChatRequestDto {
     public void setVersionId(String versionId) { this.versionId = versionId; }
     public String getHandoffId() { return handoffId; }
     public void setHandoffId(String handoffId) { this.handoffId = handoffId; }
+    public String getModel() { return model; }
+    public void setModel(String model) { this.model = model; }
+    public String getApiKey() { return apiKey; }
+    public void setApiKey(String apiKey) { this.apiKey = apiKey; }
 }
+
