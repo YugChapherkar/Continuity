@@ -5,6 +5,14 @@
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
 :root {
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #F8FAFC;
+  --surface-tertiary: #F1F5F9;
+  --border-subtle: #E2E8F0;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
   --neon-amber: #FF5E00;
   --neon-orange: #FF7700;
   --neon-magenta: #D946EF;
@@ -12,6 +20,41 @@
   --neon-cyan: #00D2FF;
   --neon-blue: #2563EB;
   --neon-dark: #050608;
+}
+
+.dark,
+[data-theme="dark"] {
+  --surface-primary: #0D0F11;
+  --surface-secondary: #14171A;
+  --surface-tertiary: #1C2024;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --text-primary: #F5F5F2;
+  --text-secondary: #A0A09D;
+  --text-muted: #71717A;
+}
+
+/* Sleek custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.7);
+}
+.dark ::-webkit-scrollbar-thumb,
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+.dark ::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 /* Luxury Editorial Serif Display */

@@ -77,7 +77,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Sync theme from localStorage on client mount
+  // Sync theme and responsive sidebar state on client mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
@@ -89,6 +89,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
         }
       } catch {
         applyTheme('dark');
+      }
+
+      // Automatically collapse sidebar on mobile devices on initial load
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
       }
     }
   }, []);

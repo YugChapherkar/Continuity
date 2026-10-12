@@ -50,27 +50,27 @@ export function GlobalCommandPalette() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-black/80 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-12 sm:pt-20 p-2 sm:p-4 bg-slate-900/60 dark:bg-black/80 backdrop-blur-md animate-fade-in"
       onClick={handleClose}
       role="dialog"
       aria-modal="true"
     >
       <div
-        className="w-full max-w-2xl bg-[#0D0F10] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+        className="w-full max-w-2xl bg-white dark:bg-[#0D0F10] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[80vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-[#050606]/60">
-          <Search className="w-5 h-5 text-neutral-400" />
+        <div className="flex items-center gap-3 px-4 sm:px-5 py-3.5 sm:py-4 border-b border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-[#050606]/60">
+          <Search className="w-5 h-5 text-slate-400 dark:text-neutral-400" />
           <input
             type="text"
             placeholder="Search projects, handoffs, colleagues, ADRs, or commands..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
-            className="w-full bg-transparent text-sm text-[#F5F5F2] placeholder-neutral-500 focus:outline-none"
+            className="w-full bg-transparent text-sm text-slate-900 dark:text-[#F5F5F2] placeholder-slate-400 dark:placeholder-neutral-500 focus:outline-none"
           />
-          <kbd className="text-[10px] bg-white/10 text-neutral-400 px-2 py-1 rounded">ESC</kbd>
+          <kbd className="text-[10px] bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-neutral-400 px-2 py-1 rounded font-mono">ESC</kbd>
         </div>
 
         {/* Results */}

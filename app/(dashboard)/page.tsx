@@ -52,7 +52,7 @@ export default function HomePage() {
 
         {/* Main Hero Statement: Bold Sans-Serif Typography + Signature Blue Pill Button */}
         <div className="relative z-10 max-w-4xl my-auto py-6">
-          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white uppercase leading-[0.92] select-none">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white uppercase leading-[0.95] select-none break-words">
             DIGITAL ENGINEERING<br />
             SOLUTIONS
           </h1>

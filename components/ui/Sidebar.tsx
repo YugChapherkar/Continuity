@@ -21,8 +21,7 @@ import {
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { currentUser, handoffs, isSidebarOpen, toggleSidebar, theme, toggleTheme } = useApp();
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { currentUser, handoffs, isSidebarOpen, setIsSidebarOpen, toggleSidebar, theme, toggleTheme } = useApp();
 
   // Pending for current user
   const pendingCount = handoffs.filter(
@@ -47,7 +46,7 @@ export function Sidebar() {
     <div className="flex flex-col h-full bg-[#0D0F10] border-r border-white/10 text-neutral-300">
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-white/10">
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <Link href="/" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2.5 group">
           <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center text-white font-bold text-sm shadow-md shadow-[#2563EB]/30 transition-transform group-hover:scale-105">
             C
           </div>
@@ -58,21 +57,13 @@ export function Sidebar() {
         </Link>
         <div className="flex items-center gap-1">
           <button
-            onClick={toggleSidebar}
-            className="hidden md:flex p-1.5 text-neutral-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+            onClick={() => setIsSidebarOpen(false)}
+            className="p-1.5 text-neutral-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
             title="Close sidebar"
             aria-label="Close sidebar"
           >
             <PanelLeftClose className="w-4 h-4" />
           </button>
-          {isMobileOpen && (
-            <button
-              onClick={() => setIsMobileOpen(false)}
-              className="md:hidden p-1 text-neutral-400 hover:text-white"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          )}
         </div>
       </div>
 
@@ -89,7 +80,7 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setIsMobileOpen(false)}
+              onClick={() => setIsSidebarOpen(false)}
               className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
                 isActive
                   ? 'bg-white/[0.07] text-[#F5F5F2] border border-white/[0.12] shadow-sm'
@@ -124,7 +115,7 @@ export function Sidebar() {
           </div>
           <button
             onClick={toggleTheme}
-            className="p-1.5 text-neutral-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors shrink-0"
+            className="p-1.5 text-neutral-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors shrink-0 cursor-pointer"
             title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
@@ -150,30 +141,24 @@ export function Sidebar() {
         {sidebarContent}
       </aside>
 
-      {/* Mobile Header Bar with Hamburger */}
-      <div className="md:hidden flex items-center justify-between h-14 px-4 bg-[#0D0F10] border-b border-white/10 sticky top-0 z-30">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded bg-[#2563EB] flex items-center justify-center text-white font-bold text-xs">
-            C
-          </div>
-          <span className="font-bold text-xs tracking-wider text-[#F5F5F2]">CONTINUITY</span>
-        </Link>
-        <button
-          onClick={() => setIsMobileOpen(true)}
-          className="p-1.5 text-neutral-400 hover:text-white rounded-lg"
-          aria-label="Open mobile navigation menu"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-      </div>
-
       {/* Mobile Flyout Drawer */}
-      {isMobileOpen && (
-        <div className="md:hidden fixed inset-0 z-50 flex">
-          <div className="fixed inset-0 bg-black/80" onClick={() => setIsMobileOpen(false)} />
-          <div className="relative w-72 max-w-full h-full z-10">{sidebarContent}</div>
+      <div
+        className={`md:hidden fixed inset-0 z-50 transition-opacity duration-300 ${
+          isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div
+          className="fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+        <div
+          className={`relative w-72 max-w-[85vw] h-full z-10 transition-transform duration-300 ${
+            isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          {sidebarContent}
         </div>
-      )}
+      </div>
     </>
   );
 }
