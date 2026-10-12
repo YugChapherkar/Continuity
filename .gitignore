@@ -8,3 +8,5 @@ coverage/
 backend/target/
 backend/storage/
 .vscode/
+
+cloudflared.exe
