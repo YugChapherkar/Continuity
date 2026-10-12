@@ -68,4 +68,34 @@ public class ConvergenceController {
     public ResponseEntity<Map<String, Object>> getBlastRadius(@PathVariable String lotId) {
         return ResponseEntity.ok(convergenceService.getBlastRadius(lotId));
     }
+
+    @GetMapping("/proofs/bundle")
+    @Operation(summary = "Get full cryptographic bundle (Merkle proofs, Besu contract anchor, event hash chain)")
+    public ResponseEntity<Map<String, Object>> getProductBundle(@RequestParam(defaultValue = "LOT-DEMO-A-000001") String serial) {
+        return ResponseEntity.ok(convergenceService.getProductBundle(serial));
+    }
+
+    @GetMapping("/proofs/anchor")
+    @Operation(summary = "Get latest batch anchor covering serial on Besu QBFT blockchain")
+    public ResponseEntity<Map<String, Object>> getSerialAnchor(@RequestParam(defaultValue = "LOT-DEMO-A-000001") String serial) {
+        return ResponseEntity.ok(convergenceService.getSerialAnchor(serial));
+    }
+
+    @GetMapping("/audit/integrity")
+    @Operation(summary = "Verify database integrity against Besu on-chain Merkle root")
+    public ResponseEntity<Map<String, Object>> getAuditIntegrity() {
+        return ResponseEntity.ok(convergenceService.getAuditIntegrity());
+    }
+
+    @PostMapping("/events/sign")
+    @Operation(summary = "Sign a custody event (HANDOVER_OFFER, HANDOVER_ACCEPT, SCAN) onto the Besu hash chain")
+    public ResponseEntity<Map<String, Object>> signEvent(@RequestBody Map<String, Object> payload) {
+        return ResponseEntity.ok(convergenceService.signEvent(payload));
+    }
+
+    @PostMapping("/lots/{lotId}/recall")
+    @Operation(summary = "Trigger on-chain lot recall freeze on Besu smart contract")
+    public ResponseEntity<Map<String, Object>> recallLot(@PathVariable String lotId) {
+        return ResponseEntity.ok(convergenceService.recallLot(lotId));
+    }
 }

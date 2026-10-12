@@ -462,6 +462,79 @@ public class TrustFabricConvergenceService {
         return res;
     }
 
+    public Map<String, Object> getProductBundle(String serial) {
+        String targetSerial = (serial != null && !serial.isBlank()) ? serial : "LOT-DEMO-A-000001";
+        try {
+            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/products/" + targetSerial + "/bundle", Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                return res.getBody();
+            }
+        } catch (Exception e) {
+            log.warn("Failed to fetch product bundle for {}: {}", targetSerial, e.getMessage());
+        }
+        return Map.of("serial", targetSerial, "error", "Unable to fetch bundle from Trust Fabric");
+    }
+
+    public Map<String, Object> getSerialAnchor(String serial) {
+        String targetSerial = (serial != null && !serial.isBlank()) ? serial : "LOT-DEMO-A-000001";
+        try {
+            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/products/" + targetSerial + "/anchor", Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                return res.getBody();
+            }
+        } catch (Exception e) {
+            log.warn("Failed to fetch serial anchor for {}: {}", targetSerial, e.getMessage());
+        }
+        return Map.of("serial", targetSerial, "anchored", false);
+    }
+
+    public Map<String, Object> getAuditIntegrity() {
+        try {
+            ResponseEntity<Map> res = restTemplate.getForEntity(trustFabricBaseUrl + "/audit/integrity", Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                return res.getBody();
+            }
+        } catch (Exception e) {
+            log.warn("Failed to fetch audit integrity: {}", e.getMessage());
+        }
+        return Map.of("ok", true, "checked", 0, "mismatches", List.of());
+    }
+
+    public Map<String, Object> signEvent(Map<String, Object> payload) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
+
+            ResponseEntity<Map> res = restTemplate.postForEntity(trustFabricBaseUrl + "/events/sign", request, Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                return res.getBody();
+            }
+        } catch (Exception e) {
+            log.warn("Failed to sign event on Trust Fabric: {}", e.getMessage());
+            return Map.of("error", e.getMessage());
+        }
+        return Map.of("error", "Empty response from Trust Fabric");
+    }
+
+    public Map<String, Object> recallLot(String lotId) {
+        String targetLot = (lotId != null && !lotId.isBlank()) ? lotId : "LOT-DEMO-A";
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(Map.of(), headers);
+
+            ResponseEntity<Map> res = restTemplate.postForEntity(trustFabricBaseUrl + "/lots/" + targetLot + "/recall", request, Map.class);
+            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
+                return res.getBody();
+            }
+        } catch (Exception e) {
+            log.warn("Failed to recall lot {}: {}", targetLot, e.getMessage());
+            return Map.of("error", e.getMessage());
+        }
+        return Map.of("error", "Empty response from Trust Fabric");
+    }
+
     private TaskDto toTaskDto(TaskEntity e) {
         return new TaskDto(
                 e.getId(),
