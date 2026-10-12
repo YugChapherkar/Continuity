@@ -101,7 +101,7 @@ public class HandoffService {
         handoff.setNote(request.getNote() != null ? request.getNote() : "Engineering handoff for " + project.getName());
         handoff.setExecutiveSummary(request.getExecutiveSummary());
 
-        int score = calculateCompletenessScore(request);
+        int score = calculateCompletenessScore(projectId, request);
         handoff.setCompletenessScore(score);
 
         try {
@@ -242,39 +242,62 @@ public class HandoffService {
         return toDto(handoff);
     }
 
-    public int calculateCompletenessScore(CreateHandoffRequest request) {
+    public int calculateCompletenessScore(String projectId, CreateHandoffRequest request) {
         if (request == null) return 0;
         int score = 0;
-        if (request.getExecutiveSummary() != null && request.getExecutiveSummary().trim().length() >= 20) {
+
+        // 1. Executive summary present & >50 chars (+30%)
+        if (request.getExecutiveSummary() != null && request.getExecutiveSummary().trim().length() > 50) {
             score += 30;
-        } else if (request.getExecutiveSummary() != null && !request.getExecutiveSummary().trim().isEmpty()) {
+        } else if (request.getExecutiveSummary() != null && request.getExecutiveSummary().trim().length() >= 20) {
             score += 15;
         }
 
+        // 2. At least 1 verified completion item (+25%)
         if (request.getCompletedItems() != null && !request.getCompletedItems().isEmpty()) {
             score += 25;
         }
 
+        // 3. Non-empty runbook commands (+25%)
         if (request.getRunbookCommands() != null && !request.getRunbookCommands().isEmpty()) {
             score += 25;
         }
 
-        if (request.getNextSteps() != null && !request.getNextSteps().isEmpty()) {
+        // 4. All pending tasks assigned with set deadlines (+20%)
+        boolean tasksCompliant = true;
+        if (projectId != null && !projectId.isBlank()) {
+            List<TaskEntity> projectTasks = taskRepository.findByProjectId(projectId);
+            for (TaskEntity task : projectTasks) {
+                if (!"Done".equalsIgnoreCase(task.getStatus())) {
+                    if (task.getAssignee() == null || task.getAssignee().isBlank() ||
+                        "Unassigned".equalsIgnoreCase(task.getAssignee()) ||
+                        task.getDeadline() == null || task.getDeadline().isBlank()) {
+                        tasksCompliant = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (tasksCompliant && ((request.getNextSteps() != null && !request.getNextSteps().isEmpty()) || (projectId != null && !projectId.isBlank()))) {
             score += 20;
         }
 
         return Math.min(100, score);
     }
 
+    public int calculateCompletenessScore(CreateHandoffRequest request) {
+        return calculateCompletenessScore(null, request);
+    }
+
     public HandoffReadinessDto validateHandoffReadiness(String projectId, CreateHandoffRequest request) {
-        int score = calculateCompletenessScore(request);
+        int score = calculateCompletenessScore(projectId, request);
         List<String> warnings = new ArrayList<>();
         List<String> satisfiedChecks = new ArrayList<>();
 
-        if (request.getExecutiveSummary() == null || request.getExecutiveSummary().trim().length() < 20) {
-            warnings.add("Executive summary is under 20 characters; detailed operational context recommended.");
+        if (request.getExecutiveSummary() == null || request.getExecutiveSummary().trim().length() <= 50) {
+            warnings.add("Executive summary is under 50 characters; detailed operational context recommended.");
         } else {
-            satisfiedChecks.add("Executive briefing depth verified (" + request.getExecutiveSummary().trim().length() + " chars).");
+            satisfiedChecks.add("Executive briefing depth verified (" + request.getExecutiveSummary().trim().length() + " chars > 50 chars).");
         }
 
         if (request.getCompletedItems() == null || request.getCompletedItems().isEmpty()) {

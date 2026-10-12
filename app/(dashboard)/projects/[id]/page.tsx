@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import { Avatar } from '@/components/ui/Avatar';
+import { CreateTaskModal } from '@/components/ui/CreateTaskModal';
 import {
   FolderGit2,
   GitCommit,
@@ -58,6 +59,7 @@ export default function ProjectWorkspacePage() {
   const [commitMsg, setCommitMsg] = useState('');
   const [baseVerId, setBaseVerId] = useState('');
   const [isSubmittingVersion, setIsSubmittingVersion] = useState(false);
+  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
 
   const project = projects.find((p) => p.id === projectId);
   if (!project) return notFound();
@@ -518,9 +520,18 @@ export default function ProjectWorkspacePage() {
                 Toggle status to update operational readiness. Changes are appended to the audit ledger.
               </p>
             </div>
-            <span className="font-mono text-xs text-neutral-500">
-              {project.tasks.length} active tasks
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-xs text-neutral-500">
+                {project.tasks.length} active tasks
+              </span>
+              <button
+                onClick={() => setIsCreateTaskModalOpen(true)}
+                className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Create Task</span>
+              </button>
+            </div>
           </div>
 
           <div className="space-y-3">
@@ -758,6 +769,13 @@ export default function ProjectWorkspacePage() {
           </div>
         </div>
       )}
+
+      {/* Create Task Modal */}
+      <CreateTaskModal
+        projectId={project.id}
+        isOpen={isCreateTaskModalOpen}
+        onClose={() => setIsCreateTaskModalOpen(false)}
+      />
     </div>
   );
 }
