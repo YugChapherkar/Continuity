@@ -88,12 +88,15 @@ public class HandoffService {
         List<VersionFileEntity> files = fileRepository.findByProjectIdAndVersionId(projectId, pinnedVersionId);
         List<String> filePaths = files.stream().map(VersionFileEntity::getPath).toList();
 
+        String mappedSenderId = mapActorToUserId(currentUserId);
+        String mappedRecipientId = mapActorToUserId(request.getRecipientId());
+
         HandoffEntity handoff = new HandoffEntity();
         handoff.setId(handoffId);
         handoff.setProjectId(projectId);
         handoff.setProjectName(project.getName());
-        handoff.setSenderId(currentUserId);
-        handoff.setRecipientId(request.getRecipientId());
+        handoff.setSenderId(mappedSenderId);
+        handoff.setRecipientId(mappedRecipientId);
         handoff.setPinnedVersionId(pinnedVersionId);
         handoff.setPinnedVersionHash(pinnedVersionHash);
         handoff.setStatus("Pending");
@@ -134,9 +137,9 @@ public class HandoffService {
 
         // Send operational alert to recipient
         notificationService.createNotification(
-                request.getRecipientId(),
+                mappedRecipientId,
                 "Handoff Awaiting Sign-off",
-                "Handoff package " + saved.getId() + " for " + project.getName() + " was assigned to you by " + resolveUserName(currentUserId) + " (Completeness: " + score + "%).",
+                "Handoff package " + saved.getId() + " for " + project.getName() + " was assigned to you by " + resolveUserName(mappedSenderId) + " (Completeness: " + score + "%).",
                 "handoff",
                 "/handoffs/" + saved.getId()
         );
@@ -149,13 +152,24 @@ public class HandoffService {
         HandoffEntity handoff = handoffRepository.findById(handoffId)
                 .orElseThrow(() -> new ResourceNotFoundException("Handoff dossier not found: " + handoffId));
 
+        String resolvedUser = mapActorToUserId(currentUserId);
+
         // Authorization check: only intended recipient can accept
-        if (currentUserId != null && !currentUserId.equals(handoff.getRecipientId())) {
-            throw new UnauthorizedException("Only the intended recipient (" + handoff.getRecipientId() + ") can accept this handoff dossier. Current user: " + currentUserId);
+        if (currentUserId != null && !resolvedUser.equals(handoff.getRecipientId())) {
+            throw new UnauthorizedException("Only the intended recipient (" + handoff.getRecipientId() + ") can accept this handoff dossier. Current user: " + resolvedUser);
         }
 
         if (!"Pending".equalsIgnoreCase(handoff.getStatus())) {
             throw new BadRequestException("Handoff " + handoffId + " has already been " + handoff.getStatus());
+        }
+
+        // Completeness Gate check (Flow 1, step 4 in Convergence Brief)
+        if (handoff.getCriticalBlockersJson() != null && handoff.getCriticalBlockersJson().toLowerCase().contains("inspection")) {
+            boolean hasPendingInspectionTask = taskRepository.findByProjectId(handoff.getProjectId()).stream()
+                    .anyMatch(t -> t.getTitle().toLowerCase().contains("inspection") && !"Done".equalsIgnoreCase(t.getStatus()));
+            if (hasPendingInspectionTask && (request == null || !Boolean.TRUE.equals(request.getForceAccept()))) {
+                throw new BadRequestException("COMPLETENESS_GATE_BLOCKED: Mandatory physical package inspection (TSK-RECALL-01) is incomplete. You cannot accept custody until physical package inspection is completed.");
+            }
         }
 
         String nowIso = LocalDateTime.now().toString();
@@ -384,5 +398,13 @@ public class HandoffService {
 
     private String resolveUserName(String userId) {
         return userRepository.findById(userId).map(UserEntity::getName).orElse(userId);
+    }
+
+    public String mapActorToUserId(String actor) {
+        if (actor == null) return "user-jessica";
+        if (actor.equals("did:maker1")) return "user-yash";
+        if (actor.equals("did:transporter1")) return "user-shruti";
+        if (actor.equals("did:retailer1")) return "user-jessica";
+        return actor;
     }
 }

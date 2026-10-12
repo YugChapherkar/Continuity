@@ -23,6 +23,8 @@ import {
   Activity,
   UserCheck,
   ChevronDown,
+  Bot,
+  Network,
 } from 'lucide-react';
 
 export function Sidebar() {
@@ -94,6 +96,8 @@ export function Sidebar() {
           badge: unreadNotifsCount > 0 ? `${unreadNotifsCount}` : undefined,
           badgeColor: 'blue',
         },
+        { label: 'AI Assistant', href: '/assistant', icon: Bot },
+        { label: 'Convergence', href: '/convergence', icon: Network },
         { label: 'Audit Log', href: '/audit', icon: ShieldCheck },
       ];
     }
@@ -120,6 +124,8 @@ export function Sidebar() {
           badge: unreadNotifsCount > 0 ? `${unreadNotifsCount}` : undefined,
           badgeColor: 'blue',
         },
+        { label: 'AI Assistant', href: '/assistant', icon: Bot },
+        { label: 'Convergence', href: '/convergence', icon: Network },
       ];
     }
 
@@ -143,6 +149,8 @@ export function Sidebar() {
         badge: unreadNotifsCount > 0 ? `${unreadNotifsCount}` : undefined,
         badgeColor: 'blue',
       },
+      { label: 'AI Assistant', href: '/assistant', icon: Bot },
+      { label: 'Convergence', href: '/convergence', icon: Network },
     ];
   };
 
