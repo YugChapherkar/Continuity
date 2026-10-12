@@ -10,13 +10,13 @@
 
 This specification establishes the cross-ecosystem bridge between:
 1. **Team Trust Fabric** (PS2 Physical-to-Digital Anti-Counterfeit Trust Fabric):
-   - FastAPI core running on `http://localhost:8000` (Public mirror: `https://continuity.404piyush.me`)
-   - Hyperledger Besu QBFT private blockchain on `http://localhost:9545` (Chain ID 1338)
-   - Live Anchor Contract: `0xEf89440626EC6FCA59dfb164f42D027BfeC7c881`
+   - Live Core & Public API: `https://continuity.404piyush.me`
+   - Hyperledger Besu QBFT private blockchain (Chain ID 1338)
+   - Live Anchor Contract: `0x02A2A64fE6Bc42d4C27eA834Aac4566Daa126455`
 2. **CONTINUITY**:
-   - Lossless engineering governance, custodial handoffs, completeness gates, and task orchestration on `http://localhost:8080` (Backend) and `http://localhost:3000` (Frontend).
+   - Lossless engineering governance, custodial handoffs, completeness gates, and task orchestration on port `:8080` (Backend) and port `:3000` (Frontend).
 
-When Trust Fabric detects a clone attack or compromised physical lot, CONTINUITY converts the breach into a **governed transfer dossier**, fans out **custodian recall tasks with strict deadlines**, anchors the incident hash to the **Besu EVM ledger**, and enforces a **Completeness Gate** preventing any custodian from accepting custody until mandatory physical inspections are signed off.
+When Trust Fabric detects a clone attack or compromised physical lot, CONTINUITY converts the breach into a **governed transfer dossier**, fans out **custodian recall tasks with strict deadlines**, anchors the incident hash directly to the **Besu EVM ledger** via `https://continuity.404piyush.me/anchor/document`, and enforces a **Completeness Gate** preventing any custodian from accepting custody until mandatory physical inspections are signed off.
 
 ---
 
@@ -55,30 +55,32 @@ GET http://localhost:8080/api/convergence/actor-map
 
 ### 3.2 Ingest Security Breach / Clone Incident (Flow 1)
 ```http
-POST http://localhost:8080/api/convergence/incidents
+POST /api/convergence/incidents
 Content-Type: application/json
 ```
 **Payload**:
 ```json
 {
-  "serial": "LOT-A-000123",
-  "lotId": "LOT-A",
+  "caseId": "TC-1042",
+  "serial": "LOT-DEMO-A-000001",
+  "lotId": "LOT-DEMO-A",
   "verdict": "CLONE_DETECTED",
-  "riskScore": 80,
+  "riskScore": 65,
   "confidence": "high",
   "failedChecks": [
-    "Check R04: Seen in Mumbai at 10:00 and Delhi at 10:20 (~3450 km/h)"
+    "Check R04: Seen 1148km apart in 0.33h (~3445 km/h)",
+    "Check R07: Offer by non-custodian did:attacker"
   ],
-  "evidenceBundleUrl": "http://localhost:8000/products/LOT-A-000123/bundle"
+  "evidenceBundleUrl": "https://continuity.404piyush.me/products/LOT-DEMO-A-000001/bundle"
 }
 ```
 **What CONTINUITY executes automatically**:
-1. Generates an emergency **Handoff Dossier** (`HO-2026-690`) assigned to retailer custodian `user-jessica`.
+1. Generates an emergency **Handoff Dossier** assigned to retailer custodian `user-jessica`.
 2. Fans out **3 per-custodian recall tasks** with countdown deadlines:
    - `TSK-RECALL-01` (P0): Physical package inspection & shelf quarantine (Jessicaa Chauhab) — **Gate Blocker**.
    - `TSK-RECALL-02` (P0): Transit telemetry audit (Shruti Patil).
-   - `TSK-RECALL-03` (P1): Revoke Lot LOT-A key on Besu EVM contract (Yash Lokhande).
-3. Anchors the dossier digest and incident state to the **Besu EVM chain** (`POST http://localhost:8000/anchor/document` or deterministic proof).
+   - `TSK-RECALL-03` (P1): Revoke Lot master key on Besu EVM contract (Yash Lokhande).
+3. Anchors the dossier digest directly on the live **Besu QBFT chain** via `POST https://continuity.404piyush.me/anchor/document`.
 4. Locks the **Completeness Gate** (custody cannot be accepted until inspection is verified).
 
 ---

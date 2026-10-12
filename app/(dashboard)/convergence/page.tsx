@@ -82,13 +82,27 @@ export default function ConvergencePage() {
   const [gateTestStatus, setGateTestStatus] = useState<'idle' | 'blocked' | 'accepted'>('idle');
   const [activeTab, setActiveTab] = useState<'demo' | 'actors' | 'spec'>('demo');
 
+  // Dynamic API base URL: respects domain/environment
+  const getApiBase = () => {
+    if (typeof window !== 'undefined') {
+      if (process.env.NEXT_PUBLIC_API_BASE_URL) return process.env.NEXT_PUBLIC_API_BASE_URL;
+      const host = window.location.hostname;
+      const proto = window.location.protocol;
+      // If deployed or accessed via domain/IP, target port 8080 on the same host
+      return `${proto}//${host}:8080`;
+    }
+    return process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+  };
+
+  const apiBase = getApiBase();
+
   // Load Status and Actor Map
   const fetchConvergenceData = async () => {
     setLoadingStatus(true);
     try {
       const [resStatus, resActors] = await Promise.all([
-        fetch('http://localhost:8080/api/convergence/status').then((r) => r.json()).catch(() => null),
-        fetch('http://localhost:8080/api/convergence/actor-map').then((r) => r.json()).catch(() => null),
+        fetch(`${apiBase}/api/convergence/status`).then((r) => r.json()).catch(() => null),
+        fetch(`${apiBase}/api/convergence/actor-map`).then((r) => r.json()).catch(() => null),
       ]);
 
       if (resStatus) setStatusData(resStatus);
@@ -110,7 +124,7 @@ export default function ConvergencePage() {
     setGateTestMessage(null);
     setGateTestStatus('idle');
     try {
-      const res = await fetch('http://localhost:8080/api/convergence/simulate-clone', {
+      const res = await fetch(`${apiBase}/api/convergence/simulate-clone`, {
         method: 'POST',
       });
       if (res.ok) {
@@ -134,7 +148,7 @@ export default function ConvergencePage() {
   const handleTestNormalSignoff = async () => {
     if (!incident) return;
     try {
-      const res = await fetch(`http://localhost:8080/api/handoffs/${incident.handoffId}/accept?recipientId=user-jessica`, {
+      const res = await fetch(`${apiBase}/api/handoffs/${incident.handoffId}/accept?recipientId=user-jessica`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),
@@ -157,7 +171,7 @@ export default function ConvergencePage() {
   const handleTestForceSignoff = async () => {
     if (!incident) return;
     try {
-      const res = await fetch(`http://localhost:8080/api/handoffs/${incident.handoffId}/accept?recipientId=user-jessica`, {
+      const res = await fetch(`${apiBase}/api/handoffs/${incident.handoffId}/accept?recipientId=user-jessica`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -284,7 +298,9 @@ export default function ConvergencePage() {
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-white">CONTINUITY Core</h3>
-                <span className="text-xs text-neutral-400 font-mono">http://localhost:8080</span>
+                <span className="text-xs text-neutral-400 font-mono truncate max-w-[160px] block" title={apiBase}>
+                  {apiBase}
+                </span>
               </div>
             </div>
             <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400">
@@ -634,7 +650,7 @@ export default function ConvergencePage() {
                   <button
                     onClick={() =>
                       copyToClipboard(
-                        `curl -X POST http://localhost:8080/api/convergence/incidents -H "Content-Type: application/json" -d '{"serial":"LOT-A-000123","lotId":"LOT-A","verdict":"CLONE_DETECTED","riskScore":80,"failedChecks":["Check R04: Velocity anomaly"],"evidenceBundleUrl":"http://localhost:8000/products/LOT-A-000123/bundle"}'`,
+                        `curl -X POST ${apiBase}/api/convergence/incidents -H "Content-Type: application/json" -d '{"caseId":"TC-1042","serial":"LOT-DEMO-A-000001","lotId":"LOT-DEMO-A","verdict":"CLONE_DETECTED","riskScore":65,"failedChecks":["Check R04: Impossible velocity","Check R07: Non-custodian offer"],"evidenceBundleUrl":"https://continuity.404piyush.me/products/LOT-DEMO-A-000001/bundle"}'`,
                         'incidents'
                       )
                     }
@@ -659,7 +675,7 @@ export default function ConvergencePage() {
                   <button
                     onClick={() =>
                       copyToClipboard(
-                        `curl -X POST http://localhost:8080/api/handoffs -H "Content-Type: application/json" -d '{"projectId":"apollo-core","senderId":"did:maker1","recipientId":"did:retailer1","note":"Direct transfer from Trust Fabric"}'`,
+                        `curl -X POST ${apiBase}/api/handoffs -H "Content-Type: application/json" -d '{"projectId":"apollo-core","senderId":"did:maker1","recipientId":"did:retailer1","note":"Direct transfer from Trust Fabric"}'`,
                         'handoffs'
                       )
                     }
@@ -683,7 +699,7 @@ export default function ConvergencePage() {
                   </div>
                   <button
                     onClick={() =>
-                      copyToClipboard(`curl http://localhost:8080/api/convergence/actor-map`, 'actormap')
+                      copyToClipboard(`curl ${apiBase}/api/convergence/actor-map`, 'actormap')
                     }
                     className="flex items-center gap-1 text-[11px] text-neutral-400 hover:text-white"
                   >

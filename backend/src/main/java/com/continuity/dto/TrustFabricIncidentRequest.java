@@ -12,7 +12,7 @@ public class TrustFabricIncidentRequest {
     private String confidence = "high";
     private List<Map<String, String>> checks = new ArrayList<>();
     private List<String> nextSteps = new ArrayList<>();
-    private String evidenceBundleUrl = "http://localhost:8000/products/LOT-A-000123/bundle";
+    private String evidenceBundleUrl = "https://continuity.404piyush.me/products/LOT-DEMO-A-000001/bundle";
 
     public TrustFabricIncidentRequest() {}
 
