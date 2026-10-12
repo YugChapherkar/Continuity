@@ -52,6 +52,7 @@ public class TaskService {
         task.setDescription(request.getDescription());
         task.setCreatedAt(LocalDate.now().toString());
         task.setBlockers(request.getBlockers());
+        task.setDeadline(request.getDeadline() != null ? request.getDeadline() : LocalDate.now().plusDays(7).toString());
 
         TaskEntity saved = taskRepository.save(task);
 
@@ -73,6 +74,7 @@ public class TaskService {
         if (request.getAssignee() != null) task.setAssignee(request.getAssignee());
         if (request.getDescription() != null) task.setDescription(request.getDescription());
         if (request.getBlockers() != null) task.setBlockers(request.getBlockers());
+        if (request.getDeadline() != null) task.setDeadline(request.getDeadline());
 
         TaskEntity saved = taskRepository.save(task);
 
@@ -93,7 +95,8 @@ public class TaskService {
                 entity.getAssignee(),
                 entity.getDescription(),
                 entity.getCreatedAt(),
-                entity.getBlockers()
+                entity.getBlockers(),
+                entity.getDeadline()
         );
     }
 }

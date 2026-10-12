@@ -6,6 +6,7 @@ import {
   HandoffPackage,
   AuditLogEntry,
   User,
+  AppNotification,
 } from './types';
 
 const API_BASE_URL =
@@ -220,6 +221,35 @@ export const api = {
       }
     );
     return handleResponse(res);
+  },
+
+  // Notifications
+  async getNotifications(recipientId?: string): Promise<AppNotification[]> {
+    const url = recipientId
+      ? `${API_BASE_URL}/api/notifications?recipientId=${encodeURIComponent(recipientId)}`
+      : `${API_BASE_URL}/api/notifications`;
+    const res = await fetch(url, {
+      headers: getAuthHeaders(),
+    });
+    return handleResponse(res);
+  },
+
+  async markNotificationRead(id: string): Promise<AppNotification> {
+    const res = await fetch(`${API_BASE_URL}/api/notifications/${id}/read`, {
+      method: 'PATCH',
+      headers: getAuthHeaders(),
+    });
+    return handleResponse(res);
+  },
+
+  async markAllNotificationsRead(recipientId?: string): Promise<void> {
+    const url = recipientId
+      ? `${API_BASE_URL}/api/notifications/read-all?recipientId=${encodeURIComponent(recipientId)}`
+      : `${API_BASE_URL}/api/notifications/read-all`;
+    await fetch(url, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
   },
 
   // Activity & Audit Ledger

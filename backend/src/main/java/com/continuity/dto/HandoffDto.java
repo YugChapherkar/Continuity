@@ -15,10 +15,14 @@ public class HandoffDto {
     private String createdAt;
     private String acceptedAt;
     private String note;
+    private Integer completenessScore = 100;
     private HandoffBriefingDto briefing;
     private List<HandoffAuditTrailItemDto> auditTrail = new ArrayList<>();
 
     public HandoffDto() {}
+
+    public Integer getCompletenessScore() { return completenessScore; }
+    public void setCompletenessScore(Integer completenessScore) { this.completenessScore = completenessScore; }
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }

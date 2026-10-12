@@ -172,7 +172,7 @@ public class ProjectService {
 
         // Attach tasks
         dto.setTasks(taskRepository.findByProjectId(entity.getId()).stream()
-                .map(t -> new TaskDto(t.getId(), t.getTitle(), t.getStatus(), t.getPriority(), t.getAssignee(), t.getDescription(), t.getCreatedAt(), t.getBlockers()))
+                .map(t -> new TaskDto(t.getId(), t.getTitle(), t.getStatus(), t.getPriority(), t.getAssignee(), t.getDescription(), t.getCreatedAt(), t.getBlockers(), t.getDeadline()))
                 .collect(Collectors.toList()));
 
         // Attach files for latest version

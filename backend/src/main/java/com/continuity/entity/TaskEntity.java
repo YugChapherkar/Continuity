@@ -34,7 +34,18 @@ public class TaskEntity {
     @Column(name = "blockers", columnDefinition = "TEXT")
     private String blockers;
 
+    @Column(name = "deadline", length = 64)
+    private String deadline;
+
     public TaskEntity() {
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public String getId() {

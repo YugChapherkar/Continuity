@@ -532,13 +532,20 @@ export default function ProjectWorkspacePage() {
                 Done: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
               }[task.status];
 
+              const isOverdue =
+                task.deadline &&
+                task.status !== 'Done' &&
+                new Date(task.deadline).getTime() < new Date().setHours(0, 0, 0, 0);
+
               return (
                 <div
                   key={task.id}
-                  className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className={`bg-white/[0.02] border rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors ${
+                    isOverdue ? 'border-rose-500/30 bg-rose-500/[0.03]' : 'border-white/[0.06]'
+                  }`}
                 >
                   <div className="space-y-1.5 max-w-2xl">
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex flex-wrap items-center gap-2.5">
                       <span className="font-mono text-xs text-neutral-500">{task.id}</span>
                       <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-neutral-400">
                         {task.priority}
@@ -546,15 +553,35 @@ export default function ProjectWorkspacePage() {
                       <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full border ${statusBadge}`}>
                         {task.status}
                       </span>
+                      {task.deadline && (
+                        <span
+                          className={`text-[11px] font-mono px-2.5 py-0.5 rounded-full border flex items-center gap-1.5 ${
+                            isOverdue
+                              ? 'bg-rose-500/20 text-rose-400 border-rose-500/40 font-semibold'
+                              : 'bg-white/5 text-neutral-400 border-white/10'
+                          }`}
+                        >
+                          <Clock className="w-3 h-3" />
+                          <span>{isOverdue ? `OVERDUE (due ${task.deadline})` : `Due ${task.deadline}`}</span>
+                        </span>
+                      )}
                     </div>
                     <h3 className="text-sm font-semibold text-[#F5F5F2]">{task.title}</h3>
                     {task.description && (
                       <p className="text-xs text-neutral-400 leading-relaxed">{task.description}</p>
                     )}
-                    <div className="text-[11px] text-neutral-500 flex items-center gap-2 pt-1">
+                    <div className="text-[11px] text-neutral-500 flex flex-wrap items-center gap-2 pt-1">
                       <span>Assignee: {task.assignee}</span>
                       <span>·</span>
                       <span>Created {task.createdAt}</span>
+                      {task.deadline && (
+                        <>
+                          <span>·</span>
+                          <span className={isOverdue ? 'text-rose-400 font-semibold' : ''}>
+                            Target: {task.deadline}
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
 

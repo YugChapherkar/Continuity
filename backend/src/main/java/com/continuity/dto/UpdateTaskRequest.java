@@ -7,6 +7,7 @@ public class UpdateTaskRequest {
     private String assignee;
     private String description;
     private String blockers;
+    private String deadline;
 
     public UpdateTaskRequest() {}
 
@@ -22,4 +23,6 @@ public class UpdateTaskRequest {
     public void setDescription(String description) { this.description = description; }
     public String getBlockers() { return blockers; }
     public void setBlockers(String blockers) { this.blockers = blockers; }
+    public String getDeadline() { return deadline; }
+    public void setDeadline(String deadline) { this.deadline = deadline; }
 }

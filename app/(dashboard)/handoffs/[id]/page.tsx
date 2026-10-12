@@ -96,6 +96,10 @@ export default function HandoffDossierPage() {
               >
                 {handoff.status}
               </span>
+              <span className="text-xs px-2.5 py-1 rounded-full border font-mono font-medium text-emerald-400 bg-emerald-500/10 border-emerald-500/20 flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                {handoff.completenessScore ?? 100}% Completeness
+              </span>
             </div>
 
             <p className="text-xs text-[#A0A09D] max-w-3xl leading-relaxed">

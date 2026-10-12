@@ -26,6 +26,7 @@ public class HandoffService {
     private final VersionFileRepository fileRepository;
     private final UserRepository userRepository;
     private final ActivityService activityService;
+    private final NotificationService notificationService;
     private final ObjectMapper objectMapper;
 
     public HandoffService(HandoffRepository handoffRepository,
@@ -36,6 +37,7 @@ public class HandoffService {
                           VersionFileRepository fileRepository,
                           UserRepository userRepository,
                           ActivityService activityService,
+                          NotificationService notificationService,
                           ObjectMapper objectMapper) {
         this.handoffRepository = handoffRepository;
         this.auditTrailRepository = auditTrailRepository;
@@ -45,6 +47,7 @@ public class HandoffService {
         this.fileRepository = fileRepository;
         this.userRepository = userRepository;
         this.activityService = activityService;
+        this.notificationService = notificationService;
         this.objectMapper = objectMapper;
     }
 
@@ -95,6 +98,9 @@ public class HandoffService {
         handoff.setNote(request.getNote() != null ? request.getNote() : "Engineering handoff for " + project.getName());
         handoff.setExecutiveSummary(request.getExecutiveSummary());
 
+        int score = calculateCompletenessScore(request);
+        handoff.setCompletenessScore(score);
+
         try {
             handoff.setCompletedItemsJson(objectMapper.writeValueAsString(request.getCompletedItems()));
             handoff.setNextStepsJson(objectMapper.writeValueAsString(request.getNextSteps()));
@@ -115,13 +121,22 @@ public class HandoffService {
         trail.setAction("HANDOFF_INITIATED");
         trail.setActor(resolveUserName(currentUserId));
         trail.setTimestamp(formattedDate);
-        trail.setDetail("Generated transfer dossier for " + project.getName() + " (version " + pinnedVersionId + ").");
+        trail.setDetail("Generated transfer dossier for " + project.getName() + " (version " + pinnedVersionId + ", completeness: " + score + "%).");
         trail.setHash(pseudoHash);
         auditTrailRepository.save(trail);
 
         // Global activity log
         activityService.recordActivity("HANDOFF_INITIATED", currentUserId, resolveUserName(currentUserId),
                 projectId, project.getName(), "Initiated handoff " + saved.getId() + " with pinned commit hash " + pinnedVersionHash);
+
+        // Send operational alert to recipient
+        notificationService.createNotification(
+                request.getRecipientId(),
+                "Handoff Awaiting Sign-off",
+                "Handoff package " + saved.getId() + " for " + project.getName() + " was assigned to you by " + resolveUserName(currentUserId) + " (Completeness: " + score + "%).",
+                "handoff",
+                "/handoffs/" + saved.getId()
+        );
 
         return toDto(saved);
     }
@@ -177,6 +192,15 @@ public class HandoffService {
                 handoff.getProjectId(), handoff.getProjectName(),
                 "Accepted operational guardianship for dossier " + handoff.getId() + ". Primary owner transferred to " + resolveUserName(currentUserId));
 
+        // Send operational alert to previous owner / sender
+        notificationService.createNotification(
+                handoff.getSenderId(),
+                "Handoff Accepted",
+                resolveUserName(currentUserId) + " accepted ownership of " + handoff.getProjectName() + " (Dossier " + handoff.getId() + ").",
+                "handoff",
+                "/handoffs/" + handoff.getId()
+        );
+
         return toDto(saved);
     }
 
@@ -203,7 +227,40 @@ public class HandoffService {
                 handoff.getProjectId(), handoff.getProjectName(),
                 "Requested clarification on handoff " + handoff.getId() + ": " + request.getQuestion());
 
+        // Send operational alert to sender
+        notificationService.createNotification(
+                handoff.getSenderId(),
+                "Clarification Requested",
+                resolveUserName(currentUserId) + " requested clarification on " + handoff.getId() + ": \"" + request.getQuestion() + "\"",
+                "handoff",
+                "/handoffs/" + handoff.getId()
+        );
+
         return toDto(handoff);
+    }
+
+    public int calculateCompletenessScore(CreateHandoffRequest request) {
+        if (request == null) return 0;
+        int score = 0;
+        if (request.getExecutiveSummary() != null && request.getExecutiveSummary().trim().length() >= 20) {
+            score += 30;
+        } else if (request.getExecutiveSummary() != null && !request.getExecutiveSummary().trim().isEmpty()) {
+            score += 15;
+        }
+
+        if (request.getCompletedItems() != null && !request.getCompletedItems().isEmpty()) {
+            score += 25;
+        }
+
+        if (request.getRunbookCommands() != null && !request.getRunbookCommands().isEmpty()) {
+            score += 25;
+        }
+
+        if (request.getNextSteps() != null && !request.getNextSteps().isEmpty()) {
+            score += 20;
+        }
+
+        return Math.min(100, score);
     }
 
     public HandoffDto toDto(HandoffEntity entity) {
@@ -219,6 +276,7 @@ public class HandoffService {
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setAcceptedAt(entity.getAcceptedAt());
         dto.setNote(entity.getNote());
+        dto.setCompletenessScore(entity.getCompletenessScore() != null ? entity.getCompletenessScore() : 100);
 
         HandoffBriefingDto briefing = new HandoffBriefingDto();
         briefing.setExecutiveSummary(entity.getExecutiveSummary());

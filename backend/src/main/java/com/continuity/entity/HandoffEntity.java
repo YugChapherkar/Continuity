@@ -61,6 +61,9 @@ public class HandoffEntity {
     @Column(name = "key_files_json", columnDefinition = "TEXT")
     private String keyFilesJson = "[]";
 
+    @Column(name = "completeness_score")
+    private Integer completenessScore = 100;
+
     public HandoffEntity() {
     }
 
@@ -206,5 +209,13 @@ public class HandoffEntity {
 
     public void setKeyFilesJson(String keyFilesJson) {
         this.keyFilesJson = keyFilesJson;
+    }
+
+    public Integer getCompletenessScore() {
+        return completenessScore;
+    }
+
+    public void setCompletenessScore(Integer completenessScore) {
+        this.completenessScore = completenessScore;
     }
 }

@@ -107,11 +107,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   // Fetch live state from Spring Boot backend with graceful local fallback
   const refreshData = useCallback(async () => {
     try {
-      const [backendProjects, backendHandoffs, backendActivity, backendUsers] = await Promise.allSettled([
+      const [backendProjects, backendHandoffs, backendActivity, backendUsers, backendNotifs] = await Promise.allSettled([
         api.getProjects(),
         api.getHandoffs(),
         api.getActivity(),
         api.getUsers(),
+        api.getNotifications(),
       ]);
 
       let connected = false;
@@ -130,6 +131,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }
       if (backendUsers.status === 'fulfilled' && backendUsers.value.length > 0) {
         setUsers(backendUsers.value);
+        connected = true;
+      }
+      if (backendNotifs.status === 'fulfilled' && backendNotifs.value.length > 0) {
+        setNotifications(backendNotifs.value);
         connected = true;
       }
 
@@ -195,6 +200,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setNotifications((prev) =>
       prev.map((n) => (n.id === notifId ? { ...n, read: true } : n))
     );
+    api.markNotificationRead(notifId).catch(() => {
+      // ignore network errors
+    });
   };
 
   const acceptHandoff = async (handoffId: string, signoffNote: string): Promise<boolean> => {

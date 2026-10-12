@@ -47,6 +47,7 @@ export interface Task {
   assignee: string;
   description?: string;
   createdAt: string;
+  deadline?: string;
 }
 
 export interface ProjectFile {
@@ -105,6 +106,7 @@ export interface HandoffPackage {
   createdAt: string;
   acceptedAt?: string;
   note: string;
+  completenessScore?: number;
   briefing: HandoffBriefing;
   auditTrail: HandoffAuditTrailItem[];
 }

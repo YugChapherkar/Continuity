@@ -168,6 +168,9 @@ export default function HandoffsInboxPage() {
                     >
                       {handoff.status}
                     </span>
+                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+                      {handoff.completenessScore ?? 100}% Readiness
+                    </span>
                     {isAssignedToMe && (
                       <span className="text-[11px] font-medium bg-blue-500/15 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full font-mono">
                         ACTION REQUIRED
