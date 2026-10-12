@@ -30,6 +30,10 @@ import {
   Target,
   BarChart3,
   Send,
+  Database,
+  Lock,
+  Bot,
+  Users,
 } from 'lucide-react';
 
 /* =========================================================================
@@ -123,8 +127,8 @@ function Navbar() {
             <a href="#performance" className="hover:text-white transition-colors">
               About
             </a>
-            <a href="#services" className="hover:text-white transition-colors">
-              Work
+            <a href="#portfolio" className="hover:text-white transition-colors">
+              Works
             </a>
             <a href="#workflow" className="hover:text-white transition-colors">
               Pricing
@@ -147,13 +151,13 @@ function Navbar() {
               </span>
             </div>
 
-            {/* Pill CTA */}
+            {/* Pill CTA: Send Inquary matching uploaded screenshot */}
             <Link
               href="/login"
-              className="hidden sm:inline-flex items-center gap-2 bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold text-[11px] sm:text-[12px] px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-[0_4px_16px_rgba(255,255,255,0.18)] transition-all group"
+              className="hidden sm:inline-flex items-center gap-2.5 bg-white/20 hover:bg-white/25 border border-white/10 text-white font-semibold text-[11px] sm:text-[12px] pl-4 pr-1.5 py-1.5 rounded-full backdrop-blur-md shadow-sm transition-all group cursor-pointer"
             >
-              <span>Book a Strategy</span>
-              <span className="w-5 h-5 rounded-full bg-[#111638] text-white flex items-center justify-center text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              <span>Send Inquary</span>
+              <span className="w-5 h-5 rounded-full bg-white text-[#111638] flex items-center justify-center font-bold text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                 ↗
               </span>
             </Link>
@@ -194,21 +198,21 @@ function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              Services & Capabilities
+              Platform Capabilities
             </a>
             <a
               href="#workflow"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              Growth Workflow
+              Continuity Lifecycle
             </a>
             <a
               href="#portfolio"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              Selected Work
+              Selected Systems
             </a>
             <a
               href="#faq"
@@ -222,7 +226,7 @@ function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 border-b border-white/10"
             >
-              Blog & Insights
+              Architecture &amp; Blog
             </a>
           </div>
 
@@ -232,14 +236,14 @@ function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center bg-[#5558FF] text-white py-3 rounded-full font-medium text-sm shadow-md"
             >
-              Book a Strategy Call ↗
+              Platform Login ↗
             </Link>
             <Link
               href="/dashboard"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center bg-white/10 text-white py-3 rounded-full font-medium text-sm border border-white/15"
             >
-              Open Workspace Platform
+              Open Governance Dashboard
             </Link>
           </div>
         </div>
@@ -273,7 +277,7 @@ function HeroSection() {
       </div>
 
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        {/* Main Editorial Headline */}
+        {/* Main Editorial Headline matching screenshot */}
         <h1
           className="text-[34px] sm:text-[44px] md:text-[52px] lg:text-[58px] leading-[1.08] font-medium tracking-tight text-white max-w-4xl mx-auto font-tasaorbiter select-none"
           style={{ color: '#ffffff' }}
@@ -305,15 +309,15 @@ function HeroSection() {
         <div className="mt-8 sm:mt-9 flex items-center justify-center gap-5 sm:gap-7 relative z-20">
           {/* Hand-drawn White Curved Arrow pointing up-right to the button */}
           <div className="hidden sm:block absolute -left-12 lg:-left-16 top-1/2 -translate-y-1/2 pointer-events-none select-none opacity-85">
-            <svg className="w-12 h-10 text-white drop-shadow-sm" viewBox="0 0 65 45" fill="none">
+            <svg className="w-14 h-10 text-white drop-shadow-sm" viewBox="0 0 65 45" fill="none">
               <path
-                d="M12 36 C 20 20, 38 14, 54 18"
+                d="M10 38 C 22 22, 38 16, 52 18"
                 stroke="currentColor"
                 strokeWidth="2.2"
                 strokeLinecap="round"
               />
               <path
-                d="M45 11 L 54 18 L 47 25"
+                d="M42 11 L 52 18 L 45 26"
                 stroke="currentColor"
                 strokeWidth="2.2"
                 strokeLinecap="round"
@@ -322,43 +326,44 @@ function HeroSection() {
             </svg>
           </div>
 
-          {/* Primary CTA: White Pill Button with Black Circle Arrow */}
+          {/* Primary CTA: White Pill Button with Black Circle Arrow: Let's Contact */}
           <Link
             href="/login"
             className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.22)] flex items-center gap-3 group transition-all cursor-pointer"
           >
-            <span>Let&apos;s Get Started</span>
+            <span>Let&apos;s Contact</span>
             <span className="w-6 h-6 rounded-full bg-[#111638] text-white flex items-center justify-center font-bold text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
               ↗
             </span>
           </Link>
 
-          {/* Secondary CTA: Transparent text link */}
-          <a
-            href="#performance"
+          {/* Secondary CTA: Transparent text link: Book a call */}
+          <Link
+            href="/dashboard"
             className="text-white hover:text-[#A6B9FF] font-medium text-[12px] sm:text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer group"
           >
             <span>Book a call</span>
             <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
               ↗
             </span>
-          </a>
+          </Link>
         </div>
 
-        {/* 3D Floating Notification Bell Artwork on Right */}
-        <div className="hidden md:block absolute right-4 lg:right-12 bottom-2 lg:bottom-6 select-none pointer-events-none z-20">
-          <div className="relative w-28 h-28 lg:w-36 lg:h-36 drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)]">
+        {/* 3D Floating Rainbow Notification Bell Artwork on Right matching screenshot */}
+        <div className="hidden md:block absolute right-4 lg:right-16 bottom-4 lg:bottom-10 select-none pointer-events-none z-20">
+          <div className="relative w-32 h-32 lg:w-40 lg:h-40 animate-pulse transition-transform duration-700">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/marklab-bell.jpg"
               alt="Marklab 3D Bell"
-              className="w-full h-full object-contain rounded-3xl"
+              className="w-full h-full object-contain filter drop-shadow-[0_15px_35px_rgba(85,88,255,0.4)] [mask-image:radial-gradient(circle_at_center,black_45%,transparent_90%)]"
+              style={{ mixBlendMode: 'screen' }}
             />
           </div>
         </div>
       </div>
 
-      {/* Made in Webflow Badge */}
+      {/* Made in Webflow Badge matching screenshot */}
       <div className="fixed bottom-3 right-3 z-40 bg-white text-slate-800 text-[10px] font-semibold px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-md border border-[#E4E7F2] hover:bg-slate-50 transition-all select-none cursor-pointer">
         <svg className="w-3.5 h-2.5 text-[#146EF5]" viewBox="0 0 16 12" fill="currentColor">
           <path d="M12.9 0L9.8 8.1 7.4 0H4.3L1.2 8.1 0 0h-.2v12h3.5L5.8 4.2 8.3 12h3.4l2.5-7.8L16 12h.2V0h-3.3z" />
@@ -386,7 +391,7 @@ function ClientLogoStrip() {
     <section className="bg-white py-7 sm:py-9 border-b border-[#E4E7F2]">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-[11px] sm:text-[12px] font-medium text-[#6F718A] uppercase tracking-wider select-none font-tasaorbiter">
-          Trusted by ambitious brands and growing teams
+          Trusted by ambitious engineering teams and digital organizations
         </p>
         <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-8 sm:gap-14 md:gap-20 text-[#6F718A]/90">
           {logos.map((logo) => (
@@ -407,7 +412,7 @@ function ClientLogoStrip() {
 }
 
 /* =========================================================================
-   4. PERFORMANCE MARKETING SHOWCASE (2-Column Grid)
+   4. PERFORMANCE & CONTINUITY PLATFORM SHOWCASE (2-Column Grid)
    ========================================================================= */
 
 function MarketingShowcase() {
@@ -422,10 +427,10 @@ function MarketingShowcase() {
               <div className="bg-white border border-[#E4E7F2] rounded-xl px-4 py-3 shadow-[0_4px_16px_rgba(27,37,100,0.06)] flex items-center gap-4">
                 <div>
                   <span className="text-[10px] uppercase font-bold text-[#6F718A] tracking-wider block font-tasaorbiter">
-                    Revenue Growth
+                    Handoff Completeness
                   </span>
                   <div className="text-[26px] sm:text-[28px] font-bold text-[#222442] leading-none mt-0.5 font-tasaorbiter">
-                    99%
+                    99.4%
                   </div>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-[#5558FF]/10 text-[#5558FF] flex items-center justify-center font-bold text-xs">
@@ -435,41 +440,41 @@ function MarketingShowcase() {
 
               {/* Decorative Blue Floating Bubble */}
               <div className="w-8 h-8 rounded-full bg-[#5558FF] text-white flex items-center justify-center shadow-md">
-                <TrendingUp className="w-4 h-4" />
+                <Shield className="w-4 h-4" />
               </div>
             </div>
 
             {/* Content Body */}
             <div className="mt-8 sm:mt-10">
               <h2 className="text-[22px] sm:text-[26px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
-                Choose Sailment Agency for{' '}
+                Choose CONTINUITY for{' '}
                 <span className="font-instrumentserif italic font-normal text-[#5558FF]">
-                  Digital Growth
+                  Digital Shift Governance
                 </span>
               </h2>
               <p className="mt-2.5 text-[12px] sm:text-[14px] text-[#6F718A] leading-[1.45] max-w-lg">
-                We provide strategic performance marketing to scale customer acquisition, boost ROI,
-                and convert traffic into long-term revenue.
+                We provide enterprise shift continuity, verifiable engineering handoffs, automated
+                completeness scoring, and tamper-evident SHA-256 audit ledgers to eliminate context decay.
               </p>
 
-              {/* Bottom Actions */}
+              {/* Bottom Actions linking to Dashboard and Login */}
               <div className="mt-6 flex items-center gap-4">
                 <Link
-                  href="/login"
+                  href="/dashboard"
                   className="bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-[0_4px_14px_rgba(85,88,255,0.3)] transition-all group"
                 >
-                  <span>Get Started</span>
+                  <span>Launch Dashboard</span>
                   <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                     ↗
                   </span>
                 </Link>
-                <a
-                  href="#workflow"
+                <Link
+                  href="/login"
                   className="text-[#5558FF] hover:text-[#4346F0] font-medium text-[12px] flex items-center gap-1 transition-colors group"
                 >
-                  <span>Book a call</span>
+                  <span>Platform Login</span>
                   <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">↗</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -484,21 +489,24 @@ function MarketingShowcase() {
               <h3 className="mt-6 text-[20px] sm:text-[22px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
                 Become the{' '}
                 <span className="font-instrumentserif italic font-normal text-[#5558FF]">
-                  B2B Marketing
+                  High-Velocity
                 </span>{' '}
-                squad
+                engineering squad
               </h3>
 
               <p className="mt-2.5 text-[12px] sm:text-[13px] text-[#6F718A] leading-[1.45]">
-                Build a predictable acquisition pipeline with targeted multichannel campaigns
-                engineered specifically for enterprise pipeline velocity.
+                Fine-grained role governance for execution pods. Distribute tasks, track blockers,
+                monitor 10 organizational KPI pulses, and ratify client delivery.
               </p>
             </div>
 
-            <div className="mt-6 pt-5 border-t border-[#E4E7F2]/80 flex items-center justify-between text-[11px] font-semibold text-[#5558FF]">
-              <span>FULL-FUNNEL AUDIT INCLUDED</span>
+            <Link
+              href="/dashboard"
+              className="mt-6 pt-5 border-t border-[#E4E7F2]/80 flex items-center justify-between text-[11px] font-semibold text-[#5558FF] hover:underline"
+            >
+              <span>EXPLORE GOVERNANCE SYSTEM</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -507,34 +515,38 @@ function MarketingShowcase() {
 }
 
 /* =========================================================================
-   5. SMART SERVICE / SERVICE CARDS
+   5. PLATFORM DELIVERABLES & CORE CAPABILITIES
    ========================================================================= */
 
 function ServicesSection() {
   const services = [
     {
-      title: 'Search Engine Optimization',
-      desc: 'Improve search visibility and organic traffic through deep technical audits and semantic authority.',
-      icon: Search,
+      title: 'Shift Rotations & Handoff Scoring',
+      desc: 'Automated 0–100% completeness scoring across 4 weighted dimensions, SHA-256 package hashes, and optimistic locking.',
+      icon: Layers,
       iconBg: 'bg-[#5558FF]/10 text-[#5558FF]',
+      href: '/handoffs',
     },
     {
-      title: 'Pay-Per-Click Advertising',
-      desc: 'Run targeted campaigns with measurable returns across Google, Meta, and LinkedIn networks.',
-      icon: MousePointerClick,
+      title: 'Executive Governance & 10 KPIs',
+      desc: 'Live organizational pulses tracking active projects, overdue deadlines, pending reviews, and blocked tasks with zero placeholder estimates.',
+      icon: BarChart3,
       iconBg: 'bg-[#B39BFF]/20 text-[#5558FF]',
+      href: '/dashboard',
     },
     {
-      title: 'Social Media Marketing',
-      desc: 'Grow audience engagement, brand authority, and community-driven conversions across channels.',
-      icon: Megaphone,
+      title: 'Multi-Round Deliverable Reviews',
+      desc: 'Structured approval workflows: approve releases, request structured revisions, and ratify client receipt with cryptographic audit logs.',
+      icon: Shield,
       iconBg: 'bg-[#A6B9FF]/20 text-[#5558FF]',
+      href: '/reviews',
     },
     {
-      title: 'Content Marketing',
-      desc: 'Create valuable editorial content that attracts high-intent buyers and builds industry leadership.',
-      icon: FileText,
+      title: 'Gemini RAG Context Engine',
+      desc: 'Grounded AI chatbot answering questions over historical shift notes, system decisions, and past handoffs using vector-grounded context.',
+      icon: Bot,
       iconBg: 'bg-[#5558FF]/10 text-[#5558FF]',
+      href: '/assistant',
     },
   ];
 
@@ -545,7 +557,7 @@ function ServicesSection() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
           <div>
             <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
-              Smart Service <br />
+              Platform Deliverables <br />
               <span className="font-instrumentserif italic font-normal text-[#5558FF]">
                 That Real Impact.
               </span>
@@ -553,10 +565,10 @@ function ServicesSection() {
           </div>
 
           <Link
-            href="/login"
+            href="/dashboard"
             className="self-start sm:self-end bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-[0_4px_14px_rgba(85,88,255,0.25)] transition-all group"
           >
-            <span>Let&apos;s Collaborate</span>
+            <span>Launch Workspace</span>
             <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
               ↗
             </span>
@@ -568,8 +580,9 @@ function ServicesSection() {
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <div
+              <Link
                 key={service.title}
+                href={service.href}
                 className="bg-[#EDF1FF] hover:bg-white border border-[#E4E7F2] rounded-[12px] p-5 sm:p-6 flex flex-col justify-between shadow-[0_4px_16px_rgba(27,37,100,0.04)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.08)] hover:-translate-y-0.5 transition-all duration-200 group"
               >
                 <div>
@@ -585,10 +598,10 @@ function ServicesSection() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-[#E4E7F2]/60 flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] group-hover:text-[#4346F0] transition-colors">
-                  <span>Explore Service</span>
+                  <span>Explore Feature</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -598,30 +611,30 @@ function ServicesSection() {
 }
 
 /* =========================================================================
-   6. DIGITAL GROWTH FEATURE & WORKFLOW
+   6. DIGITAL GROWTH & CONTINUITY WORKFLOW (4 Lifecycle Steps from README)
    ========================================================================= */
 
 function GrowthWorkflow() {
   const steps = [
     {
       num: '01',
-      title: 'Start Your Digital Journey With Confidence',
-      desc: 'Align business objectives, audit existing funnels, and benchmark conversion KPIs.',
+      title: 'Configure Pods & Distribute Scoped Tasks',
+      desc: 'Admins appoint pod leaders, define project scope, and set operational deadlines with 3-tier RBAC.',
     },
     {
       num: '02',
-      title: 'Connect For A Strategy Call That Sets Direction',
-      desc: 'Map target personas, establish attribution models, and pinpoint high-leverage growth channels.',
+      title: 'Log Shift Updates & Flag Blockers',
+      desc: 'Engineers submit daily work notes, snapshot diffs, and raise blockers without context decay.',
     },
     {
       num: '03',
-      title: 'Receive A Tailored Plan Built For Your Success',
-      desc: 'Get a full omnichannel marketing architecture with concrete timelines and projected pipeline metrics.',
+      title: 'Multi-Round Review & Executive Sign-off',
+      desc: 'Admins review milestone deliverables, request structured changes, or ratify release approvals.',
     },
     {
       num: '04',
-      title: 'Launch, Measure, And Optimize For Growth',
-      desc: 'Deploy agile multivariate campaigns, track performance telemetry, and continuously optimize CPA.',
+      title: 'Tamper-Evident SHA-256 Client Delivery',
+      desc: 'Formally delivered releases with client receipt acknowledgment and immutable audit records.',
     },
   ];
 
@@ -644,10 +657,10 @@ function GrowthWorkflow() {
               <div className="mt-8 bg-white/95 backdrop-blur-md border border-[#E4E7F2] rounded-full px-4 py-1.5 shadow-[0_6px_20px_rgba(27,37,100,0.08)] flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#5558FF] animate-pulse" />
                 <span className="text-[11px] font-bold text-[#222442] font-tasaorbiter">
-                  AI Email Engine
+                  CONTINUITY RAG Engine
                 </span>
                 <span className="text-[10px] bg-[#EDF1FF] text-[#5558FF] px-2 py-0.5 rounded-full font-mono font-semibold">
-                  ACTIVE
+                  SHA-256 ACTIVE
                 </span>
               </div>
             </div>
@@ -656,7 +669,7 @@ function GrowthWorkflow() {
           {/* Right Content: 4 Step Workflow */}
           <div className="lg:col-span-6">
             <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
-              Digital Growth in{' '}
+              Platform Delivery in{' '}
               <span className="font-instrumentserif italic font-normal text-[#5558FF]">
                 quick 4
               </span>{' '}
@@ -683,15 +696,22 @@ function GrowthWorkflow() {
             </div>
 
             {/* Action CTA */}
-            <div className="mt-6">
+            <div className="mt-6 flex items-center gap-4">
               <Link
-                href="/login"
+                href="/dashboard"
                 className="bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-5 py-2.5 rounded-full inline-flex items-center gap-2 shadow-[0_4px_16px_rgba(85,88,255,0.25)] transition-all group"
               >
-                <span>Start Journey</span>
+                <span>Enter Workspace</span>
                 <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                   ↗
                 </span>
+              </Link>
+              <Link
+                href="/assistant"
+                className="text-[#5558FF] hover:text-[#4346F0] font-medium text-[12px] flex items-center gap-1 transition-colors"
+              >
+                <span>Try RAG AI Assistant</span>
+                <span>↗</span>
               </Link>
             </div>
           </div>
@@ -702,7 +722,7 @@ function GrowthWorkflow() {
 }
 
 /* =========================================================================
-   7. SELECTED WORK / PORTFOLIO GALLERY
+   7. SELECTED WORK / PORTFOLIO GALLERY (Platform Views)
    ========================================================================= */
 
 function PortfolioGallery() {
@@ -711,24 +731,27 @@ function PortfolioGallery() {
       id: 1,
       image:
         'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80',
-      title: 'Nurture leads with personalized email marketing automation.',
-      category: 'Email Automation',
+      title: 'Enterprise Shift Continuity Dossier & Handoff Scoring.',
+      category: 'Shift Continuity',
+      href: '/handoffs',
       isWide: true,
     },
     {
       id: 2,
       image:
         'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80',
-      title: 'Generate demand through targeted LinkedIn ad campaigns.',
-      category: 'Paid Acquisition',
+      title: 'Multi-Round Deliverable Signoff & Client Receipt Ledger.',
+      category: 'Executive Reviews',
+      href: '/reviews',
       isWide: false,
     },
     {
       id: 3,
       image:
         'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-      title: 'Capture leads with high-converting website experiences.',
-      category: 'Conversion Optimization',
+      title: 'Grounded RAG Intelligence & Cross-Team Convergence.',
+      category: 'AI RAG Engine',
+      href: '/convergence',
       isWide: false,
     },
   ];
@@ -745,15 +768,16 @@ function PortfolioGallery() {
             </span>
           </h2>
           <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
-            Selected case studies demonstrating commercial impact across digital brands.
+            Selected platform modules engineered for verifiable digital handoffs and client delivery.
           </p>
         </div>
 
         {/* 3-Column Image Gallery with First Card Approximately 1.4x Wider */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-3.5 sm:gap-4 items-start">
           {portfolio.map((item) => (
-            <div
+            <Link
               key={item.id}
+              href={item.href}
               className={`${
                 item.isWide ? 'md:col-span-2 lg:col-span-1' : 'md:col-span-1'
               } flex flex-col group cursor-pointer`}
@@ -774,7 +798,7 @@ function PortfolioGallery() {
                   {item.title}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -783,75 +807,76 @@ function PortfolioGallery() {
 }
 
 /* =========================================================================
-   8. CLIENT TESTIMONIALS
+   8. CLIENT & ENGINEERING TESTIMONIALS
    ========================================================================= */
 
 function TestimonialsSection() {
   const testimonials = [
     {
       name: 'Sarah Mitchell',
-      role: 'VP Marketing, Luma Technologies',
+      role: 'VP Marketing & Engineering, Luma Tech',
       quote:
-        'Marklab transformed our acquisition funnel within 60 days. Our organic inbound pipeline increased by 140% while slashing cost-per-acquisition.',
+        'Continuity eliminated our rotation blind spots. Handoff completeness jumped to 99.4% with cryptographic verification across pods.',
       logo: 'Luma',
     },
     {
       name: 'Daniel Foster',
-      role: 'Founder, Nexora Health',
+      role: 'Founder & CTO, Nexora Health',
       quote:
-        'Their targeted PPC and editorial content strategy delivered predictable high-intent enterprise demos from week one.',
+        'The multi-round review and client delivery ratification streamlined our enterprise release certifications from week one.',
       logo: 'Nexora',
     },
     {
       name: 'Emma Wilson',
-      role: 'Head of Growth, Loopify',
+      role: 'Head of Growth & Ops, Loopify',
       quote:
-        'The data-first approach and lightning-fast optimization gave our product launch the velocity and visibility it needed.',
+        'The Gemini RAG assistant gives incoming shift engineers instant answers to questions that used to take hours of Slack digging.',
       logo: 'Loopify',
     },
     {
       name: 'James Carter',
-      role: 'CMO, Brightwave Media',
+      role: 'Lead Architect, Brightwave Media',
       quote:
-        'An indispensable growth partner. They do not just run ads—they architect full-funnel digital dominance with flawless execution.',
+        'Optimistic locking and tamper-evident SHA-256 audit ledgers give our enterprise auditors 100% peace of mind.',
       logo: 'Brightwave',
     },
   ];
 
   return (
-    <section className="py-12 sm:py-16 bg-[#F7F8FF]">
+    <section className="py-12 sm:py-16 bg-[#F7F8FF] border-b border-[#E4E7F2]">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
-          <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+          <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
             Client take some{' '}
             <span className="font-instrumentserif italic font-normal text-[#5558FF]">
               lovely words
             </span>
           </h2>
           <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
-            Real feedback from brands we&apos;ve helped
+            Real feedback from engineering pods and enterprise teams we&apos;ve powered.
           </p>
         </div>
 
+        {/* 4 Testimonial Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
           {testimonials.map((t) => (
             <div
               key={t.name}
-              className="bg-[#EDF1FF] border border-[#E4E7F2] rounded-[12px] p-5 sm:p-6 flex flex-col justify-between shadow-[0_4px_16px_rgba(27,37,100,0.03)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.06)] transition-all"
+              className="bg-white border border-[#E4E7F2] rounded-[12px] p-5 flex flex-col justify-between shadow-[0_4px_16px_rgba(27,37,100,0.04)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.08)] transition-all min-h-[190px]"
             >
               <div>
-                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#6F718A] uppercase tracking-wider mb-3">
-                  <span className="text-[#5558FF]">●</span>
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] uppercase tracking-wider font-tasaorbiter mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5558FF]" />
                   <span>{t.logo}</span>
                 </div>
-                <p className="text-[12px] text-[#222442] leading-[1.45] italic">
+                <p className="text-[12px] text-[#222442] italic leading-relaxed">
                   &ldquo;{t.quote}&rdquo;
                 </p>
               </div>
 
-              <div className="mt-5 pt-3.5 border-t border-[#E4E7F2]/80">
-                <div className="text-[12px] font-bold text-[#222442] font-tasaorbiter">{t.name}</div>
-                <div className="text-[10px] text-[#6F718A]">{t.role}</div>
+              <div className="mt-4 pt-3 border-t border-[#E4E7F2] text-[11px]">
+                <div className="font-semibold text-[#222442] font-tasaorbiter">{t.name}</div>
+                <div className="text-[#6F718A] text-[10px]">{t.role}</div>
               </div>
             </div>
           ))}
@@ -862,7 +887,7 @@ function TestimonialsSection() {
 }
 
 /* =========================================================================
-   9. FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION)
+   9. FREQUENTLY ASKED QUESTIONS (FAQ Accordion with Platform Answers)
    ========================================================================= */
 
 function FAQSection() {
@@ -870,69 +895,67 @@ function FAQSection() {
 
   const faqs = [
     {
-      q: 'What makes Marklab different from other digital marketing agencies?',
-      a: 'We combine performance growth engineering with bespoke editorial creative. Instead of vanity metrics, every campaign is tied to revenue linearizability, unit economics, and pipeline acceleration.',
+      q: 'What core problem does Continuity solve for engineering organizations?',
+      a: 'Continuity eliminates knowledge fragmentation across shift rotations, developer handoffs, and client delivery milestones by providing verifiable checklists, automated completeness scoring, and tamper-evident audit trails.',
     },
     {
-      q: 'Which industries do you specialize in?',
-      a: 'We specialize in high-growth B2B SaaS, enterprise technology platforms, fintech, and modern digital commerce brands seeking predictable, profitable market expansion.',
+      q: 'How does the 3-Tier Role-Based Access Control (RBAC) work?',
+      a: 'Admins govern organizational pods, appointments, and final client sign-offs. Team Leaders distribute tasks and inspect sprint updates. Employees record daily work notes and raise operational blockers.',
     },
     {
-      q: 'How can we get started with your team?',
-      a: 'Book an introductory strategy call. We perform a zero-commitment growth and funnel audit, identifying immediate friction points and high-leverage acquisition opportunities.',
+      q: 'How does the SHA-256 cryptographic audit ledger guarantee integrity?',
+      a: 'Every shift handoff generates an immutable SHA-256 package hash with optimistic concurrency control (409 Conflict protection), preventing simultaneous overwrite collisions and providing permanent audit proof.',
     },
     {
-      q: 'Does your service include marketing analytics?',
-      a: 'Yes. Every engagement includes end-to-end multi-touch attribution modeling, live telemetry dashboards, cohort analysis, and automated weekly performance briefs.',
+      q: 'How does the Gemini RAG contextual assistant work?',
+      a: 'The platform integrates Google Gen AI to ground conversational answers over historical handoffs, shift updates, and system decisions, helping incoming shifts instantly resolve context gaps.',
     },
     {
-      q: 'Do you offer customized marketing plans?',
-      a: 'All our plans are custom engineered. We tailor channel allocation, creative production, and bidding strategies to match your specific sales cycle and customer lifetime value.',
+      q: 'What metrics are tracked on the Executive Governance Dashboard?',
+      a: 'The dashboard calculates 10 real-time pulses: Total Employees, Active Teams, Active Projects, At-Risk Projects, Overdue Tasks, Pending Reports, Pending Reviews, Revision Requests, Approved Releases, and Delivered Releases.',
     },
     {
-      q: 'What services does Marklab offer?',
-      a: 'Our core capabilities encompass technical SEO, paid search & social acquisition (PPC), automated email lifecycle marketing, conversion rate optimization (CRO), and strategic brand positioning.',
+      q: 'How do we log in or test the live platform?',
+      a: 'Navigate to the Login page (/login) and select from our pre-seeded role personas (Admin, Team Leader, or Employee) for instant one-click testing of full platform governance.',
     },
   ];
 
-  const toggle = (idx: number) => {
-    setOpenIndex(openIndex === idx ? null : idx);
-  };
-
   return (
-    <section id="faq" className="py-12 sm:py-16 bg-white">
+    <section id="faq" className="py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
-          <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+          <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
             Frequently asked <br />
             questions
           </h2>
+          <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
+            Answers to common questions regarding platform governance, security, and setup.
+          </p>
         </div>
 
-        {/* Accordion Container (~650px wide) */}
+        {/* Compact Centered Accordion (~650px) */}
         <div className="max-w-[650px] mx-auto space-y-2.5">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
                 key={faq.q}
-                className="bg-[#EDF1FF] border border-[#E4E7F2] rounded-[8px] overflow-hidden transition-colors"
+                className="bg-[#EDF1FF] rounded-[8px] overflow-hidden transition-all duration-200 border border-[#E4E7F2]"
               >
                 <button
-                  onClick={() => toggle(idx)}
-                  className="w-full text-left px-4 sm:px-5 py-3.5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
-                  aria-expanded={isOpen}
+                  onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  className="w-full text-left px-5 py-3.5 flex items-center justify-between gap-4 select-none hover:bg-[#E4E7F2]/50 transition-colors cursor-pointer"
                 >
-                  <span className="text-[12px] sm:text-[13px] font-medium text-[#222442] font-tasaorbiter">
+                  <span className="text-[13px] sm:text-[14px] font-medium text-[#222442] font-tasaorbiter">
                     {faq.q}
                   </span>
-                  <span className="w-5 h-5 rounded-full bg-white text-[#5558FF] flex items-center justify-center shrink-0 border border-[#E4E7F2] text-xs">
-                    {isOpen ? <Minus className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                  <span className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[#5558FF] shrink-0 text-xs shadow-xs border border-[#E4E7F2]">
+                    {isOpen ? <Minus className="w-3 h-3 stroke-[2.5]" /> : <Plus className="w-3 h-3 stroke-[2.5]" />}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="px-4 sm:px-5 pb-4 pt-1 text-[12px] text-[#6F718A] leading-relaxed border-t border-[#E4E7F2]/60 animate-in fade-in duration-200">
+                  <div className="px-5 pb-4 pt-1 text-[12px] sm:text-[13px] text-[#6F718A] leading-relaxed border-t border-[#E4E7F2]/60 animate-in fade-in duration-200">
                     {faq.a}
                   </div>
                 )}
@@ -946,28 +969,28 @@ function FAQSection() {
 }
 
 /* =========================================================================
-   10. READ ARTICLES / BLOG SECTION
+   10. READ ARTICLES & ARCHITECTURE PLAYBOOKS
    ========================================================================= */
 
 function ArticlesSection() {
   const articles = [
     {
-      title: 'How to get more leads from Google ads',
-      tag: 'PAID ACQUISITION',
+      title: 'Designing Lossless Shift Rotations with Cryptographic Ledgers',
+      tag: 'SPRING BOOT 3 & SHA-256',
       readTime: '5 MIN READ',
       image:
         'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
     },
     {
-      title: 'Easy ways to improve your email open rates',
-      tag: 'RETENTION',
+      title: 'Optimistic Concurrency Control in High-Velocity Engineering Handoffs',
+      tag: 'DATABASE CONCURRENCY',
       readTime: '4 MIN READ',
       image:
         'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=800&q=80',
     },
     {
-      title: 'Simple tips to boost your website traffic',
-      tag: 'ORGANIC GROWTH',
+      title: 'Grounded Gemini RAG: Transforming Shift Notes into Instant Context',
+      tag: 'AI RAG RETRIEVAL',
       readTime: '6 MIN READ',
       image:
         'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
@@ -983,7 +1006,7 @@ function ArticlesSection() {
               Read article
             </h2>
             <p className="mt-1.5 text-[12px] sm:text-[13px] text-[#6F718A]">
-              Insights, playbooks, and tactical frameworks from our growth strategists.
+              Architecture playbooks, system design patterns, and operational frameworks.
             </p>
           </div>
 
@@ -1047,41 +1070,35 @@ function FinalCTA() {
           className="text-[32px] sm:text-[44px] md:text-[50px] font-medium leading-[1.1] text-white font-tasaorbiter"
           style={{ color: '#ffffff' }}
         >
-          Ready to{' '}
-          <span
-            className="font-instrumentserif italic font-normal text-white"
-            style={{ color: '#ffffff' }}
-          >
-            see
-          </span>{' '}
-          <br />
+          Ready to see{' '}
           <span
             className="font-instrumentserif italic font-normal text-white"
             style={{ color: '#ffffff' }}
           >
             real
           </span>{' '}
+          <br />
           Results
         </h2>
 
         <div className="mt-8 flex items-center justify-center gap-5 sm:gap-6">
           <Link
-            href="/login"
+            href="/dashboard"
             className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.2)] flex items-center gap-3 group transition-all cursor-pointer"
           >
-            <span>Let&apos;s Get Started</span>
+            <span>Launch Dashboard</span>
             <span className="w-6 h-6 rounded-full bg-[#111638] text-white flex items-center justify-center font-bold text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
               ↗
             </span>
           </Link>
 
-          <a
-            href="#faq"
+          <Link
+            href="/login"
             className="text-white hover:text-[#A6B9FF] font-medium text-[12px] sm:text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer group"
           >
-            <span>Book a call</span>
+            <span>Sign In to Platform</span>
             <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">↗</span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -1125,105 +1142,104 @@ function Footer() {
               </span>
             </Link>
             <p className="text-[12px] text-[#6F718A] leading-relaxed max-w-xs">
-              Premium digital marketing and growth agency architecting full-funnel customer acquisition.
+              CONTINUITY — Enterprise Project Continuity, Shift Governance &amp; Client Delivery Platform.
             </p>
             <div className="pt-2 text-[12px] text-[#5558FF] font-medium font-mono">
-              hello@marklab.agency
+              continuity@marklab.agency
             </div>
           </div>
 
-          {/* Column 2: Menu */}
+          {/* Column 2: Platform Menu */}
           <div className="lg:col-span-2 space-y-2.5">
             <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
-              Menu
+              Platform
             </div>
             <ul className="space-y-1.5 text-[12px] text-[#6F718A]">
               <li>
-                <a href="#" className="hover:text-[#5558FF] transition-colors">
-                  Home
-                </a>
+                <Link href="/dashboard" className="hover:text-[#5558FF] transition-colors">
+                  Governance Dashboard
+                </Link>
               </li>
               <li>
-                <a href="#performance" className="hover:text-[#5558FF] transition-colors">
-                  About
-                </a>
+                <Link href="/login" className="hover:text-[#5558FF] transition-colors">
+                  Platform Login
+                </Link>
               </li>
               <li>
-                <a href="#portfolio" className="hover:text-[#5558FF] transition-colors">
-                  Work
-                </a>
+                <Link href="/handoffs" className="hover:text-[#5558FF] transition-colors">
+                  Shift Handoffs
+                </Link>
               </li>
               <li>
-                <a href="#articles" className="hover:text-[#5558FF] transition-colors">
-                  Blog
-                </a>
+                <Link href="/reviews" className="hover:text-[#5558FF] transition-colors">
+                  Deliverable Reviews
+                </Link>
               </li>
               <li>
-                <a href="#workflow" className="hover:text-[#5558FF] transition-colors">
-                  Contact
-                </a>
+                <Link href="/assistant" className="hover:text-[#5558FF] transition-colors">
+                  Gemini RAG Assistant
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Column 3: Quick Links */}
-          <div className="lg:col-span-2 space-y-2.5">
+          <div className="lg:col-span-3 space-y-2.5">
             <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
-              Quick Links
+              Workspaces &amp; Pods
             </div>
             <ul className="space-y-1.5 text-[12px] text-[#6F718A]">
               <li>
-                <a href="#services" className="hover:text-[#5558FF] transition-colors">
-                  SEO
-                </a>
+                <Link href="/tasks" className="hover:text-[#5558FF] transition-colors">
+                  Task Execution &amp; Deadlines
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#5558FF] transition-colors">
-                  PPC Advertising
-                </a>
+                <Link href="/projects" className="hover:text-[#5558FF] transition-colors">
+                  Client Project Scopes
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#5558FF] transition-colors">
-                  Social Media
-                </a>
+                <Link href="/teams" className="hover:text-[#5558FF] transition-colors">
+                  Team Pods &amp; Leaders
+                </Link>
               </li>
               <li>
-                <a href="#services" className="hover:text-[#5558FF] transition-colors">
-                  Web Design
-                </a>
+                <Link href="/convergence" className="hover:text-[#5558FF] transition-colors">
+                  Cross-Team Convergence
+                </Link>
               </li>
               <li>
                 <a href="#faq" className="hover:text-[#5558FF] transition-colors">
-                  Resources
+                  Architecture FAQ
                 </a>
               </li>
             </ul>
           </div>
 
           {/* Column 4: Newsletter */}
-          <div className="lg:col-span-4 space-y-3">
+          <div className="lg:col-span-3 space-y-3">
             <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
               Newsletter for updates
             </div>
-            <p className="text-[12px] text-[#6F718A]">
-              Receive our bi-weekly breakdown of conversion funnels, paid media, and growth tactics.
+            <p className="text-[12px] text-[#6F718A] leading-relaxed">
+              Receive our bi-weekly breakdown of platform updates, engineering playbooks, and release notes.
             </p>
-
-            <form onSubmit={handleSubscribe} className="flex items-center gap-2 max-w-sm">
+            <form onSubmit={handleSubscribe} className="relative flex items-center mt-2">
               <input
                 type="email"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
                 required
-                className="flex-1 bg-[#F7F8FF] border border-[#E4E7F2] rounded-full px-4 py-2 text-[12px] text-[#222442] placeholder-[#6F718A] focus:outline-none focus:border-[#5558FF] transition-colors"
+                className="w-full bg-[#F7F8FF] border border-[#E4E7F2] rounded-full pl-4 pr-11 py-2 text-[12px] text-[#222442] placeholder:text-[#6F718A] focus:outline-none focus:border-[#5558FF] focus:ring-1 focus:ring-[#5558FF] transition-all"
               />
               <button
                 type="submit"
-                className="w-9 h-9 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center shrink-0 shadow-sm transition-transform active:scale-95"
-                title="Subscribe"
+                className="absolute right-1 w-7 h-7 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center transition-colors shadow-xs"
+                aria-label="Subscribe"
               >
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </form>
             {subscribed && (
@@ -1236,17 +1252,22 @@ function Footer() {
 
         {/* Bottom Strip */}
         <div className="pt-6 border-t border-[#E4E7F2] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6F718A]">
-          <div>© 2026 Marklab Agency. All rights reserved.</div>
+          <div>© 2026 CONTINUITY Platform • Marklab Studio. All rights reserved.</div>
           <div className="flex items-center gap-4">
             <Link
               href="/dashboard"
               className="text-[#5558FF] hover:underline font-semibold flex items-center gap-1"
             >
-              <span>Continuity Workspace Platform</span>
+              <span>Continuity Governance Dashboard</span>
               <ExternalLink className="w-3 h-3" />
             </Link>
             <span>•</span>
-            <span>Design &amp; Development by Marklab Studio</span>
+            <Link
+              href="/login"
+              className="text-[#6F718A] hover:text-[#5558FF] transition-colors"
+            >
+              Sign In
+            </Link>
           </div>
         </div>
       </div>
@@ -1267,16 +1288,16 @@ export function LandingPage() {
       {/* 3. Trusted By / Client Logos Strip */}
       <ClientLogoStrip />
 
-      {/* 4. Performance Marketing Showcase */}
+      {/* 4. Performance Marketing & Platform Showcase */}
       <MarketingShowcase />
 
-      {/* 5. Smart Service / Service Cards */}
+      {/* 5. Core Platform Deliverables & Capabilities */}
       <ServicesSection />
 
-      {/* 6. Digital Growth Feature & Workflow */}
+      {/* 6. Digital Growth & Continuity Workflow */}
       <GrowthWorkflow />
 
-      {/* 7. Selected Work / Portfolio Gallery */}
+      {/* 7. Selected Work / Platform Systems Gallery */}
       <PortfolioGallery />
 
       {/* 8. Client Testimonials */}
@@ -1285,7 +1306,7 @@ export function LandingPage() {
       {/* 9. Frequently Asked Questions (FAQ) */}
       <FAQSection />
 
-      {/* 10. Read Articles */}
+      {/* 10. Read Articles & Architecture Playbooks */}
       <ArticlesSection />
 
       {/* 11. Final Dramatic CTA */}
