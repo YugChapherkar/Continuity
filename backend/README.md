@@ -6,7 +6,7 @@ Enterprise backend for CONTINUITY — Digital Handoff & Platform Continuity Mana
 - **Java 21**
 - **Spring Boot 3.3.5**
 - **Spring Data JPA & PostgreSQL**
-- **Flyway Database Migrations** (V1 Schema, V2 Baseline Seed)
+- **Flyway Database Migrations** (V1 Schema, V2 Seed Data, V3 Task Deadlines, V4 Team Roster)
 - **Spring Security** (Stateless persona-based identity & role/ownership enforcement)
 - **Google Gen AI Java SDK** (`com.google.genai:google-genai`)
 - **SpringDoc OpenAPI / Swagger 3**
@@ -16,29 +16,34 @@ Enterprise backend for CONTINUITY — Digital Handoff & Platform Continuity Mana
 
 ## Quickstart
 
-### 1. Start PostgreSQL (Docker)
+### 1. Configure Environment (Optional)
+If using Docker PostgreSQL:
 ```bash
-cd backend
 docker compose up -d
 ```
+By default, the application runs out-of-the-box using the embedded file database (`continuity_db`).
 
-### 2. Configure Environment
-Copy `.env.example` or export environment variables:
+To enable AI summary capabilities:
 ```bash
 export GEMINI_API_KEY="your-gemini-api-key"
 ```
 
-### 3. Run the Backend
+### 2. Run the Backend
 ```bash
 mvn spring-boot:run
 ```
 The REST API starts on `http://localhost:8080`.
-- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- Swagger UI (Interactive API docs): `http://localhost:8080/swagger-ui.html`
 - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 - Health check: `http://localhost:8080/api/health`
 
-### 4. Run Automated Tests
+### 3. Run Automated Tests
 ```bash
 mvn test
 ```
-Runs 15 automated integration tests including snapshot uploads, diff calculations, optimistic concurrency / stale base version conflict checks (409 Conflict), handoff lifecycle, and grounded RAG citations.
+Runs 19 automated integration tests covering:
+- Task operational deadlines & overdue checks
+- Pre-submission handoff completeness scoring (0–100%)
+- Snapshot version uploads & diff calculations
+- Optimistic locking / concurrent edit conflict protection (409 Conflict)
+- Complete handoff signoff and tamper-evident audit ledger entries
