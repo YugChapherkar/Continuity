@@ -364,12 +364,6 @@ function HeroSection() {
           </div>
         </div>
       </div>
-
-      {/* Verified Audit Ledger Status Badge in bottom corner */}
-      <div className="fixed bottom-3 right-3 z-40 bg-white text-slate-800 text-[10px] font-semibold px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow-md border border-[#E4E7F2] hover:bg-slate-50 transition-all select-none cursor-pointer">
-        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-        <span>SHA-256 Verified Platform</span>
-      </div>
     </section>
   );
 }
@@ -1123,38 +1117,43 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-white border-t border-[#E4E7F2] pt-12 sm:pt-16 pb-8 relative overflow-hidden text-[#222442]">
-      {/* Faint Oversized Watermark behind bottom strip */}
-      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[120px] sm:text-[180px] font-extrabold text-[#F7F8FF] select-none pointer-events-none tracking-tight font-tasaorbiter z-0 opacity-80">
+    <footer className="w-full bg-white border-t border-[#E4E7F2] pt-16 sm:pt-20 pb-10 relative overflow-hidden text-[#222442]">
+      {/* Faint Oversized Watermark behind bottom columns */}
+      <div className="absolute bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 text-[140px] sm:text-[200px] md:text-[250px] lg:text-[280px] font-extrabold text-[#F4F5FB] select-none pointer-events-none tracking-tight font-tasaorbiter z-0 opacity-80 whitespace-nowrap">
         Continuity
       </div>
 
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-12">
+      <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-14 pb-16">
           {/* Column 1: Brand & Contact */}
-          <div className="lg:col-span-4 space-y-3">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-7 h-7 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
-                <Cpu className="w-3.5 h-3.5 stroke-[2.5]" />
+          <div className="lg:col-span-4 space-y-4">
+            <Link href="/" className="inline-flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
+                <Cpu className="w-4 h-4 stroke-[2.5]" />
               </div>
-              <span className="font-extrabold text-base tracking-tight text-[#222442] font-tasaorbiter">
+              <span className="font-extrabold text-lg tracking-tight text-[#111638] font-tasaorbiter">
                 Continuity
               </span>
             </Link>
-            <p className="text-[12px] text-[#6F718A] leading-relaxed max-w-xs">
+            <p className="text-[14px] text-[#6F718A] leading-relaxed max-w-sm">
               Enterprise Project Continuity, Shift Governance &amp; Verifiable Client Delivery Platform.
             </p>
-            <div className="pt-2 text-[12px] text-[#5558FF] font-medium font-mono">
-              continuity@enterprise.platform
+            <div className="pt-3">
+              <a
+                href="mailto:continuity@enterprise.platform"
+                className="text-[14px] text-[#5558FF] hover:underline font-medium font-mono"
+              >
+                continuity@enterprise.platform
+              </a>
             </div>
           </div>
 
           {/* Column 2: Platform Menu */}
-          <div className="lg:col-span-2 space-y-2.5">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
+          <div className="lg:col-span-2 space-y-4">
+            <div className="text-[12px] font-bold uppercase tracking-wider text-[#111638] font-tasaorbiter">
               Platform
             </div>
-            <ul className="space-y-1.5 text-[12px] text-[#6F718A]">
+            <ul className="space-y-3 text-[14px] text-[#6F718A]">
               <li>
                 <Link href="/dashboard" className="hover:text-[#5558FF] transition-colors">
                   Governance Dashboard
@@ -1183,12 +1182,12 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Quick Links */}
-          <div className="lg:col-span-3 space-y-2.5">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
+          {/* Column 3: Workspaces & Pods */}
+          <div className="lg:col-span-2 space-y-4">
+            <div className="text-[12px] font-bold uppercase tracking-wider text-[#111638] font-tasaorbiter">
               Workspaces &amp; Pods
             </div>
-            <ul className="space-y-1.5 text-[12px] text-[#6F718A]">
+            <ul className="space-y-3 text-[14px] text-[#6F718A]">
               <li>
                 <Link href="/tasks" className="hover:text-[#5558FF] transition-colors">
                   Task Execution &amp; Deadlines
@@ -1218,32 +1217,32 @@ function Footer() {
           </div>
 
           {/* Column 4: Newsletter */}
-          <div className="lg:col-span-3 space-y-3">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#222442] font-tasaorbiter">
+          <div className="lg:col-span-4 space-y-4">
+            <div className="text-[12px] font-bold uppercase tracking-wider text-[#111638] font-tasaorbiter">
               Newsletter for updates
             </div>
-            <p className="text-[12px] text-[#6F718A] leading-relaxed">
+            <p className="text-[14px] text-[#6F718A] leading-relaxed">
               Receive our bi-weekly breakdown of platform updates, engineering playbooks, and release notes.
             </p>
-            <form onSubmit={handleSubscribe} className="relative flex items-center mt-2">
+            <form onSubmit={handleSubscribe} className="flex items-center gap-3 pt-1">
               <input
                 type="email"
-                placeholder="Enter your work email"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-[#F7F8FF] border border-[#E4E7F2] rounded-full pl-4 pr-11 py-2 text-[12px] text-[#222442] placeholder:text-[#6F718A] focus:outline-none focus:border-[#5558FF] focus:ring-1 focus:ring-[#5558FF] transition-all"
+                className="flex-1 min-w-0 bg-[#F4F5F9] border border-[#E4E7F2] rounded-full px-5 py-3 text-[13px] text-[#222442] placeholder:text-[#9DA0B6] focus:outline-none focus:border-[#5558FF] focus:bg-white transition-all shadow-inner"
               />
               <button
                 type="submit"
-                className="absolute right-1 w-7 h-7 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center transition-colors shadow-xs"
+                className="w-11 h-11 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center shrink-0 transition-colors shadow-sm"
                 aria-label="Subscribe"
               >
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
             </form>
             {subscribed && (
-              <span className="text-[11px] font-medium text-emerald-600">
+              <span className="text-[12px] font-medium text-emerald-600 block">
                 ✓ Thank you for subscribing!
               </span>
             )}
@@ -1251,15 +1250,15 @@ function Footer() {
         </div>
 
         {/* Bottom Strip */}
-        <div className="pt-6 border-t border-[#E4E7F2] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#6F718A]">
+        <div className="pt-8 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#6F718A]">
           <div>© 2026 CONTINUITY Enterprise Platform. All rights reserved.</div>
           <div className="flex items-center gap-4">
             <Link
               href="/dashboard"
-              className="text-[#5558FF] hover:underline font-semibold flex items-center gap-1"
+              className="text-[#5558FF] hover:underline font-medium flex items-center gap-1"
             >
               <span>Continuity Governance Dashboard</span>
-              <ExternalLink className="w-3 h-3" />
+              <ExternalLink className="w-3.5 h-3.5" />
             </Link>
             <span>•</span>
             <Link
