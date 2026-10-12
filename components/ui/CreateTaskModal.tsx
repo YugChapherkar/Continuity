@@ -19,7 +19,7 @@ export function CreateTaskModal({ projectId, isOpen, onClose, onTaskCreated }: C
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<'P0' | 'P1' | 'P2'>('P1');
   const [status, setStatus] = useState<Task['status']>('In Progress');
-  const [assignee, setAssignee] = useState(currentUser.name || users[0]?.name || 'Jessica Chauhan');
+  const [assignee, setAssignee] = useState(currentUser.name || users[0]?.name || 'Jessicaa Chauhab');
   const [deadline, setDeadline] = useState('');
   const [blockers, setBlockers] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);

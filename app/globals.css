@@ -2,6 +2,8 @@
 @import "tw-animate-css";
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
 :root {
   --neon-amber: #FF5E00;
   --neon-orange: #FF7700;
@@ -74,60 +76,81 @@ html[data-theme="light"] body {
   color: #0F172A !important;
 }
 
+/* =========================================================================
+   DARK MODE EXPLICIT GUARANTEES
+   ========================================================================= */
+html.dark body,
+html[data-theme="dark"] body {
+  background-color: #050606 !important;
+  color: #F5F5F2 !important;
+}
+
+html.dark h1:not([class*="bg-"]):not(button *),
+html.dark h2:not([class*="bg-"]):not(button *),
+html.dark h3:not([class*="bg-"]):not(button *),
+html[data-theme="dark"] h1:not([class*="bg-"]):not(button *),
+html[data-theme="dark"] h2:not([class*="bg-"]):not(button *) {
+  color: #FFFFFF !important;
+}
+
 /* Glass cards and panel surfaces in light mode */
+html.light [class*="bg-[#0B0D0E]"],
+html[data-theme="light"] [class*="bg-[#0B0D0E]"],
+html.light [class*="bg-[#0D0F10]"],
+html[data-theme="light"] [class*="bg-[#0D0F10]"],
+html.light [class*="bg-[#141718]"],
+html[data-theme="light"] [class*="bg-[#141718]"],
+html.light [class*="bg-[#050606]"],
+html[data-theme="light"] [class*="bg-[#050606]"],
 html.light .bg-\[\#0B0D0E\]\/60,
 html.light .bg-\[\#0B0D0E\]\/50,
-html.light .bg-\[\#0B0D0E\]\/90,
-html.light .bg-\[\#0B0D0E\]\/95,
 html.light .bg-\[\#0D0F10\],
-html.light .bg-\[\#050606\],
-html.light .bg-\[\#141718\],
-html.light .bg-\[\#050606\]\/60,
-html.light .bg-\[\#050606\]\/80,
-html.light [class*="bg-[#0D0F10]"],
-html.light [class*="bg-[#050606]"],
-html.light [class*="bg-[#141718]"],
-html[data-theme="light"] .bg-\[\#0B0D0E\]\/60,
-html[data-theme="light"] .bg-\[\#0D0F10\],
-html[data-theme="light"] .bg-\[\#141718\] {
-  background-color: rgba(255, 255, 255, 0.92) !important;
+html.light .bg-\[\#141718\] {
+  background-color: rgba(255, 255, 255, 0.94) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
 }
 
 /* Sub-card wells and code blocks in light mode */
+html.light [class*="bg-white/["],
+html.light [class*="bg-white/5"],
+html.light [class*="bg-white/10"],
+html[data-theme="light"] [class*="bg-white/["],
 html.light .bg-white\/\[0\.02\],
 html.light .bg-white\/\[0\.03\],
 html.light .bg-white\/5,
-html.light .bg-white\/10,
-html[data-theme="light"] .bg-white\/\[0\.02\],
-html[data-theme="light"] .bg-white\/\[0\.03\] {
+html.light .bg-white\/10 {
   background-color: rgba(241, 245, 249, 0.9) !important;
   border-color: rgba(226, 232, 240, 0.95) !important;
 }
 
 /* Borders in light mode */
+html.light [class*="border-white"],
+html[data-theme="light"] [class*="border-white"],
 html.light .border-white\/\[0\.08\],
 html.light .border-white\/\[0\.06\],
-html.light .border-white\/\[0\.04\],
 html.light .border-white\/10,
-html.light .border-white\/5,
-html[data-theme="light"] .border-white\/\[0\.08\] {
+html.light .border-white\/5 {
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
+html.light [class*="divide-white"] > :not(:last-child),
+html[data-theme="light"] [class*="divide-white"] > :not(:last-child),
 html.light .divide-white\/\[0\.04\],
-html.light .divide-white\/5,
-html.light .divide-white\/\[0\.06\] {
+html.light .divide-white\/5 {
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
 /* Typography in light mode - deep, crisp high contrast */
+html.light [class*="text-[#F5F5F2]"],
+html[data-theme="light"] [class*="text-[#F5F5F2]"],
 html.light .text-\[\#F5F5F2\],
 html[data-theme="light"] .text-\[\#F5F5F2\] {
   color: #0F172A !important;
 }
 
+html.light [class*="text-[#A0A09D]"],
+html[data-theme="light"] [class*="text-[#A0A09D]"],
 html.light .text-\[\#A0A09D\],
 html[data-theme="light"] .text-\[\#A0A09D\] {
   color: #475569 !important;
@@ -135,6 +158,7 @@ html[data-theme="light"] .text-\[\#A0A09D\] {
 
 html.light .text-neutral-200,
 html.light .text-neutral-300,
+html[data-theme="light"] .text-neutral-200,
 html[data-theme="light"] .text-neutral-300 {
   color: #1E293B !important;
 }
@@ -363,7 +387,10 @@ html.light header {
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
-html.light aside {
+html.light aside,
+html[data-theme="light"] aside,
+html.light aside > div,
+html[data-theme="light"] aside > div {
   background-color: rgba(255, 255, 255, 0.95) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
 }

@@ -77,6 +77,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Sync theme from localStorage on client mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('continuity_theme') as 'dark' | 'light' | null;
+        if (saved === 'light' || saved === 'dark') {
+          applyTheme(saved);
+        } else {
+          applyTheme('dark');
+        }
+      } catch {
+        applyTheme('dark');
+      }
+    }
+  }, []);
+
   const toggleTheme = () => {
     applyTheme(theme === 'dark' ? 'light' : 'dark');
   };

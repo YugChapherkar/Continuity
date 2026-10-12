@@ -28,6 +28,16 @@ export default function TeamDirectoryPage() {
     );
   });
 
+  const priorityOrder = ['user-jessica', 'user-yash', 'user-shruti'];
+  const sortedUsers = [...filteredUsers].sort((a, b) => {
+    const aIdx = priorityOrder.indexOf(a.id);
+    const bIdx = priorityOrder.indexOf(b.id);
+    if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+    if (aIdx !== -1) return -1;
+    if (bIdx !== -1) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -58,7 +68,7 @@ export default function TeamDirectoryPage() {
 
       {/* Team Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredUsers.map((user) => {
+        {sortedUsers.map((user) => {
           const isCurrent = user.id === currentUser.id;
           const userProjects = projects.filter((p) => p.ownerId === user.id);
           const pendingHandoffs = handoffs.filter(

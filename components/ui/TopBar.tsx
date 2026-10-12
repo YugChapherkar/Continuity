@@ -51,6 +51,8 @@ export function TopBar() {
         {/* Light / Dark Mode Toggle Button */}
         <button
           onClick={toggleTheme}
+          id="theme-toggle-btn"
+          data-testid="theme-toggle"
           className="p-2 text-neutral-400 hover:text-white hover:bg-white/5 border border-white/10 rounded-xl transition-all cursor-pointer shrink-0"
           title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
