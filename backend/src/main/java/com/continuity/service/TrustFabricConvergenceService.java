@@ -28,8 +28,15 @@ public class TrustFabricConvergenceService {
     private final TaskRepository taskRepository;
     private final ActivityService activityService;
     private final NotificationService notificationService;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = createFastRestTemplate();
     private final ObjectMapper objectMapper;
+
+    private static RestTemplate createFastRestTemplate() {
+        org.springframework.http.client.SimpleClientHttpRequestFactory factory = new org.springframework.http.client.SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3000);
+        factory.setReadTimeout(4000);
+        return new RestTemplate(factory);
+    }
 
     @Value("${trustfabric.base-url:https://continuity.404piyush.me}")
     private String trustFabricBaseUrl;
