@@ -57,6 +57,20 @@ In fast-moving teams, transferring a task or project from one person to another 
 
 ---
 
+## 🤝 Cross-Ecosystem Convergence: Trust Fabric (Blockchain) × CONTINUITY
+
+> **Full Specification & Live Guide:** See [CONVERGENCE.md](file:///c:/Users/Yug%20Chapherkar/handoff2/handof/CONVERGENCE.md) for complete details.
+
+### What is this partnership in simple words?
+We connected **CONTINUITY** with **Team Trust Fabric** (an anti-counterfeit QR and Hyperledger Besu blockchain platform):
+1. **What we GAVE them (Our Handoff Module):** When their blockchain catches a fake product, our system automatically creates **Case TC-1042**, breaks the incident into 3 urgent recall tasks with countdown deadlines, and locks our **Completeness Gate** so employees cannot blindly sign off on deliveries until the physical box is verified authentic.
+2. **What we TOOK from them (Their Blockchain Endpoints):** We plugged our handoff dossiers into their **Ethereum Besu QBFT blockchain** (`0x02A2...`), giving our handoffs immutable cryptographic receipts, verifiable Merkle proofs, and zero-tamper database integrity.
+
+* **Live Interactive Convergence Hub:** [https://converge.yugc.in/convergence](https://converge.yugc.in/convergence)
+* **Live Partner API Base:** `https://continuity.404piyush.me`
+
+---
+
 ## 🏛️ System Design & Architecture Blueprint
 
 ### 💡 The Core System Design Prompt
