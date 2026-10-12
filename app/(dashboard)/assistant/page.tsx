@@ -145,10 +145,10 @@ How can I assist your engineering shift handover today? Select an inquiry below 
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`p-5 rounded-2xl border transition-all ${
+            className={`p-5 rounded-2xl border transition-all backdrop-blur-md ${
               msg.role === 'assistant'
-                ? 'bg-[#0D0F10] border-white/10 text-neutral-200'
-                : 'bg-[#141718] border-blue-500/30 text-white ml-8 sm:ml-16'
+                ? 'bg-[#0B0D0E]/60 border-white/[0.08] text-neutral-200'
+                : 'bg-blue-600/10 border-blue-500/25 text-white ml-8 sm:ml-16'
             }`}
           >
             <div className="flex items-center justify-between mb-3 text-xs">
@@ -189,7 +189,7 @@ How can I assist your engineering shift handover today? Select an inquiry below 
 
             {/* Citations Footer */}
             {msg.citations && msg.citations.length > 0 && (
-              <div className="mt-4 pt-3 border-t border-white/5 flex flex-wrap items-center gap-2 text-[11px]">
+              <div className="mt-4 pt-3 border-t border-white/[0.06] flex flex-wrap items-center gap-2 text-[11px]">
                 <span className="text-neutral-500 font-mono">Grounding Citations:</span>
                 {msg.citations.map((cite, cIdx) => (
                   <span
@@ -205,7 +205,7 @@ How can I assist your engineering shift handover today? Select an inquiry below 
         ))}
 
         {isLoading && (
-          <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-5 text-xs text-neutral-400 font-mono flex items-center gap-3">
+          <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-5 text-xs text-neutral-400 font-mono flex items-center gap-3">
             <RefreshCw className="w-4 h-4 text-blue-400 animate-spin" />
             <span>Parsing repository trees, ADR decision matrices, and handoff dossiers...</span>
           </div>
@@ -215,13 +215,13 @@ How can I assist your engineering shift handover today? Select an inquiry below 
       {/* Suggested Queries Strip */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 shrink-0">
         <span className="text-[11px] text-neutral-500 shrink-0 flex items-center gap-1 font-mono">
-          <Sparkles className="w-3 h-3 text-amber-400" /> Prompt:
+          <Sparkles className="w-3 h-3 text-blue-400" /> Prompt:
         </span>
         {PROMPT_SUGGESTIONS.map((s, idx) => (
           <button
             key={idx}
             onClick={() => handleSend(s)}
-            className="px-3 py-1.5 bg-[#141718] hover:bg-[#1C2022] border border-white/10 rounded-xl text-[11px] text-neutral-300 whitespace-nowrap transition-colors"
+            className="px-3 py-1.5 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] rounded-xl text-[11px] text-neutral-300 whitespace-nowrap transition-colors"
           >
             {s}
           </button>
@@ -229,7 +229,7 @@ How can I assist your engineering shift handover today? Select an inquiry below 
       </div>
 
       {/* Chat Input Bar */}
-      <div className="shrink-0 bg-[#0D0F10] border border-white/10 rounded-2xl p-2.5 flex items-center gap-3">
+      <div className="shrink-0 bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-2.5 flex items-center gap-3">
         <input
           type="text"
           placeholder="Ask anything about architecture decisions, runbook commands, or shift handover..."

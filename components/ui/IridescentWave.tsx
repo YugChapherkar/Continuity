@@ -15,7 +15,8 @@ import { useApp } from '@/context/AppContext';
  * - Razor-sharp typography contrast via protective left gradient vignette.
  */
 export function IridescentWave({ className = '' }: { className?: string }) {
-  const { isSidebarOpen } = useApp();
+  const { isSidebarOpen, theme } = useApp();
+  const isLight = theme === 'light';
 
   return (
     <div
@@ -25,27 +26,43 @@ export function IridescentWave({ className = '' }: { className?: string }) {
       aria-hidden="true"
     >
       {/* 1. Ambient Prismatic Glow Pools */}
-      <div className="absolute inset-0 opacity-35">
+      <div className={`absolute inset-0 transition-opacity duration-300 ${isLight ? 'opacity-25' : 'opacity-35'}`}>
         <div className="absolute top-1/4 right-1/6 w-[700px] h-[450px] rounded-full bg-emerald-500/20 blur-[150px]" />
         <div className="absolute top-1/2 right-1/4 w-[650px] h-[400px] rounded-full bg-cyan-500/25 blur-[160px]" />
         <div className="absolute bottom-10 right-10 w-[600px] h-[400px] rounded-full bg-blue-600/20 blur-[140px]" />
       </div>
 
-      {/* 2. Authentic Single Master Prismatic Wave Artwork (Edge-to-edge, full-bleed, NO second wave overlap) */}
+      {/* 2. Authentic Single Master Prismatic Wave Artwork */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-end overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/lumen-prismatic-wave.jpg"
           alt=""
-          className="w-full h-full object-cover object-right opacity-95 mix-blend-screen"
+          className={`w-full h-full object-cover object-right transition-all duration-300 ${
+            isLight
+              ? 'opacity-40 mix-blend-multiply'
+              : 'opacity-95 mix-blend-screen'
+          }`}
         />
       </div>
 
-      {/* 3. Left Hero Headline & Content Protective Gradient (Keeps typography 100% crisp) */}
-      <div className="absolute inset-y-0 left-0 w-full sm:w-3/5 lg:w-1/2 bg-gradient-to-r from-[#050606] via-[#050606]/80 to-transparent pointer-events-none" />
+      {/* 3. Left Hero Headline & Content Protective Gradient */}
+      <div
+        className={`absolute inset-y-0 left-0 w-full sm:w-3/5 lg:w-1/2 pointer-events-none transition-colors duration-300 ${
+          isLight
+            ? 'bg-gradient-to-r from-[#F8FAFC] via-[#F8FAFC]/80 to-transparent'
+            : 'bg-gradient-to-r from-[#050606] via-[#050606]/80 to-transparent'
+        }`}
+      />
 
       {/* 4. Top Bar subtle ambient blend */}
-      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#050606]/60 to-transparent pointer-events-none" />
+      <div
+        className={`absolute inset-x-0 top-0 h-16 pointer-events-none transition-colors duration-300 ${
+          isLight
+            ? 'bg-gradient-to-b from-[#F8FAFC]/70 to-transparent'
+            : 'bg-gradient-to-b from-[#050606]/60 to-transparent'
+        }`}
+      />
     </div>
   );
 }

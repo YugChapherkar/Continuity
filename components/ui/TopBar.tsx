@@ -4,7 +4,7 @@ import React from 'react';
 import { useApp } from '@/context/AppContext';
 import { Avatar } from './Avatar';
 import { NotificationPopover } from './NotificationPopover';
-import { Search, Plus, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Search, Plus, PanelLeftClose, PanelLeftOpen, Sun, Moon } from 'lucide-react';
 
 export function TopBar() {
   const {
@@ -13,6 +13,8 @@ export function TopBar() {
     setIsCommandPaletteOpen,
     isSidebarOpen,
     toggleSidebar,
+    theme,
+    toggleTheme,
   } = useApp();
 
   return (
@@ -44,8 +46,22 @@ export function TopBar() {
         </button>
       </div>
 
-      {/* Zone 2 & 3: Actions, User Badge, and CTA */}
+      {/* Zone 2 & 3: Actions, Theme Switcher, User Badge, and CTA */}
       <div className="flex items-center gap-3 shrink-0">
+        {/* Light / Dark Mode Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="p-2 text-neutral-400 hover:text-white hover:bg-white/5 border border-white/10 rounded-xl transition-all cursor-pointer shrink-0"
+          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {theme === 'dark' ? (
+            <Sun className="w-4 h-4 text-amber-400 hover:rotate-45 transition-transform" />
+          ) : (
+            <Moon className="w-4 h-4 text-blue-600 hover:-rotate-12 transition-transform" />
+          )}
+        </button>
+
         <NotificationPopover />
 
         {/* User Profile Badge */}

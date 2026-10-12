@@ -12,7 +12,6 @@ export function GlobalCommandPalette() {
     projects,
     handoffs,
     users,
-    setCurrentUser,
     setIsCreateHandoffModalOpen,
   } = useApp();
 
@@ -158,10 +157,10 @@ export function GlobalCommandPalette() {
                       <span className="truncate">{h.projectName}</span>
                     </div>
                     <span
-                      className={`text-[11px] px-2 py-0.5 rounded-full shrink-0 ${
+                      className={`text-[11px] px-2 py-0.5 rounded-full shrink-0 border ${
                         h.status === 'Accepted'
-                          ? 'text-emerald-400 bg-emerald-500/10'
-                          : 'text-amber-400 bg-amber-500/10'
+                          ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
+                          : 'text-blue-300 bg-blue-500/10 border-blue-500/20'
                       }`}
                     >
                       {h.status}

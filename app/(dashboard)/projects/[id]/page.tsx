@@ -141,14 +141,14 @@ export default function ProjectWorkspacePage() {
       </div>
 
       {/* Project Header Banner */}
-      <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 lg:p-8 shadow-xl">
+      <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 lg:p-8 shadow-xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center text-blue-400">
                 <FolderGit2 className="w-5 h-5" />
               </div>
-              <h1 className="text-2xl font-bold tracking-tight text-[#F5F5F2]">{project.name}</h1>
+              <h1 className="text-xl font-bold tracking-tight text-[#F5F5F2]">{project.name}</h1>
               <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-neutral-300">
                 {project.currentVersionId}
               </span>
@@ -157,7 +157,7 @@ export default function ProjectWorkspacePage() {
                   project.status === 'Active'
                     ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
                     : project.status === 'Transitioning'
-                    ? 'text-amber-400 bg-amber-500/10 border-amber-500/20'
+                    ? 'text-blue-300 bg-blue-500/10 border-blue-500/20'
                     : 'text-blue-400 bg-blue-500/10 border-blue-500/20'
                 }`}
               >
@@ -171,9 +171,9 @@ export default function ProjectWorkspacePage() {
 
             <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-400 pt-2 font-mono">
               <span>Repo: {project.repositoryUrl}</span>
-              <span>·</span>
+              <span className="text-neutral-600">·</span>
               <span>Team: {project.team}</span>
-              <span>·</span>
+              <span className="text-neutral-600">·</span>
               <div className="flex items-center gap-1.5 font-sans">
                 <span className="text-neutral-500 font-mono">Lead Custodian:</span>
                 <Avatar name={owner?.name || ''} initials={owner?.initials} size="xs" />
@@ -185,7 +185,7 @@ export default function ProjectWorkspacePage() {
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => setIsCreateHandoffModalOpen(true)}
-              className="px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold rounded-xl shadow-md shadow-[#2563EB]/30 transition-all flex items-center gap-2"
+              className="px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold rounded-xl shadow-md shadow-[#2563EB]/25 transition-all flex items-center gap-2"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Handoff Workspace</span>
@@ -194,7 +194,7 @@ export default function ProjectWorkspacePage() {
         </div>
 
         {/* Workspace Navigation Tabs */}
-        <div className="flex items-center gap-2 border-t border-white/10 mt-6 pt-4 overflow-x-auto">
+        <div className="flex items-center gap-2 border-t border-white/[0.08] mt-6 pt-4 overflow-x-auto">
           {[
             { id: 'overview', label: 'Architecture & ADRs', count: project.decisions.length },
             { id: 'history', label: 'Commit History & Diffs', count: project.versions.length },
@@ -204,14 +204,14 @@ export default function ProjectWorkspacePage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              className={`px-4 py-2 text-xs font-medium rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-xl transition-all flex items-center gap-2 whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-white/10 text-white shadow-sm border border-white/15'
+                  ? 'bg-blue-600 text-white shadow-sm'
                   : 'text-neutral-400 hover:text-white hover:bg-white/5'
               }`}
             >
               <span>{tab.label}</span>
-              <span className="font-mono text-[10px] bg-black/40 px-1.5 py-0.5 rounded text-neutral-400">
+              <span className="font-mono text-[10px] bg-black/30 px-1.5 py-0.5 rounded text-neutral-300">
                 {tab.count}
               </span>
             </button>
@@ -226,26 +226,26 @@ export default function ProjectWorkspacePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             {/* Architecture Summary */}
-            <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg">
+            <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg">
               <div className="flex items-center gap-2 text-sm font-semibold text-[#F5F5F2] mb-3">
                 <Layers className="w-4 h-4 text-blue-400" />
                 <h2>System Architecture Specification</h2>
               </div>
-              <div className="text-xs text-[#A0A09D] leading-relaxed whitespace-pre-line bg-[#050606] p-4 rounded-xl border border-white/5 font-mono">
+              <div className="text-xs text-[#A0A09D] leading-relaxed whitespace-pre-line bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] font-mono">
                 {project.architectureSummary}
               </div>
             </div>
 
             {/* Architecture Decision Records (ADRs) */}
-            <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg space-y-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg space-y-4">
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
                 <div className="flex items-center gap-2 text-sm font-semibold text-[#F5F5F2]">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
                   <h2>Architecture Decision Records ({project.decisions.length})</h2>
                 </div>
                 <button
                   onClick={() => setIsAddingAdr(!isAddingAdr)}
-                  className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-xs text-neutral-200 rounded-lg flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-xs text-neutral-200 rounded-lg flex items-center gap-1.5 transition-colors border border-white/[0.08]"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Propose ADR</span>
@@ -256,7 +256,7 @@ export default function ProjectWorkspacePage() {
               {isAddingAdr && (
                 <form
                   onSubmit={handleCreateAdr}
-                  className="bg-[#141718] border border-blue-500/30 rounded-xl p-4 space-y-3"
+                  className="bg-white/[0.03] border border-blue-500/30 rounded-xl p-4 space-y-3"
                 >
                   <h3 className="text-xs font-semibold text-blue-400">Propose New Architecture Decision Record</h3>
                   <div>
@@ -267,7 +267,7 @@ export default function ProjectWorkspacePage() {
                       value={adrTitle}
                       onChange={(e) => setAdrTitle(e.target.value)}
                       required
-                      className="w-full bg-[#050606] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2]"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2] focus:outline-none focus:border-blue-500"
                     />
                   </div>
                   <div>
@@ -277,7 +277,7 @@ export default function ProjectWorkspacePage() {
                       placeholder="What friction, latency or failure mode necessitated this choice?"
                       value={adrContext}
                       onChange={(e) => setAdrContext(e.target.value)}
-                      className="w-full bg-[#050606] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2]"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2] focus:outline-none focus:border-blue-500"
                     />
                   </div>
                   <div>
@@ -288,7 +288,7 @@ export default function ProjectWorkspacePage() {
                       value={adrDecision}
                       onChange={(e) => setAdrDecision(e.target.value)}
                       required
-                      className="w-full bg-[#050606] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2]"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2] focus:outline-none focus:border-blue-500"
                     />
                   </div>
                   <div>
@@ -298,7 +298,7 @@ export default function ProjectWorkspacePage() {
                       placeholder="What are the downstream operational impacts?"
                       value={adrConsequences}
                       onChange={(e) => setAdrConsequences(e.target.value)}
-                      className="w-full bg-[#050606] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2]"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs text-[#F5F5F2] focus:outline-none focus:border-blue-500"
                     />
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
@@ -311,7 +311,7 @@ export default function ProjectWorkspacePage() {
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-1.5 bg-[#2563EB] text-white text-xs font-medium rounded-lg"
+                      className="px-4 py-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-medium rounded-lg shadow-sm"
                     >
                       Ratify Decision
                     </button>
@@ -326,7 +326,7 @@ export default function ProjectWorkspacePage() {
                   return (
                     <div
                       key={adr.id}
-                      className="border border-white/10 rounded-xl overflow-hidden bg-[#050606]/60 transition-colors"
+                      className="border border-white/[0.08] rounded-xl overflow-hidden bg-white/[0.02] transition-colors"
                     >
                       <button
                         onClick={() => toggleAdr(adr.id)}
@@ -352,7 +352,7 @@ export default function ProjectWorkspacePage() {
                       </button>
 
                       {isExpanded && (
-                        <div className="px-5 py-4 border-t border-white/5 bg-[#0D0F10]/50 space-y-3 text-xs">
+                        <div className="px-5 py-4 border-t border-white/[0.06] bg-black/20 space-y-3 text-xs">
                           <div>
                             <span className="font-semibold text-neutral-300 block mb-1">Context:</span>
                             <p className="text-neutral-400 leading-relaxed">{adr.context}</p>
@@ -378,7 +378,7 @@ export default function ProjectWorkspacePage() {
 
           {/* Right Column: Runbook & Quickstart Guide */}
           <div className="space-y-6">
-            <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg">
+            <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2 text-sm font-semibold text-[#F5F5F2]">
                   <Terminal className="w-4 h-4 text-blue-400" />
@@ -396,13 +396,13 @@ export default function ProjectWorkspacePage() {
                   )}
                 </button>
               </div>
-              <pre className="text-[11px] font-mono text-neutral-300 bg-[#050606] p-4 rounded-xl border border-white/5 overflow-x-auto leading-relaxed">
+              <pre className="text-[11px] font-mono text-neutral-300 bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] overflow-x-auto leading-relaxed">
                 {project.quickstartGuide}
               </pre>
             </div>
 
             {/* Quick Context Card */}
-            <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg space-y-3 text-xs">
+            <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg space-y-3 text-xs">
               <h3 className="font-semibold text-[#F5F5F2]">Rotation Readiness Checklist</h3>
               <ul className="space-y-2 text-neutral-400">
                 <li className="flex items-center gap-2">
@@ -427,8 +427,8 @@ export default function ProjectWorkspacePage() {
           TAB 2: HISTORY (COMMITS & DIFFS)
          ========================================================================= */}
       {activeTab === 'history' && (
-        <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg space-y-6">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg space-y-6">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
             <div>
               <h2 className="text-base font-semibold text-[#F5F5F2]">Commit &amp; Release History</h2>
               <p className="text-xs text-neutral-400 mt-0.5">
@@ -456,11 +456,11 @@ export default function ProjectWorkspacePage() {
             {project.versions.map((ver) => (
               <div
                 key={ver.id}
-                className="bg-[#050606] border border-white/5 rounded-xl p-5 space-y-3"
+                className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 space-y-3"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-bold text-white bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded">
+                    <span className="font-mono text-xs font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded">
                       {ver.id}
                     </span>
                     <span className="font-mono text-xs text-neutral-400">
@@ -473,7 +473,7 @@ export default function ProjectWorkspacePage() {
                   </div>
                 </div>
 
-                <p className="text-xs text-[#F5F5F2] font-mono leading-relaxed bg-[#0D0F10] p-3 rounded-lg border border-white/5">
+                <p className="text-xs text-[#F5F5F2] font-mono leading-relaxed bg-black/20 p-3 rounded-lg border border-white/[0.06]">
                   {ver.commitMessage}
                 </p>
 
@@ -488,7 +488,7 @@ export default function ProjectWorkspacePage() {
                 </div>
 
                 {ver.changedFiles.length > 0 && (
-                  <div className="pt-2 border-t border-white/5 space-y-1.5 font-mono text-[11px]">
+                  <div className="pt-2 border-t border-white/[0.06] space-y-1.5 font-mono text-[11px]">
                     {ver.changedFiles.map((f, i) => (
                       <div key={i} className="flex items-center justify-between text-neutral-400">
                         <span className="truncate">{f.path}</span>
@@ -510,8 +510,8 @@ export default function ProjectWorkspacePage() {
           TAB 3: TASKS (CRITICAL BLOCKERS & QUEUE)
          ========================================================================= */}
       {activeTab === 'tasks' && (
-        <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg space-y-6">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg space-y-6">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
             <div>
               <h2 className="text-base font-semibold text-[#F5F5F2]">Workspace Tasks &amp; Blockers</h2>
               <p className="text-xs text-neutral-400 mt-0.5">
@@ -527,7 +527,7 @@ export default function ProjectWorkspacePage() {
             {project.tasks.map((task) => {
               const statusBadge = {
                 Critical: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
-                Blocked: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+                Blocked: 'bg-white/5 text-neutral-300 border-white/10',
                 'In Progress': 'bg-blue-500/15 text-blue-300 border-blue-500/30',
                 Done: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
               }[task.status];
@@ -535,7 +535,7 @@ export default function ProjectWorkspacePage() {
               return (
                 <div
                   key={task.id}
-                  className="bg-[#050606] border border-white/5 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
                   <div className="space-y-1.5 max-w-2xl">
                     <div className="flex items-center gap-2.5">
@@ -566,8 +566,8 @@ export default function ProjectWorkspacePage() {
                         onClick={() => updateTaskStatus(project.id, task.id, s)}
                         className={`px-3 py-1.5 text-xs rounded-lg transition-colors font-mono ${
                           task.status === s
-                            ? 'bg-[#2563EB] text-white'
-                            : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'
+                            ? 'bg-[#2563EB] text-white shadow-sm'
+                            : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10 border border-white/[0.06]'
                         }`}
                       >
                         {s}
@@ -587,8 +587,8 @@ export default function ProjectWorkspacePage() {
       {activeTab === 'files' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* File list */}
-          <div className="bg-[#0D0F10] border border-white/10 rounded-2xl p-4 shadow-lg space-y-2">
-            <span className="text-xs font-semibold text-[#F5F5F2] block px-2 pb-2 border-b border-white/10">
+          <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-4 shadow-lg space-y-2">
+            <span className="text-xs font-semibold text-[#F5F5F2] block px-2 pb-2 border-b border-white/[0.08]">
               Core Source Tree
             </span>
             <div className="space-y-1">
@@ -615,8 +615,8 @@ export default function ProjectWorkspacePage() {
           </div>
 
           {/* Code Viewer */}
-          <div className="lg:col-span-2 bg-[#0D0F10] border border-white/10 rounded-2xl p-6 shadow-lg space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="lg:col-span-2 bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg space-y-4">
+            <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
               <div className="flex items-center gap-2">
                 <FileCode className="w-4 h-4 text-blue-400" />
                 <span className="font-mono text-xs font-semibold text-[#F5F5F2]">
@@ -636,7 +636,7 @@ export default function ProjectWorkspacePage() {
               </button>
             </div>
 
-            <pre className="text-xs font-mono text-neutral-300 bg-[#050606] p-4 rounded-xl border border-white/5 overflow-x-auto leading-relaxed">
+            <pre className="text-xs font-mono text-neutral-300 bg-white/[0.02] p-4 rounded-xl border border-white/[0.06] overflow-x-auto leading-relaxed">
               {project.files[selectedFileIdx]?.contentSnippet}
             </pre>
           </div>

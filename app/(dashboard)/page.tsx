@@ -38,21 +38,21 @@ export default function HomePage() {
       <section className="relative min-h-[calc(100vh-8rem)] flex flex-col justify-between py-6 lg:py-10">
         {/* Top Header Group: Status Badge */}
         <div className="relative z-10 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-slate-500 dark:text-neutral-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>CONTINUITY ARCHITECTURE</span>
           </div>
 
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#0D0F10]/80 backdrop-blur-md border border-white/10 text-xs shadow-sm">
-            <span className="text-[#F5F5F2] font-medium">{currentUser.name}</span>
-            <span className="text-neutral-500">·</span>
-            <span className="text-[#A0A09D] truncate max-w-[180px] sm:max-w-none">{currentUser.role}</span>
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/5 dark:bg-[#0D0F10]/80 backdrop-blur-md border border-slate-200/80 dark:border-white/10 text-xs shadow-sm">
+            <span className="text-slate-900 dark:text-[#F5F5F2] font-semibold">{currentUser.name}</span>
+            <span className="text-slate-400 dark:text-neutral-500">·</span>
+            <span className="text-slate-600 dark:text-[#A0A09D] truncate max-w-[180px] sm:max-w-none">{currentUser.role}</span>
           </div>
         </div>
 
         {/* Main Hero Statement: Bold Sans-Serif Typography + Signature Blue Pill Button */}
         <div className="relative z-10 max-w-4xl my-auto py-6">
-          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white uppercase leading-[0.92] select-none">
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white uppercase leading-[0.92] select-none">
             DIGITAL ENGINEERING<br />
             SOLUTIONS
           </h1>
@@ -68,10 +68,10 @@ export default function HomePage() {
 
             <a
               href="#workspace-details"
-              className="px-6 py-3.5 text-sm font-medium text-neutral-300 hover:text-white transition-all flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md hover:bg-white/[0.08]"
+              className="px-6 py-3.5 text-sm font-medium text-slate-800 dark:text-neutral-300 hover:text-slate-950 dark:hover:text-white transition-all flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.04] backdrop-blur-md hover:bg-slate-900/10 dark:hover:bg-white/[0.08]"
             >
               <span>Explore workspaces</span>
-              <span className="text-xs text-neutral-400 font-mono">↓</span>
+              <span className="text-xs text-slate-500 dark:text-neutral-400 font-mono">↓</span>
             </a>
           </div>
         </div>
@@ -79,14 +79,14 @@ export default function HomePage() {
         {/* Bottom Split Narrative Row matching reference design */}
         <div className="relative z-10 pt-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
           {/* Bottom Left Microcopy */}
-          <div className="text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-neutral-400 font-normal leading-relaxed">
             Tailored strategies,<br />
-            <span className="text-neutral-300">guaranteed results</span>
+            <span className="text-slate-900 dark:text-neutral-200 font-medium">guaranteed results</span>
           </div>
 
           {/* Bottom Right Narrative Paragraph with highlighted key terms */}
-          <div className="max-w-xl text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
-            At Continuity, we understand that no two engineering teams are the same. That’s why we offer a full suite of lossless handoff services, each tailored to address your unique challenges and rotation goals. Our team <span className="text-white font-medium">combines verifiable cryptographic handoffs</span> with <span className="text-white font-medium">automated ADR tracking</span> to build workflows that <span className="text-white font-medium">deliver results</span>.
+          <div className="max-w-xl text-xs sm:text-sm text-slate-600 dark:text-neutral-300 leading-relaxed font-normal">
+            At Continuity, we understand that no two engineering teams are the same. That’s why we offer a full suite of lossless handoff services, each tailored to address your unique challenges and rotation goals. Our team <span className="text-slate-900 dark:text-white font-semibold">combines verifiable cryptographic handoffs</span> with <span className="text-slate-900 dark:text-white font-semibold">automated ADR tracking</span> to build workflows that <span className="text-slate-900 dark:text-white font-semibold">deliver results</span>.
           </div>
         </div>
       </section>
@@ -99,12 +99,12 @@ export default function HomePage() {
             SECTION: NEEDS YOUR ATTENTION (Assigned to Current User)
            ------------------------------------------------------------- */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
             <div className="flex items-center gap-2.5">
-              <ShieldAlert className="w-4 h-4 text-amber-400" />
+              <ShieldAlert className="w-4 h-4 text-blue-400" />
               <h2 className="text-base font-semibold text-[#F5F5F2]">Needs your attention</h2>
               {attentionHandoffs.length > 0 && (
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25">
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20">
                   {attentionHandoffs.length} assigned to you
                 </span>
               )}
@@ -123,15 +123,15 @@ export default function HomePage() {
               {attentionHandoffs.map((handoff) => (
                 <div
                   key={handoff.id}
-                  className="bg-[#0D0F10]/75 backdrop-blur-xl border border-amber-500/30 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-all hover:border-amber-500/50"
+                  className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] hover:border-blue-500/30 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-all"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div className="space-y-3 max-w-3xl">
                       <div className="flex flex-wrap items-center gap-2.5">
-                        <span className="font-mono text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        <span className="font-mono text-xs font-medium px-2.5 py-1 rounded-md bg-blue-500/15 text-blue-300 border border-blue-500/25">
                           Assigned to you
                         </span>
-                        <span className="font-mono text-xs text-blue-400">{handoff.id}</span>
+                        <span className="font-mono text-xs text-blue-400 font-semibold">{handoff.id}</span>
                         <span className="text-neutral-500">·</span>
                         <span className="font-mono text-xs text-neutral-400">
                           Pinned {handoff.pinnedVersionId} ({handoff.pinnedVersionHash})
@@ -142,7 +142,7 @@ export default function HomePage() {
                         {handoff.projectName}
                       </h3>
 
-                      <p className="text-sm text-[#A0A09D] leading-relaxed line-clamp-2">
+                      <p className="text-sm text-neutral-400 leading-relaxed line-clamp-2">
                         {handoff.note}
                       </p>
 
@@ -167,7 +167,7 @@ export default function HomePage() {
                     <div className="flex items-center gap-3 shrink-0">
                       <Link
                         href={`/handoffs/${handoff.id}`}
-                        className="w-full sm:w-auto px-6 py-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold rounded-xl shadow-md shadow-[#2563EB]/30 transition-all text-center flex items-center justify-center gap-2"
+                        className="w-full sm:w-auto px-5 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold rounded-xl shadow-md shadow-[#2563EB]/25 transition-all text-center flex items-center justify-center gap-2"
                       >
                         <span>Inspect Briefing Dossier</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -178,7 +178,7 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="p-8 rounded-2xl bg-[#0D0F10]/75 backdrop-blur-xl border border-white/5 text-center space-y-2">
+            <div className="p-8 rounded-2xl bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.06] text-center space-y-2">
               <CheckCircle2 className="w-6 h-6 text-emerald-400 mx-auto" />
               <p className="text-sm text-[#F5F5F2] font-medium">All transition queues clear</p>
               <p className="text-xs text-neutral-400 max-w-md mx-auto">
@@ -192,7 +192,7 @@ export default function HomePage() {
             SECTION: ACTIVE PROJECTS (Clean Tabular Overview)
            ------------------------------------------------------------- */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
             <div className="flex items-center gap-2.5">
               <FolderGit2 className="w-4 h-4 text-blue-400" />
               <h2 className="text-base font-semibold text-[#F5F5F2]">Active Projects</h2>
@@ -206,10 +206,10 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="bg-[#0D0F10]/75 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-lg">
+          <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl overflow-hidden shadow-lg">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs text-[#F5F5F2]">
-                <thead className="bg-[#050606] border-b border-white/10 text-neutral-400 uppercase text-[10px] tracking-wider font-mono">
+                <thead className="border-b border-white/[0.06] bg-white/[0.01] text-neutral-500 uppercase text-[10px] tracking-wider font-mono">
                   <tr>
                     <th scope="col" className="px-6 py-3.5">Repository / Project</th>
                     <th scope="col" className="px-6 py-3.5">Status</th>
@@ -219,7 +219,7 @@ export default function HomePage() {
                     <th scope="col" className="px-6 py-3.5 text-right">Workspace</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-white/[0.04]">
                   {projects.map((project) => {
                     const statusColors = {
                       Active: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
@@ -241,7 +241,7 @@ export default function HomePage() {
                         </td>
                         <td className="px-6 py-4">
                           <span
-                            className={`inline-block px-2.5 py-1 text-[11px] rounded-full border font-medium ${statusColors}`}
+                            className={`inline-block px-2.5 py-0.5 text-[11px] rounded-full border font-medium ${statusColors}`}
                           >
                             {project.status}
                           </span>
@@ -277,10 +277,10 @@ export default function HomePage() {
             SECTION: RECENT ACTIVITY TIMELINE
            ------------------------------------------------------------- */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
             <div className="flex items-center gap-2.5">
               <Clock className="w-4 h-4 text-neutral-400" />
-              <h2 className="text-base font-semibold text-[#F5F5F2]">Recent Activity & Audit Log</h2>
+              <h2 className="text-base font-semibold text-[#F5F5F2]">Recent Activity &amp; Audit Log</h2>
             </div>
             <Link
               href="/audit"
@@ -291,7 +291,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="bg-[#0D0F10]/75 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg divide-y divide-white/5">
+          <div className="bg-[#0B0D0E]/60 backdrop-blur-md border border-white/[0.08] rounded-2xl p-6 shadow-lg divide-y divide-white/[0.04]">
             {auditLogs.slice(0, 5).map((log) => (
               <div key={log.id} className="py-3.5 first:pt-0 last:pb-0 flex items-start gap-4">
                 <Avatar name={log.actorName} size="sm" />

@@ -12,7 +12,7 @@
   --neon-dark: #050608;
 }
 
-/* Luxury Editorial Serif Display matching reference image ("Neon Drift") */
+/* Luxury Editorial Serif Display */
 .font-editorial {
   font-family: 'Playfair Display', Georgia, serif;
   letter-spacing: -0.02em;
@@ -58,3 +58,161 @@
   box-shadow: 0 0 25px -5px rgba(0, 210, 255, 0.45);
 }
 
+/* =========================================================================
+   LIGHT MODE DESIGN SYSTEM OVERRIDES
+   Activates when html has class 'light' or data-theme='light'
+   ========================================================================= */
+
+html.light {
+  color-scheme: light;
+}
+
+html.light body {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+/* Glass cards and panel surfaces in light mode */
+html.light .bg-\[\#0B0D0E\]\/60,
+html.light .bg-\[\#0B0D0E\]\/50,
+html.light .bg-\[\#0B0D0E\]\/90,
+html.light .bg-\[\#0B0D0E\]\/95,
+html.light .bg-\[\#0D0F10\],
+html.light .bg-\[\#050606\],
+html.light .bg-\[\#141718\],
+html.light .bg-\[\#050606\]\/60,
+html.light .bg-\[\#050606\]\/80,
+html.light [class*="bg-[#0D0F10]"],
+html.light [class*="bg-[#050606]"],
+html.light [class*="bg-[#141718]"] {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Sub-card wells and code blocks in light mode */
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/5,
+html.light .bg-white\/10 {
+  background-color: rgba(241, 245, 249, 0.85) !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
+}
+
+/* Borders in light mode */
+html.light .border-white\/\[0\.08\],
+html.light .border-white\/\[0\.06\],
+html.light .border-white\/\[0\.04\],
+html.light .border-white\/10,
+html.light .border-white\/5 {
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+html.light .divide-white\/\[0\.04\],
+html.light .divide-white\/5 {
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+/* Typography in light mode - deep, crisp high contrast */
+html.light .text-\[\#F5F5F2\] {
+  color: #0F172A !important;
+}
+
+html.light .text-\[\#A0A09D\] {
+  color: #475569 !important;
+}
+
+html.light .text-neutral-200,
+html.light .text-neutral-300 {
+  color: #1E293B !important;
+}
+
+html.light .text-neutral-400 {
+  color: #475569 !important;
+}
+
+html.light .text-neutral-500 {
+  color: #64748B !important;
+}
+
+html.light .text-neutral-600 {
+  color: #475569 !important;
+}
+
+/* Headings and non-button white text in light mode */
+html.light h1:not([class*="bg-"]):not(button *),
+html.light h2:not([class*="bg-"]):not(button *),
+html.light h3:not([class*="bg-"]):not(button *),
+html.light h4:not([class*="bg-"]):not(button *) {
+  color: #0F172A !important;
+}
+
+html.light :not(button):not(button *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]).text-white {
+  color: #0F172A !important;
+}
+
+/* Blue primary action buttons ALWAYS keep pure white text */
+html.light button[class*="bg-[#2563EB]"],
+html.light button[class*="bg-[#2563EB]"] *,
+html.light a[class*="bg-[#2563EB]"],
+html.light a[class*="bg-[#2563EB]"] *,
+html.light button[class*="bg-blue"],
+html.light button[class*="bg-blue"] *,
+html.light a[class*="bg-blue"],
+html.light a[class*="bg-blue"] * {
+  color: #FFFFFF !important;
+}
+
+/* Inputs, textareas, selects in light mode */
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #0F172A !important;
+  border-color: rgba(203, 213, 225, 0.9) !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+/* Code, pre, and terminal blocks in light mode */
+html.light pre,
+html.light code {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+  color: #0F172A !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+/* Tables in light mode */
+html.light thead {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+  color: #475569 !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+html.light tr:hover {
+  background-color: rgba(241, 245, 249, 0.6) !important;
+}
+
+/* Hover effects in light mode */
+html.light .hover\:bg-white\/5:hover,
+html.light .hover\:bg-white\/10:hover {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+}
+
+html.light .hover\:border-white\/20:hover {
+  border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
+/* TopBar & Sidebar light mode headers */
+html.light header {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+html.light aside {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}

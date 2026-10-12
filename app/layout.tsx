@@ -25,8 +25,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark bg-[#050606]">
-      <body className="bg-[#050606] text-[#F5F5F2] antialiased min-h-screen" suppressHydrationWarning>
+    <html lang="en" className="dark" data-theme="dark" suppressHydrationWarning>
+      <body className="antialiased min-h-screen transition-colors duration-300" suppressHydrationWarning>
         <AppProvider>
           {children}
           <CreateHandoffModal />

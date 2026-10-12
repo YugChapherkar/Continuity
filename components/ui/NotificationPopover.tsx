@@ -27,8 +27,8 @@ export function NotificationPopover() {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#0D0F10] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-white/5">
-            <div className="flex items-center justify-between px-4 py-3 bg-[#050606]/80">
+          <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-[#0B0D0E]/95 backdrop-blur-md border border-white/[0.08] rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-white/[0.06]">
+            <div className="flex items-center justify-between px-4 py-3 bg-white/[0.02]">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold text-[#F5F5F2]">Shift Activity & Alerts</span>
                 {unreadCount > 0 && (
