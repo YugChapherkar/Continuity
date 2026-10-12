@@ -38,21 +38,21 @@ export default function HomePage() {
       <section className="relative min-h-[calc(100vh-8rem)] flex flex-col justify-between py-6 lg:py-10">
         {/* Top Header Group: Status Badge */}
         <div className="relative z-10 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-slate-500 dark:text-neutral-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>CONTINUITY ARCHITECTURE</span>
           </div>
 
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#0D0F10]/80 backdrop-blur-md border border-white/10 text-xs shadow-sm">
-            <span className="text-[#F5F5F2] font-medium">{currentUser.name}</span>
-            <span className="text-neutral-500">·</span>
-            <span className="text-[#A0A09D] truncate max-w-[180px] sm:max-w-none">{currentUser.role}</span>
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/5 dark:bg-[#0D0F10]/80 backdrop-blur-md border border-slate-200/80 dark:border-white/10 text-xs shadow-sm">
+            <span className="text-slate-900 dark:text-[#F5F5F2] font-semibold">{currentUser.name}</span>
+            <span className="text-slate-400 dark:text-neutral-500">·</span>
+            <span className="text-slate-600 dark:text-[#A0A09D] truncate max-w-[180px] sm:max-w-none">{currentUser.role}</span>
           </div>
         </div>
 
         {/* Main Hero Statement: Bold Sans-Serif Typography + Signature Blue Pill Button */}
         <div className="relative z-10 max-w-4xl my-auto py-6">
-          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white uppercase leading-[0.92] select-none">
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white uppercase leading-[0.92] select-none">
             DIGITAL ENGINEERING<br />
             SOLUTIONS
           </h1>
@@ -68,10 +68,10 @@ export default function HomePage() {
 
             <a
               href="#workspace-details"
-              className="px-6 py-3.5 text-sm font-medium text-neutral-300 hover:text-white transition-all flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-md hover:bg-white/[0.08]"
+              className="px-6 py-3.5 text-sm font-medium text-slate-800 dark:text-neutral-300 hover:text-slate-950 dark:hover:text-white transition-all flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.04] backdrop-blur-md hover:bg-slate-900/10 dark:hover:bg-white/[0.08]"
             >
               <span>Explore workspaces</span>
-              <span className="text-xs text-neutral-400 font-mono">↓</span>
+              <span className="text-xs text-slate-500 dark:text-neutral-400 font-mono">↓</span>
             </a>
           </div>
         </div>
@@ -79,14 +79,14 @@ export default function HomePage() {
         {/* Bottom Split Narrative Row matching reference design */}
         <div className="relative z-10 pt-6 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
           {/* Bottom Left Microcopy */}
-          <div className="text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-neutral-400 font-normal leading-relaxed">
             Tailored strategies,<br />
-            <span className="text-neutral-300">guaranteed results</span>
+            <span className="text-slate-900 dark:text-neutral-200 font-medium">guaranteed results</span>
           </div>
 
           {/* Bottom Right Narrative Paragraph with highlighted key terms */}
-          <div className="max-w-xl text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
-            At Continuity, we understand that no two engineering teams are the same. That’s why we offer a full suite of lossless handoff services, each tailored to address your unique challenges and rotation goals. Our team <span className="text-white font-medium">combines verifiable cryptographic handoffs</span> with <span className="text-white font-medium">automated ADR tracking</span> to build workflows that <span className="text-white font-medium">deliver results</span>.
+          <div className="max-w-xl text-xs sm:text-sm text-slate-600 dark:text-neutral-300 leading-relaxed font-normal">
+            At Continuity, we understand that no two engineering teams are the same. That’s why we offer a full suite of lossless handoff services, each tailored to address your unique challenges and rotation goals. Our team <span className="text-slate-900 dark:text-white font-semibold">combines verifiable cryptographic handoffs</span> with <span className="text-slate-900 dark:text-white font-semibold">automated ADR tracking</span> to build workflows that <span className="text-slate-900 dark:text-white font-semibold">deliver results</span>.
           </div>
         </div>
       </section>

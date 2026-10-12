@@ -12,7 +12,7 @@
   --neon-dark: #050608;
 }
 
-/* Luxury Editorial Serif Display matching reference image ("Neon Drift") */
+/* Luxury Editorial Serif Display */
 .font-editorial {
   font-family: 'Playfair Display', Georgia, serif;
   letter-spacing: -0.02em;
@@ -57,6 +57,7 @@
 .neon-glow-cyan {
   box-shadow: 0 0 25px -5px rgba(0, 210, 255, 0.45);
 }
+
 /* =========================================================================
    LIGHT MODE DESIGN SYSTEM OVERRIDES
    Activates when html has class 'light' or data-theme='light'
@@ -80,8 +81,11 @@ html.light .bg-\[\#0D0F10\],
 html.light .bg-\[\#050606\],
 html.light .bg-\[\#141718\],
 html.light .bg-\[\#050606\]\/60,
-html.light .bg-\[\#050606\]\/80 {
-  background-color: rgba(255, 255, 255, 0.82) !important;
+html.light .bg-\[\#050606\]\/80,
+html.light [class*="bg-[#0D0F10]"],
+html.light [class*="bg-[#050606]"],
+html.light [class*="bg-[#141718]"] {
+  background-color: rgba(255, 255, 255, 0.85) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
 }
@@ -109,7 +113,7 @@ html.light .divide-white\/5 {
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
-/* Typography in light mode */
+/* Typography in light mode - deep, crisp high contrast */
 html.light .text-\[\#F5F5F2\] {
   color: #0F172A !important;
 }
@@ -124,11 +128,39 @@ html.light .text-neutral-300 {
 }
 
 html.light .text-neutral-400 {
-  color: #64748B !important;
+  color: #475569 !important;
 }
 
 html.light .text-neutral-500 {
-  color: #94A3B8 !important;
+  color: #64748B !important;
+}
+
+html.light .text-neutral-600 {
+  color: #475569 !important;
+}
+
+/* Headings and non-button white text in light mode */
+html.light h1:not([class*="bg-"]):not(button *),
+html.light h2:not([class*="bg-"]):not(button *),
+html.light h3:not([class*="bg-"]):not(button *),
+html.light h4:not([class*="bg-"]):not(button *) {
+  color: #0F172A !important;
+}
+
+html.light :not(button):not(button *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]).text-white {
+  color: #0F172A !important;
+}
+
+/* Blue primary action buttons ALWAYS keep pure white text */
+html.light button[class*="bg-[#2563EB]"],
+html.light button[class*="bg-[#2563EB]"] *,
+html.light a[class*="bg-[#2563EB]"],
+html.light a[class*="bg-[#2563EB]"] *,
+html.light button[class*="bg-blue"],
+html.light button[class*="bg-blue"] *,
+html.light a[class*="bg-blue"],
+html.light a[class*="bg-blue"] * {
+  color: #FFFFFF !important;
 }
 
 /* Inputs, textareas, selects in light mode */
@@ -176,11 +208,11 @@ html.light .hover\:border-white\/20:hover {
 
 /* TopBar & Sidebar light mode headers */
 html.light header {
-  background-color: rgba(255, 255, 255, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
 html.light aside {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.92) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
