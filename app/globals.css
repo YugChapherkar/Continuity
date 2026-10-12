@@ -63,11 +63,13 @@
    Activates when html has class 'light' or data-theme='light'
    ========================================================================= */
 
-html.light {
+html.light,
+html[data-theme="light"] {
   color-scheme: light;
 }
 
-html.light body {
+html.light body,
+html[data-theme="light"] body {
   background-color: #F8FAFC !important;
   color: #0F172A !important;
 }
@@ -84,8 +86,11 @@ html.light .bg-\[\#050606\]\/60,
 html.light .bg-\[\#050606\]\/80,
 html.light [class*="bg-[#0D0F10]"],
 html.light [class*="bg-[#050606]"],
-html.light [class*="bg-[#141718]"] {
-  background-color: rgba(255, 255, 255, 0.85) !important;
+html.light [class*="bg-[#141718]"],
+html[data-theme="light"] .bg-\[\#0B0D0E\]\/60,
+html[data-theme="light"] .bg-\[\#0D0F10\],
+html[data-theme="light"] .bg-\[\#141718\] {
+  background-color: rgba(255, 255, 255, 0.92) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
 }
@@ -94,8 +99,10 @@ html.light [class*="bg-[#141718]"] {
 html.light .bg-white\/\[0\.02\],
 html.light .bg-white\/\[0\.03\],
 html.light .bg-white\/5,
-html.light .bg-white\/10 {
-  background-color: rgba(241, 245, 249, 0.85) !important;
+html.light .bg-white\/10,
+html[data-theme="light"] .bg-white\/\[0\.02\],
+html[data-theme="light"] .bg-white\/\[0\.03\] {
+  background-color: rgba(241, 245, 249, 0.9) !important;
   border-color: rgba(226, 232, 240, 0.95) !important;
 }
 
@@ -104,39 +111,108 @@ html.light .border-white\/\[0\.08\],
 html.light .border-white\/\[0\.06\],
 html.light .border-white\/\[0\.04\],
 html.light .border-white\/10,
-html.light .border-white\/5 {
+html.light .border-white\/5,
+html[data-theme="light"] .border-white\/\[0\.08\] {
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
 html.light .divide-white\/\[0\.04\],
-html.light .divide-white\/5 {
+html.light .divide-white\/5,
+html.light .divide-white\/\[0\.06\] {
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
 /* Typography in light mode - deep, crisp high contrast */
-html.light .text-\[\#F5F5F2\] {
+html.light .text-\[\#F5F5F2\],
+html[data-theme="light"] .text-\[\#F5F5F2\] {
   color: #0F172A !important;
 }
 
-html.light .text-\[\#A0A09D\] {
+html.light .text-\[\#A0A09D\],
+html[data-theme="light"] .text-\[\#A0A09D\] {
   color: #475569 !important;
 }
 
 html.light .text-neutral-200,
-html.light .text-neutral-300 {
+html.light .text-neutral-300,
+html[data-theme="light"] .text-neutral-300 {
   color: #1E293B !important;
 }
 
-html.light .text-neutral-400 {
+html.light .text-neutral-400,
+html[data-theme="light"] .text-neutral-400 {
   color: #475569 !important;
 }
 
-html.light .text-neutral-500 {
+html.light .text-neutral-500,
+html[data-theme="light"] .text-neutral-500 {
   color: #64748B !important;
 }
 
 html.light .text-neutral-600 {
   color: #475569 !important;
+}
+
+/* High-contrast status badge text in light mode */
+html.light .text-rose-300,
+html.light .text-rose-400,
+html[data-theme="light"] .text-rose-300,
+html[data-theme="light"] .text-rose-400 {
+  color: #BE123C !important;
+}
+
+html.light .text-emerald-300,
+html.light .text-emerald-400,
+html[data-theme="light"] .text-emerald-300,
+html[data-theme="light"] .text-emerald-400 {
+  color: #047857 !important;
+}
+
+html.light .text-blue-300,
+html.light .text-blue-400,
+html[data-theme="light"] .text-blue-300,
+html[data-theme="light"] .text-blue-400 {
+  color: #1D4ED8 !important;
+}
+
+html.light .text-amber-300,
+html.light .text-amber-400,
+html[data-theme="light"] .text-amber-300,
+html[data-theme="light"] .text-amber-400 {
+  color: #B45309 !important;
+}
+
+/* High-contrast status badge backgrounds in light mode */
+html.light .bg-rose-500\/10,
+html.light .bg-rose-500\/15,
+html.light .bg-rose-500\/20,
+html.light .bg-rose-500\/25 {
+  background-color: rgba(244, 63, 94, 0.12) !important;
+  border-color: rgba(244, 63, 94, 0.28) !important;
+}
+
+html.light .bg-emerald-500\/10,
+html.light .bg-emerald-500\/15,
+html.light .bg-emerald-500\/20,
+html.light .bg-emerald-500\/25 {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.28) !important;
+}
+
+html.light .bg-blue-500\/10,
+html.light .bg-blue-500\/15,
+html.light .bg-blue-500\/20,
+html.light .bg-blue-500\/25 {
+  background-color: rgba(37, 99, 235, 0.12) !important;
+  border-color: rgba(37, 99, 235, 0.28) !important;
+}
+
+html.light .bg-amber-500\/10,
+html.light .bg-amber-500\/15,
+html.light .bg-amber-500\/20,
+html.light .bg-amber-500\/25 {
+  background-color: rgba(245, 158, 11, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.28) !important;
 }
 
 /* Headings and non-button white text in light mode */
@@ -163,6 +239,54 @@ html.light a[class*="bg-blue"] * {
   color: #FFFFFF !important;
 }
 
+/* Active navigation link in Sidebar */
+html.light aside nav a.bg-white\/\[0\.07\],
+html[data-theme="light"] aside nav a.bg-white\/\[0\.07\] {
+  background-color: #EFF6FF !important;
+  border-color: #BFDBFE !important;
+  color: #1D4ED8 !important;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+html.light aside nav a.bg-white\/\[0\.07\] svg,
+html[data-theme="light"] aside nav a.bg-white\/\[0\.07\] svg {
+  color: #2563EB !important;
+}
+
+/* AI Assistant user query bubble */
+html.light [class*="bg-blue-600/10"],
+html[data-theme="light"] [class*="bg-blue-600/10"] {
+  background-color: #EFF6FF !important;
+  border-color: #BFDBFE !important;
+  color: #0F172A !important;
+}
+
+html.light [class*="bg-blue-600/10"] span,
+html[data-theme="light"] [class*="bg-blue-600/10"] span,
+html.light [class*="bg-blue-600/10"] div,
+html[data-theme="light"] [class*="bg-blue-600/10"] div {
+  color: #0F172A !important;
+}
+
+html.light [class*="bg-blue-600/10"] svg {
+  color: #2563EB !important;
+}
+
+/* Prevent hover:text-white on light buttons from vanishing */
+html.light :not(button[class*="bg-"]):not(a[class*="bg-"]):not([class*="bg-[#2563EB]"]):not([class*="bg-blue"]):not([class*="bg-emerald"]):not([class*="bg-rose"]).hover\:text-white:hover {
+  color: #0F172A !important;
+}
+
+/* Search bar and Command palette in light mode */
+html.light .hover\:bg-\[\#1C2022\]:hover {
+  background-color: #F1F5F9 !important;
+}
+
+html.light kbd {
+  background-color: #E2E8F0 !important;
+  color: #475569 !important;
+}
+
 /* Inputs, textareas, selects in light mode */
 html.light input,
 html.light textarea,
@@ -170,6 +294,11 @@ html.light select {
   background-color: rgba(255, 255, 255, 0.95) !important;
   color: #0F172A !important;
   border-color: rgba(203, 213, 225, 0.9) !important;
+}
+
+html.light select option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
 }
 
 html.light input::placeholder,
@@ -183,6 +312,28 @@ html.light code {
   background-color: rgba(241, 245, 249, 0.95) !important;
   color: #0F172A !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+/* Audit verification banner and notifications in light mode */
+html.light .bg-emerald-950\/15 {
+  background-color: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+}
+
+html.light .text-emerald-200 {
+  color: #065F46 !important;
+}
+
+html.light .text-emerald-300\/70 {
+  color: #047857 !important;
+}
+
+html.light .bg-blue-950\/10 {
+  background-color: #EFF6FF !important;
+}
+
+html.light .hover\:bg-blue-950\/20:hover {
+  background-color: #DBEAFE !important;
 }
 
 /* Tables in light mode */
@@ -208,11 +359,12 @@ html.light .hover\:border-white\/20:hover {
 
 /* TopBar & Sidebar light mode headers */
 html.light header {
-  background-color: rgba(255, 255, 255, 0.85) !important;
+  background-color: rgba(255, 255, 255, 0.88) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
 html.light aside {
-  background-color: rgba(255, 255, 255, 0.92) !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
+
