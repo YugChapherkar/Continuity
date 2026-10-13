@@ -216,9 +216,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const logout = () => {
-    setIsAuthenticated(false);
-    showToast('Signed out of continuity session', 'info');
+  const logout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {}
+    setIsAuthenticatedState(false);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('continuity_token');
+        localStorage.setItem('continuity_authenticated', 'false');
+        localStorage.removeItem('continuity_current_user_id');
+      } catch {}
+      window.location.href = '/login';
+    }
   };
 
   const applyTheme = (newTheme: 'dark' | 'light') => {
@@ -332,7 +342,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Initial load: restore saved user and fetch backend
+  // Initial load: restore saved user, verify session cookie, and fetch backend data
   useEffect(() => {
     try {
       if (typeof window !== 'undefined') {
@@ -341,16 +351,30 @@ export function AppProvider({ children }: { children: ReactNode }) {
           const found = INITIAL_USERS.find((u) => u.id === savedUserId);
           if (found) setCurrentUserState(found);
         }
-        const savedAuth = localStorage.getItem('continuity_authenticated');
-        if (savedAuth === 'false') {
-          setIsAuthenticatedState(false);
-        } else if (savedAuth === 'true') {
-          setIsAuthenticatedState(true);
-        }
       }
     } catch {
       // ignore
     }
+
+    // Verify session with backend JWT endpoint to stay synchronized with HTTP-only cookie
+    fetch('/api/auth/me')
+      .then(async (res) => {
+        if (res.ok) {
+          const userData = await res.json();
+          setCurrentUserState(userData);
+          setIsAuthenticatedState(true);
+          try {
+            localStorage.setItem('continuity_authenticated', 'true');
+            localStorage.setItem('continuity_current_user_id', userData.id);
+          } catch {}
+        } else if (res.status === 401) {
+          setIsAuthenticatedState(false);
+          try {
+            localStorage.setItem('continuity_authenticated', 'false');
+          } catch {}
+        }
+      })
+      .catch(() => {});
 
     refreshData();
   }, [refreshData]);

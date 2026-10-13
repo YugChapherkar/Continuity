@@ -1,29 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React from 'react';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { TopBar } from '@/components/ui/TopBar';
 import { IridescentWave } from '@/components/ui/IridescentWave';
 import { useApp } from '@/context/AppContext';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { isSidebarOpen, theme, isAuthenticated } = useApp();
-  const router = useRouter();
-  const [mounted, setMounted] = useState(false);
+  const { isSidebarOpen, theme } = useApp();
   const isLight = theme === 'light';
-
-  useEffect(() => {
-    setMounted(true);
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
-
-  // Gracefully wait during client-side auth redirection
-  if (mounted && !isAuthenticated) {
-    return null;
-  }
 
   return (
     <div
