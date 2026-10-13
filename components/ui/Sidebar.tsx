@@ -220,19 +220,16 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* Role Badge Pill */}
-      <div className="px-4 pt-4 pb-1 shrink-0">
-        <div
-          className={`px-3 py-1.5 rounded-lg border text-[11px] font-mono flex items-center justify-between ${
-            activeRole === 'Admin'
-              ? 'bg-blue-500/10 border-blue-500/25 text-blue-600 dark:text-blue-300'
-              : activeRole === 'Team Leader'
-              ? 'bg-amber-500/10 border-amber-500/25 text-amber-600 dark:text-amber-300'
-              : 'bg-emerald-500/10 border-emerald-500/25 text-emerald-600 dark:text-emerald-300'
-          }`}
-        >
-          <span className="font-semibold uppercase tracking-wider">{activeRole} Workspace</span>
-          <span className="text-[9px] opacity-75 font-sans">Strict RBAC</span>
+      {/* Workspace Indicator */}
+      <div className="px-4 pt-3 pb-1 shrink-0">
+        <div className="px-3 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] text-xs flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0" />
+            <span className="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">
+              {activeRole} Workspace
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-slate-500 dark:text-neutral-400">Strict RBAC</span>
         </div>
       </div>
 
@@ -258,23 +255,23 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               onClick={() => setIsSidebarOpen(false)}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
+              className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs transition-all ${
                 isActive
                   ? isLight
-                    ? 'bg-blue-50 text-blue-700 border border-blue-200/90 shadow-sm font-semibold'
-                    : 'bg-white/[0.08] text-[#F5F5F2] border border-white/[0.12] shadow-sm'
+                    ? 'bg-slate-100 text-slate-900 font-semibold border border-slate-200 shadow-xs'
+                    : 'bg-white/[0.08] text-white font-semibold border border-white/[0.08] shadow-xs'
                   : isLight
-                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
-                  : 'text-neutral-400 hover:text-neutral-200 hover:bg-white/[0.04]'
+                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent font-medium'
+                  : 'text-neutral-400 hover:text-white hover:bg-white/[0.03] border border-transparent font-medium'
               }`}
             >
               <div className="flex items-center gap-3">
                 <Icon
-                  className={`w-4 h-4 ${
-                    isActive ? (isLight ? 'text-blue-600' : 'text-blue-400') : (isLight ? 'text-slate-400' : 'text-neutral-400')
+                  className={`w-4 h-4 shrink-0 ${
+                    isActive ? (isLight ? 'text-blue-600' : 'text-blue-400') : (isLight ? 'text-slate-400' : 'text-neutral-500')
                   }`}
                 />
-                <span>{item.label}</span>
+                <span className={isActive ? (isLight ? 'text-slate-900' : 'text-white') : ''}>{item.label}</span>
               </div>
               {item.badge && (
                 <span className={`text-[10px] font-semibold border px-2 py-0.5 rounded-full font-mono ${badgeClasses}`}>
@@ -342,26 +339,30 @@ export function Sidebar() {
                     }}
                     className={`w-full text-left p-2 rounded-lg flex items-start justify-between gap-2 text-xs transition-colors cursor-pointer ${
                       isSelected
-                        ? isLight ? 'bg-blue-50 text-blue-700 font-semibold border border-blue-200' : 'bg-[#2563EB]/20 text-white border border-[#2563EB]/40'
-                        : isLight ? 'hover:bg-slate-100 text-slate-700' : 'hover:bg-white/5 text-neutral-300'
+                        ? isLight
+                          ? 'bg-slate-100 text-slate-900 font-semibold border border-slate-200'
+                          : 'bg-white/[0.08] text-white font-semibold border border-white/10'
+                        : isLight
+                        ? 'hover:bg-slate-50 text-slate-700'
+                        : 'hover:bg-white/5 text-neutral-300'
                     }`}
                   >
                     <div>
-                      <div className={`font-medium flex items-center gap-1.5 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                        <span>{persona.name}</span>
+                      <div className={`font-semibold flex items-center gap-1.5 ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                        <span className={isLight ? 'text-slate-900' : 'text-white'}>{persona.name}</span>
                         <span
                           className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-semibold ${
                             persona.role === 'Admin'
-                              ? 'bg-blue-500/20 text-blue-600 dark:text-blue-300'
+                              ? 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/20'
                               : persona.role === 'Team Leader'
-                              ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300'
-                              : 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-300'
+                              ? 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20'
+                              : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/20'
                           }`}
                         >
                           {persona.badge}
                         </span>
                       </div>
-                      <div className={`text-[10px] ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>{persona.desc}</div>
+                      <div className={`text-[10px] mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>{persona.desc}</div>
                     </div>
                   </button>
                 );

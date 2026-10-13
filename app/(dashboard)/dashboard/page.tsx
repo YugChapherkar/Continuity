@@ -109,15 +109,14 @@ export default function HomePage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
       {/* =========================================================================
-          TOP EXECUTIVE HEADER (Clean, Minimal, Professional)
+          TOP EXECUTIVE / ROLE HEADER (Only rendered for Admin & Team Leader)
          ========================================================================= */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
-        <div className="flex items-center gap-3.5">
-          <Avatar name={currentUser.name} initials={currentUser.initials} size="md" />
+      {activeRole !== 'Employee' && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-semibold text-slate-900 dark:text-white">
-                {currentUser.name}
+                {activeRole === 'Admin' ? 'Executive Governance' : 'Pod Operations'}
               </h1>
               <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                 {activeRole}
@@ -125,55 +124,44 @@ export default function HomePage() {
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               {activeRole === 'Admin'
-                ? 'Executive platform governance, 10-KPI monitoring, and delivery sign-offs.'
-                : activeRole === 'Team Leader'
-                ? 'Engineering execution, pod task distribution, and sprint progress.'
-                : 'Task execution workbench, daily work journal, and shift handovers.'}
+                ? 'Organizational KPI monitoring, project health, and cross-team execution pulses.'
+                : 'Pod task distribution, sprint deliverables, and blocker management.'}
             </p>
           </div>
-        </div>
 
-        {/* Global Action CTAs */}
-        <div className="flex items-center gap-2">
-          {activeRole === 'Admin' && (
+          {/* Action CTAs */}
+          <div className="flex items-center gap-2">
+            {activeRole === 'Admin' && (
+              <button
+                onClick={() => setIsCreateProjectOpen(true)}
+                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Create Project</span>
+              </button>
+            )}
+
+            {activeRole === 'Team Leader' && (
+              <Link
+                href="/reports"
+                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Submit Progress Report</span>
+              </Link>
+            )}
+
             <button
-              onClick={() => setIsCreateProjectOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+              onClick={() => setIsCreateHandoffModalOpen(true)}
+              className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Create Project</span>
+              <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <span>New Handoff</span>
             </button>
-          )}
-
-          {activeRole === 'Team Leader' && (
-            <Link
-              href="/reports"
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>Submit Progress Report</span>
-            </Link>
-          )}
-
-          {activeRole === 'Employee' && (
-            <Link
-              href="/updates"
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-            >
-              <Activity className="w-3.5 h-3.5" />
-              <span>Log Daily Update</span>
-            </Link>
-          )}
-
-          <button
-            onClick={() => setIsCreateHandoffModalOpen(true)}
-            className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer"
-          >
-            <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-            <span>New Handoff</span>
-          </button>
+          </div>
         </div>
-      </div>
+      )}
+
 
       {/* =========================================================================
           ADMIN EXECUTIVE DASHBOARD VIEW
