@@ -38,7 +38,7 @@ spring:
 
 app:
   jwt:
-    secret: ${JWT_SECRET:}
+    secret: ${JWT_SECRET:continuity-enterprise-secret-key-2026-secure-hmac-sha256}
   storage:
     snapshot-dir: ${SNAPSHOT_DIR:./storage/snapshots}
   cors:
