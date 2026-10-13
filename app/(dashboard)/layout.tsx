@@ -27,8 +27,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 flex flex-col md:flex-row relative overflow-x-clip ${
-        isLight ? 'bg-[#F8FAFC] text-slate-900' : 'bg-[#050606] text-[#F5F5F2]'
+      className={`min-h-screen transition-colors duration-200 flex flex-col md:flex-row relative overflow-x-clip ${
+        isLight ? 'bg-white text-slate-900' : 'bg-[#0A0C10] text-[#F3F4F6]'
       }`}
     >
       <Sidebar />

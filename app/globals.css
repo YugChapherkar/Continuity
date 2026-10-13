@@ -138,7 +138,7 @@ html[data-theme="light"] {
 
 html.light body,
 html[data-theme="light"] body {
-  background-color: #F8FAFC !important;
+  background-color: #FFFFFF !important;
   color: #0F172A !important;
 }
 
