@@ -2,24 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   getStore,
   saveStore,
-  getUserById,
   getEffectiveRole,
   createAuditLog,
   createNotification,
   transferTaskOwnership,
 } from '@/lib/server-store';
+import { requireUser } from '@/lib/auth';
 
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
-  const actor = getUserById(actorId);
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
 
-  if (!actor) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const { id } = await params;
 
   const role = getEffectiveRole(actor);
   if (role !== 'Admin' && role !== 'Team Leader') {

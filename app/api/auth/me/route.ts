@@ -1,21 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserById } from '@/lib/server-store';
-import { getAuthenticatedUser } from '@/lib/auth';
+import { requireUser } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
-  const authUser = await getAuthenticatedUser(req);
-
-  if (!authUser) {
-    return NextResponse.json(
-      { error: 'Unauthorized: No valid session or token provided' },
-      { status: 401 }
-    );
-  }
-
-  const user = getUserById(authUser.id);
-  if (!user) {
-    return NextResponse.json({ error: 'User not found' }, { status: 404 });
-  }
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const user = auth.user;
 
   return NextResponse.json({
     id: user.id,

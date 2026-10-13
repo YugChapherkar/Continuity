@@ -1,6 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyUserCredentials, getUserById } from '@/lib/server-store';
+import { verifyUserCredentials } from '@/lib/server-store';
 import { signJwtToken, AUTH_COOKIE_NAME } from '@/lib/auth';
+
+interface RateLimitEntry {
+  attempts: number[];
+  lockedUntil?: number;
+}
+
+const MAX_ATTEMPTS = 5;
+const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const LOCKOUT_MS = 15 * 60 * 1000; // 15 minutes
+const loginAttempts = new Map<string, RateLimitEntry>();
+
+function getClientIp(req: NextRequest): string {
+  const forwarded = req.headers.get('x-forwarded-for');
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.headers.get('x-real-ip') || '127.0.0.1';
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,15 +33,60 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const ip = getClientIp(req);
+    const cleanId = String(identifier).trim().toLowerCase();
+    const rateLimitKey = `${ip}:${cleanId}`;
+    const now = Date.now();
+
+    // 1. Rate limiting & Lockout check
+    const entry = loginAttempts.get(rateLimitKey);
+    if (entry) {
+      if (entry.lockedUntil && now < entry.lockedUntil) {
+        const remainingMin = Math.ceil((entry.lockedUntil - now) / 60000);
+        return NextResponse.json(
+          {
+            error: `Too many failed login attempts. Account temporarily locked out. Please try again in ${remainingMin} minute(s).`,
+          },
+          { status: 429 }
+        );
+      }
+
+      // Filter out attempts outside the sliding window
+      entry.attempts = entry.attempts.filter((t) => now - t < WINDOW_MS);
+      if (entry.attempts.length >= MAX_ATTEMPTS) {
+        entry.lockedUntil = now + LOCKOUT_MS;
+        loginAttempts.set(rateLimitKey, entry);
+        return NextResponse.json(
+          {
+            error: 'Too many failed login attempts. Account temporarily locked out for 15 minutes.',
+          },
+          { status: 429 }
+        );
+      }
+    }
+
+    // 2. Verify credentials
     const user = await verifyUserCredentials(identifier, password);
     if (!user) {
+      // Record failed attempt
+      const current = loginAttempts.get(rateLimitKey) || { attempts: [] };
+      current.attempts = current.attempts.filter((t) => now - t < WINDOW_MS);
+      current.attempts.push(now);
+      if (current.attempts.length >= MAX_ATTEMPTS) {
+        current.lockedUntil = now + LOCKOUT_MS;
+      }
+      loginAttempts.set(rateLimitKey, current);
+
       return NextResponse.json(
         { error: 'Invalid credentials. Please verify your email/ID and password.' },
         { status: 401 }
       );
     }
 
-    // Generate signed JWT token with user identity
+    // Reset rate limiter on successful authentication
+    loginAttempts.delete(rateLimitKey);
+
+    // 3. Generate signed JWT token
     const token = await signJwtToken({
       id: user.id,
       email: user.email,
@@ -35,10 +98,9 @@ export async function POST(req: NextRequest) {
       teamId: user.teamId,
     });
 
-    // Create response with user info and token
+    // 4. Return sanitized user without token in JSON response body
     const response = NextResponse.json({
       success: true,
-      token,
       user: {
         id: user.id,
         name: user.name,
@@ -54,7 +116,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Set secure HTTP-only cookie
+    // 5. Set secure HTTP-only cookie
     response.cookies.set({
       name: AUTH_COOKIE_NAME,
       value: token,
@@ -74,3 +136,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

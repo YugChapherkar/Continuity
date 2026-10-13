@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getStore, getUserById, isUserAuthorizedForProject } from '@/lib/server-store';
+import { getStore, isUserAuthorizedForProject } from '@/lib/server-store';
+import { requireUser } from '@/lib/auth';
 
 const SECRET_PATTERNS = [
   /password\s*[:=]\s*['"][^'"]+['"]/gi,
@@ -20,17 +21,14 @@ function sanitizeSecrets(text: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const auth = await requireUser(req);
+    if (auth.error) return auth.error;
+    const actor = auth.user;
+
     const { query, activeProjectId } = await req.json();
 
     if (!query || typeof query !== 'string') {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
-    }
-
-    const actorId = req.headers.get('x-user-id') || 'user-jessica';
-    const actor = getUserById(actorId);
-
-    if (!actor) {
-      return NextResponse.json({ error: 'Unauthorized: Actor identity required' }, { status: 401 });
     }
 
     const store = getStore();

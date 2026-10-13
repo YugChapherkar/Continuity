@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getStore, saveStore, getUserById, getEffectiveRole, createAuditLog } from '@/lib/server-store';
+import { getStore, saveStore, getEffectiveRole, createAuditLog } from '@/lib/server-store';
+import { requireUser } from '@/lib/auth';
 import { Team } from '@/lib/types';
 
 export async function GET(req: NextRequest) {
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
-  const actor = getUserById(actorId);
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
   const store = getStore();
-
-  if (!actor) {
-    return NextResponse.json(store.teams);
-  }
 
   const role = getEffectiveRole(actor);
 
@@ -34,8 +32,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
-  const actor = getUserById(actorId);
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
 
   if (!actor || getEffectiveRole(actor) !== 'Admin') {
     return NextResponse.json(

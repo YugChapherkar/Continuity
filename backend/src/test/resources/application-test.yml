@@ -14,5 +14,7 @@ spring:
     locations: classpath:db/migration
 
 app:
+  jwt:
+    secret: continuity-enterprise-secret-key-2026-secure-hmac-sha256
   storage:
     snapshot-dir: ./target/test-snapshots

@@ -37,6 +37,8 @@ spring:
       max-request-size: 50MB
 
 app:
+  jwt:
+    secret: ${JWT_SECRET:}
   storage:
     snapshot-dir: ${SNAPSHOT_DIR:./storage/snapshots}
   cors:

@@ -2,14 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   getStore,
   saveStore,
-  getUserById,
   createAuditLog,
   createNotification,
   computeHandoverReadiness,
 } from '@/lib/server-store';
+import { requireUser } from '@/lib/auth';
 import { HandoffPackage } from '@/lib/types';
 
 export async function GET(req: NextRequest) {
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+
   const store = getStore();
   const searchParams = req.nextUrl.searchParams;
   const recipientId = searchParams.get('recipientId');
@@ -40,12 +43,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const actorId = req.headers.get('x-user-id') || 'user-jessica';
-  const actor = getUserById(actorId);
-
-  if (!actor) {
-    return NextResponse.json({ error: 'Unauthorized: User not recognized' }, { status: 401 });
-  }
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
 
   try {
     const body = await req.json();

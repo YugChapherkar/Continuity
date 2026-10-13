@@ -110,7 +110,6 @@ export function createNotification(
 }
 
 function getInitialStore(): ServerStoreData {
-  const DEFAULT_HASH = '$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa'; // '12345678'
   const users: User[] = [
     {
       id: 'user-admin',
@@ -128,7 +127,7 @@ function getInitialStore(): ServerStoreData {
       activeProjectsCount: 4,
       pendingHandoffsCount: 0,
       isAdmin: true,
-      passwordHash: DEFAULT_HASH,
+      passwordHash: '$2b$10$1v3Zr4dJRalS1.f6Mnctg.GIMgNBaVZA8qu6oDcj8bfCSK79wK9rK', // '12345678'
       createdAt: '2026-01-01T00:00:00Z',
     },
     {
@@ -147,7 +146,7 @@ function getInitialStore(): ServerStoreData {
       location: 'Zurich, Switzerland (CET)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 0,
-      passwordHash: DEFAULT_HASH,
+      passwordHash: '$2b$10$Z0HDAbgQ2H3zdvqRTy3eLeJIPKWWwWfyMMv1kn/ShRzrFG0BgV4S6', // '12345678'
       createdAt: '2026-01-15T00:00:00Z',
     },
     {
@@ -166,7 +165,7 @@ function getInitialStore(): ServerStoreData {
       location: 'New York, NY (EST)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 1,
-      passwordHash: DEFAULT_HASH,
+      passwordHash: '$2b$10$oPlH30s6mHnwtQeqL.uuhu9IzuHAyYlhz.cZHAfqV4X3dBjvDjuHK', // '12345678'
       createdAt: '2026-02-01T00:00:00Z',
     },
     {
@@ -185,7 +184,7 @@ function getInitialStore(): ServerStoreData {
       location: 'London, UK (GMT)',
       activeProjectsCount: 1,
       pendingHandoffsCount: 1,
-      passwordHash: DEFAULT_HASH,
+      passwordHash: '$2b$10$k6cLCBWfZ3ndLbJT6vdS/.PR3NqW6OOpX2mPEKSixJHSjTGi3r2KK', // '12345678'
       createdAt: '2026-02-15T00:00:00Z',
     },
     {
@@ -204,7 +203,7 @@ function getInitialStore(): ServerStoreData {
       location: 'San Francisco, CA (PST)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 1,
-      passwordHash: DEFAULT_HASH,
+      passwordHash: '$2b$10$MOzWoEU6fBgGG1PdD/zUYO4SKeNm0obrUDaol2yczZrtRevwmWgZC', // '12345678'
       createdAt: '2026-03-01T00:00:00Z',
     },
 
@@ -224,6 +223,7 @@ function getInitialStore(): ServerStoreData {
       location: 'Mumbai, IN (IST)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 1,
+      passwordHash: '$2b$10$eDDkCykeaL0I/U7hlYYEx.yW4MjbXBuLF32EZ7.rguc605Mtyk9HW', // '12345678'
       createdAt: '2026-03-15T00:00:00Z',
     },
     {
@@ -242,6 +242,7 @@ function getInitialStore(): ServerStoreData {
       location: 'Pune, IN (IST)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 1,
+      passwordHash: '$2b$10$ngL0U5CoObmACjS22AMHHORF.ZkQq41iiht8brCwcIWw2VD5wTimG', // '12345678'
       createdAt: '2026-04-01T00:00:00Z',
     },
     {
@@ -260,6 +261,7 @@ function getInitialStore(): ServerStoreData {
       location: 'Seattle, WA (PST)',
       activeProjectsCount: 1,
       pendingHandoffsCount: 0,
+      passwordHash: '$2b$10$E.GPE31SdqrBTur1/SdYxOEROA2lB/Hmmox.PqSo4jKNNPSJF/gmi', // '12345678'
       createdAt: '2026-04-15T00:00:00Z',
     },
     {
@@ -278,6 +280,7 @@ function getInitialStore(): ServerStoreData {
       location: 'Austin, TX (CST)',
       activeProjectsCount: 1,
       pendingHandoffsCount: 0,
+      passwordHash: '$2b$10$jyNnU1kzvVljuKbpXRZJbe41x3DjsTtTgnobtB4FY1oq7ACv5zxZ6', // '12345678'
       createdAt: '2026-05-01T00:00:00Z',
     },
   ];
@@ -1148,8 +1151,6 @@ function getInitialStore(): ServerStoreData {
 }
 
 function ensureCoreUsers(store: ServerStoreData) {
-  const DEFAULT_HASH = '$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa'; // '12345678'
-
   // 1. Admin: Yug Chapherkar
   let admin = store.users.find((u) => u.id === 'user-admin' || u.email === 'admin@phx.in' || u.systemRole === 'Admin');
   if (!admin) {
@@ -1169,7 +1170,7 @@ function ensureCoreUsers(store: ServerStoreData) {
       activeProjectsCount: 4,
       pendingHandoffsCount: 0,
       isAdmin: true,
-      passwordHash: DEFAULT_HASH,
+      passwordHash: '$2b$10$1v3Zr4dJRalS1.f6Mnctg.GIMgNBaVZA8qu6oDcj8bfCSK79wK9rK',
       createdAt: '2026-01-01T00:00:00Z',
     };
     store.users.unshift(admin);
@@ -1177,7 +1178,7 @@ function ensureCoreUsers(store: ServerStoreData) {
     admin.name = 'Yug Chapherkar';
     admin.email = 'admin@phx.in';
     admin.initials = 'YC';
-    admin.passwordHash = DEFAULT_HASH;
+    admin.passwordHash = '$2b$10$1v3Zr4dJRalS1.f6Mnctg.GIMgNBaVZA8qu6oDcj8bfCSK79wK9rK';
     admin.systemRole = 'Admin';
     admin.isAdmin = true;
   }
@@ -1190,7 +1191,7 @@ function ensureCoreUsers(store: ServerStoreData) {
     lead.employeeId = 'TL-1001';
     lead.role = 'Project Lead & Staff Systems Architect';
     lead.systemRole = 'Team Leader';
-    lead.passwordHash = DEFAULT_HASH;
+    lead.passwordHash = '$2b$10$Z0HDAbgQ2H3zdvqRTy3eLeJIPKWWwWfyMMv1kn/ShRzrFG0BgV4S6';
   }
 
   // 3. Employee: Jessica Chauhan
@@ -1199,13 +1200,8 @@ function ensureCoreUsers(store: ServerStoreData) {
     emp.name = 'Jessica Chauhan';
     emp.email = 'employee@phx.in';
     emp.systemRole = 'Employee';
-    emp.passwordHash = DEFAULT_HASH;
+    emp.passwordHash = '$2b$10$MOzWoEU6fBgGG1PdD/zUYO4SKeNm0obrUDaol2yczZrtRevwmWgZC';
   }
-
-  // Ensure all users have passwordHash
-  store.users.forEach((u) => {
-    if (!u.passwordHash) u.passwordHash = DEFAULT_HASH;
-  });
 }
 
 export function getStore(): ServerStoreData {
@@ -1256,10 +1252,9 @@ export async function verifyUserCredentials(identifier: string, plainPassword: s
       u.employeeId?.toLowerCase() === clean ||
       u.id.toLowerCase() === clean
   );
-  if (!user) return null;
+  if (!user || !user.passwordHash) return null;
 
-  const hash = user.passwordHash || '$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa';
-  const isValid = await bcrypt.compare(plainPassword, hash);
+  const isValid = await bcrypt.compare(plainPassword, user.passwordHash);
   if (!isValid) return null;
   return user;
 }

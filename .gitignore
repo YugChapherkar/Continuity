@@ -7,6 +7,14 @@ coverage/
 !.env.example
 backend/target/
 backend/storage/
+backend/mvn_home/
 .vscode/
 cloudflared.exe
+
+# Database and Storage files
+*.db
+*.db-journal
+*.db-wal
+storage/*.json
+!storage/.gitkeep
 

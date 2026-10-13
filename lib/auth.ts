@@ -1,10 +1,23 @@
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getUserById } from './server-store';
+import { User } from './types';
 
-const JWT_SECRET_STRING = process.env.JWT_SECRET || 'continuity-enterprise-secret-key-2026-secure-hmac-sha256';
-const JWT_SECRET = new TextEncoder().encode(JWT_SECRET_STRING);
+export const AUTH_COOKIE_NAME = 'continuity_token';
+
+/**
+ * Resolve and validate the JWT secret key from environment.
+ * Fails fast at startup if missing or shorter than 32 characters.
+ */
+export function getJwtSecret(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret.trim().length < 32) {
+    throw new Error('FATAL: JWT_SECRET environment variable is missing or shorter than 32 characters.');
+  }
+  return new TextEncoder().encode(secret.trim());
+}
 
 export interface AuthUser {
   id: string;
@@ -16,8 +29,6 @@ export interface AuthUser {
   department?: string;
   teamId?: string;
 }
-
-export const AUTH_COOKIE_NAME = 'continuity_token';
 
 /**
  * Hash a plain password using bcrypt (10 rounds)
@@ -38,6 +49,7 @@ export async function verifyPassword(plainPassword: string, passwordHash: string
  * Generate a signed JWT token valid for 7 days
  */
 export async function signJwtToken(user: AuthUser): Promise<string> {
+  const secretKey = getJwtSecret();
   return new SignJWT({
     sub: user.id,
     email: user.email,
@@ -51,7 +63,7 @@ export async function signJwtToken(user: AuthUser): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
-    .sign(JWT_SECRET);
+    .sign(secretKey);
 }
 
 /**
@@ -59,7 +71,8 @@ export async function signJwtToken(user: AuthUser): Promise<string> {
  */
 export async function verifyJwtToken(token: string): Promise<AuthUser | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
+    const secretKey = getJwtSecret();
+    const { payload } = await jwtVerify(token, secretKey);
     if (!payload.sub || !payload.email) {
       return null;
     }
@@ -113,4 +126,45 @@ export async function getAuthenticatedUser(req?: NextRequest): Promise<AuthUser 
   }
 
   return verifyJwtToken(token);
+}
+
+/**
+ * Mandatory security gate for route handlers in app/api/**.
+ * Reads ONLY the verified `x-authenticated-user-id` header (injected by middleware)
+ * or verifies the JWT directly from headers/cookies.
+ * Returns 401 if absent or unauthenticated. No default users anywhere.
+ */
+export async function requireUser(req: NextRequest): Promise<
+  | { user: User; error?: never }
+  | { user?: never; error: NextResponse }
+> {
+  // Read ONLY x-authenticated-user-id (injected by verified middleware)
+  let userId = req.headers.get('x-authenticated-user-id');
+  if (!userId) {
+    const authUser = await getAuthenticatedUser(req);
+    if (authUser) {
+      userId = authUser.id;
+    }
+  }
+
+  if (!userId) {
+    return {
+      error: NextResponse.json(
+        { error: 'Unauthorized: Authentication required with valid JWT credentials.' },
+        { status: 401 }
+      ),
+    };
+  }
+
+  const user = getUserById(userId);
+  if (!user) {
+    return {
+      error: NextResponse.json(
+        { error: 'Unauthorized: Authenticated user not found in directory.' },
+        { status: 401 }
+      ),
+    };
+  }
+
+  return { user };
 }

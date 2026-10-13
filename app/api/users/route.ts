@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getStore, saveStore, getUserById, getEffectiveRole, createAuditLog } from '@/lib/server-store';
+import { getStore, saveStore, getEffectiveRole, createAuditLog } from '@/lib/server-store';
 import { User, SystemRole } from '@/lib/types';
-import { hashPassword } from '@/lib/auth';
+import { hashPassword, requireUser } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 export async function GET(req: NextRequest) {
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+
   const store = getStore();
   const searchParams = req.nextUrl.searchParams;
   const role = searchParams.get('role');
@@ -29,15 +32,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
-  if (!actorId) {
-    return NextResponse.json(
-      { error: 'Unauthorized: Authentication required with valid JWT credentials.' },
-      { status: 401 }
-    );
-  }
-
-  const actor = getUserById(actorId);
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
 
   if (!actor || getEffectiveRole(actor) !== 'Admin') {
     return NextResponse.json(
@@ -170,15 +167,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
-  if (!actorId) {
-    return NextResponse.json(
-      { error: 'Unauthorized: Authentication required with valid JWT credentials.' },
-      { status: 401 }
-    );
-  }
-
-  const actor = getUserById(actorId);
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
 
   if (!actor || getEffectiveRole(actor) !== 'Admin') {
     return NextResponse.json(

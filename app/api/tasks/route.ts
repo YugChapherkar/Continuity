@@ -2,20 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   getStore,
   saveStore,
-  getUserById,
   getEffectiveRole,
   isUserAuthorizedForProject,
   createAuditLog,
   createNotification,
 } from '@/lib/server-store';
+import { requireUser } from '@/lib/auth';
 import { Task, TaskStatus } from '@/lib/types';
 
 export async function GET(req: NextRequest) {
-  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
-  if (!actorId) {
-    return NextResponse.json({ error: 'Unauthorized: Authentication required with valid JWT credentials.' }, { status: 401 });
-  }
-  const actor = getUserById(actorId);
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
   const store = getStore();
 
   const searchParams = req.nextUrl.searchParams;
@@ -70,15 +68,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
-  if (!actorId) {
-    return NextResponse.json({ error: 'Unauthorized: Authentication required with valid JWT credentials.' }, { status: 401 });
-  }
-  const actor = getUserById(actorId);
-
-  if (!actor) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
 
   const role = getEffectiveRole(actor);
   if (role === 'Employee') {

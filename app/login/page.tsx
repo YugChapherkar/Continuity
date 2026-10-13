@@ -51,6 +51,8 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // Demo Mode check
+  const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 
   // Quick Credentials Autofill Handler
   const handleSelectDemoCredentials = (creds: {
@@ -116,8 +118,12 @@ export default function LoginPage() {
         return;
       }
 
-      // Securely store token and user in client state
-      localStorage.setItem('continuity_token', data.token);
+      // Securely store user in client state (auth is managed via HTTP-only cookie)
+      if (data.token) {
+        localStorage.setItem('continuity_token', data.token);
+      } else {
+        localStorage.removeItem('continuity_token');
+      }
       localStorage.setItem('continuity_current_user_id', data.user.id);
       setCurrentUser(data.user);
       setIsAuthenticated(true);
@@ -255,93 +261,95 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Quick-Access Test Credentials */}
-          <div className={`mt-8 p-4 rounded-xl border ${
-            isLight ? 'bg-slate-50 border-slate-200' : 'bg-white/[0.03] border-white/10'
-          }`}>
-            <div className="mb-3">
-              <span className="text-xs font-semibold tracking-wider uppercase text-neutral-400">
-                Verified Enterprise Credentials (1-Click Fill)
-              </span>
+          {/* Quick-Access Test Credentials (guarded by NEXT_PUBLIC_DEMO_MODE) */}
+          {isDemoMode && (
+            <div className={`mt-8 p-4 rounded-xl border ${
+              isLight ? 'bg-slate-50 border-slate-200' : 'bg-white/[0.03] border-white/10'
+            }`}>
+              <div className="mb-3">
+                <span className="text-xs font-semibold tracking-wider uppercase text-neutral-400">
+                  Verified Enterprise Credentials (1-Click Fill)
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {/* ADMIN */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleSelectDemoCredentials({
+                      identifier: 'admin@phx.in',
+                      pass: '12345678',
+                      portal: 'admin',
+                    })
+                  }
+                  className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
+                    isLight
+                      ? 'bg-white border-slate-200 hover:border-blue-500 shadow-sm'
+                      : 'bg-[#121518] border-white/10 hover:border-blue-500/60'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-blue-400">1. Main Admin</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono">Admin</span>
+                  </div>
+                  <div className="text-xs font-semibold mt-1">Yug Chapherkar</div>
+                  <div className="text-[11px] text-neutral-400 font-mono truncate">admin@phx.in</div>
+                  <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
+                </button>
+
+                {/* PROJECT LEAD */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleSelectDemoCredentials({
+                      identifier: 'lead@phx.in',
+                      pass: '12345678',
+                      portal: 'employee',
+                    })
+                  }
+                  className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
+                    isLight
+                      ? 'bg-white border-slate-200 hover:border-purple-500 shadow-sm'
+                      : 'bg-[#121518] border-white/10 hover:border-purple-500/60'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-purple-400">2. Project Lead</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Lead</span>
+                  </div>
+                  <div className="text-xs font-semibold mt-1">Marcus Vance</div>
+                  <div className="text-[11px] text-neutral-400 font-mono truncate">lead@phx.in</div>
+                  <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
+                </button>
+
+                {/* EMPLOYEE */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleSelectDemoCredentials({
+                      identifier: 'employee@phx.in',
+                      pass: '12345678',
+                      portal: 'employee',
+                    })
+                  }
+                  className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
+                    isLight
+                      ? 'bg-white border-slate-200 hover:border-emerald-500 shadow-sm'
+                      : 'bg-[#121518] border-white/10 hover:border-emerald-500/60'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-emerald-400">3. Employee</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Staff</span>
+                  </div>
+                  <div className="text-xs font-semibold mt-1">Jessica Chauhan</div>
+                  <div className="text-[11px] text-neutral-400 font-mono truncate">employee@phx.in</div>
+                  <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
+                </button>
+              </div>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              {/* ADMIN */}
-              <button
-                type="button"
-                onClick={() =>
-                  handleSelectDemoCredentials({
-                    identifier: 'admin@phx.in',
-                    pass: '12345678',
-                    portal: 'admin',
-                  })
-                }
-                className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
-                  isLight
-                    ? 'bg-white border-slate-200 hover:border-blue-500 shadow-sm'
-                    : 'bg-[#121518] border-white/10 hover:border-blue-500/60'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-blue-400">1. Main Admin</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono">Admin</span>
-                </div>
-                <div className="text-xs font-semibold mt-1">Yug Chapherkar</div>
-                <div className="text-[11px] text-neutral-400 font-mono truncate">admin@phx.in</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
-              </button>
-
-              {/* PROJECT LEAD */}
-              <button
-                type="button"
-                onClick={() =>
-                  handleSelectDemoCredentials({
-                    identifier: 'lead@phx.in',
-                    pass: '12345678',
-                    portal: 'employee',
-                  })
-                }
-                className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
-                  isLight
-                    ? 'bg-white border-slate-200 hover:border-purple-500 shadow-sm'
-                    : 'bg-[#121518] border-white/10 hover:border-purple-500/60'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-purple-400">2. Project Lead</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Lead</span>
-                </div>
-                <div className="text-xs font-semibold mt-1">Marcus Vance</div>
-                <div className="text-[11px] text-neutral-400 font-mono truncate">lead@phx.in</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
-              </button>
-
-              {/* EMPLOYEE */}
-              <button
-                type="button"
-                onClick={() =>
-                  handleSelectDemoCredentials({
-                    identifier: 'employee@phx.in',
-                    pass: '12345678',
-                    portal: 'employee',
-                  })
-                }
-                className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
-                  isLight
-                    ? 'bg-white border-slate-200 hover:border-emerald-500 shadow-sm'
-                    : 'bg-[#121518] border-white/10 hover:border-emerald-500/60'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-400">3. Employee</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Staff</span>
-                </div>
-                <div className="text-xs font-semibold mt-1">Jessica Chauhan</div>
-                <div className="text-[11px] text-neutral-400 font-mono truncate">employee@phx.in</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
-              </button>
-            </div>
-          </div>
+          )}
         </main>
       )}
 
@@ -588,32 +596,34 @@ export default function LoginPage() {
                 )}
               </button>
               {/* Quick credential buttons inside Employee portal */}
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmployeeAuthTab('email');
-                    setEmail('lead@phx.in');
-                    setPassword('12345678');
-                    setErrorMessage(null);
-                  }}
-                  className="flex-1 py-1.5 px-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-[11px] text-purple-300 font-mono text-center transition-colors cursor-pointer border border-purple-500/20"
-                >
-                  ⚡ Lead (lead@phx.in)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmployeeAuthTab('email');
-                    setEmail('employee@phx.in');
-                    setPassword('12345678');
-                    setErrorMessage(null);
-                  }}
-                  className="flex-1 py-1.5 px-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-[11px] text-emerald-300 font-mono text-center transition-colors cursor-pointer border border-emerald-500/20"
-                >
-                  ⚡ Employee (employee@phx.in)
-                </button>
-              </div>
+              {isDemoMode && (
+                <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmployeeAuthTab('email');
+                      setEmail('lead@phx.in');
+                      setPassword('12345678');
+                      setErrorMessage(null);
+                    }}
+                    className="flex-1 py-1.5 px-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-[11px] text-purple-300 font-mono text-center transition-colors cursor-pointer border border-purple-500/20"
+                  >
+                    ⚡ Lead (lead@phx.in)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmployeeAuthTab('email');
+                      setEmail('employee@phx.in');
+                      setPassword('12345678');
+                      setErrorMessage(null);
+                    }}
+                    className="flex-1 py-1.5 px-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-[11px] text-emerald-300 font-mono text-center transition-colors cursor-pointer border border-emerald-500/20"
+                  >
+                    ⚡ Employee (employee@phx.in)
+                  </button>
+                </div>
+              )}
             </form>
           </div>
         </main>
@@ -753,19 +763,21 @@ export default function LoginPage() {
                 )}
               </button>
               {/* Quick credential buttons inside Admin portal */}
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAdminIdentifier('admin@phx.in');
-                    setAdminPassword('12345678');
-                    setErrorMessage(null);
-                  }}
-                  className="w-full py-1.5 px-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-[11px] text-blue-300 font-mono text-center transition-colors cursor-pointer border border-blue-500/20"
-                >
-                  ⚡ Auto-fill Main Admin (admin@phx.in / 12345678)
-                </button>
-              </div>
+              {isDemoMode && (
+                <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAdminIdentifier('admin@phx.in');
+                      setAdminPassword('12345678');
+                      setErrorMessage(null);
+                    }}
+                    className="w-full py-1.5 px-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-[11px] text-blue-300 font-mono text-center transition-colors cursor-pointer border border-blue-500/20"
+                  >
+                    ⚡ Auto-fill Main Admin (admin@phx.in / 12345678)
+                  </button>
+                </div>
+              )}
             </form>
           </div>
         </main>

@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getStore, saveStore, getUserById, getEffectiveRole, createAuditLog } from '@/lib/server-store';
+import { getStore, saveStore, getEffectiveRole, createAuditLog } from '@/lib/server-store';
+import { requireUser } from '@/lib/auth';
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
+
   const { id } = await params;
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
-  const actor = getUserById(actorId);
   const store = getStore();
 
   const team = store.teams.find((t) => t.id === id);
@@ -58,9 +61,11 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
+
   const { id } = await params;
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
-  const actor = getUserById(actorId);
 
   if (!actor || getEffectiveRole(actor) !== 'Admin') {
     return NextResponse.json(
