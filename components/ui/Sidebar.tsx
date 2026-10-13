@@ -79,14 +79,14 @@ export function Sidebar() {
           href: '/reports',
           icon: FileText,
           badge: pendingReportsCount > 0 ? `${pendingReportsCount}` : undefined,
-          badgeColor: 'amber',
+          badgeColor: 'neutral',
         },
         {
           label: 'Reviews & Approvals',
           href: '/admin/reviews',
           icon: ClipboardCheck,
           badge: pendingReviewsCount > 0 ? `${pendingReviewsCount}` : undefined,
-          badgeColor: 'rose',
+          badgeColor: 'neutral',
         },
         { label: 'Client Deliveries', href: '/admin/deliveries', icon: PackageCheck },
         {
@@ -248,17 +248,20 @@ export function Sidebar() {
             pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
 
           const badgeClasses =
-            item.badgeColor === 'rose'
-              ? 'bg-rose-500/20 text-rose-600 dark:text-rose-300 border-rose-500/30'
-              : item.badgeColor === 'amber'
-              ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border-amber-500/30'
-              : 'bg-blue-500/15 text-blue-600 dark:text-blue-300 border-blue-500/25';
+            item.badgeColor === 'blue'
+              ? 'bg-blue-500/10 text-blue-600 dark:text-blue-300 border-blue-500/20'
+              : 'bg-slate-100 dark:bg-white/[0.08] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10';
 
           return (
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setIsSidebarOpen(false)}
+              prefetch={true}
+              onClick={() => {
+                if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                  setIsSidebarOpen(false);
+                }
+              }}
               className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs transition-all ${
                 isActive
                   ? isLight
@@ -330,7 +333,7 @@ export function Sidebar() {
           >
             {theme === 'dark' ? (
               <>
-                <Sun className="w-3 h-3 text-amber-400" />
+                <Sun className="w-3 h-3 text-slate-400" />
                 <span>Light</span>
               </>
             ) : (
@@ -343,13 +346,15 @@ export function Sidebar() {
 
           <button
             onClick={() => {
-              setIsSidebarOpen(false);
+              if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                setIsSidebarOpen(false);
+              }
               logout();
             }}
             className={`flex-1 py-1.5 px-2 flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium border transition-all cursor-pointer ${
               isLight
-                ? 'text-slate-600 hover:text-rose-600 bg-white hover:bg-rose-50 border-slate-200/90 hover:border-rose-200 shadow-sm'
-                : 'text-neutral-400 hover:text-rose-400 bg-white/[0.03] hover:bg-rose-500/10 border-white/[0.06] hover:border-rose-500/20'
+                ? 'text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border-slate-200/90 hover:border-slate-300 shadow-sm'
+                : 'text-neutral-400 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border-white/[0.06] hover:border-white/20'
             }`}
           >
             <LogOut className="w-3 h-3" />

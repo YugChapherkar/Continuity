@@ -110,7 +110,7 @@ export function TopBar() {
           aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
           {theme === 'dark' ? (
-            <Sun className="w-4 h-4 text-amber-400" />
+            <Sun className="w-4 h-4 text-slate-400" />
           ) : (
             <Moon className="w-4 h-4 text-blue-600" />
           )}
