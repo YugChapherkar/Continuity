@@ -194,13 +194,17 @@ export function Sidebar() {
         }`}
       >
         <Link href="/dashboard" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center text-white font-bold text-sm shadow-md shadow-[#2563EB]/30 transition-transform group-hover:scale-105">
-            C
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={
+              isLight
+                ? 'https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png'
+                : 'https://res.cloudinary.com/deimij13f/image/upload/v1791857114/logo-c_1_ju4lgi.png'
+            }
+            alt="Continuity"
+            className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+          />
           <div className="flex flex-col">
-            <span className={`font-bold text-sm tracking-widest ${isLight ? 'text-slate-900' : 'text-[#F5F5F2]'}`}>
-              CONTINUITY
-            </span>
             <span className="text-[9px] text-neutral-400 tracking-wider uppercase">
               {activeRole} Platform
             </span>

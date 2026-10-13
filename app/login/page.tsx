@@ -150,10 +150,16 @@ export default function LoginPage() {
       {/* Top Header */}
       <header className="w-full max-w-4xl flex items-center justify-between z-20 pt-2 pb-4">
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-xl bg-[#2563EB] flex items-center justify-center text-white font-bold text-sm shadow-md shadow-[#2563EB]/25 transition-transform group-hover:scale-105">
-            C
-          </div>
-          <span className="font-extrabold text-sm tracking-wider">CONTINUITY</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={
+              isLight
+                ? 'https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png'
+                : 'https://res.cloudinary.com/deimij13f/image/upload/v1791857114/logo-c_1_ju4lgi.png'
+            }
+            alt="Continuity"
+            className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+          />
         </Link>
 
         <div className="flex items-center gap-2">

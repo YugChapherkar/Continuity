@@ -108,34 +108,34 @@ function Navbar() {
 
   return (
     <>
-      <header className="marklab-navbar-header relative z-40 max-w-[1180px] mx-auto pt-4 sm:pt-6 px-2 sm:px-4 mb-8 sm:mb-12 !bg-transparent !border-none !shadow-none">
-        <nav className="backdrop-blur-2xl bg-[#111638]/85 hover:bg-[#111638]/95 border border-white/10 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between shadow-[0_16px_36px_rgba(17,22,56,0.45)] transition-all">
-          {/* Brandmark: Lilac circle with plus + Continuity */}
+      <header className="marklab-navbar-header relative z-40 max-w-[1180px] mx-auto pt-4 sm:pt-6 px-2 sm:px-4 mb-4 sm:mb-6 !bg-transparent !border-none !shadow-none w-full">
+        <nav className="backdrop-blur-2xl bg-white/95 hover:bg-white border border-slate-200/90 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between shadow-[0_16px_36px_rgba(0,0,0,0.12)] transition-all text-slate-900">
+          {/* Brandmark: Black logo with white background */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-7 h-7 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-              <Cpu className="w-3.5 h-3.5 stroke-[2.5]" />
-            </div>
-            <span className="font-extrabold text-[15px] sm:text-base tracking-tight text-white font-tasaorbiter" style={{ color: '#ffffff' }}>
-              Continuity
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png"
+              alt="Continuity"
+              className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] lg:text-[13px] font-medium text-slate-200/90 font-tasaorbiter">
-            <a href="#performance" className="hover:text-white flex items-center gap-1 transition-colors">
+          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] lg:text-[13px] font-semibold text-slate-700 font-tasaorbiter">
+            <a href="#performance" className="hover:text-slate-950 flex items-center gap-1 transition-colors">
               <span>Platform</span>
-              <ChevronDown className="w-3 h-3 text-slate-400" />
+              <ChevronDown className="w-3 h-3 text-slate-500" />
             </a>
-            <Link href="/handoffs" className="hover:text-white transition-colors">
+            <Link href="/handoffs" className="hover:text-slate-950 transition-colors">
               Handoffs
             </Link>
-            <Link href="/reviews" className="hover:text-white transition-colors">
+            <Link href="/reviews" className="hover:text-slate-950 transition-colors">
               Reviews
             </Link>
-            <a href="#workflow" className="hover:text-white transition-colors">
+            <a href="#workflow" className="hover:text-slate-950 transition-colors">
               Lifecycle
             </a>
-            <Link href="/assistant" className="hover:text-white transition-colors">
+            <Link href="/assistant" className="hover:text-slate-950 transition-colors">
               RAG AI
             </Link>
           </div>
@@ -144,10 +144,10 @@ function Navbar() {
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Live Indicator Badge */}
             <div
-              className="relative text-slate-200 hover:text-white cursor-pointer transition-colors p-1"
+              className="relative text-slate-600 hover:text-slate-900 cursor-pointer transition-colors p-1"
               title="Platform Services Online"
             >
-              <Shield className="w-4 h-4 text-[#A6B9FF]" />
+              <Shield className="w-4 h-4 text-[#5558FF]" />
               <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#5558FF] text-white text-[9px] font-bold rounded-full flex items-center justify-center font-mono">
                 ✓
               </span>
@@ -156,7 +156,7 @@ function Navbar() {
             {/* Pill CTA: Open Dashboard */}
             <Link
               href="/dashboard"
-              className="hidden sm:inline-flex items-center gap-2.5 bg-white/20 hover:bg-white/25 border border-white/10 text-white font-semibold text-[11px] sm:text-[12px] pl-4 pr-1.5 py-1.5 rounded-full backdrop-blur-md shadow-sm transition-all group cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-2.5 bg-[#111638] hover:bg-[#1A2255] text-white font-semibold text-[11px] sm:text-[12px] pl-4 pr-1.5 py-1.5 rounded-full shadow-md transition-all group cursor-pointer"
             >
               <span>Open Dashboard</span>
               <span className="w-5 h-5 rounded-full bg-white text-[#111638] flex items-center justify-center font-bold text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
@@ -167,7 +167,7 @@ function Navbar() {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+              className="md:hidden text-slate-800 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -178,58 +178,76 @@ function Navbar() {
 
       {/* Mobile Sliding Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-[#111638]/95 backdrop-blur-xl pt-24 px-6 flex flex-col justify-between pb-10 md:hidden animate-in fade-in duration-200">
-          <div className="flex flex-col gap-5 text-base font-medium text-white font-tasaorbiter">
-            <Link
-              href="/dashboard"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10 flex items-center justify-between"
-            >
-              <span>Governance Dashboard</span>
-              <ChevronRight className="w-4 h-4 text-slate-400" />
-            </Link>
-            <Link
-              href="/handoffs"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10"
-            >
-              Shift Rotations &amp; Handoffs
-            </Link>
-            <Link
-              href="/reviews"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10"
-            >
-              Deliverable Reviews
-            </Link>
-            <Link
-              href="/tasks"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10"
-            >
-              Task Execution &amp; Deadlines
-            </Link>
-            <Link
-              href="/convergence"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10"
-            >
-              Cross-Team Convergence
-            </Link>
-            <Link
-              href="/assistant"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10"
-            >
-              Gemini RAG Assistant
-            </Link>
-            <a
-              href="#faq"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/10"
-            >
-              Architecture FAQ
-            </a>
+        <div className="fixed inset-0 z-50 bg-[#111638]/95 backdrop-blur-xl pt-6 px-6 flex flex-col justify-between pb-10 md:hidden animate-in fade-in duration-200">
+          <div>
+            <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://res.cloudinary.com/deimij13f/image/upload/v1791857114/logo-c_1_ju4lgi.png"
+                alt="Continuity"
+                className="h-8 w-auto object-contain"
+              />
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-5 text-base font-medium text-white font-tasaorbiter">
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 border-b border-white/10 flex items-center justify-between"
+              >
+                <span>Governance Dashboard</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </Link>
+              <Link
+                href="/handoffs"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 border-b border-white/10"
+              >
+                Shift Rotations &amp; Handoffs
+              </Link>
+              <Link
+                href="/reviews"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 border-b border-white/10"
+              >
+                Deliverable Reviews
+              </Link>
+              <Link
+                href="/tasks"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 border-b border-white/10"
+              >
+                Task Execution &amp; Deadlines
+              </Link>
+              <Link
+                href="/convergence"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 border-b border-white/10"
+              >
+                Cross-Team Convergence
+              </Link>
+              <Link
+                href="/assistant"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 border-b border-white/10"
+              >
+                Gemini RAG Assistant
+              </Link>
+              <a
+                href="#faq"
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 border-b border-white/10"
+              >
+                Architecture FAQ
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-col gap-3 pt-6">
@@ -260,11 +278,11 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section className="relative w-full pt-4 sm:pt-6 pb-20 sm:pb-24 overflow-hidden bg-[#111638] text-white">
-      {/* 1. Integrated Floating Pill Navbar */}
+    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between overflow-hidden bg-[#111638] text-white">
+      {/* 1. Integrated Floating Pill Navbar with White BG and Black Logo */}
       <Navbar />
 
-      {/* Vivid Atmospheric Radial Gradients matching reference screenshot */}
+      {/* Vivid Atmospheric Radial Gradients */}
       <div className="absolute inset-0 pointer-events-none select-none">
         {/* Core Electric Blue & Soft Periwinkle Center Glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[800px] h-[450px] bg-gradient-to-tr from-[#5558FF]/55 via-[#A6B9FF]/35 to-[#B39BFF]/25 blur-[120px] rounded-full" />
@@ -274,12 +292,12 @@ function HeroSection() {
         <div className="absolute top-10 right-10 w-[500px] h-[400px] bg-[#A6B9FF]/25 blur-[130px] rounded-full" />
         {/* Subtle Vertical Light Rays near right edge */}
         <div className="absolute top-0 right-12 w-32 h-full bg-gradient-to-b from-white/10 via-transparent to-transparent opacity-40 blur-lg" />
-        {/* Soft Lavender Gradient Fade to White Page Background at bottom */}
+        {/* Soft Lavender Gradient Fade at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none" />
       </div>
 
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        {/* Main Editorial Headline matching reference styling */}
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex-1 flex flex-col justify-center items-center my-auto py-6 sm:py-10">
+        {/* Main Editorial Headline */}
         <h1
           className="text-[34px] sm:text-[44px] md:text-[52px] lg:text-[58px] leading-[1.08] font-medium tracking-tight text-white max-w-4xl mx-auto font-tasaorbiter select-none"
           style={{ color: '#ffffff' }}
@@ -328,7 +346,7 @@ function HeroSection() {
             </svg>
           </div>
 
-          {/* Primary CTA: White Pill Button with Black Circle Arrow: Launch Workspace */}
+          {/* Primary CTA: White Pill Button with Black Circle Arrow */}
           <Link
             href="/dashboard"
             className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.22)] flex items-center gap-3 group transition-all cursor-pointer"
@@ -351,7 +369,7 @@ function HeroSection() {
           </Link>
         </div>
 
-        {/* 3D Floating Rainbow Notification Bell Artwork on Right matching screenshot */}
+        {/* 3D Floating Rainbow Notification Bell Artwork on Right */}
         <div className="hidden md:block absolute right-4 lg:right-16 bottom-4 lg:bottom-10 select-none pointer-events-none z-20">
           <div className="relative w-32 h-32 lg:w-40 lg:h-40 animate-pulse transition-transform duration-700">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -363,6 +381,12 @@ function HeroSection() {
             />
           </div>
         </div>
+      </div>
+
+      {/* Bottom Scroll Cue to indicate more sections below */}
+      <div className="relative z-10 pb-5 pt-2 flex flex-col items-center justify-center text-slate-300/80 text-[11px] tracking-wider uppercase font-semibold gap-1 select-none pointer-events-none animate-bounce">
+        <span>Scroll to Explore</span>
+        <ChevronDown className="w-4 h-4 text-slate-300" />
       </div>
     </section>
   );
@@ -382,26 +406,24 @@ function ClientLogoStrip() {
   ];
 
   return (
-    <section className="bg-white py-7 sm:py-9 border-b border-[#E4E7F2]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p className="text-[11px] sm:text-[12px] font-medium text-[#6F718A] uppercase tracking-wider select-none font-tasaorbiter">
-          Trusted by mission-critical engineering pods and enterprise infrastructure teams
-        </p>
-        <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-8 sm:gap-14 md:gap-20 text-[#6F718A]/90">
-          {logos.map((logo) => (
-            <div
-              key={logo.name}
-              className="flex items-center gap-2 hover:text-[#222442] transition-colors select-none"
-            >
-              <span className="text-[12px] text-[#5558FF]">{logo.symbol}</span>
-              <span className="text-[13px] sm:text-[14px] font-bold tracking-tight font-tasaorbiter">
-                {logo.name}
-              </span>
-            </div>
-          ))}
-        </div>
+    <div className="w-full text-center pb-6 sm:pb-8 border-b border-[#E4E7F2]/80">
+      <p className="text-[11px] sm:text-[12px] font-medium text-[#6F718A] uppercase tracking-wider select-none font-tasaorbiter">
+        Trusted by mission-critical engineering pods and enterprise infrastructure teams
+      </p>
+      <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-8 sm:gap-14 md:gap-20 text-[#6F718A]/90">
+        {logos.map((logo) => (
+          <div
+            key={logo.name}
+            className="flex items-center gap-2 hover:text-[#222442] transition-colors select-none"
+          >
+            <span className="text-[12px] text-[#5558FF]">{logo.symbol}</span>
+            <span className="text-[13px] sm:text-[14px] font-bold tracking-tight font-tasaorbiter">
+              {logo.name}
+            </span>
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -411,9 +433,12 @@ function ClientLogoStrip() {
 
 function MarketingShowcase() {
   return (
-    <section id="performance" className="py-12 sm:py-16 bg-[#F7F8FF]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch">
+    <section id="performance" className="min-h-[100dvh] flex flex-col justify-center py-10 sm:py-14 bg-[#F7F8FF]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center">
+        {/* Client Logos Strip inside Section 2 */}
+        <ClientLogoStrip />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch mt-6 sm:mt-8">
           {/* Left Panel: Wider Card (~2:1 ratio) with Dashboard Floating Metric */}
           <div className="lg:col-span-8 bg-gradient-to-br from-[#EDF1FF] via-white to-[#F7F8FF] border border-[#E4E7F2] rounded-[14px] p-6 sm:p-8 flex flex-col justify-between shadow-[0_6px_24px_rgba(27,37,100,0.05)] relative overflow-hidden group hover:shadow-[0_10px_32px_rgba(27,37,100,0.08)] transition-all">
             {/* Top Floating White Metric Card */}
@@ -440,13 +465,13 @@ function MarketingShowcase() {
 
             {/* Content Body */}
             <div className="mt-8 sm:mt-10">
-              <h2 className="text-[22px] sm:text-[26px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
+              <h2 className="text-[22px] sm:text-[26px] font-semibold text-slate-900 leading-[1.15] font-tasaorbiter">
                 Zero Context Loss across{' '}
                 <span className="font-instrumentserif italic font-normal text-[#5558FF]">
                   Developer Shift Rotations
                 </span>
               </h2>
-              <p className="mt-2.5 text-[12px] sm:text-[14px] text-[#6F718A] leading-[1.45] max-w-lg">
+              <p className="mt-2.5 text-[12px] sm:text-[14px] text-slate-600 leading-[1.45] max-w-lg">
                 Automated completeness scoring across 4 weighted dimensions, SHA-256 tamper-evident package hashes,
                 and optimistic concurrency control (409 Conflict protection) to eliminate rotation blind spots.
               </p>
@@ -480,7 +505,7 @@ function MarketingShowcase() {
                 <Target className="w-4 h-4 stroke-[2]" />
               </div>
 
-              <h3 className="mt-6 text-[20px] sm:text-[22px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
+              <h3 className="mt-6 text-[20px] sm:text-[22px] font-semibold text-slate-900 leading-[1.15] font-tasaorbiter">
                 Built for{' '}
                 <span className="font-instrumentserif italic font-normal text-[#5558FF]">
                   High-Velocity
@@ -488,7 +513,7 @@ function MarketingShowcase() {
                 engineering pods
               </h3>
 
-              <p className="mt-2.5 text-[12px] sm:text-[13px] text-[#6F718A] leading-[1.45]">
+              <p className="mt-2.5 text-[12px] sm:text-[13px] text-slate-600 leading-[1.45]">
                 Fine-grained role governance for execution pods. Distribute tasks, track blockers,
                 monitor 10 organizational KPI pulses, and ratify client delivery.
               </p>
@@ -545,8 +570,8 @@ function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="py-12 sm:py-16 bg-white">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-white">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
           <div>
@@ -633,8 +658,8 @@ function GrowthWorkflow() {
   ];
 
   return (
-    <section id="workflow" className="py-12 sm:py-16 bg-[#F7F8FF]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="workflow" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-[#F7F8FF]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
           {/* Left Visual Panel: Abstract Sculpture + Floating Pill */}
           <div className="lg:col-span-6 bg-gradient-to-tr from-[#EDF1FF] via-[#E4E7F2] to-[#EDF1FF] border border-[#E4E7F2] rounded-[14px] p-8 h-[360px] sm:h-[420px] flex flex-col items-center justify-center relative overflow-hidden shadow-[0_6px_24px_rgba(27,37,100,0.05)]">
@@ -751,8 +776,8 @@ function PortfolioGallery() {
   ];
 
   return (
-    <section id="portfolio" className="py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="portfolio" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Centered Heading */}
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
           <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
@@ -837,8 +862,8 @@ function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 bg-[#F7F8FF] border-b border-[#E4E7F2]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimonials" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-[#F7F8FF] border-b border-[#E4E7F2]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
           <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
             Trusted by Engineering Leaders <br />
@@ -915,8 +940,8 @@ function FAQSection() {
   ];
 
   return (
-    <section id="faq" className="py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
           <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
             Frequently asked <br />
@@ -992,8 +1017,8 @@ function ArticlesSection() {
   ];
 
   return (
-    <section id="articles" className="py-12 sm:py-16 bg-[#F7F8FF]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="articles" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-[#F7F8FF]">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex items-end justify-between mb-8 sm:mb-10">
           <div>
             <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
@@ -1053,13 +1078,13 @@ function ArticlesSection() {
 
 function FinalCTA() {
   return (
-    <section className="relative w-full py-16 sm:py-24 bg-[#111638] text-white overflow-hidden text-center">
+    <section className="relative w-full min-h-[100dvh] flex flex-col justify-center py-16 sm:py-24 bg-[#111638] text-white overflow-hidden text-center">
       {/* Vivid Blue and Lavender Radial Gradient Glow */}
       <div className="absolute inset-0 pointer-events-none select-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#5558FF]/50 via-[#A6B9FF]/30 to-[#B39BFF]/20 blur-[110px] rounded-full" />
       </div>
 
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <h2
           className="text-[32px] sm:text-[44px] md:text-[50px] font-medium leading-[1.1] text-white font-tasaorbiter"
           style={{ color: '#ffffff' }}
@@ -1128,12 +1153,12 @@ function Footer() {
           {/* Column 1: Brand & Contact */}
           <div className="lg:col-span-4 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-full bg-[#E9D5FF] text-[#1E1B4B] flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
-                <Cpu className="w-4 h-4 stroke-[2.5]" />
-              </div>
-              <span className="font-extrabold text-lg tracking-tight text-[#111638] font-tasaorbiter">
-                Continuity
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png"
+                alt="Continuity"
+                className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+              />
             </Link>
             <p className="text-[14px] text-[#6F718A] leading-relaxed max-w-sm">
               Enterprise Project Continuity, Shift Governance &amp; Verifiable Client Delivery Platform.
@@ -1281,13 +1306,10 @@ function Footer() {
 export function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-[#222442] font-sans antialiased selection:bg-[#5558FF]/20 selection:text-[#111638]">
-      {/* 1 & 2. Hero Section with Integrated Floating Pill Navbar */}
+      {/* 1. Hero Section (Occupies 100% of Screen 1) */}
       <HeroSection />
 
-      {/* 3. Trusted By / Client Logos Strip */}
-      <ClientLogoStrip />
-
-      {/* 4. Performance Marketing & Platform Showcase */}
+      {/* 2. Performance Marketing & Client Logos Showcase (Occupies Screen 2) */}
       <MarketingShowcase />
 
       {/* 5. Core Platform Deliverables & Capabilities */}
