@@ -195,9 +195,7 @@ export default function LoginPage() {
               }`}
             >
               <div className="space-y-3">
-                <div className="w-11 h-11 rounded-xl bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
-                  <Users className="w-5 h-5" />
-                </div>
+                <Users className="w-7 h-7 text-blue-500 group-hover:scale-105 transition-transform" />
                 <div>
                   <h2 className={`text-lg font-bold transition-colors ${
                     isLight ? 'text-slate-900 group-hover:text-blue-600' : 'text-white group-hover:text-blue-400'
@@ -233,9 +231,7 @@ export default function LoginPage() {
               }`}
             >
               <div className="space-y-3">
-                <div className="w-11 h-11 rounded-xl bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
+                <ShieldCheck className="w-7 h-7 text-blue-500 group-hover:scale-105 transition-transform" />
                 <div>
                   <h2 className={`text-lg font-bold transition-colors ${
                     isLight ? 'text-slate-900 group-hover:text-blue-600' : 'text-white group-hover:text-blue-400'
@@ -263,13 +259,9 @@ export default function LoginPage() {
           <div className={`mt-8 p-4 rounded-xl border ${
             isLight ? 'bg-slate-50 border-slate-200' : 'bg-white/[0.03] border-white/10'
           }`}>
-            <div className="flex items-center justify-between mb-3">
+            <div className="mb-3">
               <span className="text-xs font-semibold tracking-wider uppercase text-neutral-400">
                 Verified Enterprise Credentials (1-Click Fill)
-              </span>
-              <span className="text-[11px] font-mono text-emerald-500 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                BCrypt &bull; JWT Auth
               </span>
             </div>
 
@@ -782,10 +774,6 @@ export default function LoginPage() {
       {/* Clean Footer */}
       <footer className="w-full max-w-4xl py-4 z-20 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 border-t border-white/[0.06] gap-2">
         <span>&copy; {new Date().getFullYear()} Continuity. All rights reserved.</span>
-        <div className="flex items-center gap-1.5 text-neutral-400">
-          <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
-          <span>Enterprise SSO &bull; 256-bit Encrypted</span>
-        </div>
       </footer>
     </div>
   );

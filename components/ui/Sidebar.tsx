@@ -283,92 +283,32 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Quick Role & Persona Switcher */}
+      {/* User Identity Profile Tile */}
       <div
         className={`p-3 border-t shrink-0 space-y-2 ${
           isLight ? 'bg-slate-50/90 border-slate-200/80' : 'bg-[#050606]/80 border-white/10'
         }`}
       >
-        <div className="relative">
-          <button
-            onClick={() => setIsPersonaMenuOpen((prev) => !prev)}
-            className={`w-full flex items-center justify-between p-2 rounded-xl text-left border transition-colors cursor-pointer group ${
-              isLight
-                ? 'bg-white hover:bg-slate-50 border-slate-200/90 text-slate-800 shadow-sm'
-                : 'bg-white/[0.03] hover:bg-white/[0.06] border-white/[0.08] text-[#F5F5F2]'
-            }`}
-          >
-            <div className="flex items-center gap-2.5 min-w-0">
-              <Avatar name={currentUser.name} initials={currentUser.initials} size="sm" showIndicator />
-              <div className="min-w-0">
-                <p className={`text-xs font-medium truncate flex items-center gap-1.5 ${isLight ? 'text-slate-900' : 'text-[#F5F5F2]'}`}>
-                  <span className="truncate">{currentUser.name}</span>
-                </p>
-                <p className={`text-[10px] truncate flex items-center gap-1 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
-                  <span className="font-semibold text-blue-600 dark:text-blue-400">{activeRole}</span>
-                  <span>·</span>
-                  <span className="truncate">{currentUser.role}</span>
-                </p>
-              </div>
+        <div
+          className={`w-full flex items-center justify-between p-2 rounded-xl text-left border ${
+            isLight
+              ? 'bg-white border-slate-200/90 text-slate-800 shadow-sm'
+              : 'bg-white/[0.03] border-white/[0.08] text-[#F5F5F2]'
+          }`}
+        >
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Avatar name={currentUser.name} initials={currentUser.initials} size="sm" showIndicator />
+            <div className="min-w-0">
+              <p className={`text-xs font-semibold truncate flex items-center gap-1.5 ${isLight ? 'text-slate-900' : 'text-[#F5F5F2]'}`}>
+                <span className="truncate">{currentUser.name}</span>
+              </p>
+              <p className={`text-[10px] truncate flex items-center gap-1 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+                <span className="font-semibold text-blue-600 dark:text-blue-400">{activeRole}</span>
+                <span>·</span>
+                <span className="truncate">{currentUser.role}</span>
+              </p>
             </div>
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform shrink-0 ${isLight ? 'text-slate-400 group-hover:text-slate-800' : 'text-neutral-400 group-hover:text-white'}`} />
-          </button>
-
-          {/* Persona Switcher Popup Dropdown */}
-          {isPersonaMenuOpen && (
-            <div
-              className={`absolute bottom-full left-0 right-0 mb-2 p-2 border rounded-xl shadow-2xl z-50 space-y-1 ${
-                isLight ? 'bg-white border-slate-200 shadow-slate-300/40 text-slate-800' : 'bg-[#0E1112] border-white/15 text-neutral-200'
-              }`}
-            >
-              <div className={`px-2 py-1 text-[10px] font-semibold uppercase tracking-wider ${isLight ? 'text-slate-400' : 'text-neutral-400'}`}>
-                Switch Perspective
-              </div>
-              {DEMO_PERSONAS.map((persona) => {
-                const userObj = users.find((u) => u.id === persona.id);
-                const isSelected = currentUser.id === persona.id;
-
-                return (
-                  <button
-                    key={persona.id}
-                    onClick={() => {
-                      if (userObj) {
-                        setCurrentUser(userObj);
-                        setIsPersonaMenuOpen(false);
-                      }
-                    }}
-                    className={`w-full text-left p-2 rounded-lg flex items-start justify-between gap-2 text-xs transition-colors cursor-pointer ${
-                      isSelected
-                        ? isLight
-                          ? 'bg-slate-100 text-slate-900 font-semibold border border-slate-200'
-                          : 'bg-white/[0.08] text-white font-semibold border border-white/10'
-                        : isLight
-                        ? 'hover:bg-slate-50 text-slate-700'
-                        : 'hover:bg-white/5 text-neutral-300'
-                    }`}
-                  >
-                    <div>
-                      <div className={`font-semibold flex items-center gap-1.5 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                        <span className={isLight ? 'text-slate-900' : 'text-white'}>{persona.name}</span>
-                        <span
-                          className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-semibold ${
-                            persona.role === 'Admin'
-                              ? 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/20'
-                              : persona.role === 'Team Leader'
-                              ? 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20'
-                              : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/20'
-                          }`}
-                        >
-                          {persona.badge}
-                        </span>
-                      </div>
-                      <div className={`text-[10px] mt-0.5 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>{persona.desc}</div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          </div>
         </div>
 
         {/* Theme & Logout Controls */}
