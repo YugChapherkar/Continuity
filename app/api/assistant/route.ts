@@ -240,15 +240,16 @@ STRICT OPERATIONAL RULES:
 USER QUERY:
 ${query}`;
 
+        const modelName = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
         const geminiRes = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
+          model: modelName,
           contents: systemPrompt,
         });
 
         if (geminiRes && geminiRes.text) {
           return NextResponse.json({
             response: geminiRes.text,
-            model: 'gemini-2.5-flash',
+            model: modelName,
             citations: Array.from(citations).slice(0, 8),
             pinnedVersionId: targetProject?.currentVersionId || 'v2.4.0',
           });
