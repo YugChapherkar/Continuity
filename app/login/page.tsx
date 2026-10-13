@@ -52,119 +52,85 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Form Submission
+  // Quick Credentials Autofill Handler
+  const handleSelectDemoCredentials = (creds: {
+    identifier: string;
+    pass: string;
+    portal: 'admin' | 'employee';
+  }) => {
+    setSelectedPortal(creds.portal);
+    if (creds.portal === 'admin') {
+      setAdminIdentifier(creds.identifier);
+      setAdminPassword(creds.pass);
+    } else {
+      setEmployeeAuthTab('email');
+      setEmail(creds.identifier);
+      setPassword(creds.pass);
+    }
+    setErrorMessage(null);
+  };
+
+  // Form Submission via Real JWT Authentication Endpoint
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
 
-    let targetUser: User | undefined;
+    const identifier =
+      selectedPortal === 'admin'
+        ? adminIdentifier.trim()
+        : employeeAuthTab === 'email'
+        ? email.trim()
+        : employeeIdInput.trim();
 
-    if (selectedPortal === 'admin') {
-      const cleanAdminId = adminIdentifier.trim().toLowerCase();
-      if (!cleanAdminId) {
-        setErrorMessage('Please enter your Admin Email or ID.');
-        return;
-      }
-      targetUser = users.find(
-        (u) =>
-          u.email.toLowerCase() === cleanAdminId ||
-          u.employeeId?.toLowerCase() === cleanAdminId ||
-          u.id === 'user-admin'
-      );
+    const plainPassword =
+      selectedPortal === 'admin'
+        ? adminPassword
+        : password || pin;
 
-      if (!targetUser) {
-        targetUser = {
-          id: 'user-admin',
-          name: 'Alexander Ward (Admin)',
-          email: cleanAdminId.includes('@') ? cleanAdminId : 'admin@continuity.internal',
-          employeeId: cleanAdminId.includes('ADM-') ? cleanAdminId.toUpperCase() : 'ADM-0001',
-          role: 'System Administrator',
-          avatar: '',
-          initials: 'AW',
-          department: 'Platform Administration',
-          bio: 'System administrator managing platform access and audit logs.',
-          location: 'Headquarters',
-          activeProjectsCount: 5,
-          pendingHandoffsCount: 0,
-          isAdmin: true,
-        };
-      } else {
-        targetUser = { ...targetUser, isAdmin: true };
-      }
-    } else {
-      // Employee portal submission
-      if (employeeAuthTab === 'email') {
-        const cleanEmail = email.trim().toLowerCase();
-        if (!cleanEmail) {
-          setErrorMessage('Please enter your company email address.');
-          return;
-        }
-        if (!cleanEmail.includes('@')) {
-          setErrorMessage('Please enter a valid work email.');
-          return;
-        }
-        targetUser = users.find((u) => u.email.toLowerCase() === cleanEmail);
-      } else {
-        const cleanId = employeeIdInput.trim().toUpperCase();
-        if (!cleanId) {
-          setErrorMessage('Please enter your Employee ID.');
-          return;
-        }
-        targetUser = users.find(
-          (u) =>
-            u.employeeId?.toUpperCase() === cleanId ||
-            u.id.toUpperCase() === cleanId ||
-            u.employeeId?.toUpperCase().replace('CNT-', '') === cleanId.replace('CNT-', '')
-        );
-      }
+    if (!identifier) {
+      setErrorMessage(selectedPortal === 'admin' ? 'Please enter your Admin Email or ID.' : 'Please enter your company email address.');
+      return;
+    }
+
+    if (!plainPassword) {
+      setErrorMessage('Please enter your password.');
+      return;
     }
 
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    setIsLoading(false);
 
-    if (targetUser) {
-      setCurrentUser(targetUser);
-      setIsAuthenticated(true);
-      if (selectedPortal === 'admin') {
-        showToast(`Welcome, Administrator ${targetUser.name}!`, 'success');
-      } else {
-        showToast(`Welcome back, ${targetUser.name}!`, 'success');
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          identifier,
+          password: plainPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMessage(data.error || 'Authentication failed. Please check credentials.');
+        return;
       }
-      router.push('/dashboard');
-    } else {
-      const newCustomUser: User = {
-        id: `user-${Date.now()}`,
-        name:
-          employeeAuthTab === 'email'
-            ? email.split('@')[0].replace('.', ' ').replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())
-            : `Employee ${employeeIdInput.toUpperCase()}`,
-        email:
-          employeeAuthTab === 'email'
-            ? email.trim()
-            : `${employeeIdInput.trim().toLowerCase()}@continuity.internal`,
-        employeeId:
-          employeeAuthTab === 'employeeId'
-            ? employeeIdInput.trim().toUpperCase()
-            : `CNT-${Math.floor(1000 + Math.random() * 9000)}`,
-        role: 'Engineering Systems Specialist',
-        avatar: '',
-        initials:
-          employeeAuthTab === 'email'
-            ? email.slice(0, 2).toUpperCase()
-            : employeeIdInput.slice(0, 2).toUpperCase(),
-        department: 'Core Engineering Systems',
-        bio: 'Enterprise verified employee authenticated via corporate portal.',
-        location: 'Engineering Hub',
-        activeProjectsCount: 1,
-        pendingHandoffsCount: 0,
-      };
-      setCurrentUser(newCustomUser);
+
+      // Securely store token and user in client state
+      localStorage.setItem('continuity_token', data.token);
+      localStorage.setItem('continuity_current_user_id', data.user.id);
+      setCurrentUser(data.user);
       setIsAuthenticated(true);
-      showToast(`Welcome, ${newCustomUser.name}!`, 'success');
+
+      showToast(`Welcome, ${data.user.name} (${data.user.systemRole || 'Employee'})!`, 'success');
       router.push('/dashboard');
+    } catch {
+      setErrorMessage('Unable to reach the authentication service. Please verify your connection.');
+    } finally {
+      setIsLoading(false);
     }
   };
+
 
   return (
     <div
@@ -290,6 +256,98 @@ export default function LoginPage() {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Quick-Access Test Credentials */}
+          <div className={`mt-8 p-4 rounded-xl border ${
+            isLight ? 'bg-slate-50 border-slate-200' : 'bg-white/[0.03] border-white/10'
+          }`}>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-semibold tracking-wider uppercase text-neutral-400">
+                Verified Enterprise Credentials (1-Click Fill)
+              </span>
+              <span className="text-[11px] font-mono text-emerald-500 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                BCrypt &bull; JWT Auth
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              {/* ADMIN */}
+              <button
+                type="button"
+                onClick={() =>
+                  handleSelectDemoCredentials({
+                    identifier: 'admin@phx.in',
+                    pass: '12345678',
+                    portal: 'admin',
+                  })
+                }
+                className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
+                  isLight
+                    ? 'bg-white border-slate-200 hover:border-blue-500 shadow-sm'
+                    : 'bg-[#121518] border-white/10 hover:border-blue-500/60'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-blue-400">1. Main Admin</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono">Admin</span>
+                </div>
+                <div className="text-xs font-semibold mt-1">Yug Chapherkar</div>
+                <div className="text-[11px] text-neutral-400 font-mono truncate">admin@phx.in</div>
+                <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
+              </button>
+
+              {/* PROJECT LEAD */}
+              <button
+                type="button"
+                onClick={() =>
+                  handleSelectDemoCredentials({
+                    identifier: 'lead@phx.in',
+                    pass: '12345678',
+                    portal: 'employee',
+                  })
+                }
+                className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
+                  isLight
+                    ? 'bg-white border-slate-200 hover:border-purple-500 shadow-sm'
+                    : 'bg-[#121518] border-white/10 hover:border-purple-500/60'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-purple-400">2. Project Lead</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Lead</span>
+                </div>
+                <div className="text-xs font-semibold mt-1">Marcus Vance</div>
+                <div className="text-[11px] text-neutral-400 font-mono truncate">lead@phx.in</div>
+                <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
+              </button>
+
+              {/* EMPLOYEE */}
+              <button
+                type="button"
+                onClick={() =>
+                  handleSelectDemoCredentials({
+                    identifier: 'employee@phx.in',
+                    pass: '12345678',
+                    portal: 'employee',
+                  })
+                }
+                className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
+                  isLight
+                    ? 'bg-white border-slate-200 hover:border-emerald-500 shadow-sm'
+                    : 'bg-[#121518] border-white/10 hover:border-emerald-500/60'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-emerald-400">3. Employee</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Staff</span>
+                </div>
+                <div className="text-xs font-semibold mt-1">Jessica Chauhan</div>
+                <div className="text-[11px] text-neutral-400 font-mono truncate">employee@phx.in</div>
+                <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
+              </button>
             </div>
           </div>
         </main>
@@ -537,6 +595,33 @@ export default function LoginPage() {
                   </>
                 )}
               </button>
+              {/* Quick credential buttons inside Employee portal */}
+              <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmployeeAuthTab('email');
+                    setEmail('lead@phx.in');
+                    setPassword('12345678');
+                    setErrorMessage(null);
+                  }}
+                  className="flex-1 py-1.5 px-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-[11px] text-purple-300 font-mono text-center transition-colors cursor-pointer border border-purple-500/20"
+                >
+                  ⚡ Lead (lead@phx.in)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmployeeAuthTab('email');
+                    setEmail('employee@phx.in');
+                    setPassword('12345678');
+                    setErrorMessage(null);
+                  }}
+                  className="flex-1 py-1.5 px-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-[11px] text-emerald-300 font-mono text-center transition-colors cursor-pointer border border-emerald-500/20"
+                >
+                  ⚡ Employee (employee@phx.in)
+                </button>
+              </div>
             </form>
           </div>
         </main>
@@ -675,6 +760,20 @@ export default function LoginPage() {
                   </>
                 )}
               </button>
+              {/* Quick credential buttons inside Admin portal */}
+              <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAdminIdentifier('admin@phx.in');
+                    setAdminPassword('12345678');
+                    setErrorMessage(null);
+                  }}
+                  className="w-full py-1.5 px-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-[11px] text-blue-300 font-mono text-center transition-colors cursor-pointer border border-blue-500/20"
+                >
+                  ⚡ Auto-fill Main Admin (admin@phx.in / 12345678)
+                </button>
+              </div>
             </form>
           </div>
         </main>

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 import {
   User,
   Team,
@@ -109,31 +110,33 @@ export function createNotification(
 }
 
 function getInitialStore(): ServerStoreData {
+  const DEFAULT_HASH = '$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa'; // '12345678'
   const users: User[] = [
     {
       id: 'user-admin',
-      name: 'Alexander Ward',
-      email: 'admin@continuity.internal',
+      name: 'Yug Chapherkar',
+      email: 'admin@phx.in',
       employeeId: 'ADM-0001',
       role: 'System Administrator & Executive Sponsor',
       systemRole: 'Admin',
       accountStatus: 'Active',
       avatar: '',
-      initials: 'AW',
+      initials: 'YC',
       department: 'Platform Administration & Executive Leadership',
       bio: 'Executive platform administrator overseeing enterprise governance, team orchestration, deliverable sign-offs, and final client release delivery.',
       location: 'San Francisco, CA (HQ)',
       activeProjectsCount: 4,
       pendingHandoffsCount: 0,
       isAdmin: true,
+      passwordHash: DEFAULT_HASH,
       createdAt: '2026-01-01T00:00:00Z',
     },
     {
       id: 'user-marcus',
       name: 'Marcus Vance',
-      email: 'm.vance@continuity.internal',
-      employeeId: 'CNT-1004',
-      role: 'Staff Systems Architect & Team Leader',
+      email: 'lead@phx.in',
+      employeeId: 'TL-1001',
+      role: 'Project Lead & Staff Systems Architect',
       systemRole: 'Team Leader',
       accountStatus: 'Active',
       teamId: 'team-storage',
@@ -144,6 +147,7 @@ function getInitialStore(): ServerStoreData {
       location: 'Zurich, Switzerland (CET)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 0,
+      passwordHash: DEFAULT_HASH,
       createdAt: '2026-01-15T00:00:00Z',
     },
     {
@@ -162,6 +166,7 @@ function getInitialStore(): ServerStoreData {
       location: 'New York, NY (EST)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 1,
+      passwordHash: DEFAULT_HASH,
       createdAt: '2026-02-01T00:00:00Z',
     },
     {
@@ -180,12 +185,13 @@ function getInitialStore(): ServerStoreData {
       location: 'London, UK (GMT)',
       activeProjectsCount: 1,
       pendingHandoffsCount: 1,
+      passwordHash: DEFAULT_HASH,
       createdAt: '2026-02-15T00:00:00Z',
     },
     {
       id: 'user-jessica',
       name: 'Jessica Chauhan',
-      email: 'chauhanjessicaa27@gmail.com',
+      email: 'employee@phx.in',
       employeeId: 'CNT-1001',
       role: 'Senior Distributed Systems Engineer',
       systemRole: 'Employee',
@@ -198,8 +204,10 @@ function getInitialStore(): ServerStoreData {
       location: 'San Francisco, CA (PST)',
       activeProjectsCount: 2,
       pendingHandoffsCount: 1,
+      passwordHash: DEFAULT_HASH,
       createdAt: '2026-03-01T00:00:00Z',
     },
+
     {
       id: 'user-yash',
       name: 'Yash Lokhande',
@@ -1139,8 +1147,70 @@ function getInitialStore(): ServerStoreData {
   };
 }
 
+function ensureCoreUsers(store: ServerStoreData) {
+  const DEFAULT_HASH = '$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa'; // '12345678'
+
+  // 1. Admin: Yug Chapherkar
+  let admin = store.users.find((u) => u.id === 'user-admin' || u.email === 'admin@phx.in' || u.systemRole === 'Admin');
+  if (!admin) {
+    admin = {
+      id: 'user-admin',
+      name: 'Yug Chapherkar',
+      email: 'admin@phx.in',
+      employeeId: 'ADM-0001',
+      role: 'System Administrator & Executive Sponsor',
+      systemRole: 'Admin',
+      accountStatus: 'Active',
+      avatar: '',
+      initials: 'YC',
+      department: 'Platform Administration & Executive Leadership',
+      bio: 'Executive platform administrator overseeing enterprise governance, team orchestration, deliverable sign-offs, and final client release delivery.',
+      location: 'San Francisco, CA (HQ)',
+      activeProjectsCount: 4,
+      pendingHandoffsCount: 0,
+      isAdmin: true,
+      passwordHash: DEFAULT_HASH,
+      createdAt: '2026-01-01T00:00:00Z',
+    };
+    store.users.unshift(admin);
+  } else {
+    admin.name = 'Yug Chapherkar';
+    admin.email = 'admin@phx.in';
+    admin.initials = 'YC';
+    admin.passwordHash = DEFAULT_HASH;
+    admin.systemRole = 'Admin';
+    admin.isAdmin = true;
+  }
+
+  // 2. Project Lead: Marcus Vance
+  let lead = store.users.find((u) => u.id === 'user-marcus' || u.email === 'lead@phx.in');
+  if (lead) {
+    lead.name = 'Marcus Vance';
+    lead.email = 'lead@phx.in';
+    lead.employeeId = 'TL-1001';
+    lead.role = 'Project Lead & Staff Systems Architect';
+    lead.systemRole = 'Team Leader';
+    lead.passwordHash = DEFAULT_HASH;
+  }
+
+  // 3. Employee: Jessica Chauhan
+  let emp = store.users.find((u) => u.id === 'user-jessica' || u.email === 'employee@phx.in');
+  if (emp) {
+    emp.name = 'Jessica Chauhan';
+    emp.email = 'employee@phx.in';
+    emp.systemRole = 'Employee';
+    emp.passwordHash = DEFAULT_HASH;
+  }
+
+  // Ensure all users have passwordHash
+  store.users.forEach((u) => {
+    if (!u.passwordHash) u.passwordHash = DEFAULT_HASH;
+  });
+}
+
 export function getStore(): ServerStoreData {
   if (cachedData) {
+    ensureCoreUsers(cachedData);
     return cachedData;
   }
 
@@ -1150,6 +1220,7 @@ export function getStore(): ServerStoreData {
     try {
       const content = fs.readFileSync(STORAGE_FILE, 'utf-8');
       cachedData = JSON.parse(content) as ServerStoreData;
+      ensureCoreUsers(cachedData);
       return cachedData;
     } catch {
       // fallback
@@ -1157,6 +1228,7 @@ export function getStore(): ServerStoreData {
   }
 
   cachedData = getInitialStore();
+  ensureCoreUsers(cachedData);
   saveStore(cachedData);
   return cachedData;
 }
@@ -1170,6 +1242,28 @@ export function saveStore(data: ServerStoreData) {
     console.error('Failed to save continuity server store:', err);
   }
 }
+
+/**
+ * Verify user credentials against stored bcrypt password hashes.
+ * Checks email or employee ID.
+ */
+export async function verifyUserCredentials(identifier: string, plainPassword: string): Promise<User | null> {
+  const store = getStore();
+  const clean = identifier.trim().toLowerCase();
+  const user = store.users.find(
+    (u) =>
+      u.email.toLowerCase() === clean ||
+      u.employeeId?.toLowerCase() === clean ||
+      u.id.toLowerCase() === clean
+  );
+  if (!user) return null;
+
+  const hash = user.passwordHash || '$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa';
+  const isValid = await bcrypt.compare(plainPassword, hash);
+  if (!isValid) return null;
+  return user;
+}
+
 
 // Security / Role helpers
 export function getUserById(userId: string): User | undefined {

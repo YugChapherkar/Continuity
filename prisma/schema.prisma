@@ -1,0 +1,168 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                   String   @id
+  name                 String
+  email                String   @unique
+  passwordHash         String
+  role                 String
+  systemRole           String   // 'Admin', 'Team Leader', 'Employee'
+  employeeId           String   @unique
+  avatar               String?
+  initials             String
+  department           String
+  bio                  String?
+  location             String?
+  activeProjectsCount  Int      @default(0)
+  pendingHandoffsCount Int      @default(0)
+  isAdmin              Boolean  @default(false)
+  teamId               String?
+  accountStatus        String   @default("Active")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Team {
+  id          String   @id
+  name        String
+  department  String
+  leaderId    String
+  leaderName  String
+  status      String   @default("Active")
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model Project {
+  id                  String   @id
+  name                String
+  description         String?
+  status              String
+  health              String   @default("Green")
+  priority            String   @default("P1")
+  client              String?
+  ownerId             String
+  teamId              String?
+  team                String
+  teamLeaderId        String?
+  teamLeader          String?
+  repositoryUrl       String?
+  architectureSummary String?
+  quickstartGuide     String?
+  completenessScore   Int      @default(85)
+  tasksData           String?
+  versionsData        String?
+  decisionsData       String?
+  teamMembersData     String?
+  filesData           String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Handoff {
+  id                 String    @id
+  projectId          String
+  projectName        String
+  senderId           String
+  recipientId        String
+  status             String
+  completenessScore  Int       @default(0)
+  note               String?
+  taskTitle          String?
+  briefingData       String?
+  auditTrailData     String?
+  readinessCheckData String?
+  acceptedAt         DateTime?
+  createdAt          DateTime  @default(now())
+}
+
+model DailyUpdate {
+  id               String   @id
+  employeeId       String
+  employeeName     String
+  projectId        String
+  projectName      String
+  taskId           String?
+  taskTitle        String?
+  completedWork    String
+  inProgress       String
+  nextSteps        String
+  blockers         String?
+  leaderComment    String?
+  reviewedByLeader Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
+
+model ProgressReport {
+  id              String   @id
+  leaderId        String
+  leaderName      String
+  projectId       String
+  projectName     String
+  teamName        String
+  status          String   @default("Submitted")
+  summary         String
+  blockers        String?
+  recommendations String?
+  adminFeedback   String?
+  createdAt       DateTime @default(now())
+}
+
+model ReviewSubmission {
+  id            String   @id
+  projectId     String
+  projectName   String
+  versionId     String
+  versionHash   String
+  submittedBy   String
+  submitterName String
+  status        String   @default("Submitted for Final Review")
+  decisionNote  String?
+  reviewedBy    String?
+  createdAt     DateTime @default(now())
+}
+
+model DeliveryRecord {
+  id               String   @id
+  projectId        String
+  projectName      String
+  client           String
+  deliveredVersion String
+  versionHash      String
+  approvedBy       String
+  tamperProofHash  String
+  status           String   @default("Delivered")
+  deliveredAt      DateTime @default(now())
+}
+
+model AuditLog {
+  id          String   @id
+  timestamp   String
+  hash        String
+  prevHash    String
+  action      String
+  actorId     String
+  actorName   String
+  projectId   String?
+  projectName String?
+  detail      String
+  verifiable  Boolean  @default(true)
+}
+
+model Notification {
+  id          String   @id
+  recipientId String?
+  title       String
+  message     String
+  type        String
+  read        Boolean  @default(false)
+  link        String?
+  timestamp   DateTime @default(now())
+}

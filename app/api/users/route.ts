@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getStore, saveStore, getUserById, getEffectiveRole, createAuditLog } from '@/lib/server-store';
 import { User, SystemRole } from '@/lib/types';
+import { hashPassword } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 export async function GET(req: NextRequest) {
   const store = getStore();
@@ -21,23 +23,42 @@ export async function GET(req: NextRequest) {
     filtered = filtered.filter((u) => u.accountStatus === status);
   }
 
-  return NextResponse.json(filtered);
+  // Sanitize out password hashes from public user listings
+  const sanitized = filtered.map(({ passwordHash, ...rest }) => rest);
+  return NextResponse.json(sanitized);
 }
 
 export async function POST(req: NextRequest) {
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
+  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
+  if (!actorId) {
+    return NextResponse.json(
+      { error: 'Unauthorized: Authentication required with valid JWT credentials.' },
+      { status: 401 }
+    );
+  }
+
   const actor = getUserById(actorId);
 
   if (!actor || getEffectiveRole(actor) !== 'Admin') {
     return NextResponse.json(
-      { error: 'Forbidden: Only an authorized Admin can create or invite employees.' },
+      { error: 'Forbidden: Only an authorized Admin can create or invite employees and assign roles.' },
       { status: 403 }
     );
   }
 
   try {
     const body = await req.json();
-    const { name, email, role, systemRole = 'Employee', department, teamId, location, bio } = body;
+    const {
+      name,
+      email,
+      role,
+      systemRole = 'Employee',
+      department,
+      teamId,
+      location,
+      bio,
+      password = '12345678',
+    } = body;
 
     if (!name || !email || !department) {
       return NextResponse.json({ error: 'Name, email, and department are required' }, { status: 400 });
@@ -57,14 +78,20 @@ export async function POST(req: NextRequest) {
       .substring(0, 2)
       .toUpperCase();
 
-    const employeeId = `CNT-${Math.floor(1000 + Math.random() * 9000)}`;
+    const employeeId = systemRole === 'Admin'
+      ? `ADM-${Math.floor(1000 + Math.random() * 9000)}`
+      : systemRole === 'Team Leader'
+      ? `TL-${Math.floor(1000 + Math.random() * 9000)}`
+      : `CNT-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const passwordHash = await hashPassword(password);
 
     const newUser: User = {
       id,
       name,
       email,
       employeeId,
-      role: role || 'Software Systems Engineer',
+      role: role || (systemRole === 'Team Leader' ? 'Lead Systems Architect & Project Lead' : 'Software Systems Engineer'),
       systemRole: systemRole as SystemRole,
       accountStatus: 'Active',
       teamId,
@@ -76,6 +103,7 @@ export async function POST(req: NextRequest) {
       activeProjectsCount: 0,
       pendingHandoffsCount: 0,
       isAdmin: systemRole === 'Admin',
+      passwordHash,
       createdAt: new Date().toISOString(),
     };
 
@@ -87,26 +115,69 @@ export async function POST(req: NextRequest) {
       if (team && !team.memberIds.includes(id)) {
         team.memberIds.push(id);
       }
+      if (team && systemRole === 'Team Leader' && !team.leaderId) {
+        team.leaderId = id;
+      }
+    }
+
+    // Also sync to Prisma DB if available
+    try {
+      await prisma.user.upsert({
+        where: { id: newUser.id },
+        update: {
+          name: newUser.name,
+          email: newUser.email,
+          role: newUser.role,
+          systemRole: newUser.systemRole || 'Employee',
+          passwordHash: passwordHash,
+          teamId: newUser.teamId || null,
+        },
+        create: {
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+          role: newUser.role,
+          systemRole: newUser.systemRole || 'Employee',
+          passwordHash: passwordHash,
+          employeeId: newUser.employeeId || employeeId,
+          initials: newUser.initials,
+          department: newUser.department,
+          location: newUser.location || null,
+          bio: newUser.bio || null,
+          teamId: newUser.teamId || null,
+        },
+      });
+    } catch {
+      // Prisma sync best-effort
     }
 
     createAuditLog(
       actor.id,
       actor.name,
       'EMPLOYEE_INVITED',
-      `Admin ${actor.name} invited new employee ${name} (${email}) as ${systemRole}.`,
-      'Continuity Directory',
-      { employeeId: id, email, systemRole }
+      `Admin ${actor.name} created account for ${name} (${email}) with role [${systemRole}] and secure hashed credentials.`,
+      'Continuity RBAC',
+      { employeeId: id, email, systemRole, teamId }
     );
 
     saveStore(store);
-    return NextResponse.json(newUser, { status: 201 });
+
+    const { passwordHash: _, ...sanitizedUser } = newUser;
+    return NextResponse.json(sanitizedUser, { status: 201 });
   } catch (err: unknown) {
     return NextResponse.json({ error: err instanceof Error ? err.message : 'Server error' }, { status: 500 });
   }
 }
 
 export async function PATCH(req: NextRequest) {
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
+  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
+  if (!actorId) {
+    return NextResponse.json(
+      { error: 'Unauthorized: Authentication required with valid JWT credentials.' },
+      { status: 401 }
+    );
+  }
+
   const actor = getUserById(actorId);
 
   if (!actor || getEffectiveRole(actor) !== 'Admin') {

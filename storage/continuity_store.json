@@ -2,31 +2,32 @@
   "users": [
     {
       "id": "user-admin",
-      "name": "Alexander Ward",
-      "email": "admin@continuity.internal",
+      "name": "Yug Chapherkar",
+      "email": "admin@phx.in",
       "employeeId": "ADM-0001",
       "role": "System Administrator & Executive Sponsor",
       "systemRole": "Admin",
       "accountStatus": "Active",
       "avatar": "",
-      "initials": "AW",
+      "initials": "YC",
       "department": "Platform Administration & Executive Leadership",
       "bio": "Executive platform administrator overseeing enterprise governance, team orchestration, deliverable sign-offs, and final client release delivery.",
       "location": "San Francisco, CA (HQ)",
       "activeProjectsCount": 4,
       "pendingHandoffsCount": 0,
       "isAdmin": true,
-      "createdAt": "2026-01-01T00:00:00Z"
+      "createdAt": "2026-01-01T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-marcus",
       "name": "Marcus Vance",
-      "email": "m.vance@continuity.internal",
-      "employeeId": "CNT-1004",
-      "role": "Staff Systems Architect & Team Leader",
+      "email": "lead@phx.in",
+      "employeeId": "TL-1001",
+      "role": "Project Lead & Staff Systems Architect",
       "systemRole": "Team Leader",
       "accountStatus": "Active",
-      "teamId": "team-delta-rapid-deployment-5ed",
+      "teamId": "team-storage",
       "avatar": "",
       "initials": "MV",
       "department": "Distributed Storage & Consensus",
@@ -34,7 +35,8 @@
       "location": "Zurich, Switzerland (CET)",
       "activeProjectsCount": 2,
       "pendingHandoffsCount": 0,
-      "createdAt": "2026-01-15T00:00:00Z"
+      "createdAt": "2026-01-15T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-sarah",
@@ -52,7 +54,8 @@
       "location": "New York, NY (EST)",
       "activeProjectsCount": 2,
       "pendingHandoffsCount": 1,
-      "createdAt": "2026-02-01T00:00:00Z"
+      "createdAt": "2026-02-01T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-elena",
@@ -70,17 +73,18 @@
       "location": "London, UK (GMT)",
       "activeProjectsCount": 1,
       "pendingHandoffsCount": 1,
-      "createdAt": "2026-02-15T00:00:00Z"
+      "createdAt": "2026-02-15T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-jessica",
       "name": "Jessica Chauhan",
-      "email": "chauhanjessicaa27@gmail.com",
+      "email": "employee@phx.in",
       "employeeId": "CNT-1001",
       "role": "Senior Distributed Systems Engineer",
       "systemRole": "Employee",
       "accountStatus": "Active",
-      "teamId": "team-delta-rapid-deployment-5ed",
+      "teamId": "team-storage",
       "avatar": "",
       "initials": "JC",
       "department": "Platform Architecture & Core Infrastructure",
@@ -88,7 +92,8 @@
       "location": "San Francisco, CA (PST)",
       "activeProjectsCount": 2,
       "pendingHandoffsCount": 1,
-      "createdAt": "2026-03-01T00:00:00Z"
+      "createdAt": "2026-03-01T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-yash",
@@ -106,7 +111,8 @@
       "location": "Mumbai, IN (IST)",
       "activeProjectsCount": 2,
       "pendingHandoffsCount": 1,
-      "createdAt": "2026-03-15T00:00:00Z"
+      "createdAt": "2026-03-15T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-shruti",
@@ -124,7 +130,8 @@
       "location": "Pune, IN (IST)",
       "activeProjectsCount": 2,
       "pendingHandoffsCount": 1,
-      "createdAt": "2026-04-01T00:00:00Z"
+      "createdAt": "2026-04-01T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-david",
@@ -142,7 +149,8 @@
       "location": "Seattle, WA (PST)",
       "activeProjectsCount": 1,
       "pendingHandoffsCount": 0,
-      "createdAt": "2026-04-15T00:00:00Z"
+      "createdAt": "2026-04-15T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     },
     {
       "id": "user-alex",
@@ -160,7 +168,8 @@
       "location": "Austin, TX (CST)",
       "activeProjectsCount": 1,
       "pendingHandoffsCount": 0,
-      "createdAt": "2026-05-01T00:00:00Z"
+      "createdAt": "2026-05-01T00:00:00Z",
+      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
     }
   ],
   "teams": [
@@ -175,7 +184,8 @@
       "memberIds": [
         "user-marcus",
         "user-jessica",
-        "user-yash"
+        "user-yash",
+        "user-rohanjoshi-5zu5"
       ],
       "createdAt": "2026-01-15T08:00:00Z",
       "updatedAt": "2026-10-10T12:00:00Z"
@@ -2782,6 +2792,24 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "AUDIT-MV5ZU5KX-AA20",
+      "timestamp": "2026-10-13T01:19:46.881Z",
+      "hash": "2215e638d5631fcd9e43f4dff39ed6f903540a29e82b54f7b0244a4c0572fa9d",
+      "prevHash": "188ab77127e129e6194e662317eb97798e371fb50340f8b865429600d3676a82",
+      "action": "EMPLOYEE_INVITED",
+      "actorId": "user-admin",
+      "actorName": "Yug Chapherkar",
+      "projectName": "Continuity RBAC",
+      "detail": "Admin Yug Chapherkar created account for Rohan Joshi (rohan@phx.in) with role [Team Leader] and secure hashed credentials.",
+      "metadata": {
+        "employeeId": "user-rohanjoshi-5zu5",
+        "email": "rohan@phx.in",
+        "systemRole": "Team Leader",
+        "teamId": "team-storage"
+      },
+      "verifiable": true
+    },
     {
       "id": "AUDIT-MV5MX8QJ-TJZX",
       "timestamp": "2026-10-12T19:18:15.931Z",

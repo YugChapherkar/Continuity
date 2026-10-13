@@ -16,8 +16,7 @@ public class SecurityUtils {
         if (auth != null && auth.getPrincipal() instanceof UserEntity user) {
             return user.getId();
         }
-        // Fallback default for local unauthenticated dev requests
-        return "user-jessica";
+        throw new UnauthorizedException("Unauthorized: Valid JWT bearer token required.");
     }
 
     public static UserEntity getCurrentUser() {

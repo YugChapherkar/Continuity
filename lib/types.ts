@@ -4,6 +4,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  passwordHash?: string;
   employeeId?: string;
   role: string; // Job title / functional description
   systemRole?: SystemRole; // Strict RBAC role
@@ -20,6 +21,7 @@ export interface User {
   createdAt?: string;
   lastActiveAt?: string;
 }
+
 
 export interface Team {
   id: string;

@@ -11,7 +11,10 @@ import {
 import { Task, TaskStatus } from '@/lib/types';
 
 export async function GET(req: NextRequest) {
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
+  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
+  if (!actorId) {
+    return NextResponse.json({ error: 'Unauthorized: Authentication required with valid JWT credentials.' }, { status: 401 });
+  }
   const actor = getUserById(actorId);
   const store = getStore();
 
@@ -67,7 +70,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const actorId = req.headers.get('x-user-id') || 'user-admin';
+  const actorId = req.headers.get('x-authenticated-user-id') || req.headers.get('x-user-id');
+  if (!actorId) {
+    return NextResponse.json({ error: 'Unauthorized: Authentication required with valid JWT credentials.' }, { status: 401 });
+  }
   const actor = getUserById(actorId);
 
   if (!actor) {
