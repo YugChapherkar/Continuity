@@ -148,34 +148,73 @@ export default function LoginPage() {
       <IridescentWave />
 
       {/* Top Header */}
-      <header className="w-full max-w-4xl flex items-center justify-between z-20 pt-2 pb-4">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={
-              isLight
-                ? 'https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png'
-                : 'https://res.cloudinary.com/deimij13f/image/upload/v1791857114/logo-c_1_ju4lgi.png'
-            }
-            alt="Continuity"
-            className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
-          />
-        </Link>
+      <header className="w-full max-w-5xl mx-auto pt-3 sm:pt-5 px-3 sm:px-6 z-30">
+        <nav
+          className={`backdrop-blur-2xl rounded-full px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between border shadow-lg transition-all ${
+            isLight
+              ? 'bg-white/95 border-slate-200/90 text-slate-900 shadow-[0_12px_32px_rgba(0,0,0,0.06)]'
+              : 'bg-[#101216]/90 border-white/10 text-white shadow-[0_16px_36px_rgba(0,0,0,0.4)]'
+          }`}
+        >
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png"
+              alt="Continuity"
+              className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+            />
+          </Link>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all text-neutral-400 hover:text-white cursor-pointer"
-            title={isLight ? 'Dark mode' : 'Light mode'}
-            aria-label={isLight ? 'Dark mode' : 'Light mode'}
-          >
-            {isLight ? (
-              <Moon className="w-4 h-4 text-blue-600" />
-            ) : (
-              <Sun className="w-4 h-4 text-amber-400" />
-            )}
-          </button>
-        </div>
+          {/* Center: System Status & Security Pill */}
+          <div className="hidden md:flex items-center gap-3">
+            <span
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${
+                isLight
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200/80'
+                  : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+              }`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Auth Gateway Active
+            </span>
+            <span className={`text-xs font-mono ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+              BCrypt • 256-bit JWT
+            </span>
+          </div>
+
+          {/* Right Action: Return to Website + Theme Toggle */}
+          <div className="flex items-center gap-2.5">
+            <Link
+              href="/"
+              className={`text-xs font-semibold px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${
+                isLight
+                  ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+                  : 'text-neutral-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <span>Back to Home</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-full border transition-all cursor-pointer ${
+                isLight
+                  ? 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  : 'border-white/10 bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'
+              }`}
+              title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+              aria-label={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+            >
+              {isLight ? (
+                <Moon className="w-3.5 h-3.5 text-blue-600" />
+              ) : (
+                <Sun className="w-3.5 h-3.5 text-amber-400" />
+              )}
+            </button>
+          </div>
+        </nav>
       </header>
 
       {/* =========================================================================

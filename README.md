@@ -1,6 +1,6 @@
 # 🚀 CONTINUITY — Enterprise Project Continuity, Team Governance & Client Delivery Platform
 
-> **CONTINUITY** is an enterprise-grade AI-powered platform for project continuity, team pod management, employee accountability, multi-round deliverable review, and verified client delivery. Built with strict role-based access control (RBAC), tamper-evident cryptographic audit logs (SHA-256), and grounded contextual intelligence.
+> **CONTINUITY** is an enterprise-grade AI-powered platform for engineering project continuity, team pod management, employee accountability, multi-round deliverable review, and verified client delivery. Built with strict role-based access control (RBAC), tamper-evident cryptographic audit logs (SHA-256), a dual-engine RAG knowledge terminal, and secure BCrypt + JWT session architecture.
 
 ---
 
@@ -31,10 +31,85 @@ The platform strictly differentiates access and permissions across three core ro
 | **Review & Confirm Daily Updates** | ✅ Yes | ✅ Yes (Assigned Pods) | ❌ No |
 | **Submit Sprint / Progress Reports to Admin** | ✅ Yes | ✅ Yes | ❌ No |
 | **Submit Milestone Deliverables for Review** | ✅ Yes | ✅ Yes | ❌ No |
-| **Multi-Round Deliverable Review (Approve / Changes Requested)** | ✅ Yes | ❌ No (Read-Only) | ❌ No |
+| **Multi-Round Deliverable Review (Approve / Revisions)** | ✅ Yes | ❌ No (Read-Only) | ❌ No |
 | **Record Client Release Delivery** | ✅ Yes | ❌ No | ❌ No |
 | **Ratify Client Receipt Acknowledgment** | ✅ Yes | ❌ No | ❌ No |
+| **AI Knowledge Query Terminal (RAG)** | ✅ Yes | ✅ Yes | ✅ Yes |
 | **View Immutable SHA-256 Audit Ledger** | ✅ Yes | ✅ Yes (Read-Only) | ✅ Yes (Read-Only) |
+
+---
+
+## 🧠 Retrieval-Augmented Generation (RAG) Architecture
+
+The platform includes a dedicated **AI Knowledge Query Terminal** (`/assistant`) anchored by a strict zero-hallucination grounding model:
+
+```mermaid
+graph TD
+    UserQuery[Engineer / Lead Query] --> Route[/api/assistant or Spring Boot /chat]
+    Route --> Sanitizer[Secret & Credential Redaction Filter]
+    Sanitizer --> CorpusRetrieval[Multi-Source Corpus Retrieval]
+
+    subgraph "Grounded Enterprise Corpus"
+        ADRs[Architectural Decision Records - ADRs]
+        Files[Codebase Snapshots & Kernel Runbooks]
+        Tasks[Active Tasks & Blocker Registry]
+        Handoffs[Handoff Dossiers & Executive Summaries]
+    end
+
+    CorpusRetrieval --> ADRs
+    CorpusRetrieval --> Files
+    CorpusRetrieval --> Tasks
+    CorpusRetrieval --> Handoffs
+
+    ADRs --> TokenScoring[Relevance Ranking & Token Overlap Scoring]
+    Files --> TokenScoring
+    Tasks --> TokenScoring
+    Handoffs --> TokenScoring
+
+    TokenScoring --> TopEvidence[Top Grounded Evidence Chunks]
+    TopEvidence --> LLMEngine{Inference Engine}
+    
+    LLMEngine -->|GEMINI_API_KEY Available| Gemini[Google GenAI: gemini-2.5-flash]
+    LLMEngine -->|Backend Active| SpringBoot[Spring Boot RagKnowledgeService]
+    LLMEngine -->|Offline / Fallback| LocalSynth[Deterministic Grounded Synthesizer]
+
+    Gemini --> FormattedOutput[Synthesized Analysis + Markdown Runbooks + Exact Citations]
+    SpringBoot --> FormattedOutput
+    LocalSynth --> FormattedOutput
+```
+
+### Core RAG Capabilities:
+1. **Multi-Source Retrieval**: Aggregates verified context across Architectural Decision Records (ADRs), codebase files (`src/consensus/raft_state.rs`, kernel configs, Envoy proxies), tasks/blockers, and handoff dossiers.
+2. **Relevance Scoring & Token Ranking**: Matches query tokens with document titles, decisions, consequences, and code snippets, returning the top relevant evidence chunks.
+3. **Secret Redaction Filter**: Automatically scans and strips passwords, JWTs, API keys, bearer tokens, and private keys (`[REDACTED_SECRET]`) before passing context to LLMs.
+4. **Dual Inference Engine**:
+   - **Google GenAI (`@google/genai`)**: Executes inference via `gemini-2.5-flash` with strict grounding system instructions when `GEMINI_API_KEY` is provided.
+   - **Spring Boot RAG Service**: Java 21 backend service querying isolated version snapshots and file indexes (`/api/projects/{projectId}/chat`).
+   - **Deterministic Grounded Synthesizer**: Fallback engine generating verified, structured markdown with exact terminal commands and zero hallucinations.
+5. **Mandatory Citations**: Every generated response includes exact grounding citations (e.g., `ADR-041`, `Task TASK-201`, `File src/consensus/raft_state.rs`, `HO-2026-089`).
+
+---
+
+## 🔐 Enterprise Authentication & Security Architecture
+
+1. **BCrypt Password Hashing**: Passwords are securely hashed with BCrypt (10 salt rounds).
+2. **256-Bit HMAC-SHA256 JWTs**: Authenticated sessions issue signed JSON Web Tokens containing identity claims (`sub`, `systemRole`, `email`, `name`, `department`).
+3. **Secure HTTP-Only Cookies**: JWT tokens are stored exclusively in HTTP-only, SameSite=Lax cookies (`continuity_token`), protecting against XSS token exfiltration.
+4. **Edge Route Protection (`middleware.ts`)**: Next.js Edge middleware enforces JWT verification on all protected routes (`/dashboard`, `/tasks`, `/projects`, etc.) and all API routes (`/api/*`). Unauthenticated visitors are redirected to `/login` before any layout HTML is sent.
+5. **Zero Spoofed Identity Fallback**: All API routes use `requireUser(req)` in `lib/auth.ts`, reading only edge-verified headers (`x-authenticated-user-id`). Client-injected `x-user-id` headers are stripped.
+6. **No Default Secrets**: `JWT_SECRET` must be set via environment variables (minimum 32 characters) and fails fast at startup if missing.
+
+---
+
+## 🔑 Test Credentials (1-Click Fill Available)
+
+When running locally with `NEXT_PUBLIC_DEMO_MODE=true`, the `/login` page displays 1-click test credential fill buttons:
+
+| Role | Name | Email / ID | Password | Access Level |
+| :--- | :--- | :--- | :--- | :--- |
+| **Main Admin** | Yug Chapherkar | `admin@phx.in` (or `EMP-001`) | `12345678` | Full Executive Org Governance |
+| **Project Lead** | Marcus Vance | `lead@phx.in` (or `EMP-002`) | `12345678` | Pod Management, Task Assignment, Sprint Reports |
+| **Employee** | Jessica Chauhan | `employee@phx.in` (or `EMP-003`) | `12345678` | Personal Workbench, Daily Journal, Blocker Logging |
 
 ---
 
@@ -42,12 +117,12 @@ The platform strictly differentiates access and permissions across three core ro
 
 The executive dashboard renders 10 calculated operational metrics without dummy placeholders:
 
-1. **Total Employees** — Active vs. inactive personnel count.
+1. **Total Employees** — Active vs. inactive personnel count in directory.
 2. **Active Teams** — Operational engineering pods with assigned leaders.
 3. **Active Projects** — In-flight development workstreams.
 4. **At-Risk Projects** — Workstreams impacted by blockers, revisions, or pending deadlines.
 5. **Overdue Tasks** — Incomplete tasks with past operational deadlines.
-6. **Pending Reports** — Unreviewed progress submissions from Team Leaders.
+6. **Pending Reports** — Unreviewed sprint submissions from Team Leaders.
 7. **Pending Reviews** — Milestone deliverables awaiting executive sign-off.
 8. **Revision Requests** — Deliverables rejected with structured revision tasks.
 9. **Approved Releases** — Releases certified by Admin ready for client handover.
@@ -88,9 +163,9 @@ sequenceDiagram
 | **Frontend** | Next.js 15 (App Router), React 19, Tailwind CSS | High-performance responsive web client with light/dark theme persistence |
 | **API & Server Store** | Next.js Route Handlers + TypeScript | Atomic file-persisted JSON database (`storage/continuity_store.json`) with optimistic locking |
 | **Enterprise Backend** | Java 21, Spring Boot 3.3.5 | Enterprise REST controllers, Spring Data JPA, Flyway DB migrations |
-| **Database Schemas** | PostgreSQL / H2 Database | Full Flyway migrations `V1` through `V5` supporting relational persistence |
-| **Security & Auditing** | Node.js Crypto / Java SHA-256 | Immutable hash-chained audit logging across all state transitions |
-| **AI Continuity Assistant**| Gemini API / Local Grounded Context | File-grounded architectural assistant with zero-hallucination fallback |
+| **Database Schemas** | SQLite / PostgreSQL / H2 | Relational schema migrations `V1` through `V7` supporting relational persistence |
+| **Security & Auditing** | BCrypt, Jose JWT, SHA-256 | HTTP-only cookie JWT auth and immutable hash-chained audit logging |
+| **RAG AI Assistant** | Google GenAI SDK (`@google/genai`), Spring Boot RAG | Context-grounded architectural assistant with zero-hallucination fallback |
 
 ---
 
@@ -112,9 +187,12 @@ Continuity/
 │   │   ├── projects/page.tsx         # Workspace Manager & Versions
 │   │   ├── handoffs/page.tsx         # Digital Handoff Dossiers
 │   │   ├── audit/page.tsx            # Cryptographic SHA-256 Ledger
-│   │   └── assistant/page.tsx        # AI Continuity Copilot
+│   │   └── assistant/page.tsx        # AI Knowledge Query Terminal (RAG)
 │   ├── api/                          # Next.js REST API Handlers
-│   │   ├── auth/me/route.ts          # Identity resolution via X-User-Id
+│   │   ├── assistant/route.ts        # RAG Knowledge Synthesis Endpoint
+│   │   ├── auth/login/route.ts       # BCrypt + JWT Authentication Endpoint
+│   │   ├── auth/logout/route.ts      # HTTP-Only Cookie Invalidation
+│   │   ├── auth/me/route.ts          # Verified Identity Resolution
 │   │   ├── users/route.ts            # User onboarding & role updates
 │   │   ├── teams/                    # Pod management & member routing
 │   │   ├── projects/                 # Project creation & health rules
@@ -125,23 +203,29 @@ Continuity/
 │   │   ├── deliveries/               # Client release delivery & receipt
 │   │   ├── audit/route.ts            # SHA-256 audit ledger retrieval
 │   │   └── notifications/route.ts    # In-app notifications
-├── components/ui/                    # Reusable Design System Widgets
-│   ├── Sidebar.tsx                   # Role-filtered navigation & persona switcher
-│   ├── TopBar.tsx                    # Search, quick actions & user status
-│   └── GlobalCommandPalette.tsx      # Keyboard-driven navigation (Ctrl+K)
+│   ├── login/page.tsx                # Enterprise Login Portal with Floating Navbar
+│   └── page.tsx                      # Landing Page with 100dvh Screen Sections
+├── components/
+│   ├── employee/EmployeeDashboard.tsx # Comprehensive Engineer Workbench
+│   ├── landing/LandingPage.tsx       # Landing Page Component System
+│   └── ui/                           # Reusable UI & Layout Components
+│       ├── Sidebar.tsx               # Collapsible RBAC Navigation
+│       ├── TopBar.tsx                # Global Command Palette (⌘K) & Search
+│       └── IridescentWave.tsx        # Ambient Prismatic Glass Wave
 ├── context/
-│   └── AppContext.tsx                # Unified client context & live state
+│   └── AppContext.tsx                # Unified State & Session Synchronization
 ├── lib/
-│   ├── types.ts                      # Strict TypeScript data models
-│   ├── api.ts                        # Fully typed client API fetchers
-│   └── server-store.ts               # Atomic store persistence & RBAC helpers
+│   ├── auth.ts                       # JWT Signing, Cookie Config & Auth Helpers
+│   ├── types.ts                      # TypeScript Domain Models
+│   ├── api.ts                        # Client API Fetchers
+│   └── server-store.ts               # Atomic Store Persistence & Authorization Helpers
 ├── backend/                          # Spring Boot 3.3.5 Application
-│   ├── src/main/java/                # Controllers, services, and security
-│   └── src/main/resources/db/migration/ # Flyway migrations (V1 to V5)
-│       └── V5__enterprise_platform_schema.sql # Enterprise schema migration
-└── scripts/
-    ├── test_e2e_flow.ps1             # 15-step automated end-to-end test suite
-    └── test_routes.ps1               # Automated HTTP route health checks
+│   ├── src/main/java/com/continuity/ # Java Services, Controllers, and Repositories
+│   │   ├── controller/KnowledgeController.java # Spring Boot RAG REST Endpoint
+│   │   └── service/RagKnowledgeService.java    # Spring Boot Knowledge Indexer
+│   └── src/main/resources/db/migration/        # Flyway migrations (V1 to V7)
+└── tests/
+    └── security.test.mjs             # 6-Step Automated Security Verification Suite
 ```
 
 ---
@@ -153,152 +237,64 @@ Continuity/
 - **Java JDK 21** (if running the Spring Boot backend)
 - **Maven 3.9+** (or use the included wrapper)
 
-### Step 1: Start the Frontend Application
+### Step 1: Environment Setup
+Copy the example environment configuration:
 ```bash
-# Install NPM dependencies
-npm install
+cp .env.example .env
+```
+Ensure `JWT_SECRET` is set to a secure string of at least 32 characters:
+```env
+JWT_SECRET="continuity-enterprise-secret-key-2026-secure-hmac-sha256"
+DATABASE_URL="file:./continuity.db"
+NEXT_PUBLIC_DEMO_MODE=true
+# Optional: GEMINI_API_KEY="your-gemini-api-key"
+```
 
-# Start Next.js development server
+### Step 2: Start Next.js Frontend
+```bash
+npm install
 npm run dev
 ```
 Open **`http://localhost:3000`** in your browser.
 
-> **Tip:** Use the persona switcher in the bottom-left of the sidebar to immediately switch between:
-> - **Alexander Ward** (`Admin`)
-> - **Marcus Vance** (`Team Leader`)
-> - **Jessica Chauhan** (`Employee`)
+- **Landing Page:** `http://localhost:3000/`
+- **Login Portal:** `http://localhost:3000/login`
+- **Executive Dashboard:** `http://localhost:3000/dashboard`
+- **RAG Terminal:** `http://localhost:3000/assistant`
 
 ---
 
-### Step 2: (Optional) Run the Spring Boot Backend
+### Step 3: (Optional) Run the Spring Boot Microservice
 ```bash
 cd backend
 mvn spring-boot:run
 ```
 - **Backend API:** `http://localhost:8080/api`
-- **Swagger Documentation:** `http://localhost:8080/swagger-ui.html`
+- **Swagger UI:** `http://localhost:8080/swagger-ui.html`
 
 ---
 
 ## 🧪 Automated Verification & Testing
 
-### 1. 15-Step End-to-End Workflow Verification
-Verifies the complete cycle (Admin creates team -> Admin creates project -> Leader assigns task -> Employee logs update -> Leader reviews -> Leader reports -> Leader submits deliverable -> Admin requests revision -> Revision resubmitted -> Admin approves -> Admin records delivery -> Client acknowledges):
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\test_e2e_flow.ps1
+### 1. Security Verification Suite (Node.js Test Runner)
+Verifies unauthorized 401 rejection, forged header stripping, static file extension bypass protection, hardcoded secret rejection, and role-based 403 Forbidden enforcement:
+```bash
+npm test
 ```
 
-### 2. Route Health Check
-Verifies all dashboard and API endpoints return HTTP 200:
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\test_routes.ps1
-```
-
-### 3. Employee Workbench & Handover Verification (10-Step Suite)
-Verifies employee identity, readiness checker (100%), lossless handover creation, clarification requests, atomic recipient acceptance, task ownership timeline, task comments, blocker lifecycle (Reported -> Acknowledged -> Escalated -> Resolved), daily work journal, and grounded AI assistant citations & non-fabrication refusal:
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\test_employee_workbench.ps1
-```
-
-### 4. TypeScript Compilation
-Verifies clean compilation with zero type errors:
+### 2. TypeScript Compilation Check
+Verifies complete type safety across all components and API handlers:
 ```bash
 npx tsc --noEmit
 ```
 
-### 5. Backend Unit & Integration Tests
+### 3. Production Build Validation
+Verifies production bundle generation for all 38 static and dynamic routes:
 ```bash
-cd backend
-mvn test
+npm run build
 ```
-
----
-
-## 💼 Employee Workbench & Handover Architecture
-
-The **Employee Dashboard** (`components/employee/EmployeeDashboard.tsx`) provides engineers with an integrated operational command center:
-
-```mermaid
-graph TD
-    subgraph "Employee Workspace"
-        Emp[Engineer / Custodian]
-        Metrics[Active Metrics Ribbon]
-        Tasks[Assigned Tasks & Action Tray]
-        Journal[Daily Work Journal]
-        AICopilot[Grounded AI Assistant]
-    end
-
-    subgraph "Handover Lifecycle & Custody Guarantee"
-        Sender[Task Owner / Jessica] -->|Drafts Dossier| ReadyCheck[Smart Readiness Checker]
-        ReadyCheck -->|Calculates Score & Tips| Dispatch[Dispatch Handover]
-        Dispatch -.->|INVARIANT: Sender Retains Custody| PendingQueue[Pending Review Queue]
-        PendingQueue --> Clarify[Clarification Requested] --> Sender
-        PendingQueue --> Decline[Declined with Reason] --> Sender
-        PendingQueue -->|Formal Acceptance| AtomicTransfer[Atomic Ownership Transfer]
-        AtomicTransfer -->|Appends Ledger| Timeline[Task Ownership Timeline]
-        AtomicTransfer --> NewOwner[New Primary Custodian / Marcus]
-    end
-
-    subgraph "Blocker Escalation Lifecycle"
-        Reported[1. Reported High/Critical] --> Acknowledged[2. Leader Acknowledged]
-        Acknowledged --> Escalated[3. Escalated to Executive Admin]
-        Escalated --> Resolved[4. Resolved & Unblocked]
-    end
-```
-
-### 1. Smart Handover Readiness Checker
-- Evaluates 6 key operational dimensions in real time (0–100% score):
-  - **Executive Summary Completeness** (≥ 25 chars)
-  - **Completed Work Items** (≥ 1 item)
-  - **Pending / Next Steps** (≥ 1 item)
-  - **Reproducible Runbook Commands** (≥ 1 command)
-  - **Setup Instructions & Environment Config** (≥ 15 chars)
-  - **Attached Code Files / Artifacts** (≥ 1 file)
-- Displays a visual health bar with contextual improvement suggestions before sending.
-
-### 2. Task Ownership Timeline
-- Maintains an immutable, timestamped custody log for every task:
-  - Previous owner & new owner
-  - Associated handoff dossier ID
-  - Transfer method (`Creation`, `Recipient Acceptance`, or `Manager Override`)
-  - Sign-off notes and SHA-256 integrity hash
-
-### 3. Daily Work Journal
-- Enables employees to record structured daily progress:
-  - Completed work items
-  - In-progress initiatives & milestones
-  - Planned next steps
-  - Operational blockers (automatically cross-links with the blocker workflow)
-- Seamlessly feeds into the Team Leader review queue.
-
-### 4. Blocker Escalation Lifecycle
-- Four-stage blocker governance:
-  1. **Reported**: Employee flags a task as blocked with severity (`Low`, `Medium`, `High`, `Critical`).
-  2. **Acknowledged**: Team Leader acknowledges awareness within the pod.
-  3. **Escalated**: Unresolved or cross-team platform dependencies escalated to Admin.
-  4. **Resolved**: Blocker resolved with notes; task atomically returns to `In Progress`.
-
-### 5. Lossless Handover Guarantee (Core Invariant)
-- **Zero Premature Transfers**: Handover creation does **not** transfer task ownership. The sender remains the primary owner until the recipient formally accepts or a manager initiates an override.
-- **Clarification & Decline Handling**: If the recipient asks questions or declines, the task remains safely in the sender's custody with zero orphan states.
-
-### 6. Grounded AI Project Assistant
-- Answers complex architectural, workflow, and runbook questions using authorized project files, ADRs, tasks, and handoff dossiers.
-- **Security & Privacy**: Automatically sanitizes tokens, private keys, and passwords before query dispatch.
-- **Zero Fabrication**: Explicitly refuses ungrounded speculation if documentation is absent, always citing verified sources.
-
----
-
-## 🔒 Security & Data Integrity
-
-1. **Role Enforcement**: API endpoints reject unauthorized mutations with HTTP `403 Forbidden` if an actor lacks the necessary permissions.
-2. **Tamper-Evident Hashing**: Every milestone review, team appointment, task transition, and client delivery record is sealed into an immutable SHA-256 chained audit record.
-3. **Database Migrations**: Flyway migrations `V1` through `V6` (`V6__employee_workbench_schema.sql`) support enterprise PostgreSQL relational persistence.
-4. **Optimistic Locking**: Concurrent updates are safeguarded against state overwrite conflicts.
-5. **Offline Fallback**: The frontend functions seamlessly with in-memory persistence and offline intelligence even during backend maintenance windows.
 
 ---
 
 ## 📜 License
-Internal Enterprise Use — CONTINUITY Platform Team.
-
+Internal Enterprise Use — CONTINUITY Platform Engineering Team.

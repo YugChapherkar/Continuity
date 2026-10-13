@@ -74,9 +74,13 @@ How can I assist your engineering shift handover today? Select an inquiry below 
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || data.message || `API Error ${res.status}`);
+      }
+
       const assistantMsg: Message = {
         role: 'assistant',
-        content: data.response || 'No analysis returned.',
+        content: data.response || 'No analysis returned from the knowledge base.',
         citations: data.citations || [],
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
@@ -126,6 +130,7 @@ How can I assist your engineering shift handover today? Select an inquiry below 
             onChange={(e) => setSelectedProjectId(e.target.value)}
             className="bg-white dark:bg-[#141718] border border-slate-200 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-[#F5F5F2] px-3 py-2 focus:outline-none focus:border-blue-500 font-mono shadow-sm"
           >
+            <option value="all">All Projects (Platform Wide)</option>
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
