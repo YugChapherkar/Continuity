@@ -432,7 +432,7 @@ export default function LoginPage() {
             )}
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
               {employeeAuthTab === 'email' && (
                 <>
                   <div>
@@ -455,6 +455,10 @@ export default function LoginPage() {
                           setErrorMessage(null);
                         }}
                         placeholder="name@continuity.internal"
+                        suppressHydrationWarning
+                        autoComplete="off"
+                        data-lpignore="true"
+                        data-1p-ignore="true"
                         className="w-full pl-10 pr-3.5 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                         required
                       />
@@ -487,6 +491,10 @@ export default function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••••••"
+                        suppressHydrationWarning
+                        autoComplete="off"
+                        data-lpignore="true"
+                        data-1p-ignore="true"
                         className="w-full pl-10 pr-10 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                       />
                       <button
@@ -673,7 +681,7 @@ export default function LoginPage() {
             )}
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
               <div>
                 <label
                   htmlFor="admin-identifier-input"
@@ -694,6 +702,10 @@ export default function LoginPage() {
                       setErrorMessage(null);
                     }}
                     placeholder="admin@continuity.internal"
+                    suppressHydrationWarning
+                    autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
                     className="w-full pl-10 pr-3.5 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
                     required
                   />
@@ -726,6 +738,10 @@ export default function LoginPage() {
                     value={adminPassword}
                     onChange={(e) => setAdminPassword(e.target.value)}
                     placeholder="••••••••••••"
+                    suppressHydrationWarning
+                    autoComplete="off"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
                     className="w-full pl-10 pr-10 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                   />
                   <button

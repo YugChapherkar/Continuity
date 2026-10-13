@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -1142,7 +1142,7 @@ function Footer() {
   };
 
   return (
-    <footer className="w-full bg-white border-t border-[#E4E7F2] pt-16 sm:pt-20 pb-10 relative overflow-hidden text-[#222442]">
+    <footer className="w-full bg-white border-t border-[#E4E7F2] pt-16 sm:pt-20 pb-10 relative overflow-hidden text-[#222442]" suppressHydrationWarning>
       {/* Faint Oversized Watermark behind bottom columns */}
       <div className="absolute bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 text-[140px] sm:text-[200px] md:text-[250px] lg:text-[280px] font-extrabold text-[#F4F5FB] select-none pointer-events-none tracking-tight font-tasaorbiter z-0 opacity-80 whitespace-nowrap">
         Continuity
@@ -1249,18 +1249,23 @@ function Footer() {
             <p className="text-[14px] text-[#6F718A] leading-relaxed">
               Receive our bi-weekly breakdown of platform updates, engineering playbooks, and release notes.
             </p>
-            <form onSubmit={handleSubscribe} className="flex items-center gap-3 pt-1">
+            <form onSubmit={handleSubscribe} className="flex items-center gap-3 pt-1" suppressHydrationWarning>
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                suppressHydrationWarning
+                autoComplete="off"
+                data-lpignore="true"
+                data-1p-ignore="true"
                 className="flex-1 min-w-0 bg-[#F4F5F9] border border-[#E4E7F2] rounded-full px-5 py-3 text-[13px] text-[#222442] placeholder:text-[#9DA0B6] focus:outline-none focus:border-[#5558FF] focus:bg-white transition-all shadow-inner"
               />
               <button
                 type="submit"
-                className="w-11 h-11 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center shrink-0 transition-colors shadow-sm"
+                suppressHydrationWarning
+                className="w-11 h-11 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center shrink-0 transition-colors shadow-sm cursor-pointer"
                 aria-label="Subscribe"
               >
                 <ArrowRight className="w-4 h-4" />
