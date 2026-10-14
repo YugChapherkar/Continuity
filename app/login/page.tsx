@@ -222,10 +222,10 @@ export default function LoginPage() {
                 setEmployeeAuthTab('email');
                 setErrorMessage(null);
               }}
-              className={`p-6 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between hover:scale-[1.02] shadow-xl ${
+              className={`p-6 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between hover:scale-[1.02] ${
                 isLight
-                  ? 'bg-white border-slate-200 hover:border-blue-500 hover:shadow-blue-500/10'
-                  : 'bg-[#0B0D0E] border-white/10 hover:border-blue-500/60 hover:shadow-blue-500/15'
+                  ? 'bg-white border-slate-200 hover:border-blue-500'
+                  : 'bg-[#0B0D0E] border-white/10 hover:border-blue-500/60'
               }`}
             >
               <div className="space-y-3">
@@ -255,10 +255,10 @@ export default function LoginPage() {
                 setSelectedPortal('admin');
                 setErrorMessage(null);
               }}
-              className={`p-6 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between hover:scale-[1.02] shadow-xl ${
+              className={`p-6 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between hover:scale-[1.02] ${
                 isLight
-                  ? 'bg-white border-slate-200 hover:border-blue-500 hover:shadow-blue-500/10'
-                  : 'bg-[#0B0D0E] border-white/10 hover:border-blue-500/60 hover:shadow-blue-500/15'
+                  ? 'bg-white border-slate-200 hover:border-blue-500'
+                  : 'bg-[#0B0D0E] border-white/10 hover:border-blue-500/60'
               }`}
             >
               <div className="space-y-3">
@@ -269,9 +269,6 @@ export default function LoginPage() {
                   }`}>
                     Administrator Login
                   </h2>
-                  <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                    Platform settings, audit trails, and administration.
-                  </p>
                 </div>
               </div>
 
