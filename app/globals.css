@@ -339,9 +339,31 @@ html.light [class*="bg-[#1E1B4B]"] .text-white {
 }
 
 html.light [class*="bg-[#111638]"] p.text-slate-300,
-html.light [class*="bg-[#111638]"] span.text-slate-300,
-html.light [class*="bg-[#111638]"] nav a {
+html.light [class*="bg-[#111638]"] span.text-slate-300 {
   color: #E2E8F0 !important;
+}
+
+/* White pill navbar links ALWAYS have high-contrast dark slate text */
+nav.bg-white\/95 a,
+nav.bg-white\/95 a *,
+nav.bg-white\/95 a span,
+nav[class*="bg-white"] a,
+nav[class*="bg-white"] a *,
+.marklab-navbar-header nav a,
+.marklab-navbar-header nav a *,
+.marklab-navbar-header nav a span {
+  color: #1E293B !important;
+}
+
+nav.bg-white\/95 a:hover,
+nav.bg-white\/95 a:hover *,
+nav.bg-white\/95 a:hover span,
+nav[class*="bg-white"] a:hover,
+nav[class*="bg-white"] a:hover *,
+.marklab-navbar-header nav a:hover,
+.marklab-navbar-header nav a:hover *,
+.marklab-navbar-header nav a:hover span {
+  color: #020617 !important;
 }
 
 /* Blue primary solid action buttons ALWAYS keep pure white text */

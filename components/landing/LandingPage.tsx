@@ -121,21 +121,21 @@ function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] lg:text-[13px] font-semibold text-slate-700 font-tasaorbiter">
-            <a href="#performance" className="hover:text-slate-950 flex items-center gap-1 transition-colors">
-              <span>Platform</span>
-              <ChevronDown className="w-3 h-3 text-slate-500" />
+          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] lg:text-[13px] font-semibold text-slate-800 font-tasaorbiter">
+            <a href="#performance" className="text-slate-800 hover:text-slate-950 flex items-center gap-1 transition-colors">
+              <span className="text-slate-800 hover:text-slate-950">Platform</span>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-600" />
             </a>
-            <Link href="/handoffs" className="hover:text-slate-950 transition-colors">
+            <Link href="/handoffs" className="text-slate-800 hover:text-slate-950 transition-colors">
               Handoffs
             </Link>
-            <Link href="/reviews" className="hover:text-slate-950 transition-colors">
+            <Link href="/reviews" className="text-slate-800 hover:text-slate-950 transition-colors">
               Reviews
             </Link>
-            <a href="#workflow" className="hover:text-slate-950 transition-colors">
+            <a href="#workflow" className="text-slate-800 hover:text-slate-950 transition-colors">
               Lifecycle
             </a>
-            <Link href="/assistant" className="hover:text-slate-950 transition-colors">
+            <Link href="/assistant" className="text-slate-800 hover:text-slate-950 transition-colors">
               RAG AI
             </Link>
           </div>
