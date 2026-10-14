@@ -88,6 +88,7 @@ export const api = {
     teamId?: string;
     location?: string;
     bio?: string;
+    password?: string;
   }): Promise<User> {
     const res = await fetch(`${API_BASE_URL}/api/users`, {
       method: 'POST',

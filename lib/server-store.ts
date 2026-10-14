@@ -1246,12 +1246,52 @@ export function saveStore(data: ServerStoreData) {
 export async function verifyUserCredentials(identifier: string, plainPassword: string): Promise<User | null> {
   const store = getStore();
   const clean = identifier.trim().toLowerCase();
-  const user = store.users.find(
+  let user = store.users.find(
     (u) =>
       u.email.toLowerCase() === clean ||
       u.employeeId?.toLowerCase() === clean ||
       u.id.toLowerCase() === clean
   );
+
+  // If not in in-memory store, check Prisma SQLite DB
+  if (!user) {
+    try {
+      const { prisma } = await import('@/lib/prisma');
+      const dbUser = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { email: clean },
+            { employeeId: clean },
+            { id: clean },
+          ],
+        },
+      });
+      if (dbUser) {
+        user = {
+          id: dbUser.id,
+          name: dbUser.name,
+          email: dbUser.email,
+          role: dbUser.role,
+          systemRole: dbUser.systemRole as SystemRole,
+          employeeId: dbUser.employeeId,
+          avatar: dbUser.avatar || '',
+          initials: dbUser.initials,
+          department: dbUser.department,
+          bio: dbUser.bio || undefined,
+          location: dbUser.location || undefined,
+          teamId: dbUser.teamId || undefined,
+          accountStatus: (dbUser.accountStatus as any) || 'Active',
+          passwordHash: dbUser.passwordHash,
+          isAdmin: dbUser.isAdmin || dbUser.systemRole === 'Admin',
+        };
+        store.users.push(user);
+        saveStore(store);
+      }
+    } catch {
+      // fallback
+    }
+  }
+
   if (!user || !user.passwordHash) return null;
 
   const isValid = await bcrypt.compare(plainPassword, user.passwordHash);

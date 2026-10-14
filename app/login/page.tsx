@@ -148,7 +148,7 @@ export default function LoginPage() {
       <IridescentWave />
 
       {/* Top Header */}
-      <header className="w-full max-w-5xl mx-auto pt-3 sm:pt-5 px-3 sm:px-6 z-30">
+      <header className="login-header w-full max-w-5xl mx-auto pt-3 sm:pt-5 px-3 sm:px-6 z-30 !bg-transparent !border-none !shadow-none">
         <nav
           className={`backdrop-blur-2xl rounded-full px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between border shadow-lg transition-all ${
             isLight
@@ -166,23 +166,6 @@ export default function LoginPage() {
             />
           </Link>
 
-          {/* Center: System Status & Security Pill */}
-          <div className="hidden md:flex items-center gap-3">
-            <span
-              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${
-                isLight
-                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200/80'
-                  : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-              }`}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Auth Gateway Active
-            </span>
-            <span className={`text-xs font-mono ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
-              BCrypt • 256-bit JWT
-            </span>
-          </div>
-
           {/* Right Action: Return to Website + Theme Toggle */}
           <div className="flex items-center gap-2.5">
             <Link
@@ -199,18 +182,18 @@ export default function LoginPage() {
 
             <button
               onClick={toggleTheme}
-              className={`p-2 rounded-full border transition-all cursor-pointer ${
+              className={`p-1.5 transition-colors cursor-pointer border-0 bg-transparent rounded-lg ${
                 isLight
-                  ? 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  : 'border-white/10 bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'
+                  ? 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/60'
+                  : 'text-neutral-400 hover:text-white hover:bg-white/10'
               }`}
               title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
               aria-label={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
             >
               {isLight ? (
-                <Moon className="w-3.5 h-3.5 text-blue-600" />
+                <Moon className="w-4 h-4 text-slate-700" />
               ) : (
-                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                <Sun className="w-4 h-4 text-amber-400" />
               )}
             </button>
           </div>
@@ -253,9 +236,6 @@ export default function LoginPage() {
                   }`}>
                     Employee Login
                   </h2>
-                  <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-                    Engineering workspaces, team pods, and shift handoffs.
-                  </p>
                 </div>
               </div>
 

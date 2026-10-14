@@ -41,6 +41,7 @@ export default function AdminEmployeesPage() {
   const [inviteDept, setInviteDept] = useState('Platform Infrastructure');
   const [inviteTeamId, setInviteTeamId] = useState('');
   const [inviteLocation, setInviteLocation] = useState('Remote (UTC)');
+  const [invitePassword, setInvitePassword] = useState('12345678');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (activeRole !== 'Admin') {
@@ -97,6 +98,7 @@ export default function AdminEmployeesPage() {
         department: inviteDept,
         teamId: inviteTeamId || undefined,
         location: inviteLocation,
+        password: invitePassword || '12345678',
       });
       await refreshData();
       showToast(`Employee ${inviteName} onboarded and access provisioned.`, 'success');
@@ -583,6 +585,23 @@ export default function AdminEmployeesPage() {
                     ))}
                   </select>
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1">
+                  Initial Login Password *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. 12345678"
+                  value={invitePassword}
+                  onChange={(e) => setInvitePassword(e.target.value)}
+                  className="w-full px-3.5 py-2 bg-[#050606] border border-white/15 rounded-xl text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-blue-500 font-mono"
+                />
+                <span className="text-[10px] text-neutral-400 mt-1 block">
+                  The employee can log in immediately using their email and this password.
+                </span>
               </div>
 
               <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-white/10">

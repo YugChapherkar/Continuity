@@ -17,7 +17,7 @@
       "pendingHandoffsCount": 0,
       "isAdmin": true,
       "createdAt": "2026-01-01T00:00:00Z",
-      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
+      "passwordHash": "$2b$10$1v3Zr4dJRalS1.f6Mnctg.GIMgNBaVZA8qu6oDcj8bfCSK79wK9rK"
     },
     {
       "id": "user-marcus",
@@ -36,7 +36,7 @@
       "activeProjectsCount": 2,
       "pendingHandoffsCount": 0,
       "createdAt": "2026-01-15T00:00:00Z",
-      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
+      "passwordHash": "$2b$10$Z0HDAbgQ2H3zdvqRTy3eLeJIPKWWwWfyMMv1kn/ShRzrFG0BgV4S6"
     },
     {
       "id": "user-sarah",
@@ -93,7 +93,7 @@
       "activeProjectsCount": 2,
       "pendingHandoffsCount": 1,
       "createdAt": "2026-03-01T00:00:00Z",
-      "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
+      "passwordHash": "$2b$10$MOzWoEU6fBgGG1PdD/zUYO4SKeNm0obrUDaol2yczZrtRevwmWgZC"
     },
     {
       "id": "user-yash",
@@ -170,6 +170,45 @@
       "pendingHandoffsCount": 0,
       "createdAt": "2026-05-01T00:00:00Z",
       "passwordHash": "$2b$10$cEOW.VBVo8R07lmZ1nnm1OWH1nxREglK87WyqzcJl4qwYH4TPFaEa"
+    },
+    {
+      "id": "user-shruti-6afm",
+      "name": "shruti ",
+      "email": "shruti@gmail.com",
+      "employeeId": "CNT-2817",
+      "role": "Systems Engineer",
+      "systemRole": "Employee",
+      "accountStatus": "Active",
+      "avatar": "",
+      "initials": "S",
+      "department": "Platform Infrastructure",
+      "location": "Remote (UTC)",
+      "bio": "Continuity engineering team member.",
+      "activeProjectsCount": 0,
+      "pendingHandoffsCount": 0,
+      "isAdmin": false,
+      "passwordHash": "$2b$10$B6j7qZCKhmk3aKcjvYYb1uMM9OHjI4uB4oiXjhOckxNn9Ed4lWoMy",
+      "createdAt": "2026-10-13T06:16:24.341Z"
+    },
+    {
+      "id": "user-rohanverma-8cmf",
+      "name": "Rohan Verma",
+      "email": "lead.emp.1791996792831@continuity.internal",
+      "employeeId": "CNT-9927",
+      "role": "Platform Systems Engineer",
+      "systemRole": "Employee",
+      "accountStatus": "Active",
+      "teamId": "team-storage",
+      "avatar": "",
+      "initials": "RV",
+      "department": "Core Infrastructure",
+      "location": "Remote (UTC)",
+      "bio": "Continuity engineering team member.",
+      "activeProjectsCount": 0,
+      "pendingHandoffsCount": 0,
+      "isAdmin": false,
+      "passwordHash": "$2b$10$kduiVbJ/KylZMzI6WylCtuNneAkSqIMD9KpDdW4UVpOc0p0rWqjyW",
+      "createdAt": "2026-10-14T16:53:14.030Z"
     }
   ],
   "teams": [
@@ -185,7 +224,8 @@
         "user-marcus",
         "user-jessica",
         "user-yash",
-        "user-rohanjoshi-5zu5"
+        "user-rohanjoshi-5zu5",
+        "user-rohanverma-8cmf"
       ],
       "createdAt": "2026-01-15T08:00:00Z",
       "updatedAt": "2026-10-10T12:00:00Z"
@@ -1641,6 +1681,311 @@
   ],
   "handoffs": [
     {
+      "id": "HO-2026-603",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "senderId": "user-marcus",
+      "recipientId": "user-rohanverma-8cmf",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Accepted",
+      "createdAt": "2026-10-14T16:53:14.850Z",
+      "note": "Shift rotation handover to newly onboarded engineer Rohan Verma.",
+      "completenessScore": 90,
+      "readinessCheck": {
+        "score": 90,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "1 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": false,
+            "suggestion": "Attach or link relevant evidence files or documentation links."
+          }
+        ],
+        "suggestions": [
+          "Attach or link relevant evidence files or documentation links."
+        ]
+      },
+      "setupInstructions": "",
+      "pendingTasks": [
+        "Monitor memory allocation on staging"
+      ],
+      "files": [],
+      "briefing": {
+        "executiveSummary": "Apollo consensus Raft state machine operational. Read barriers validated.",
+        "completedItems": [
+          "WAL journal flush ring verified",
+          "Node 3 split brain test passed"
+        ],
+        "nextSteps": [
+          "Monitor memory allocation on staging"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/apollo-ctl cluster status"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Marcus Vance",
+          "timestamp": "2026-10-14T16:53:14.850Z",
+          "detail": "Handoff dossier created and dispatched to Rohan Verma. Readiness Score: 90%. Ownership remains with Marcus Vance until acceptance."
+        },
+        {
+          "action": "HANDOFF_ACCEPTED",
+          "actor": "Rohan Verma",
+          "timestamp": "2026-10-14T16:53:16.125Z",
+          "detail": "Handoff verified and accepted. Note: \"Confirmed cluster health, verified telemetry runbook, and accepted primary shift custodianship.\". Operational ownership transferred."
+        }
+      ],
+      "acceptedAt": "2026-10-14T16:53:16.125Z"
+    },
+    {
+      "id": "HO-2026-659",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "senderId": "user-admin",
+      "recipientId": "user-admin",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Pending",
+      "createdAt": "2026-10-13T06:26:23.525Z",
+      "note": "Completed core sprint milestones, verified staging builds, and stabilized cluster state.",
+      "completenessScore": 90,
+      "readinessCheck": {
+        "score": 90,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": false,
+            "suggestion": "Attach or link relevant evidence files or documentation links."
+          }
+        ],
+        "suggestions": [
+          "Attach or link relevant evidence files or documentation links."
+        ]
+      },
+      "setupInstructions": "",
+      "pendingTasks": [
+        "Monitor p99 latency during peak traffic",
+        "Complete failover verification simulation"
+      ],
+      "files": [],
+      "briefing": {
+        "executiveSummary": "Completed core sprint milestones, verified staging builds, and stabilized cluster state.",
+        "completedItems": [
+          "CI pipeline passing on main branch",
+          "Verified staging health telemetry and zero error rate"
+        ],
+        "nextSteps": [
+          "Monitor p99 latency during peak traffic",
+          "Complete failover verification simulation"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status --verify"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Yug Chapherkar",
+          "timestamp": "2026-10-13T06:26:23.525Z",
+          "detail": "Handoff dossier created and dispatched to Yug Chapherkar. Readiness Score: 90%. Ownership remains with Yug Chapherkar until acceptance."
+        }
+      ]
+    },
+    {
+      "id": "HO-2026-167",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "senderId": "user-jessica",
+      "recipientId": "user-marcus",
+      "pinnedVersionId": "v2.4.0",
+      "pinnedVersionHash": "a9f82c1",
+      "status": "Pending",
+      "createdAt": "2026-10-13T05:59:50.154Z",
+      "note": "Completed core sprint milestones, verified staging builds, and stabilized cluster state.",
+      "completenessScore": 90,
+      "readinessCheck": {
+        "score": 90,
+        "passed": true,
+        "criteria": [
+          {
+            "id": "summary",
+            "label": "Executive Context & Purpose",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "Sufficient operational context provided."
+          },
+          {
+            "id": "completed_items",
+            "label": "Completed Work Items",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 completed work item(s) recorded."
+          },
+          {
+            "id": "next_steps",
+            "label": "Pending Tasks & Next Steps",
+            "weight": 20,
+            "satisfied": true,
+            "suggestion": "2 pending action item(s) defined."
+          },
+          {
+            "id": "runbook_commands",
+            "label": "Setup Instructions & Runbook",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Executable diagnostic commands or setup instructions supplied."
+          },
+          {
+            "id": "blockers_clarity",
+            "label": "Blocker & Risk Assessment",
+            "weight": 15,
+            "satisfied": true,
+            "suggestion": "Zero active blockers flagged; clean operational transfer state."
+          },
+          {
+            "id": "evidence_files",
+            "label": "Verification Evidence & Files",
+            "weight": 10,
+            "satisfied": false,
+            "suggestion": "Attach or link relevant evidence files or documentation links."
+          }
+        ],
+        "suggestions": [
+          "Attach or link relevant evidence files or documentation links."
+        ]
+      },
+      "setupInstructions": "",
+      "pendingTasks": [
+        "Monitor p99 latency during peak traffic",
+        "Complete failover verification simulation"
+      ],
+      "files": [],
+      "briefing": {
+        "executiveSummary": "Completed core sprint milestones, verified staging builds, and stabilized cluster state.",
+        "completedItems": [
+          "CI pipeline passing on main branch",
+          "Verified staging health telemetry and zero error rate"
+        ],
+        "nextSteps": [
+          "Monitor p99 latency during peak traffic",
+          "Complete failover verification simulation"
+        ],
+        "criticalBlockers": [],
+        "architecturalDecisions": [
+          "ADR-041: Adopt Speculative Read Barriers to Minimize Leader RTT",
+          "ADR-039: Migrate WAL Disk Flush from POSIX sync to io_uring Async Ring"
+        ],
+        "keyFiles": [
+          "src/consensus/raft_state.rs"
+        ],
+        "runbookCommands": [
+          "./bin/ctl cluster status --verify"
+        ]
+      },
+      "auditTrail": [
+        {
+          "action": "HANDOFF_INITIATED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-13T05:59:50.155Z",
+          "detail": "Handoff dossier created and dispatched to Marcus Vance. Readiness Score: 90%. Ownership remains with Jessica Chauhan until acceptance."
+        }
+      ]
+    },
+    {
       "id": "HO-2026-517",
       "projectId": "apollo-core",
       "projectName": "Apollo Core Distributed Consensus",
@@ -2318,7 +2663,7 @@
       "recipientId": "user-jessica",
       "pinnedVersionId": "v2.4.0",
       "pinnedVersionHash": "a9f82c1",
-      "status": "Pending",
+      "status": "Accepted",
       "createdAt": "2026-10-11T12:00:00Z",
       "note": "Rotation handover for Apollo Core io_uring WAL verification during APAC to US-West shift handover.",
       "completenessScore": 94,
@@ -2354,8 +2699,15 @@
           "actor": "Yash Lokhande",
           "timestamp": "2026-10-11 12:00 UTC",
           "detail": "Handoff dossier created and dispatched to Jessica Chauhan with pinned version v2.4.0."
+        },
+        {
+          "action": "HANDOFF_ACCEPTED",
+          "actor": "Jessica Chauhan",
+          "timestamp": "2026-10-13T06:00:14.402Z",
+          "detail": "Handoff verified and accepted. Note: \"Attested operational readiness and assumed primary custodianship.\". Operational ownership transferred."
         }
-      ]
+      ],
+      "acceptedAt": "2026-10-13T06:00:14.402Z"
     }
   ],
   "updates": [
@@ -2792,6 +3144,127 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "AUDIT-MV8CMH9M-OQKR",
+      "timestamp": "2026-10-14T16:53:16.138Z",
+      "hash": "c4f1c322cce5025b387e8a021b1d03ef75c004702d8f146c2e9db5198e81b5ed",
+      "prevHash": "d2117fc3ec6d058e487600a96be74e9cdcdaba0f07cdc4a142250a7873b68095",
+      "action": "HANDOFF_ACCEPTED",
+      "actorId": "user-rohanverma-8cmf",
+      "actorName": "Rohan Verma",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff HO-2026-603 accepted by Rohan Verma for \"Apollo Core Distributed Consensus\". Custodianship transferred.",
+      "metadata": {
+        "handoffId": "HO-2026-603",
+        "recipientId": "user-rohanverma-8cmf"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV8CMGA2-GQIL",
+      "timestamp": "2026-10-14T16:53:14.858Z",
+      "hash": "d2117fc3ec6d058e487600a96be74e9cdcdaba0f07cdc4a142250a7873b68095",
+      "prevHash": "abe5af7a5eada4b0d67afb756225f8dfc0b2e30ee8880eadab040595fdffea6d",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-603 initiated for \"Apollo Core Distributed Consensus\" to Rohan Verma. Readiness: 90%.",
+      "metadata": {
+        "handoffId": "HO-2026-603",
+        "senderId": "user-marcus",
+        "recipientId": "user-rohanverma-8cmf",
+        "score": 90
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV8CMFOL-KXZS",
+      "timestamp": "2026-10-14T16:53:14.085Z",
+      "hash": "abe5af7a5eada4b0d67afb756225f8dfc0b2e30ee8880eadab040595fdffea6d",
+      "prevHash": "ac09929c3672696e4aea90c885c4d2bff5eeea7aae81760b0cadc0f55a15b014",
+      "action": "EMPLOYEE_INVITED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Continuity RBAC",
+      "detail": "Team Leader Marcus Vance created account for Rohan Verma (lead.emp.1791996792831@continuity.internal) with role [Employee] and secure hashed credentials.",
+      "metadata": {
+        "employeeId": "user-rohanverma-8cmf",
+        "email": "lead.emp.1791996792831@continuity.internal",
+        "systemRole": "Employee",
+        "teamId": "team-storage"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV6ASGJQ-6D7T",
+      "timestamp": "2026-10-13T06:26:23.558Z",
+      "hash": "ac09929c3672696e4aea90c885c4d2bff5eeea7aae81760b0cadc0f55a15b014",
+      "prevHash": "6e4cd27d226090a4483e6e076090baa6e8c07c0ba54a17baa3736d93f7eb1745",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-admin",
+      "actorName": "Yug Chapherkar",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-659 initiated for \"Apollo Core Distributed Consensus\" to Yug Chapherkar. Readiness: 90%.",
+      "metadata": {
+        "handoffId": "HO-2026-659",
+        "senderId": "user-admin",
+        "recipientId": "user-admin",
+        "score": 90
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV6AFMC1-8HR1",
+      "timestamp": "2026-10-13T06:16:24.529Z",
+      "hash": "6e4cd27d226090a4483e6e076090baa6e8c07c0ba54a17baa3736d93f7eb1745",
+      "prevHash": "146427cb65f01d5a8ad55e99273cf74a33e0326c8adebb2de67af3cc3a14e8fe",
+      "action": "EMPLOYEE_INVITED",
+      "actorId": "user-admin",
+      "actorName": "Yug Chapherkar",
+      "projectName": "Continuity RBAC",
+      "detail": "Admin Yug Chapherkar created account for shruti  (shruti@gmail.com) with role [Employee] and secure hashed credentials.",
+      "metadata": {
+        "employeeId": "user-shruti-6afm",
+        "email": "shruti@gmail.com",
+        "systemRole": "Employee"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV69UTS3-A7HC",
+      "timestamp": "2026-10-13T06:00:14.403Z",
+      "hash": "146427cb65f01d5a8ad55e99273cf74a33e0326c8adebb2de67af3cc3a14e8fe",
+      "prevHash": "b35456ccb7fa695ad88553976a5ce4d4001e97bb07df48ebcd602af8147964fd",
+      "action": "HANDOFF_ACCEPTED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff HO-2026-089 accepted by Jessica Chauhan for \"Apollo Core Distributed Consensus\". Custodianship transferred.",
+      "metadata": {
+        "handoffId": "HO-2026-089",
+        "recipientId": "user-jessica"
+      },
+      "verifiable": true
+    },
+    {
+      "id": "AUDIT-MV69UB2J-756Q",
+      "timestamp": "2026-10-13T05:59:50.155Z",
+      "hash": "b35456ccb7fa695ad88553976a5ce4d4001e97bb07df48ebcd602af8147964fd",
+      "prevHash": "2215e638d5631fcd9e43f4dff39ed6f903540a29e82b54f7b0244a4c0572fa9d",
+      "action": "HANDOFF_INITIATED",
+      "actorId": "user-jessica",
+      "actorName": "Jessica Chauhan",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Handoff dossier HO-2026-167 initiated for \"Apollo Core Distributed Consensus\" to Marcus Vance. Readiness: 90%.",
+      "metadata": {
+        "handoffId": "HO-2026-167",
+        "senderId": "user-jessica",
+        "recipientId": "user-marcus",
+        "score": 90
+      },
+      "verifiable": true
+    },
     {
       "id": "AUDIT-MV5ZU5KX-AA20",
       "timestamp": "2026-10-13T01:19:46.881Z",
@@ -3918,6 +4391,56 @@
     }
   ],
   "notifications": [
+    {
+      "id": "notif-1791996796138-ju2n",
+      "title": "Handover Accepted: HO-2026-603",
+      "message": "Rohan Verma accepted the handover for \"Apollo Core Distributed Consensus\". Custodianship transfer complete.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-603"
+    },
+    {
+      "id": "notif-1791996794858-f21h",
+      "title": "Incoming Handover Package: HO-2026-603",
+      "message": "Marcus Vance dispatched a handover dossier for \"Apollo Core Distributed Consensus\". Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-rohanverma-8cmf",
+      "link": "/handoffs/HO-2026-603"
+    },
+    {
+      "id": "notif-1791872783558-z9m5",
+      "title": "Incoming Handover Package: HO-2026-659",
+      "message": "Yug Chapherkar dispatched a handover dossier for \"Apollo Core Distributed Consensus\". Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-admin",
+      "link": "/handoffs/HO-2026-659"
+    },
+    {
+      "id": "notif-1791871214403-iief",
+      "title": "Handover Accepted: HO-2026-089",
+      "message": "Jessica Chauhan accepted the handover for \"Apollo Core Distributed Consensus\". Custodianship transfer complete.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-yash",
+      "link": "/handoffs/HO-2026-089"
+    },
+    {
+      "id": "notif-1791871190155-ws9n",
+      "title": "Incoming Handover Package: HO-2026-167",
+      "message": "Jessica Chauhan dispatched a handover dossier for \"Apollo Core Distributed Consensus\". Review and acceptance required.",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "handoff",
+      "recipientId": "user-marcus",
+      "link": "/handoffs/HO-2026-167"
+    },
     {
       "id": "notif-1791832695931-br0j",
       "title": "New Progress Update Submitted",

@@ -36,9 +36,10 @@ export async function POST(req: NextRequest) {
   if (auth.error) return auth.error;
   const actor = auth.user;
 
-  if (!actor || getEffectiveRole(actor) !== 'Admin') {
+  const effectiveRole = getEffectiveRole(actor);
+  if (!actor || (effectiveRole !== 'Admin' && effectiveRole !== 'Team Leader')) {
     return NextResponse.json(
-      { error: 'Forbidden: Only an authorized Admin can create or invite employees and assign roles.' },
+      { error: 'Forbidden: Only an authorized Admin or Team Leader can create or onboard employees.' },
       { status: 403 }
     );
   }
@@ -49,13 +50,21 @@ export async function POST(req: NextRequest) {
       name,
       email,
       role,
-      systemRole = 'Employee',
       department,
-      teamId,
       location,
       bio,
-      password = '12345678',
+      password,
     } = body;
+
+    let { systemRole = 'Employee', teamId } = body;
+
+    // If Team Leader is creating, enforce Employee role and default to their own team
+    if (effectiveRole === 'Team Leader') {
+      systemRole = 'Employee';
+      if (!teamId && actor.teamId) {
+        teamId = actor.teamId;
+      }
+    }
 
     if (!name || !email || !department) {
       return NextResponse.json({ error: 'Name, email, and department are required' }, { status: 400 });
@@ -81,7 +90,10 @@ export async function POST(req: NextRequest) {
       ? `TL-${Math.floor(1000 + Math.random() * 9000)}`
       : `CNT-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    const passwordHash = await hashPassword(password);
+    const rawPassword = (password && String(password).trim().length > 0)
+      ? String(password).trim()
+      : '12345678';
+    const passwordHash = await hashPassword(rawPassword);
 
     const newUser: User = {
       id,
@@ -117,7 +129,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Also sync to Prisma DB if available
+    // Persist to Prisma SQLite database
     try {
       await prisma.user.upsert({
         where: { id: newUser.id },
@@ -144,15 +156,15 @@ export async function POST(req: NextRequest) {
           teamId: newUser.teamId || null,
         },
       });
-    } catch {
-      // Prisma sync best-effort
+    } catch (dbErr) {
+      console.warn('Prisma DB sync warning:', dbErr);
     }
 
     createAuditLog(
       actor.id,
       actor.name,
       'EMPLOYEE_INVITED',
-      `Admin ${actor.name} created account for ${name} (${email}) with role [${systemRole}] and secure hashed credentials.`,
+      `${effectiveRole} ${actor.name} created account for ${name} (${email}) with role [${systemRole}] and secure hashed credentials.`,
       'Continuity RBAC',
       { employeeId: id, email, systemRole, teamId }
     );

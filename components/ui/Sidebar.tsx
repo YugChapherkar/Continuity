@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
-import { Avatar } from './Avatar';
 import {
   Layers,
   FolderGit2,
@@ -12,9 +11,6 @@ import {
   Users,
   ShieldCheck,
   PanelLeftClose,
-  Sun,
-  Moon,
-  LogOut,
   CheckSquare,
   FileText,
   ClipboardCheck,
@@ -41,8 +37,6 @@ export function Sidebar() {
     isSidebarOpen,
     setIsSidebarOpen,
     theme,
-    toggleTheme,
-    logout,
   } = useApp();
 
   const [isPersonaMenuOpen, setIsPersonaMenuOpen] = useState(false);
@@ -239,7 +233,7 @@ export function Sidebar() {
 
       {/* Navigation Items */}
       <nav className="flex-1 px-3 py-3 space-y-1 overflow-y-auto">
-        <div className={`px-3 pb-2 text-[10px] font-semibold uppercase tracking-wider ${isLight ? 'text-slate-400' : 'text-neutral-500'}`}>
+        <div className={`px-3 pb-2 text-[10px] font-bold uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
           Navigation
         </div>
         {navItems.map((item) => {
@@ -265,20 +259,20 @@ export function Sidebar() {
               className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs transition-all ${
                 isActive
                   ? isLight
-                    ? 'bg-slate-100 text-slate-900 font-semibold border border-slate-200 shadow-xs'
-                    : 'bg-white/[0.08] text-white font-semibold border border-white/[0.08] shadow-xs'
+                    ? 'bg-blue-50 text-blue-700 font-bold border border-blue-200/80 shadow-xs'
+                    : 'bg-white/[0.08] text-white font-bold border border-white/[0.08] shadow-xs'
                   : isLight
-                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent font-medium'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/[0.03] border border-transparent font-medium'
+                  ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-transparent font-medium'
+                  : 'text-neutral-300 hover:text-white hover:bg-white/[0.04] border border-transparent font-medium'
               }`}
             >
               <div className="flex items-center gap-3">
                 <Icon
                   className={`w-4 h-4 shrink-0 ${
-                    isActive ? (isLight ? 'text-blue-600' : 'text-blue-400') : (isLight ? 'text-slate-400' : 'text-neutral-500')
+                    isActive ? (isLight ? 'text-blue-600' : 'text-blue-400') : (isLight ? 'text-slate-500' : 'text-neutral-400')
                   }`}
                 />
-                <span className={isActive ? (isLight ? 'text-slate-900' : 'text-white') : ''}>{item.label}</span>
+                <span className={isActive ? (isLight ? 'text-blue-700' : 'text-white') : ''}>{item.label}</span>
               </div>
               {item.badge && (
                 <span className={`text-[10px] font-semibold border px-2 py-0.5 rounded-full font-mono ${badgeClasses}`}>
@@ -289,79 +283,6 @@ export function Sidebar() {
           );
         })}
       </nav>
-
-      {/* User Identity Profile Tile */}
-      <div
-        className={`p-3 border-t shrink-0 space-y-2 ${
-          isLight ? 'bg-slate-50/90 border-slate-200/80' : 'bg-[#050606]/80 border-white/10'
-        }`}
-      >
-        <div
-          className={`w-full flex items-center justify-between p-2 rounded-xl text-left border ${
-            isLight
-              ? 'bg-white border-slate-200/90 text-slate-800 shadow-sm'
-              : 'bg-white/[0.03] border-white/[0.08] text-[#F5F5F2]'
-          }`}
-        >
-          <div className="flex items-center gap-2.5 min-w-0">
-            <Avatar name={currentUser.name} initials={currentUser.initials} size="sm" showIndicator />
-            <div className="min-w-0">
-              <p className={`text-xs font-semibold truncate flex items-center gap-1.5 ${isLight ? 'text-slate-900' : 'text-[#F5F5F2]'}`}>
-                <span className="truncate">{currentUser.name}</span>
-              </p>
-              <p className={`text-[10px] truncate flex items-center gap-1 ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
-                <span className="font-semibold text-blue-600 dark:text-blue-400">{activeRole}</span>
-                <span>·</span>
-                <span className="truncate">{currentUser.role}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Theme & Logout Controls */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            id="sidebar-theme-toggle"
-            data-testid="sidebar-theme-toggle"
-            className={`flex-1 py-1.5 px-2 flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium border transition-colors cursor-pointer ${
-              isLight
-                ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200/90 shadow-sm'
-                : 'bg-white/[0.03] hover:bg-white/[0.07] text-neutral-400 hover:text-white border-white/[0.06]'
-            }`}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {theme === 'dark' ? (
-              <>
-                <Sun className="w-3 h-3 text-slate-400" />
-                <span>Light</span>
-              </>
-            ) : (
-              <>
-                <Moon className="w-3 h-3 text-blue-600" />
-                <span>Dark</span>
-              </>
-            )}
-          </button>
-
-          <button
-            onClick={() => {
-              if (typeof window !== 'undefined' && window.innerWidth < 768) {
-                setIsSidebarOpen(false);
-              }
-              logout();
-            }}
-            className={`flex-1 py-1.5 px-2 flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium border transition-all cursor-pointer ${
-              isLight
-                ? 'text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 border-slate-200/90 hover:border-slate-300 shadow-sm'
-                : 'text-neutral-400 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border-white/[0.06] hover:border-white/20'
-            }`}
-          >
-            <LogOut className="w-3 h-3" />
-            <span>Log out</span>
-          </button>
-        </div>
-      </div>
     </div>
   );
 

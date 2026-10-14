@@ -8,6 +8,7 @@ import {
   transferTaskOwnership,
 } from '@/lib/server-store';
 import { requireUser } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(
   req: NextRequest,
@@ -50,6 +51,19 @@ export async function POST(
       timestamp: new Date().toISOString(),
       detail: `Handoff verified and accepted. Note: "${signoffNote}". Operational ownership transferred.`,
     });
+
+    try {
+      await prisma.handoff.update({
+        where: { id: handoff.id },
+        data: {
+          status: 'Accepted',
+          acceptedAt: new Date(),
+          auditTrailData: JSON.stringify(handoff.auditTrail),
+        },
+      });
+    } catch (dbErr) {
+      console.warn('Prisma accept sync warning:', dbErr);
+    }
 
     createAuditLog(
       actor.id,

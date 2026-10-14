@@ -8,6 +8,7 @@ import {
 } from '@/lib/server-store';
 import { requireUser } from '@/lib/auth';
 import { HandoffPackage } from '@/lib/types';
+import { prisma } from '@/lib/prisma';
 
 export async function GET(req: NextRequest) {
   const auth = await requireUser(req);
@@ -143,6 +144,27 @@ export async function POST(req: NextRequest) {
 
     // Prepend to store
     store.handoffs.unshift(newHandoff);
+
+    // Sync to Prisma SQLite DB
+    try {
+      await prisma.handoff.create({
+        data: {
+          id: newHandoff.id,
+          projectId: newHandoff.projectId,
+          projectName: newHandoff.projectName,
+          senderId: newHandoff.senderId,
+          recipientId: newHandoff.recipientId,
+          status: newHandoff.status,
+          completenessScore: newHandoff.completenessScore,
+          note: newHandoff.note || null,
+          taskTitle: newHandoff.taskTitle || null,
+          briefingData: JSON.stringify(newHandoff.briefing),
+          auditTrailData: JSON.stringify(newHandoff.auditTrail),
+        },
+      });
+    } catch (dbErr) {
+      console.warn('Prisma handoff sync warning:', dbErr);
+    }
 
     // Cryptographic audit log
     createAuditLog(

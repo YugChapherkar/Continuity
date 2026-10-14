@@ -98,9 +98,10 @@ export async function POST(req: NextRequest) {
       teamId: user.teamId,
     });
 
-    // 4. Return sanitized user without token in JSON response body
+    // 4. Return sanitized user and token
     const response = NextResponse.json({
       success: true,
+      token,
       user: {
         id: user.id,
         name: user.name,

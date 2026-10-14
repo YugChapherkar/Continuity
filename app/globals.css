@@ -476,11 +476,12 @@ html.light .hover\:border-white\/20:hover {
 }
 
 /* TopBar & Sidebar light mode headers */
-html.light header:not(.marklab-navbar-header) {
+html.light header:not(.marklab-navbar-header):not(.login-header):not([class*="bg-transparent"]) {
   background-color: rgba(255, 255, 255, 0.88) !important;
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
+html.light header.login-header,
 html.light header.marklab-navbar-header,
 html.light [class*="bg-[#111638]"] header {
   background-color: transparent !important;
