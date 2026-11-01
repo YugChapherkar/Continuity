@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { Avatar } from '@/components/ui/Avatar';
 import { CreateProjectModal } from '@/components/ui/CreateProjectModal';
+import { CardGridSkeleton } from '@/components/ui/Skeletons';
 import {
   FolderGit2,
   Search,
@@ -57,16 +58,16 @@ export default function ProjectsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 text-slate-800 dark:text-[#F5F5F2] text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+            className="px-4 py-2.5 bg-white hover:bg-slate-50 text-black text-xs font-semibold rounded-full border border-slate-300 transition-all flex items-center gap-2 cursor-pointer shadow-xs"
           >
             <Plus className="w-4 h-4" />
             <span>New Workspace</span>
           </button>
           <button
             onClick={() => setIsCreateHandoffModalOpen(true)}
-            className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md shadow-blue-600/25 transition-all flex items-center gap-2 cursor-pointer"
+            className="dark-cta-btn px-5 py-2.5 bg-black hover:bg-neutral-800 text-white text-xs font-semibold rounded-full shadow-xs transition-all flex items-center gap-2 cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Start a handoff</span>
           </button>
         </div>
@@ -74,20 +75,20 @@ export default function ProjectsPage() {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 shadow-sm">
-          <span className="text-[11px] text-slate-500 dark:text-neutral-400 uppercase tracking-wider font-mono font-semibold">Total Workspaces</span>
-          <p className="text-2xl font-bold text-slate-900 dark:text-[#F5F5F2] mt-1 font-mono">{projects.length}</p>
-          <span className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium inline-block">100% losslessly tracked</span>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+          <span className="text-[11px] text-neutral-600 uppercase tracking-wider font-mono font-bold">Total Workspaces</span>
+          <p className="text-2xl font-bold text-black mt-1 font-mono font-tasaorbiter">{projects.length}</p>
+          <span className="text-[11px] text-neutral-600 mt-1 font-medium inline-block">100% losslessly tracked</span>
         </div>
-        <div className="bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 shadow-sm">
-          <span className="text-[11px] text-slate-500 dark:text-neutral-400 uppercase tracking-wider font-mono font-semibold">In Shift Transition</span>
-          <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1 font-mono">{transitioningCount}</p>
-          <span className="text-[11px] text-slate-500 dark:text-neutral-400 mt-1 inline-block">Active handoffs open</span>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+          <span className="text-[11px] text-neutral-600 uppercase tracking-wider font-mono font-bold">In Shift Transition</span>
+          <p className="text-2xl font-bold text-black mt-1 font-mono font-tasaorbiter">{transitioningCount}</p>
+          <span className="text-[11px] text-neutral-600 mt-1 inline-block">Active handoffs open</span>
         </div>
-        <div className="bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl p-5 shadow-sm">
-          <span className="text-[11px] text-slate-500 dark:text-neutral-400 uppercase tracking-wider font-mono font-semibold">Architecture ADRs</span>
-          <p className="text-2xl font-bold text-slate-900 dark:text-[#F5F5F2] mt-1 font-mono">{totalAdrs}</p>
-          <span className="text-[11px] text-slate-500 dark:text-neutral-400 mt-1 inline-block">Ratified decision records</span>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+          <span className="text-[11px] text-neutral-600 uppercase tracking-wider font-mono font-bold">Architecture ADRs</span>
+          <p className="text-2xl font-bold text-black mt-1 font-mono font-tasaorbiter">{totalAdrs}</p>
+          <span className="text-[11px] text-neutral-600 mt-1 inline-block">Ratified decision records</span>
         </div>
       </div>
 
@@ -139,123 +140,127 @@ export default function ProjectsPage() {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {filteredProjects.map((project) => {
-          const owner = users.find((u) => u.id === project.ownerId);
-          const statusColors: Record<string, string> = {
-            Active: 'text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20',
-            Transitioning: 'text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/20',
-            'Review Needed': 'text-amber-700 dark:text-neutral-300 bg-amber-50 dark:bg-white/5 border-amber-200 dark:border-white/10',
-            Stable: 'text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/20',
-            'At Risk': 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20',
-            Critical: 'text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/20',
-            'Submitted for Final Review': 'text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-500/10 border-purple-200 dark:border-purple-500/20',
-            'In Review': 'text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-500/10 border-purple-200 dark:border-purple-500/20',
-            'Changes Requested': 'text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/20',
-            'Approved for Delivery': 'text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-500/10 border-cyan-200 dark:border-cyan-500/20',
-            Delivered: 'text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20',
-          };
-          const badgeStyle = statusColors[project.status] || 'text-slate-600 dark:text-neutral-300 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-white/10';
+      {projects.length === 0 ? (
+        <CardGridSkeleton count={4} />
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {filteredProjects.map((project) => {
+            const owner = users.find((u) => u.id === project.ownerId);
+            const statusColors: Record<string, string> = {
+              Active: 'text-emerald-800 bg-emerald-50 border-emerald-200',
+              Transitioning: 'text-blue-800 bg-blue-50 border-blue-200',
+              'Review Needed': 'text-amber-800 bg-amber-50 border-amber-200',
+              Stable: 'text-slate-800 bg-slate-50 border-slate-200',
+              'At Risk': 'text-amber-800 bg-amber-50 border-amber-200',
+              Critical: 'text-rose-800 bg-rose-50 border-rose-200',
+              'Submitted for Final Review': 'text-purple-800 bg-purple-50 border-purple-200',
+              'In Review': 'text-purple-800 bg-purple-50 border-purple-200',
+              'Changes Requested': 'text-rose-800 bg-rose-50 border-rose-200',
+              'Approved for Delivery': 'text-cyan-800 bg-cyan-50 border-cyan-200',
+              Delivered: 'text-emerald-800 bg-emerald-50 border-emerald-200',
+            };
+            const badgeStyle = statusColors[project.status] || 'text-slate-700 bg-slate-50 border-slate-200';
 
-          return (
-            <div
-              key={project.id}
-              className="bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-blue-400/50 dark:hover:border-white/20 transition-all group flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                      <FolderGit2 className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-base text-slate-900 dark:text-[#F5F5F2] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {project.name}
-                      </h3>
-                      <span className="text-[11px] text-slate-500 dark:text-neutral-400 font-mono">
-                        {project.repositoryUrl}
-                      </span>
-                    </div>
-                  </div>
-                  <span className={`px-2.5 py-1 text-[11px] rounded-full border font-medium ${badgeStyle}`}>
-                    {project.status}
-                  </span>
-                </div>
-
-                <p className="text-xs text-slate-600 dark:text-[#A0A09D] mt-4 leading-relaxed line-clamp-3">
-                  {project.description}
-                </p>
-
-                {/* Key Metrics Pill Grid */}
-                <div className="grid grid-cols-3 gap-2 mt-5 py-3 border-y border-slate-100 dark:border-white/5 text-xs text-slate-600 dark:text-neutral-400">
-                  <div className="flex items-center gap-1.5 font-mono">
-                    <GitCommit className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-500" />
-                    <span>{project.currentVersionId}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 font-mono">
-                    <FileCode className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-500" />
-                    <span>{project.decisions.length} ADRs</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 font-mono">
-                    <Users className="w-3.5 h-3.5 text-slate-400 dark:text-neutral-500" />
-                    <span>{project.team}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Footer: Team Avatars, Owner & CTA */}
-              <div className="mt-5 flex items-center justify-between pt-2">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <Avatar name={owner?.name || 'Unassigned'} initials={owner?.initials} size="xs" />
-                    <div className="text-[11px]">
-                      <span className="text-slate-500 dark:text-neutral-400">Lead: </span>
-                      <span className="text-slate-900 dark:text-[#F5F5F2] font-medium">{owner?.name || 'Unassigned'}</span>
-                    </div>
-                  </div>
-
-                  {project.teamMembers && project.teamMembers.length > 0 && (
-                    <div className="hidden sm:flex items-center -space-x-1.5 pl-2 border-l border-slate-200 dark:border-white/10" title={`${project.teamMembers.length} team members`}>
-                      {project.teamMembers.slice(0, 3).map((tm) => {
-                        const u = users.find((x) => x.id === tm.userId);
-                        if (!u) return null;
-                        return (
-                          <Avatar
-                            key={tm.userId}
-                            name={u.name}
-                            initials={u.initials}
-                            size="xs"
-                            className="border border-white dark:border-[#0B0D0E]"
-                          />
-                        );
-                      })}
-                      {project.teamMembers.length > 3 && (
-                        <span className="w-5 h-5 rounded-full bg-slate-100 dark:bg-white/10 text-[9px] text-slate-700 dark:text-neutral-300 flex items-center justify-center font-mono border border-white dark:border-[#0B0D0E]">
-                          +{project.teamMembers.length - 3}
+            return (
+              <div
+                key={project.id}
+                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs hover:border-black transition-all group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#F8FAFC] border border-slate-200 flex items-center justify-center text-black">
+                        <FolderGit2 className="w-5 h-5 stroke-[2]" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-base text-black font-tasaorbiter group-hover:text-neutral-700 transition-colors">
+                          {project.name}
+                        </h3>
+                        <span className="text-[11px] text-neutral-500 font-mono">
+                          {project.repositoryUrl}
                         </span>
-                      )}
+                      </div>
                     </div>
-                  )}
+                    <span className={`px-2.5 py-1 text-[11px] rounded-full border font-mono font-semibold ${badgeStyle}`}>
+                      {project.status}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-neutral-700 mt-4 leading-relaxed line-clamp-3">
+                    {project.description}
+                  </p>
+
+                  {/* Key Metrics Pill Grid */}
+                  <div className="grid grid-cols-3 gap-2 mt-5 py-3 border-y border-slate-100 text-xs text-neutral-700">
+                    <div className="flex items-center gap-1.5 font-mono">
+                      <GitCommit className="w-3.5 h-3.5 text-neutral-500" />
+                      <span>{project.currentVersionId}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-mono">
+                      <FileCode className="w-3.5 h-3.5 text-neutral-500" />
+                      <span>{project.decisions.length} ADRs</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-mono">
+                      <Users className="w-3.5 h-3.5 text-neutral-500" />
+                      <span>{project.team}</span>
+                    </div>
+                  </div>
                 </div>
 
-                <Link
-                  href={`/projects/${project.id}`}
-                  className="px-4 py-2 bg-slate-50 hover:bg-blue-600 hover:text-white text-slate-700 dark:bg-white/5 dark:hover:bg-blue-600 dark:text-neutral-300 text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5 border border-slate-200 dark:border-white/[0.08]"
-                >
-                  <span>Open Workspace</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+                {/* Card Footer: Team Avatars, Owner & CTA */}
+                <div className="mt-5 flex items-center justify-between pt-2 border-t border-slate-100">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      <Avatar name={owner?.name || 'Unassigned'} initials={owner?.initials} size="xs" />
+                      <div className="text-[11px]">
+                        <span className="text-neutral-500">Lead: </span>
+                        <span className="text-black font-semibold">{owner?.name || 'Unassigned'}</span>
+                      </div>
+                    </div>
 
-        {filteredProjects.length === 0 && (
-          <div className="col-span-full py-16 text-center text-slate-500 dark:text-neutral-400 text-sm bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl">
-            No workspaces matching your query.
-          </div>
-        )}
-      </div>
+                    {project.teamMembers && project.teamMembers.length > 0 && (
+                      <div className="hidden sm:flex items-center -space-x-1.5 pl-2 border-l border-slate-200" title={`${project.teamMembers.length} team members`}>
+                        {project.teamMembers.slice(0, 3).map((tm) => {
+                          const u = users.find((x) => x.id === tm.userId);
+                          if (!u) return null;
+                          return (
+                            <Avatar
+                              key={tm.userId}
+                              name={u.name}
+                              initials={u.initials}
+                              size="xs"
+                              className="border border-white"
+                            />
+                          );
+                        })}
+                        {project.teamMembers.length > 3 && (
+                          <span className="w-5 h-5 rounded-full bg-slate-100 text-[9px] text-black flex items-center justify-center font-mono border border-white">
+                            +{project.teamMembers.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <Link
+                    href={`/projects/${project.id}`}
+                    className="px-4 py-2 bg-[#F8FAFC] hover:bg-black hover:text-white text-black text-xs font-semibold rounded-full transition-all flex items-center gap-1.5 border border-slate-200"
+                  >
+                    <span>Open Workspace</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {filteredProjects.length === 0 && projects.length > 0 && (
+        <div className="py-16 text-center text-neutral-500 text-sm bg-white border border-slate-200 rounded-2xl">
+          No workspaces matching your query.
+        </div>
+      )}
 
       {/* Comprehensive Guided Workspace Questionnaire Modal */}
       <CreateProjectModal

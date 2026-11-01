@@ -164,9 +164,9 @@ export default function AdminEmployeesPage() {
 
         <button
           onClick={() => setIsInviteModalOpen(true)}
-          className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-600 shadow-md shadow-blue-500/20 flex items-center gap-2 transition-all cursor-pointer self-start md:self-auto"
+          className="dark-cta-btn px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-black hover:bg-neutral-800 shadow-xs flex items-center gap-2 transition-all cursor-pointer self-start md:self-auto"
         >
-          <UserPlus className="w-4 h-4" />
+          <UserPlus className="w-4 h-4 stroke-[2.5]" />
           <span>Invite / Add Employee</span>
         </button>
       </div>

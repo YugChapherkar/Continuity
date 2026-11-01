@@ -130,13 +130,13 @@ export default function HomePage() {
           </div>
 
           {/* Action CTAs */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             {activeRole === 'Admin' && (
               <button
                 onClick={() => setIsCreateProjectOpen(true)}
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+                className="dark-cta-btn px-4 py-2 rounded-full text-xs font-semibold text-white bg-black hover:bg-neutral-800 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Create Project</span>
               </button>
             )}
@@ -144,7 +144,7 @@ export default function HomePage() {
             {activeRole === 'Team Leader' && (
               <Link
                 href="/reports"
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+                className="dark-cta-btn px-4 py-2 rounded-full text-xs font-semibold text-white bg-black hover:bg-neutral-800 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>Submit Progress Report</span>
@@ -153,9 +153,9 @@ export default function HomePage() {
 
             <button
               onClick={() => setIsCreateHandoffModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 rounded-full text-xs font-semibold text-black bg-white hover:bg-slate-50 border border-slate-300 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
-              <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <Layers className="w-3.5 h-3.5 text-black" />
               <span>New Handoff</span>
             </button>
           </div>

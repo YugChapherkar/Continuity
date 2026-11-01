@@ -535,3 +535,22 @@ html[data-theme="light"] aside > div {
   border-color: rgba(226, 232, 240, 0.9) !important;
 }
 
+@keyframes progress-strip {
+  0% {
+    width: 0%;
+    margin-left: 0%;
+  }
+  50% {
+    width: 70%;
+    margin-left: 20%;
+  }
+  100% {
+    width: 100%;
+    margin-left: 0%;
+  }
+}
+
+.animate-progress-strip {
+  animation: progress-strip 0.35s ease-out forwards;
+}
+

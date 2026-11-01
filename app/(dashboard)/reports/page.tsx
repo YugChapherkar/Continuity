@@ -141,9 +141,9 @@ export default function ReportsPage() {
         {(activeRole === 'Team Leader' || activeRole === 'Admin') && (
           <button
             onClick={() => setIsSubmitModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/25 flex items-center gap-2 transition-all cursor-pointer self-start md:self-auto"
+            className="dark-cta-btn px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-black hover:bg-neutral-800 shadow-xs flex items-center gap-2 transition-all cursor-pointer self-start md:self-auto"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Submit Progress Report</span>
           </button>
         )}

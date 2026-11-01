@@ -154,17 +154,17 @@ export default function AdminTeamsPage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setIsTransferModalOpen(true)}
-            className="px-3.5 py-2 rounded-xl text-xs font-medium text-neutral-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.08] border border-white/10 flex items-center gap-2 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-full text-xs font-semibold text-black bg-white hover:bg-slate-50 border border-slate-300 flex items-center gap-2 transition-all cursor-pointer shadow-xs"
           >
-            <ArrowRightLeft className="w-3.5 h-3.5 text-blue-400" />
+            <ArrowRightLeft className="w-3.5 h-3.5 text-black" />
             <span>Transfer Member</span>
           </button>
 
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-600 shadow-md shadow-blue-500/20 flex items-center gap-2 transition-all cursor-pointer"
+            className="dark-cta-btn px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-black hover:bg-neutral-800 shadow-xs flex items-center gap-2 transition-all cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Create New Team</span>
           </button>
         </div>

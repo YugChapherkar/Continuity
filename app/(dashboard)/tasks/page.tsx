@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { Avatar } from '@/components/ui/Avatar';
+import { TableSkeleton } from '@/components/ui/Skeletons';
 import { api } from '@/lib/api';
 import { Task, TaskStatus } from '@/lib/types';
 import {
@@ -169,9 +170,9 @@ export default function TasksPage() {
         {canCreateTask && (
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 flex items-center gap-2 transition-all cursor-pointer self-start md:self-auto"
+            className="dark-cta-btn px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-black hover:bg-neutral-800 shadow-sm flex items-center gap-2 transition-all cursor-pointer self-start md:self-auto"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Create & Assign Task</span>
           </button>
         )}
@@ -248,128 +249,132 @@ export default function TasksPage() {
       </div>
 
       {/* Tasks Table */}
-      <div className="bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200/90 dark:border-white/[0.08] rounded-2xl overflow-hidden shadow-sm dark:shadow-xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 dark:bg-white/[0.03] border-b border-slate-200 dark:border-white/[0.06] text-slate-500 dark:text-neutral-400 font-mono text-[11px] uppercase tracking-wider">
-              <tr>
-                <th className="px-6 py-4">Task ID & Priority</th>
-                <th className="px-6 py-4">Title & Workspace</th>
-                <th className="px-6 py-4">Assignee</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">Due Date</th>
-                <th className="px-6 py-4">Latest Progress</th>
-                <th className="px-6 py-4 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-white/[0.04]">
-              {filteredTasks.length === 0 ? (
+      {projects.length === 0 ? (
+        <TableSkeleton rows={6} cols={6} />
+      ) : (
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-[#F8FAFC] border-b border-slate-200 text-neutral-600 font-mono text-[11px] uppercase tracking-wider">
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-slate-400 dark:text-neutral-500">
-                    No matching tasks found.
-                  </td>
+                  <th className="px-6 py-4">Task ID & Priority</th>
+                  <th className="px-6 py-4">Title & Workspace</th>
+                  <th className="px-6 py-4">Assignee</th>
+                  <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4">Due Date</th>
+                  <th className="px-6 py-4">Latest Progress</th>
+                  <th className="px-6 py-4 text-right">Action</th>
                 </tr>
-              ) : (
-                filteredTasks.map((task) => {
-                  const isOverdue =
-                    task.deadline &&
-                    task.status !== 'Completed' &&
-                    task.status !== 'Done' &&
-                    new Date(task.deadline).getTime() < new Date().setHours(0, 0, 0, 0);
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {filteredTasks.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="px-6 py-12 text-center text-neutral-500">
+                      No matching tasks found.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredTasks.map((task) => {
+                    const isOverdue =
+                      task.deadline &&
+                      task.status !== 'Completed' &&
+                      task.status !== 'Done' &&
+                      new Date(task.deadline).getTime() < new Date().setHours(0, 0, 0, 0);
 
-                  const isMyTask =
-                    task.assigneeId === currentUser.id ||
-                    task.assignee.toLowerCase() === currentUser.name.toLowerCase();
+                    const isMyTask =
+                      task.assigneeId === currentUser.id ||
+                      task.assignee.toLowerCase() === currentUser.name.toLowerCase();
 
-                  return (
-                    <tr
-                      key={task.id}
-                      onClick={() => {
-                        setSelectedTask(task);
-                        setUpdateStatus(task.status as any);
-                        setUpdateNote(task.latestUpdate || '');
-                      }}
-                      className="hover:bg-slate-50/70 dark:hover:bg-white/[0.02] transition-colors cursor-pointer group"
-                    >
-                      {/* ID & Priority */}
-                      <td className="px-6 py-4 font-mono">
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold text-blue-600 dark:text-blue-400">{task.id}</span>
+                    return (
+                      <tr
+                        key={task.id}
+                        onClick={() => {
+                          setSelectedTask(task);
+                          setUpdateStatus(task.status as any);
+                          setUpdateNote(task.latestUpdate || '');
+                        }}
+                        className="hover:bg-slate-50 transition-colors cursor-pointer group"
+                      >
+                        {/* ID & Priority */}
+                        <td className="px-6 py-4 font-mono">
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-black">{task.id}</span>
+                            <span
+                              className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                                task.priority === 'P0'
+                                  ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                                  : task.priority === 'P1'
+                                  ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                  : 'bg-slate-100 text-slate-700 border border-slate-200'
+                              }`}
+                            >
+                              {task.priority}
+                            </span>
+                          </div>
+                        </td>
+
+                        {/* Title & Project */}
+                        <td className="px-6 py-4 max-w-sm">
+                          <div className="font-semibold text-black group-hover:text-neutral-700 transition-colors">
+                            {task.title}
+                          </div>
+                          <div className="text-[11px] text-neutral-500 truncate mt-0.5">
+                            {task.projectName}
+                          </div>
+                        </td>
+
+                        {/* Assignee */}
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
+                            <Avatar name={task.assignee} size="xs" />
+                            <span className={isMyTask ? 'text-black font-semibold' : 'text-neutral-700'}>
+                              {task.assignee}
+                            </span>
+                          </div>
+                        </td>
+
+                        {/* Status Badge */}
+                        <td className="px-6 py-4">
                           <span
-                            className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${
-                              task.priority === 'P0'
-                                ? 'bg-rose-50 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30'
-                                : task.priority === 'P1'
-                                ? 'bg-amber-50 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30'
-                                : 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-neutral-400 border border-slate-200 dark:border-white/10'
+                            className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono border font-semibold ${
+                              statusColors[task.status] || 'bg-slate-100 text-slate-700 border-slate-200'
                             }`}
                           >
-                            {task.priority}
+                            {task.status}
                           </span>
-                        </div>
-                      </td>
+                        </td>
 
-                      {/* Title & Project */}
-                      <td className="px-6 py-4 max-w-sm">
-                        <div className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                          {task.title}
-                        </div>
-                        <div className="text-[11px] text-slate-500 dark:text-neutral-400 truncate mt-0.5">
-                          {task.projectName}
-                        </div>
-                      </td>
+                        {/* Due Date */}
+                        <td className="px-6 py-4 font-mono text-[11px]">
+                          {task.deadline ? (
+                            <span className={isOverdue ? 'text-rose-600 font-bold' : 'text-neutral-600'}>
+                              {task.deadline}
+                            </span>
+                          ) : (
+                            <span className="text-neutral-400">—</span>
+                          )}
+                        </td>
 
-                      {/* Assignee */}
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <Avatar name={task.assignee} size="xs" />
-                          <span className={isMyTask ? 'text-slate-900 dark:text-white font-medium' : 'text-slate-700 dark:text-neutral-300'}>
-                            {task.assignee}
+                        {/* Latest Progress */}
+                        <td className="px-6 py-4 max-w-xs truncate text-[11px] text-neutral-600">
+                          {task.latestUpdate || <span className="text-neutral-400 italic">No notes</span>}
+                        </td>
+
+                        {/* Action */}
+                        <td className="px-6 py-4 text-right">
+                          <span className="text-xs font-semibold text-black group-hover:translate-x-0.5 transition-transform inline-block">
+                            View →
                           </span>
-                        </div>
-                      </td>
-
-                      {/* Status Badge */}
-                      <td className="px-6 py-4">
-                        <span
-                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono border font-semibold ${
-                            statusColors[task.status] || 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-neutral-400'
-                          }`}
-                        >
-                          {task.status}
-                        </span>
-                      </td>
-
-                      {/* Due Date */}
-                      <td className="px-6 py-4 font-mono text-[11px]">
-                        {task.deadline ? (
-                          <span className={isOverdue ? 'text-rose-600 dark:text-rose-400 font-bold' : 'text-slate-500 dark:text-neutral-400'}>
-                            {task.deadline}
-                          </span>
-                        ) : (
-                          <span className="text-slate-400 dark:text-neutral-600">—</span>
-                        )}
-                      </td>
-
-                      {/* Latest Progress */}
-                      <td className="px-6 py-4 max-w-xs truncate text-[11px] text-slate-500 dark:text-neutral-400">
-                        {task.latestUpdate || <span className="text-slate-400 dark:text-neutral-600 italic">No notes</span>}
-                      </td>
-
-                      {/* Action */}
-                      <td className="px-6 py-4 text-right">
-                        <span className="text-xs text-blue-600 dark:text-blue-400 group-hover:translate-x-0.5 transition-transform inline-block">
-                          View →
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Modal: View / Update Task */}
       {selectedTask && (

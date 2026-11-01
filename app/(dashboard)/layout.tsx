@@ -4,6 +4,7 @@ import React from 'react';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { TopBar } from '@/components/ui/TopBar';
 import { IridescentWave } from '@/components/ui/IridescentWave';
+import { NavigationProgressBar } from '@/components/ui/NavigationProgressBar';
 import { useApp } from '@/context/AppContext';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -13,9 +14,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div
       className={`min-h-screen transition-colors duration-200 flex flex-col md:flex-row relative overflow-x-clip ${
-        isLight ? 'bg-white text-slate-900' : 'bg-[#0A0C10] text-[#F3F4F6]'
+        isLight ? 'bg-[#F8FAFC] text-black' : 'bg-[#0A0C10] text-[#F3F4F6]'
       }`}
     >
+      <NavigationProgressBar />
       <Sidebar />
       <div
         className={`flex-1 flex flex-col min-w-0 relative min-h-screen transition-[padding] duration-300 ease-in-out ${
