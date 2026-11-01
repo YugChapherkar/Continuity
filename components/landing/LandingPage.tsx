@@ -530,9 +530,7 @@ function ServicesSection() {
                 className="bg-[#F8FAFC] hover:bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-6 flex flex-col justify-between transition-all duration-200 group"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-black flex items-center justify-center mb-5">
-                    <Icon className="w-5 h-5 stroke-[2]" />
-                  </div>
+                  <Icon className="w-6 h-6 text-black stroke-[2] mb-5" />
                   <h3 className="hero-black-text text-lg font-semibold text-black leading-snug font-tasaorbiter">
                     {service.title}
                   </h3>
@@ -652,91 +650,6 @@ function GrowthWorkflow() {
               </Link>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================================
-   7. SELECTED SYSTEMS / PORTFOLIO GALLERY (Platform Views)
-   ========================================================================= */
-
-function PortfolioGallery() {
-  const portfolio = [
-    {
-      id: 1,
-      image:
-        'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80',
-      title: 'Enterprise Shift Continuity Dossier & Handoff Scoring.',
-      category: 'Shift Continuity',
-      href: '/handoffs',
-      isWide: true,
-    },
-    {
-      id: 2,
-      image:
-        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80',
-      title: 'Multi-Round Deliverable Signoff & Client Receipt Ledger.',
-      category: 'Executive Reviews',
-      href: '/reviews',
-      isWide: false,
-    },
-    {
-      id: 3,
-      image:
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-      title: 'Grounded RAG Intelligence & Cross-Team Convergence.',
-      category: 'AI RAG Engine',
-      href: '/convergence',
-      isWide: false,
-    },
-  ];
-
-  return (
-    <section id="portfolio" className="py-16 sm:py-24 bg-white text-black border-b border-slate-200">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Centered Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <h2 className="hero-black-text text-3xl sm:text-4xl lg:text-[42px] font-medium text-black leading-[1.1] font-tasaorbiter">
-            Systems in Production <br />
-            <span className="font-instrumentserif italic font-normal text-black">
-              Verified at Scale
-            </span>
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-neutral-700">
-            Mission-critical platform modules engineered for verifiable engineering handoffs and client delivery.
-          </p>
-        </div>
-
-        {/* 3-Column Image Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-5 sm:gap-6 items-start">
-          {portfolio.map((item) => (
-            <Link
-              key={item.id}
-              href={item.href}
-              className={`${
-                item.isWide ? 'md:col-span-2 lg:col-span-1' : 'md:col-span-1'
-              } flex flex-col group cursor-pointer`}
-            >
-              <div className="relative aspect-[1.3] w-full rounded-2xl overflow-hidden bg-[#F8FAFC] border border-slate-200">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                />
-              </div>
-              <div className="mt-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 font-mono block">
-                  {item.category}
-                </span>
-                <p className="mt-1 text-sm sm:text-base font-semibold text-black leading-snug group-hover:underline">
-                  {item.title}
-                </p>
-              </div>
-            </Link>
-          ))}
         </div>
       </div>
     </section>
@@ -905,120 +818,59 @@ function FAQSection() {
 }
 
 /* =========================================================================
-   10. ARCHITECTURE PLAYBOOKS & SYSTEM SPECIFICATIONS
-   ========================================================================= */
-
-function ArticlesSection() {
-  const articles = [
-    {
-      title: 'Designing Lossless Shift Rotations with Cryptographic Ledgers',
-      tag: 'SPRING BOOT 3 & SHA-256',
-      readTime: '5 MIN READ',
-      image:
-        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      title: 'Optimistic Concurrency Control in High-Velocity Engineering Handoffs',
-      tag: 'DATABASE CONCURRENCY',
-      readTime: '4 MIN READ',
-      image:
-        'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      title: 'Grounded Gemini RAG: Transforming Shift Notes into Instant Context',
-      tag: 'AI RAG RETRIEVAL',
-      readTime: '6 MIN READ',
-      image:
-        'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-    },
-  ];
-
-  return (
-    <section id="articles" className="py-16 sm:py-24 bg-[#F8FAFC] text-black border-b border-slate-200">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="mb-10 sm:mb-12">
-          <h2 className="hero-black-text text-3xl sm:text-4xl font-medium text-black leading-[1.1] font-tasaorbiter">
-            Architecture Playbooks
-          </h2>
-          <p className="mt-2 text-sm sm:text-base text-neutral-700">
-            Engineering specifications, system design patterns, and operational frameworks.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-          {articles.map((art) => (
-            <div
-              key={art.title}
-              className="bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all group"
-            >
-              <div className="relative aspect-[1.3] w-full overflow-hidden bg-slate-100 border-b border-slate-200">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={art.image}
-                  alt={art.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                />
-              </div>
-
-              <div className="p-5 sm:p-6">
-                <div className="flex items-center justify-between text-xs font-bold tracking-wider text-neutral-600 mb-2.5 font-mono">
-                  <span className="text-black">{art.tag}</span>
-                  <span>{art.readTime}</span>
-                </div>
-                <h3 className="hero-black-text text-base sm:text-lg font-semibold text-black leading-snug font-tasaorbiter">
-                  {art.title}
-                </h3>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================================
    11. FINAL CTA SECTION (Light Mode Background & Black Text)
    ========================================================================= */
 
 function FinalCTA() {
   return (
-    <section className="relative w-full py-20 sm:py-28 bg-white text-black border-b border-slate-200 text-center">
+    <section className="relative w-full py-16 sm:py-24 bg-[#F8FAFC] text-black border-b border-slate-200">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <h2
-          className="hero-black-text text-3xl sm:text-5xl md:text-[56px] font-medium leading-[1.08] text-black font-tasaorbiter"
-          style={{ color: '#000000' }}
-        >
-          Ready to experience{' '}
-          <span
-            className="font-instrumentserif italic font-normal text-black"
+        <div className="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 lg:p-16 text-center">
+          {/* Eyebrow Pill */}
+          <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[#F8FAFC] border border-slate-200 mb-6">
+            <span className="text-xs font-semibold tracking-wider uppercase text-black font-tasaorbiter">
+              Enterprise Shift &amp; Delivery Governance
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h2
+            className="hero-black-text text-3xl sm:text-5xl md:text-[56px] font-semibold tracking-tight leading-[1.08] text-black font-tasaorbiter max-w-3xl mx-auto"
             style={{ color: '#000000' }}
           >
-            real
-          </span>{' '}
-          <br />
-          Continuity?
-        </h2>
+            Ready to experience{' '}
+            <span
+              className="font-instrumentserif italic font-normal text-black"
+              style={{ color: '#000000' }}
+            >
+              real
+            </span>{' '}
+            Continuity?
+          </h2>
 
-        <p className="mt-4 text-base sm:text-lg text-neutral-700 max-w-xl mx-auto">
-          Start verifying developer shift rotations, deliverables, and cryptographic handoffs today.
-        </p>
+          {/* Subtitle */}
+          <p className="mt-4 sm:mt-5 text-base sm:text-lg text-neutral-700 max-w-2xl mx-auto leading-relaxed">
+            Eliminate shift rotation blind spots, enforce 0–100% handoff completeness scoring, and ratify client releases with SHA-256 cryptographic proof.
+          </p>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4 max-w-md sm:max-w-none mx-auto">
-          <Link
-            href="/dashboard"
-            className="dark-cta-btn bg-black hover:bg-neutral-800 text-white font-semibold px-7 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
-          >
-            <span>Launch Dashboard</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          {/* Primary & Secondary CTAs */}
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4 max-w-md sm:max-w-none mx-auto">
+            <Link
+              href="/dashboard"
+              className="dark-cta-btn bg-black hover:bg-neutral-800 text-white font-semibold px-8 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
+            >
+              <span>Launch Dashboard</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
 
-          <Link
-            href="/login"
-            className="bg-white hover:bg-slate-100 text-black border border-slate-300 font-semibold px-7 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
-          >
-            <span>Sign In to Platform</span>
-          </Link>
+            <Link
+              href="/login"
+              className="bg-white hover:bg-slate-100 text-black border border-slate-300 font-semibold px-8 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            >
+              <span>Sign In to Platform</span>
+            </Link>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1218,17 +1070,11 @@ export function LandingPage() {
       {/* 6. Digital Growth & Continuity Workflow */}
       <GrowthWorkflow />
 
-      {/* 7. Selected Work / Platform Systems Gallery */}
-      <PortfolioGallery />
-
       {/* 8. Client Testimonials */}
       <TestimonialsSection />
 
       {/* 9. Frequently Asked Questions (FAQ) */}
       <FAQSection />
-
-      {/* 10. Read Articles & Architecture Playbooks */}
-      <ArticlesSection />
 
       {/* 11. Final Dramatic CTA */}
       <FinalCTA />

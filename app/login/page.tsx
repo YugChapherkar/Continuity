@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
-import { IridescentWave } from '@/components/ui/IridescentWave';
-import { User } from '@/lib/types';
 import {
   Mail,
   BadgeCheck,
@@ -19,12 +17,11 @@ import {
   Sun,
   Moon,
   ShieldCheck,
-  ShieldAlert,
   Users,
 } from 'lucide-react';
 
 export default function LoginPage() {
-  const { users, setCurrentUser, setIsAuthenticated, showToast, theme, toggleTheme } = useApp();
+  const { setCurrentUser, setIsAuthenticated, showToast, theme, toggleTheme } = useApp();
   const router = useRouter();
   const isLight = theme === 'light';
 
@@ -51,6 +48,7 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   // Demo Mode check
   const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 
@@ -137,44 +135,26 @@ export default function LoginPage() {
     }
   };
 
-
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 flex flex-col justify-between items-center p-4 sm:p-6 lg:p-8 relative overflow-hidden ${
-        isLight ? 'bg-[#F8FAFC] text-slate-900' : 'bg-[#050606] text-[#F5F5F2]'
-      }`}
-    >
-      {/* Background authentic wave */}
-      <IridescentWave />
-
-      {/* Top Header */}
-      <header className="login-header w-full max-w-5xl mx-auto pt-3 sm:pt-5 px-3 sm:px-6 z-30 !bg-transparent !border-none !shadow-none">
-        <nav
-          className={`backdrop-blur-2xl rounded-full px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between border shadow-lg transition-all ${
-            isLight
-              ? 'bg-white/95 border-slate-200/90 text-slate-900 shadow-[0_12px_32px_rgba(0,0,0,0.06)]'
-              : 'bg-[#101216]/90 border-white/10 text-white shadow-[0_16px_36px_rgba(0,0,0,0.4)]'
-          }`}
-        >
+    <div className="min-h-screen bg-[#F8FAFC] text-black font-sans flex flex-col justify-between selection:bg-black selection:text-white">
+      {/* Top Navigation Bar: matches Landing Page clean approach */}
+      <header className="marklab-navbar-header relative z-40 max-w-[1280px] mx-auto pt-4 sm:pt-6 px-4 sm:px-6 lg:px-8 w-full">
+        <nav className="bg-white border border-slate-200 rounded-2xl sm:rounded-full px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between shadow-sm transition-all text-black">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png"
               alt="Continuity"
-              className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+              className="h-9 sm:h-11 w-auto object-contain"
             />
           </Link>
 
-          {/* Right Action: Return to Website + Theme Toggle */}
-          <div className="flex items-center gap-2.5">
+          {/* Right Action Group */}
+          <div className="flex items-center gap-3 sm:gap-4">
             <Link
               href="/"
-              className={`text-xs font-semibold px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${
-                isLight
-                  ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
-                  : 'text-neutral-300 hover:text-white hover:bg-white/10'
-              }`}
+              className="text-xs sm:text-sm font-semibold text-neutral-800 hover:text-black transition-colors flex items-center gap-1.5"
             >
               <span>Back to Home</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -182,648 +162,643 @@ export default function LoginPage() {
 
             <button
               onClick={toggleTheme}
-              className={`p-1.5 transition-colors cursor-pointer border-0 bg-transparent rounded-lg ${
-                isLight
-                  ? 'text-slate-600 hover:text-slate-950 hover:bg-slate-100/60'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/10'
-              }`}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-black transition-colors cursor-pointer"
               title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
               aria-label={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
             >
               {isLight ? (
-                <Moon className="w-4 h-4 text-slate-700" />
+                <Moon className="w-4 h-4 text-black" />
               ) : (
-                <Sun className="w-4 h-4 text-amber-400" />
+                <Sun className="w-4 h-4 text-black" />
               )}
             </button>
           </div>
         </nav>
       </header>
 
-      {/* =========================================================================
-          STAGE 1: THE INITIAL QUESTION GATE (Clean & Direct)
-         ========================================================================= */}
-      {selectedPortal === 'question' && (
-        <main className="w-full max-w-2xl relative z-10 my-auto py-8 animate-in fade-in zoom-in-95 duration-200">
-          <div className="text-center space-y-2 mb-8">
-            <h1 className={`text-3xl sm:text-4xl font-bold tracking-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              Sign in to Continuity
-            </h1>
-            <p className={`text-sm ${isLight ? 'text-slate-600' : 'text-neutral-400'}`}>
-              Select your access portal to continue
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* OPTION 1: EMPLOYEE LOGIN */}
-            <div
-              onClick={() => {
-                setSelectedPortal('employee');
-                setEmployeeAuthTab('email');
-                setErrorMessage(null);
-              }}
-              className={`p-6 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between hover:scale-[1.02] ${
-                isLight
-                  ? 'bg-white border-slate-200 hover:border-blue-500'
-                  : 'bg-[#0B0D0E] border-white/10 hover:border-blue-500/60'
-              }`}
-            >
-              <div className="space-y-3">
-                <Users className="w-7 h-7 text-blue-500 group-hover:scale-105 transition-transform" />
-                <div>
-                  <h2 className={`text-lg font-bold transition-colors ${
-                    isLight ? 'text-slate-900 group-hover:text-blue-600' : 'text-white group-hover:text-blue-400'
-                  }`}>
-                    Employee Login
-                  </h2>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-3 border-t border-white/5 flex items-center justify-between">
-                <span className="text-xs font-semibold text-blue-400 group-hover:underline">
-                  Continue as Employee
-                </span>
-                <div className="w-7 h-7 rounded-full bg-[#2563EB] text-white flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </div>
-              </div>
-            </div>
-
-            {/* OPTION 2: ADMIN LOGIN */}
-            <div
-              onClick={() => {
-                setSelectedPortal('admin');
-                setErrorMessage(null);
-              }}
-              className={`p-6 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between hover:scale-[1.02] ${
-                isLight
-                  ? 'bg-white border-slate-200 hover:border-blue-500'
-                  : 'bg-[#0B0D0E] border-white/10 hover:border-blue-500/60'
-              }`}
-            >
-              <div className="space-y-3">
-                <ShieldCheck className="w-7 h-7 text-blue-500 group-hover:scale-105 transition-transform" />
-                <div>
-                  <h2 className={`text-lg font-bold transition-colors ${
-                    isLight ? 'text-slate-900 group-hover:text-blue-600' : 'text-white group-hover:text-blue-400'
-                  }`}>
-                    Administrator Login
-                  </h2>
-                </div>
-              </div>
-
-              <div className="mt-6 pt-3 border-t border-white/5 flex items-center justify-between">
-                <span className="text-xs font-semibold text-blue-400 group-hover:underline">
-                  Continue as Administrator
-                </span>
-                <div className="w-7 h-7 rounded-full bg-[#2563EB] text-white flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick-Access Test Credentials (guarded by NEXT_PUBLIC_DEMO_MODE) */}
-          {isDemoMode && (
-            <div className={`mt-8 p-4 rounded-xl border ${
-              isLight ? 'bg-slate-50 border-slate-200' : 'bg-white/[0.03] border-white/10'
-            }`}>
-              <div className="mb-3">
-                <span className="text-xs font-semibold tracking-wider uppercase text-neutral-400">
-                  Verified Enterprise Credentials (1-Click Fill)
+      {/* Main Content Area */}
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-10 sm:py-16 w-full max-w-[1280px] mx-auto">
+        {/* =========================================================================
+            STAGE 1: PORTAL SELECTION (Clean Cards, zero gradients, pure black/white)
+           ========================================================================= */}
+        {selectedPortal === 'question' && (
+          <main className="w-full max-w-2xl">
+            {/* Header / Intro */}
+            <div className="text-center mb-8 sm:mb-10">
+              <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white border border-slate-200 mb-4 shadow-sm">
+                <span className="text-xs font-semibold tracking-wider uppercase text-black font-tasaorbiter">
+                  Enterprise Authentication
                 </span>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                {/* ADMIN */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectDemoCredentials({
-                      identifier: 'admin@phx.in',
-                      pass: '12345678',
-                      portal: 'admin',
-                    })
-                  }
-                  className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
-                    isLight
-                      ? 'bg-white border-slate-200 hover:border-blue-500 shadow-sm'
-                      : 'bg-[#121518] border-white/10 hover:border-blue-500/60'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-blue-400">1. Main Admin</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono">Admin</span>
-                  </div>
-                  <div className="text-xs font-semibold mt-1">Yug Chapherkar</div>
-                  <div className="text-[11px] text-neutral-400 font-mono truncate">admin@phx.in</div>
-                  <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
-                </button>
-
-                {/* PROJECT LEAD */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectDemoCredentials({
-                      identifier: 'lead@phx.in',
-                      pass: '12345678',
-                      portal: 'employee',
-                    })
-                  }
-                  className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
-                    isLight
-                      ? 'bg-white border-slate-200 hover:border-purple-500 shadow-sm'
-                      : 'bg-[#121518] border-white/10 hover:border-purple-500/60'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-purple-400">2. Project Lead</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">Lead</span>
-                  </div>
-                  <div className="text-xs font-semibold mt-1">Marcus Vance</div>
-                  <div className="text-[11px] text-neutral-400 font-mono truncate">lead@phx.in</div>
-                  <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
-                </button>
-
-                {/* EMPLOYEE */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSelectDemoCredentials({
-                      identifier: 'employee@phx.in',
-                      pass: '12345678',
-                      portal: 'employee',
-                    })
-                  }
-                  className={`p-3 rounded-xl border text-left transition-all hover:scale-[1.02] cursor-pointer ${
-                    isLight
-                      ? 'bg-white border-slate-200 hover:border-emerald-500 shadow-sm'
-                      : 'bg-[#121518] border-white/10 hover:border-emerald-500/60'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-emerald-400">3. Employee</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Staff</span>
-                  </div>
-                  <div className="text-xs font-semibold mt-1">Jessica Chauhan</div>
-                  <div className="text-[11px] text-neutral-400 font-mono truncate">employee@phx.in</div>
-                  <div className="text-[10px] text-neutral-500 mt-0.5 font-mono">Pass: 12345678</div>
-                </button>
-              </div>
-            </div>
-          )}
-        </main>
-      )}
-
-      {/* =========================================================================
-          STAGE 2: EMPLOYEE LOGIN PANEL
-         ========================================================================= */}
-      {selectedPortal === 'employee' && (
-        <main className="w-full max-w-md relative z-10 my-auto py-6 animate-in fade-in duration-200">
-          <div
-            className={`border rounded-2xl p-6 sm:p-7 shadow-2xl transition-all ${
-              isLight
-                ? 'bg-white border-slate-200 shadow-slate-200/60'
-                : 'bg-[#0B0D0E] border-white/10 shadow-black/80'
-            }`}
-          >
-            {/* Back button */}
-            <button
-              onClick={() => {
-                setSelectedPortal('question');
-                setErrorMessage(null);
-              }}
-              className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 mb-5 cursor-pointer group"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to portal selection</span>
-            </button>
-
-            {/* Header */}
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold tracking-tight">Employee Login</h1>
+              <h1 className="hero-black-text text-3xl sm:text-4xl font-semibold tracking-tight text-black font-tasaorbiter">
+                Sign in to Continuity
+              </h1>
+              <p className="mt-2 text-sm sm:text-base text-neutral-700">
+                Select your designated access portal to enter your workspace.
+              </p>
             </div>
 
-            {/* Switcher: Company Email vs Badge ID */}
-            <div className="grid grid-cols-2 p-1 bg-white/[0.04] border border-white/[0.08] rounded-xl gap-1 mb-5">
-              <button
-                type="button"
+            {/* Portal Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+              {/* Option 1: Employee Login */}
+              <div
                 onClick={() => {
+                  setSelectedPortal('employee');
                   setEmployeeAuthTab('email');
                   setErrorMessage(null);
                 }}
-                className={`py-2 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                  employeeAuthTab === 'email'
-                    ? 'bg-[#2563EB] text-white shadow-sm'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/5'
-                }`}
+                className="bg-white hover:bg-white border border-slate-200 hover:border-black rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 group cursor-pointer shadow-sm"
               >
-                <Mail className="w-3.5 h-3.5" />
-                <span>Company Email</span>
-              </button>
+                <div>
+                  <Users className="w-6 h-6 text-black stroke-[2] mb-5 group-hover:scale-105 transition-transform" />
+                  <h2 className="hero-black-text text-xl font-semibold text-black font-tasaorbiter">
+                    Employee Portal
+                  </h2>
+                  <p className="mt-2 text-xs sm:text-sm text-neutral-700 leading-relaxed">
+                    Access shift handoffs, submit updates, track active tasks, and consult the RAG knowledge base.
+                  </p>
+                </div>
 
-              <button
-                type="button"
+                <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black">
+                  <span>Enter as Employee</span>
+                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Option 2: Administrator Login */}
+              <div
                 onClick={() => {
-                  setEmployeeAuthTab('employeeId');
+                  setSelectedPortal('admin');
                   setErrorMessage(null);
                 }}
-                className={`py-2 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                  employeeAuthTab === 'employeeId'
-                    ? 'bg-[#2563EB] text-white shadow-sm'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/5'
-                }`}
+                className="bg-white hover:bg-white border border-slate-200 hover:border-black rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 group cursor-pointer shadow-sm"
               >
-                <BadgeCheck className="w-3.5 h-3.5" />
-                <span>Employee ID</span>
-              </button>
+                <div>
+                  <ShieldCheck className="w-6 h-6 text-black stroke-[2] mb-5 group-hover:scale-105 transition-transform" />
+                  <h2 className="hero-black-text text-xl font-semibold text-black font-tasaorbiter">
+                    Administrator Portal
+                  </h2>
+                  <p className="mt-2 text-xs sm:text-sm text-neutral-700 leading-relaxed">
+                    Governance dashboard, executive audit trail, pod member assignments, and deliverable reviews.
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black">
+                  <span>Enter as Admin</span>
+                  <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center group-hover:translate-x-1 transition-transform">
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Error Message */}
-            {errorMessage && (
-              <div className="mb-4 p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/25 flex items-center gap-2 text-xs text-rose-400">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>{errorMessage}</span>
-              </div>
-            )}
+            {/* Quick Demo Credentials */}
+            {isDemoMode && (
+              <div className="mt-8 bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-sm">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold tracking-wider uppercase text-neutral-600">
+                    Verified Demo Credentials (1-Click Fill)
+                  </span>
+                </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
-              {employeeAuthTab === 'email' && (
-                <>
-                  <div>
-                    <label
-                      htmlFor="company-email-input"
-                      className="block text-xs font-medium text-neutral-300 mb-1.5"
-                    >
-                      Company Email
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                        <Mail className="w-4 h-4" />
-                      </div>
-                      <input
-                        id="company-email-input"
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          setErrorMessage(null);
-                        }}
-                        placeholder="name@continuity.internal"
-                        suppressHydrationWarning
-                        autoComplete="off"
-                        data-lpignore="true"
-                        data-1p-ignore="true"
-                        className="w-full pl-10 pr-3.5 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label
-                        htmlFor="company-password-input"
-                        className="block text-xs font-medium text-neutral-300"
-                      >
-                        Password
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => showToast('Password recovery instructions sent to your registered work email.', 'info')}
-                        className="text-[11px] text-blue-400 hover:underline cursor-pointer"
-                      >
-                        Forgot?
-                      </button>
-                    </div>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                        <Lock className="w-4 h-4" />
-                      </div>
-                      <input
-                        id="company-password-input"
-                        type={showPassword ? 'text' : 'password'}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••••••"
-                        suppressHydrationWarning
-                        autoComplete="off"
-                        data-lpignore="true"
-                        data-1p-ignore="true"
-                        className="w-full pl-10 pr-10 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-400 hover:text-neutral-200 transition-colors cursor-pointer"
-                        title={showPassword ? 'Hide password' : 'Show password'}
-                      >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {employeeAuthTab === 'employeeId' && (
-                <>
-                  <div>
-                    <label
-                      htmlFor="employee-id-input"
-                      className="block text-xs font-medium text-neutral-300 mb-1.5"
-                    >
-                      Employee ID
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                        <BadgeCheck className="w-4 h-4" />
-                      </div>
-                      <input
-                        id="employee-id-input"
-                        type="text"
-                        value={employeeIdInput}
-                        onChange={(e) => {
-                          setEmployeeIdInput(e.target.value);
-                          setErrorMessage(null);
-                        }}
-                        placeholder="Employee ID"
-                        className="w-full pl-10 pr-3.5 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label
-                        htmlFor="employee-pin-input"
-                        className="block text-xs font-medium text-neutral-300"
-                      >
-                        Security PIN
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => showToast('Security PIN recovery request submitted to your administrator.', 'info')}
-                        className="text-[11px] text-blue-400 hover:underline cursor-pointer"
-                      >
-                        Reset PIN?
-                      </button>
-                    </div>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                        <KeyRound className="w-4 h-4" />
-                      </div>
-                      <input
-                        id="employee-pin-input"
-                        type={showPin ? 'text' : 'password'}
-                        value={pin}
-                        onChange={(e) => setPin(e.target.value)}
-                        placeholder="••••••"
-                        maxLength={12}
-                        className="w-full pl-10 pr-10 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPin(!showPin)}
-                        className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-400 hover:text-neutral-200 transition-colors cursor-pointer"
-                        title={showPin ? 'Hide PIN' : 'Show PIN'}
-                      >
-                        {showPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {/* Remember Me */}
-              <div className="flex items-center text-xs text-neutral-400 pt-1">
-                <label className="inline-flex items-center gap-2 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 text-blue-600 focus:ring-0"
-                  />
-                  <span>Remember on this device</span>
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isLoading}
-                id="employee-login-submit-btn"
-                className="w-full py-3 px-4 bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-[#2563EB]/50 text-white text-xs font-semibold rounded-xl shadow-md shadow-[#2563EB]/25 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
-              >
-                {isLoading ? (
-                  <span>Signing in...</span>
-                ) : (
-                  <>
-                    <span>Sign In to Workspace</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </button>
-              {/* Quick credential buttons inside Employee portal */}
-              {isDemoMode && (
-                <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* ADMIN */}
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmployeeAuthTab('email');
-                      setEmail('lead@phx.in');
-                      setPassword('12345678');
-                      setErrorMessage(null);
-                    }}
-                    className="flex-1 py-1.5 px-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-[11px] text-purple-300 font-mono text-center transition-colors cursor-pointer border border-purple-500/20"
+                    onClick={() =>
+                      handleSelectDemoCredentials({
+                        identifier: 'admin@phx.in',
+                        pass: '12345678',
+                        portal: 'admin',
+                      })
+                    }
+                    className="p-3.5 rounded-xl border border-slate-200 bg-[#F8FAFC] hover:bg-white hover:border-black text-left transition-all cursor-pointer group"
                   >
-                    ⚡ Lead (lead@phx.in)
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-black">Main Admin</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-black text-white font-mono font-semibold">Admin</span>
+                    </div>
+                    <div className="text-xs font-semibold mt-1 text-black">Yug Chapherkar</div>
+                    <div className="text-[11px] text-neutral-600 font-mono truncate">admin@phx.in</div>
+                    <div className="text-[10px] text-neutral-500 mt-1 font-mono">Pass: 12345678</div>
                   </button>
+
+                  {/* PROJECT LEAD */}
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmployeeAuthTab('email');
-                      setEmail('employee@phx.in');
-                      setPassword('12345678');
-                      setErrorMessage(null);
-                    }}
-                    className="flex-1 py-1.5 px-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-[11px] text-emerald-300 font-mono text-center transition-colors cursor-pointer border border-emerald-500/20"
+                    onClick={() =>
+                      handleSelectDemoCredentials({
+                        identifier: 'lead@phx.in',
+                        pass: '12345678',
+                        portal: 'employee',
+                      })
+                    }
+                    className="p-3.5 rounded-xl border border-slate-200 bg-[#F8FAFC] hover:bg-white hover:border-black text-left transition-all cursor-pointer group"
                   >
-                    ⚡ Employee (employee@phx.in)
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-black">Project Lead</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200 text-black font-mono font-semibold">Lead</span>
+                    </div>
+                    <div className="text-xs font-semibold mt-1 text-black">Marcus Vance</div>
+                    <div className="text-[11px] text-neutral-600 font-mono truncate">lead@phx.in</div>
+                    <div className="text-[10px] text-neutral-500 mt-1 font-mono">Pass: 12345678</div>
+                  </button>
+
+                  {/* EMPLOYEE */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleSelectDemoCredentials({
+                        identifier: 'employee@phx.in',
+                        pass: '12345678',
+                        portal: 'employee',
+                      })
+                    }
+                    className="p-3.5 rounded-xl border border-slate-200 bg-[#F8FAFC] hover:bg-white hover:border-black text-left transition-all cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-black">Employee</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-200 text-black font-mono font-semibold">Staff</span>
+                    </div>
+                    <div className="text-xs font-semibold mt-1 text-black">Jessica Chauhan</div>
+                    <div className="text-[11px] text-neutral-600 font-mono truncate">employee@phx.in</div>
+                    <div className="text-[10px] text-neutral-500 mt-1 font-mono">Pass: 12345678</div>
                   </button>
                 </div>
-              )}
-            </form>
-          </div>
-        </main>
-      )}
-
-      {/* =========================================================================
-          STAGE 3: ADMINISTRATOR LOGIN PANEL
-         ========================================================================= */}
-      {selectedPortal === 'admin' && (
-        <main className="w-full max-w-md relative z-10 my-auto py-6 animate-in fade-in duration-200">
-          <div
-            className={`border rounded-2xl p-6 sm:p-7 shadow-2xl transition-all ${
-              isLight
-                ? 'bg-white border-slate-200 shadow-slate-200/60'
-                : 'bg-[#0B0D0E] border-white/10 shadow-black/80'
-            }`}
-          >
-            {/* Back button */}
-            <button
-              onClick={() => {
-                setSelectedPortal('question');
-                setErrorMessage(null);
-              }}
-              className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 mb-5 cursor-pointer group"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to portal selection</span>
-            </button>
-
-            {/* Header */}
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold tracking-tight">Administrator Login</h1>
-            </div>
-
-            {/* Error Message */}
-            {errorMessage && (
-              <div className="mb-4 p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/25 flex items-center gap-2 text-xs text-rose-400">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>{errorMessage}</span>
               </div>
             )}
+          </main>
+        )}
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
-              <div>
-                <label
-                  htmlFor="admin-identifier-input"
-                  className="block text-xs font-medium text-neutral-300 mb-1.5"
+        {/* =========================================================================
+            STAGE 2: EMPLOYEE LOGIN PANEL
+           ========================================================================= */}
+        {selectedPortal === 'employee' && (
+          <main className="w-full max-w-md">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm transition-all text-black">
+              {/* Back button */}
+              <button
+                onClick={() => {
+                  setSelectedPortal('question');
+                  setErrorMessage(null);
+                }}
+                className="text-xs font-semibold text-neutral-700 hover:text-black flex items-center gap-1.5 mb-5 cursor-pointer group"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                <span>Back to portal selection</span>
+              </button>
+
+              {/* Header */}
+              <div className="text-center mb-6">
+                <div className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-slate-200 flex items-center justify-center mx-auto mb-3 text-black">
+                  <Users className="w-5 h-5 stroke-[2]" />
+                </div>
+                <h1 className="hero-black-text text-2xl font-bold tracking-tight text-black font-tasaorbiter">
+                  Employee Login
+                </h1>
+                <p className="mt-1 text-xs sm:text-sm text-neutral-600">
+                  Sign in with your company credentials
+                </p>
+              </div>
+
+              {/* Tab Switcher: Company Email vs Employee ID */}
+              <div className="grid grid-cols-2 p-1 bg-[#F8FAFC] border border-slate-200 rounded-xl gap-1 mb-5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmployeeAuthTab('email');
+                    setErrorMessage(null);
+                  }}
+                  className={`py-2 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    employeeAuthTab === 'email'
+                      ? 'dark-cta-btn bg-black text-white shadow-sm'
+                      : 'text-neutral-700 hover:text-black'
+                  }`}
                 >
-                  Email or Admin ID
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-blue-400">
-                    <ShieldCheck className="w-4 h-4" />
-                  </div>
-                  <input
-                    id="admin-identifier-input"
-                    type="text"
-                    value={adminIdentifier}
-                    onChange={(e) => {
-                      setAdminIdentifier(e.target.value);
-                      setErrorMessage(null);
-                    }}
-                    placeholder="admin@continuity.internal"
-                    suppressHydrationWarning
-                    autoComplete="off"
-                    data-lpignore="true"
-                    data-1p-ignore="true"
-                    className="w-full pl-10 pr-3.5 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
-                    required
-                  />
-                </div>
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Company Email</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmployeeAuthTab('employeeId');
+                    setErrorMessage(null);
+                  }}
+                  className={`py-2 px-3 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    employeeAuthTab === 'employeeId'
+                      ? 'dark-cta-btn bg-black text-white shadow-sm'
+                      : 'text-neutral-700 hover:text-black'
+                  }`}
+                >
+                  <BadgeCheck className="w-3.5 h-3.5" />
+                  <span>Employee ID</span>
+                </button>
               </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label
-                    htmlFor="admin-password-input"
-                    className="block text-xs font-medium text-neutral-300"
-                  >
-                    Password
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => showToast('Password recovery instructions sent to your registered email.', 'info')}
-                    className="text-[11px] text-blue-400 hover:underline cursor-pointer"
-                  >
-                    Forgot?
-                  </button>
-                </div>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-blue-400">
-                    <Lock className="w-4 h-4" />
-                  </div>
-                  <input
-                    id="admin-password-input"
-                    type={showAdminPassword ? 'text' : 'password'}
-                    value={adminPassword}
-                    onChange={(e) => setAdminPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    suppressHydrationWarning
-                    autoComplete="off"
-                    data-lpignore="true"
-                    data-1p-ignore="true"
-                    className="w-full pl-10 pr-10 py-2.5 bg-white/[0.04] border border-white/[0.1] rounded-xl text-xs text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowAdminPassword(!showAdminPassword)}
-                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-400 hover:text-neutral-200 transition-colors cursor-pointer"
-                    title={showAdminPassword ? 'Hide password' : 'Show password'}
-                  >
-                    {showAdminPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Remember Me */}
-              <div className="flex items-center text-xs text-neutral-400 pt-1">
-                <label className="inline-flex items-center gap-2 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 text-blue-600 focus:ring-0"
-                  />
-                  <span>Remember on this device</span>
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isLoading}
-                id="admin-login-submit-btn"
-                className="w-full py-3 px-4 bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-[#2563EB]/50 text-white text-xs font-semibold rounded-xl shadow-md shadow-[#2563EB]/25 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
-              >
-                {isLoading ? (
-                  <span>Authenticating...</span>
-                ) : (
-                  <>
-                    <span>Sign In as Admin</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </button>
-              {/* Quick credential buttons inside Admin portal */}
-              {isDemoMode && (
-                <div className="pt-2 border-t border-white/10 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAdminIdentifier('admin@phx.in');
-                      setAdminPassword('12345678');
-                      setErrorMessage(null);
-                    }}
-                    className="w-full py-1.5 px-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-[11px] text-blue-300 font-mono text-center transition-colors cursor-pointer border border-blue-500/20"
-                  >
-                    ⚡ Auto-fill Main Admin (admin@phx.in / 12345678)
-                  </button>
+              {/* Error Message */}
+              {errorMessage && (
+                <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2 text-xs text-red-700">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorMessage}</span>
                 </div>
               )}
-            </form>
-          </div>
-        </main>
-      )}
 
-      {/* Clean Footer */}
-      <footer className="w-full max-w-4xl py-4 z-20 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 border-t border-white/[0.06] gap-2">
-        <span>&copy; {new Date().getFullYear()} Continuity. All rights reserved.</span>
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
+                {employeeAuthTab === 'email' && (
+                  <>
+                    <div>
+                      <label
+                        htmlFor="company-email-input"
+                        className="block text-xs font-semibold text-black mb-1.5"
+                      >
+                        Company Email
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                          <Mail className="w-4 h-4" />
+                        </div>
+                        <input
+                          id="company-email-input"
+                          type="email"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            setErrorMessage(null);
+                          }}
+                          placeholder="name@continuity.internal"
+                          suppressHydrationWarning
+                          autoComplete="off"
+                          data-lpignore="true"
+                          data-1p-ignore="true"
+                          className="w-full pl-10 pr-3.5 py-2.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs sm:text-sm text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white transition-all"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label
+                          htmlFor="company-password-input"
+                          className="block text-xs font-semibold text-black"
+                        >
+                          Password
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => showToast('Password recovery instructions sent to your registered work email.', 'info')}
+                          className="text-[11px] font-semibold text-neutral-600 hover:text-black hover:underline cursor-pointer"
+                        >
+                          Forgot?
+                        </button>
+                      </div>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                          <Lock className="w-4 h-4" />
+                        </div>
+                        <input
+                          id="company-password-input"
+                          type={showPassword ? 'text' : 'password'}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="••••••••••••"
+                          suppressHydrationWarning
+                          autoComplete="off"
+                          data-lpignore="true"
+                          data-1p-ignore="true"
+                          className="w-full pl-10 pr-10 py-2.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs sm:text-sm text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white transition-all"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-500 hover:text-black transition-colors cursor-pointer"
+                          title={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {employeeAuthTab === 'employeeId' && (
+                  <>
+                    <div>
+                      <label
+                        htmlFor="employee-id-input"
+                        className="block text-xs font-semibold text-black mb-1.5"
+                      >
+                        Employee ID
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                          <BadgeCheck className="w-4 h-4" />
+                        </div>
+                        <input
+                          id="employee-id-input"
+                          type="text"
+                          value={employeeIdInput}
+                          onChange={(e) => {
+                            setEmployeeIdInput(e.target.value);
+                            setErrorMessage(null);
+                          }}
+                          placeholder="Employee ID"
+                          className="w-full pl-10 pr-3.5 py-2.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs sm:text-sm text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white transition-all font-mono"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label
+                          htmlFor="employee-pin-input"
+                          className="block text-xs font-semibold text-black"
+                        >
+                          Security PIN
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => showToast('Security PIN recovery request submitted to your administrator.', 'info')}
+                          className="text-[11px] font-semibold text-neutral-600 hover:text-black hover:underline cursor-pointer"
+                        >
+                          Reset PIN?
+                        </button>
+                      </div>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                          <KeyRound className="w-4 h-4" />
+                        </div>
+                        <input
+                          id="employee-pin-input"
+                          type={showPin ? 'text' : 'password'}
+                          value={pin}
+                          onChange={(e) => setPin(e.target.value)}
+                          placeholder="••••••"
+                          maxLength={12}
+                          className="w-full pl-10 pr-10 py-2.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs sm:text-sm text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white transition-all font-mono"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPin(!showPin)}
+                          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-500 hover:text-black transition-colors cursor-pointer"
+                          title={showPin ? 'Hide PIN' : 'Show PIN'}
+                        >
+                          {showPin ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* Remember Me */}
+                <div className="flex items-center text-xs text-neutral-700 pt-1">
+                  <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="w-4 h-4 rounded border-slate-300 text-black focus:ring-0 accent-black cursor-pointer"
+                    />
+                    <span>Remember on this device</span>
+                  </label>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  id="employee-login-submit-btn"
+                  className="dark-cta-btn w-full py-3.5 px-4 bg-black hover:bg-neutral-800 disabled:opacity-50 text-white text-xs sm:text-sm font-semibold rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer mt-3"
+                >
+                  {isLoading ? (
+                    <span>Signing in...</span>
+                  ) : (
+                    <>
+                      <span>Sign In to Workspace</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+
+                {/* Quick Autofills inside panel */}
+                {isDemoMode && (
+                  <div className="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEmployeeAuthTab('email');
+                        setEmail('lead@phx.in');
+                        setPassword('12345678');
+                        setErrorMessage(null);
+                      }}
+                      className="flex-1 py-2 px-2.5 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-[11px] text-black font-mono text-center transition-colors cursor-pointer border border-slate-200"
+                    >
+                      Lead (lead@phx.in)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEmployeeAuthTab('email');
+                        setEmail('employee@phx.in');
+                        setPassword('12345678');
+                        setErrorMessage(null);
+                      }}
+                      className="flex-1 py-2 px-2.5 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-[11px] text-black font-mono text-center transition-colors cursor-pointer border border-slate-200"
+                    >
+                      Employee (employee@phx.in)
+                    </button>
+                  </div>
+                )}
+              </form>
+            </div>
+          </main>
+        )}
+
+        {/* =========================================================================
+            STAGE 3: ADMINISTRATOR LOGIN PANEL
+           ========================================================================= */}
+        {selectedPortal === 'admin' && (
+          <main className="w-full max-w-md">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm transition-all text-black">
+              {/* Back button */}
+              <button
+                onClick={() => {
+                  setSelectedPortal('question');
+                  setErrorMessage(null);
+                }}
+                className="text-xs font-semibold text-neutral-700 hover:text-black flex items-center gap-1.5 mb-5 cursor-pointer group"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                <span>Back to portal selection</span>
+              </button>
+
+              {/* Header */}
+              <div className="text-center mb-6">
+                <div className="w-10 h-10 rounded-full bg-[#F8FAFC] border border-slate-200 flex items-center justify-center mx-auto mb-3 text-black">
+                  <ShieldCheck className="w-5 h-5 stroke-[2]" />
+                </div>
+                <h1 className="hero-black-text text-2xl font-bold tracking-tight text-black font-tasaorbiter">
+                  Administrator Login
+                </h1>
+                <p className="mt-1 text-xs sm:text-sm text-neutral-600">
+                  Enter governance and executive credentials
+                </p>
+              </div>
+
+              {/* Error Message */}
+              {errorMessage && (
+                <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2 text-xs text-red-700">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning>
+                <div>
+                  <label
+                    htmlFor="admin-identifier-input"
+                    className="block text-xs font-semibold text-black mb-1.5"
+                  >
+                    Email or Admin ID
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <input
+                      id="admin-identifier-input"
+                      type="text"
+                      value={adminIdentifier}
+                      onChange={(e) => {
+                        setAdminIdentifier(e.target.value);
+                        setErrorMessage(null);
+                      }}
+                      placeholder="admin@continuity.internal"
+                      suppressHydrationWarning
+                      autoComplete="off"
+                      data-lpignore="true"
+                      data-1p-ignore="true"
+                      className="w-full pl-10 pr-3.5 py-2.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs sm:text-sm text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white transition-all font-mono"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label
+                      htmlFor="admin-password-input"
+                      className="block text-xs font-semibold text-black"
+                    >
+                      Password
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => showToast('Password recovery instructions sent to your registered email.', 'info')}
+                      className="text-[11px] font-semibold text-neutral-600 hover:text-black hover:underline cursor-pointer"
+                    >
+                      Forgot?
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                      <Lock className="w-4 h-4" />
+                    </div>
+                    <input
+                      id="admin-password-input"
+                      type={showAdminPassword ? 'text' : 'password'}
+                      value={adminPassword}
+                      onChange={(e) => setAdminPassword(e.target.value)}
+                      placeholder="••••••••••••"
+                      suppressHydrationWarning
+                      autoComplete="off"
+                      data-lpignore="true"
+                      data-1p-ignore="true"
+                      className="w-full pl-10 pr-10 py-2.5 bg-[#F8FAFC] border border-slate-300 rounded-xl text-xs sm:text-sm text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white transition-all"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowAdminPassword(!showAdminPassword)}
+                      className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-500 hover:text-black transition-colors cursor-pointer"
+                      title={showAdminPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showAdminPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Remember Me */}
+                <div className="flex items-center text-xs text-neutral-700 pt-1">
+                  <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="w-4 h-4 rounded border-slate-300 text-black focus:ring-0 accent-black cursor-pointer"
+                    />
+                    <span>Remember on this device</span>
+                  </label>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  id="admin-login-submit-btn"
+                  className="dark-cta-btn w-full py-3.5 px-4 bg-black hover:bg-neutral-800 disabled:opacity-50 text-white text-xs sm:text-sm font-semibold rounded-full transition-all flex items-center justify-center gap-2 cursor-pointer mt-3"
+                >
+                  {isLoading ? (
+                    <span>Authenticating...</span>
+                  ) : (
+                    <>
+                      <span>Sign In as Admin</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+
+                {/* Quick Autofill */}
+                {isDemoMode && (
+                  <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAdminIdentifier('admin@phx.in');
+                        setAdminPassword('12345678');
+                        setErrorMessage(null);
+                      }}
+                      className="w-full py-2 px-3 rounded-xl bg-[#F8FAFC] hover:bg-slate-100 text-[11px] text-black font-mono text-center transition-colors cursor-pointer border border-slate-200"
+                    >
+                      Auto-fill Main Admin (admin@phx.in / 12345678)
+                    </button>
+                  </div>
+                )}
+              </form>
+            </div>
+          </main>
+        )}
+      </div>
+
+      {/* Clean Footer Strip */}
+      <footer className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-600 gap-3">
+        <div>&copy; {new Date().getFullYear()} CONTINUITY Enterprise Platform. All rights reserved.</div>
+        <div className="flex items-center gap-6">
+          <Link href="/" className="text-neutral-700 hover:text-black font-medium transition-colors">
+            Privacy Policy
+          </Link>
+          <Link href="/" className="text-neutral-700 hover:text-black font-medium transition-colors">
+            Terms of Service
+          </Link>
+          <Link href="/" className="text-neutral-700 hover:text-black font-medium transition-colors">
+            Architecture
+          </Link>
+        </div>
       </footer>
     </div>
   );
