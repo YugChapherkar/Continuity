@@ -22,6 +22,7 @@ import {
 } from '@/lib/types';
 import {
   INITIAL_USERS,
+  INITIAL_TEAMS,
   INITIAL_PROJECTS,
   INITIAL_HANDOFFS,
   INITIAL_AUDIT_LOGS,
@@ -184,7 +185,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [users, setUsers] = useState<User[]>(INITIAL_USERS);
   const [currentUser, setCurrentUserState] = useState<User>(INITIAL_USERS[0]);
-  const [teams, setTeams] = useState<Team[]>([]);
+  const [teams, setTeams] = useState<Team[]>(INITIAL_TEAMS);
   const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
   const [handoffs, setHandoffs] = useState<HandoffPackage[]>(INITIAL_HANDOFFS);
   const [updates, setUpdates] = useState<EmployeeDailyUpdate[]>([]);
