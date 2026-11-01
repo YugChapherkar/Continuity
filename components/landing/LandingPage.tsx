@@ -352,17 +352,17 @@ function ClientLogoStrip() {
   ];
 
   return (
-    <div className="w-full text-center pb-6 sm:pb-8 border-b border-[#E4E7F2]/80">
-      <p className="text-[11px] sm:text-[12px] font-medium text-[#6F718A] uppercase tracking-wider select-none font-tasaorbiter">
+    <div className="w-full text-center pb-8 sm:pb-10 border-b border-slate-200">
+      <p className="text-xs font-semibold text-neutral-600 uppercase tracking-wider select-none font-tasaorbiter">
         Trusted by mission-critical engineering pods and enterprise infrastructure teams
       </p>
-      <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-8 sm:gap-14 md:gap-20 text-[#6F718A]/90">
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-8 sm:gap-14 md:gap-20 text-black">
         {logos.map((logo) => (
           <div
             key={logo.name}
-            className="flex items-center gap-2 hover:text-[#222442] transition-colors select-none"
+            className="flex items-center gap-2 transition-colors select-none"
           >
-            <span className="text-[13px] sm:text-[14px] font-bold tracking-tight font-tasaorbiter">
+            <span className="text-sm sm:text-base font-bold tracking-tight text-black font-tasaorbiter">
               {logo.name}
             </span>
           </div>
@@ -378,87 +378,73 @@ function ClientLogoStrip() {
 
 function MarketingShowcase() {
   return (
-    <section id="performance" className="min-h-[100dvh] flex flex-col justify-center py-10 sm:py-14 bg-[#F7F8FF]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center">
-        {/* Client Logos Strip inside Section 2 */}
+    <section id="performance" className="py-16 sm:py-24 bg-[#F8FAFC] text-black border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        {/* Client Logos Strip */}
         <ClientLogoStrip />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch mt-6 sm:mt-8">
-          {/* Left Panel: Wider Card (~2:1 ratio) with Dashboard Floating Metric */}
-          <div className="lg:col-span-8 bg-white border border-[#E4E7F2] rounded-[14px] p-6 sm:p-8 flex flex-col justify-between shadow-[0_6px_24px_rgba(27,37,100,0.05)] relative overflow-hidden group hover:shadow-[0_10px_32px_rgba(27,37,100,0.08)] transition-all">
-            {/* Top Floating White Metric Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch mt-10 sm:mt-12">
+          {/* Left Panel: Wider Card (~2:1 ratio) */}
+          <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 sm:p-10 flex flex-col justify-between">
+            {/* Top Metric Card */}
             <div className="flex items-start justify-between">
-              <div className="bg-white border border-[#E4E7F2] rounded-xl px-4 py-3 shadow-[0_4px_16px_rgba(27,37,100,0.06)] flex items-center gap-4">
+              <div className="bg-[#F8FAFC] border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-4">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#6F718A] tracking-wider block font-tasaorbiter">
+                  <span className="text-[11px] uppercase font-bold text-neutral-600 tracking-wider block font-tasaorbiter">
                     Handoff Completeness
                   </span>
-                  <div className="text-[26px] sm:text-[28px] font-bold text-[#222442] leading-none mt-0.5 font-tasaorbiter">
+                  <div className="text-2xl sm:text-3xl font-bold text-black leading-none mt-1 font-tasaorbiter">
                     99.4%
                   </div>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-[#5558FF]/10 text-[#5558FF] flex items-center justify-center font-bold text-xs">
+                <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-black flex items-center justify-center font-bold text-xs">
                   <Check className="w-4 h-4 stroke-[2.5]" />
                 </div>
-              </div>
-
-              {/* Decorative Blue Floating Bubble */}
-              <div className="w-8 h-8 rounded-full bg-[#5558FF] text-white flex items-center justify-center shadow-md">
-                <Shield className="w-4 h-4" />
               </div>
             </div>
 
             {/* Content Body */}
-            <div className="mt-8 sm:mt-10">
-              <h2 className="text-[22px] sm:text-[26px] font-semibold text-slate-900 leading-[1.15] font-tasaorbiter">
+            <div className="mt-8 sm:mt-12">
+              <h2 className="hero-black-text text-2xl sm:text-3xl lg:text-4xl font-semibold text-black leading-[1.12] font-tasaorbiter">
                 Zero Context Loss across{' '}
-                <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+                <span className="font-instrumentserif italic font-normal text-black">
                   Developer Shift Rotations
                 </span>
               </h2>
-              <p className="mt-2.5 text-[12px] sm:text-[14px] text-slate-600 leading-[1.45] max-w-lg">
+              <p className="mt-3 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-xl">
                 Automated completeness scoring across 4 weighted dimensions, SHA-256 tamper-evident package hashes,
                 and optimistic concurrency control (409 Conflict protection) to eliminate rotation blind spots.
               </p>
 
-              {/* Bottom Actions linking to Dashboard and Login */}
-              <div className="mt-6 flex items-center gap-4">
+              {/* Bottom Action */}
+              <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
                 <Link
                   href="/dashboard"
-                  className="bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-[0_4px_14px_rgba(85,88,255,0.3)] transition-all group"
+                  className="dark-cta-btn bg-black hover:bg-neutral-800 text-white text-sm font-semibold px-6 py-3 rounded-full inline-flex items-center justify-center gap-2 transition-colors"
                 >
                   <span>Launch Dashboard</span>
-                  <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                    ↗
-                  </span>
-                </Link>
-                <Link
-                  href="/login"
-                  className="text-[#5558FF] hover:text-[#4346F0] font-medium text-[12px] flex items-center gap-1 transition-colors group"
-                >
-                  <span>Platform Login</span>
-                  <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">↗</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
           </div>
 
-          {/* Right Panel: Narrower Pale Blue Card */}
-          <div className="lg:col-span-4 bg-[#EDF1FF] border border-[#E4E7F2] rounded-[14px] p-6 sm:p-8 flex flex-col justify-between shadow-[0_6px_24px_rgba(27,37,100,0.05)] hover:shadow-[0_10px_32px_rgba(27,37,100,0.08)] transition-all">
+          {/* Right Panel: Narrower Card */}
+          <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 sm:p-10 flex flex-col justify-between">
             <div>
-              <div className="w-8 h-8 rounded-full bg-white text-[#5558FF] flex items-center justify-center shadow-xs border border-[#E4E7F2]">
-                <Target className="w-4 h-4 stroke-[2]" />
+              <div className="w-10 h-10 rounded-xl bg-[#F8FAFC] text-black flex items-center justify-center border border-slate-200">
+                <Target className="w-5 h-5 stroke-[2]" />
               </div>
 
-              <h3 className="mt-6 text-[20px] sm:text-[22px] font-semibold text-slate-900 leading-[1.15] font-tasaorbiter">
+              <h3 className="hero-black-text mt-6 text-xl sm:text-2xl font-semibold text-black leading-[1.15] font-tasaorbiter">
                 Built for{' '}
-                <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+                <span className="font-instrumentserif italic font-normal text-black">
                   High-Velocity
                 </span>{' '}
                 engineering pods
               </h3>
 
-              <p className="mt-2.5 text-[12px] sm:text-[13px] text-slate-600 leading-[1.45]">
+              <p className="mt-3 text-sm sm:text-base text-neutral-700 leading-relaxed">
                 Fine-grained role governance for execution pods. Distribute tasks, track blockers,
                 monitor 10 organizational KPI pulses, and ratify client delivery.
               </p>
@@ -466,10 +452,10 @@ function MarketingShowcase() {
 
             <Link
               href="/dashboard"
-              className="mt-6 pt-5 border-t border-[#E4E7F2]/80 flex items-center justify-between text-[11px] font-semibold text-[#5558FF] hover:underline"
+              className="mt-8 pt-5 border-t border-slate-200 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black hover:underline"
             >
-              <span>EXPLORE GOVERNANCE SYSTEM</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>Explore Governance System</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -488,82 +474,76 @@ function ServicesSection() {
       title: 'Shift Rotations & Handoff Scoring',
       desc: 'Automated 0–100% completeness scoring across 4 weighted dimensions, SHA-256 package hashes, and optimistic locking.',
       icon: Layers,
-      iconBg: 'bg-[#5558FF]/10 text-[#5558FF]',
       href: '/handoffs',
     },
     {
       title: 'Executive Governance & 10 KPIs',
       desc: 'Live organizational pulses tracking active projects, overdue deadlines, pending reviews, and blocked tasks with zero placeholder estimates.',
       icon: BarChart3,
-      iconBg: 'bg-[#B39BFF]/20 text-[#5558FF]',
       href: '/dashboard',
     },
     {
       title: 'Multi-Round Deliverable Reviews',
       desc: 'Structured approval workflows: approve releases, request structured revisions, and ratify client receipt with cryptographic audit logs.',
       icon: Shield,
-      iconBg: 'bg-[#A6B9FF]/20 text-[#5558FF]',
       href: '/reviews',
     },
     {
       title: 'Gemini RAG Knowledge Assistant',
       desc: 'Grounded AI chatbot answering questions over historical shift notes, system decisions, and past handoffs using vector-grounded context.',
       icon: Bot,
-      iconBg: 'bg-[#5558FF]/10 text-[#5558FF]',
       href: '/assistant',
     },
   ];
 
   return (
-    <section id="services" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-white">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <section id="services" className="py-16 sm:py-24 bg-white text-black border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-12">
           <div>
-            <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+            <h2 className="hero-black-text text-3xl sm:text-4xl lg:text-[42px] font-medium text-black leading-[1.1] font-tasaorbiter">
               Platform Capabilities <br />
-              <span className="font-instrumentserif italic font-normal text-[#5558FF]">
-                That Guarantee Delivery.
+              <span className="font-instrumentserif italic font-normal text-black">
+                That Guarantee Delivery
               </span>
             </h2>
           </div>
 
           <Link
             href="/dashboard"
-            className="self-start sm:self-end bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-[0_4px_14px_rgba(85,88,255,0.25)] transition-all group"
+            className="dark-cta-btn self-start sm:self-end bg-black hover:bg-neutral-800 text-white text-sm font-semibold px-6 py-3 rounded-full inline-flex items-center gap-2 transition-colors"
           >
             <span>Explore Capabilities</span>
-            <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-              ↗
-            </span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         {/* 4 Equal-Width Service Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {services.map((service) => {
             const Icon = service.icon;
             return (
               <Link
                 key={service.title}
                 href={service.href}
-                className="bg-[#EDF1FF] hover:bg-white border border-[#E4E7F2] rounded-[12px] p-5 sm:p-6 flex flex-col justify-between shadow-[0_4px_16px_rgba(27,37,100,0.04)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.08)] hover:-translate-y-0.5 transition-all duration-200 group"
+                className="bg-[#F8FAFC] hover:bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-6 flex flex-col justify-between transition-all duration-200 group"
               >
                 <div>
-                  <div className={`w-9 h-9 rounded-xl ${service.iconBg} flex items-center justify-center mb-5`}>
-                    <Icon className="w-4 h-4 stroke-[2]" />
+                  <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-black flex items-center justify-center mb-5">
+                    <Icon className="w-5 h-5 stroke-[2]" />
                   </div>
-                  <h3 className="text-[16px] font-medium text-[#222442] leading-[1.2] font-tasaorbiter">
+                  <h3 className="hero-black-text text-lg font-semibold text-black leading-snug font-tasaorbiter">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-[12px] text-[#6F718A] leading-[1.45]">
+                  <p className="mt-2.5 text-sm text-neutral-700 leading-relaxed">
                     {service.desc}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#E4E7F2]/60 flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] group-hover:text-[#4346F0] transition-colors">
+                <div className="mt-6 pt-4 border-t border-slate-200 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-black">
                   <span>Explore Feature</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             );
@@ -603,51 +583,57 @@ function GrowthWorkflow() {
   ];
 
   return (
-    <section id="workflow" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-[#F7F8FF]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
-          {/* Left Visual Panel: Abstract Sculpture + Floating Pill */}
-          <div className="lg:col-span-6 bg-[#EDF1FF] border border-[#E4E7F2] rounded-[14px] p-8 h-[360px] sm:h-[420px] flex flex-col items-center justify-center relative overflow-hidden shadow-[0_6px_24px_rgba(27,37,100,0.05)]">
-            {/* Geometric Lightning-Bolt / Ribbon Sculpture in Center */}
-            <div className="relative z-10 flex flex-col items-center">
-              <div className="w-24 h-32 sm:w-28 sm:h-36 bg-[#5558FF] rounded-2xl shadow-lg transform rotate-12 flex items-center justify-center relative border border-white/30">
-                <Zap className="w-12 h-12 text-white fill-white/20 stroke-[1.5]" />
-              </div>
+    <section id="workflow" className="py-16 sm:py-24 bg-[#F8FAFC] text-black border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-center">
+          {/* Left Panel: Clean Architectural Verification Summary */}
+          <div className="lg:col-span-6 bg-white border border-slate-200 rounded-2xl p-6 sm:p-10 space-y-6">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono font-semibold uppercase tracking-wider text-black">
+              Cryptographic Verification Pipeline
+            </div>
 
-              {/* Floating Pill beneath sculpture */}
-              <div className="mt-8 bg-white border border-[#E4E7F2] rounded-full px-4 py-1.5 shadow-[0_6px_20px_rgba(27,37,100,0.08)] flex items-center gap-2">
-                <span className="text-[11px] font-bold text-[#222442] font-tasaorbiter">
-                  CONTINUITY AI ENGINE
-                </span>
-                <span className="text-[10px] bg-[#EDF1FF] text-[#5558FF] px-2 py-0.5 rounded-full font-mono font-semibold">
-                  SHA-256 ACTIVE
-                </span>
+            <h3 className="hero-black-text text-2xl sm:text-3xl font-semibold text-black leading-tight font-tasaorbiter">
+              Verifiable Handoffs from Pod Execution to Client Delivery
+            </h3>
+
+            <p className="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              Every rotation package is scored across four completeness dimensions and sealed with a SHA-256 cryptographic digest before ownership transfers.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 pt-2">
+              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
+                <div className="text-xs font-mono uppercase text-neutral-600">Integrity Standard</div>
+                <div className="mt-1 text-xl font-bold text-black font-tasaorbiter">SHA-256</div>
+              </div>
+              <div className="p-4 rounded-xl bg-[#F8FAFC] border border-slate-200">
+                <div className="text-xs font-mono uppercase text-neutral-600">Concurrency Lock</div>
+                <div className="mt-1 text-xl font-bold text-black font-tasaorbiter">409 Protected</div>
               </div>
             </div>
           </div>
 
           {/* Right Content: 4 Step Workflow */}
           <div className="lg:col-span-6">
-            <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.15] font-tasaorbiter">
+            <h2 className="hero-black-text text-3xl sm:text-4xl font-medium text-black leading-[1.12] font-tasaorbiter">
               Platform Delivery in{' '}
-              <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+              <span className="font-instrumentserif italic font-normal text-black">
                 quick 4
               </span>{' '}
               Simple Steps
             </h2>
 
             {/* Workflow Card with 4 Stacked Rows */}
-            <div className="mt-6 bg-white border border-[#E4E7F2] rounded-[14px] p-5 sm:p-6 shadow-[0_6px_24px_rgba(27,37,100,0.05)] divide-y divide-[#E4E7F2]">
+            <div className="mt-6 bg-white border border-slate-200 rounded-2xl p-6 divide-y divide-slate-200">
               {steps.map((step) => (
-                <div key={step.num} className="py-3.5 first:pt-0 last:pb-0 flex items-start gap-3.5">
-                  <div className="w-7 h-7 rounded-full bg-[#EDF1FF] text-[#5558FF] font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5 font-tasaorbiter border border-[#E4E7F2]">
+                <div key={step.num} className="py-4 first:pt-0 last:pb-0 flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 text-black font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 font-mono border border-slate-200">
                     {step.num}
                   </div>
                   <div>
-                    <h4 className="text-[13px] sm:text-[14px] font-semibold text-[#222442] leading-snug font-tasaorbiter">
+                    <h4 className="hero-black-text text-sm sm:text-base font-semibold text-black leading-snug font-tasaorbiter">
                       {step.title}
                     </h4>
-                    <p className="mt-1 text-[11px] sm:text-[12px] text-[#6F718A] leading-relaxed">
+                    <p className="mt-1 text-xs sm:text-sm text-neutral-700 leading-relaxed">
                       {step.desc}
                     </p>
                   </div>
@@ -656,22 +642,13 @@ function GrowthWorkflow() {
             </div>
 
             {/* Action CTA */}
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
               <Link
                 href="/dashboard"
-                className="bg-[#5558FF] hover:bg-[#4346F0] text-white text-[12px] font-medium px-5 py-2.5 rounded-full inline-flex items-center gap-2 shadow-[0_4px_16px_rgba(85,88,255,0.25)] transition-all group"
+                className="dark-cta-btn bg-black hover:bg-neutral-800 text-white text-sm font-semibold px-6 py-3 rounded-full inline-flex items-center justify-center gap-2 transition-colors"
               >
                 <span>Enter Workspace</span>
-                <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                  ↗
-                </span>
-              </Link>
-              <Link
-                href="/assistant"
-                className="text-[#5558FF] hover:text-[#4346F0] font-medium text-[12px] flex items-center gap-1 transition-colors"
-              >
-                <span>Try RAG AI Assistant</span>
-                <span>↗</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -717,31 +694,32 @@ function PortfolioGallery() {
   ];
 
   return (
-    <section id="portfolio" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <section id="portfolio" className="py-16 sm:py-24 bg-white text-black border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Centered Heading */}
-        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
-          <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <h2 className="hero-black-text text-3xl sm:text-4xl lg:text-[42px] font-medium text-black leading-[1.1] font-tasaorbiter">
             Systems in Production <br />
-            <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+            <span className="font-instrumentserif italic font-normal text-black">
               Verified at Scale
             </span>
           </h2>
-          <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
+          <p className="mt-3 text-sm sm:text-base text-neutral-700">
             Mission-critical platform modules engineered for verifiable engineering handoffs and client delivery.
           </p>
         </div>
 
-        {/* 3-Column Image Gallery with First Card Approximately 1.4x Wider */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-3.5 sm:gap-4 items-start">
+        {/* 3-Column Image Gallery */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-5 sm:gap-6 items-start">
           {portfolio.map((item) => (
             <Link
               key={item.id}
               href={item.href}
-              className={`${item.isWide ? 'md:col-span-2 lg:col-span-1' : 'md:col-span-1'
-                } flex flex-col group cursor-pointer`}
+              className={`${
+                item.isWide ? 'md:col-span-2 lg:col-span-1' : 'md:col-span-1'
+              } flex flex-col group cursor-pointer`}
             >
-              <div className="relative aspect-[1.3] w-full rounded-[10px] overflow-hidden bg-[#EDF1FF] border border-[#E4E7F2]">
+              <div className="relative aspect-[1.3] w-full rounded-2xl overflow-hidden bg-[#F8FAFC] border border-slate-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.image}
@@ -749,11 +727,11 @@ function PortfolioGallery() {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               </div>
-              <div className="mt-3">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5558FF] font-tasaorbiter block">
+              <div className="mt-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-neutral-600 font-mono block">
                   {item.category}
                 </span>
-                <p className="mt-1 text-[12px] sm:text-[13px] font-medium text-[#222442] leading-snug group-hover:text-[#5558FF] transition-colors">
+                <p className="mt-1 text-sm sm:text-base font-semibold text-black leading-snug group-hover:underline">
                   {item.title}
                 </p>
               </div>
@@ -802,39 +780,39 @@ function TestimonialsSection() {
   ];
 
   return (
-    <section id="testimonials" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-[#F7F8FF] border-b border-[#E4E7F2]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
-          <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+    <section id="testimonials" className="py-16 sm:py-24 bg-[#F8FAFC] text-black border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <h2 className="hero-black-text text-3xl sm:text-4xl lg:text-[42px] font-medium text-black leading-[1.1] font-tasaorbiter">
             Trusted by Engineering Leaders <br />
-            <span className="font-instrumentserif italic font-normal text-[#5558FF]">
+            <span className="font-instrumentserif italic font-normal text-black">
               In High-Stakes Environments
             </span>
           </h2>
-          <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
+          <p className="mt-3 text-sm sm:text-base text-neutral-700">
             Real feedback from engineering pods and enterprise teams operating with Continuity.
           </p>
         </div>
 
         {/* 4 Testimonial Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {testimonials.map((t) => (
             <div
               key={t.name}
-              className="bg-white border border-[#E4E7F2] rounded-[12px] p-5 flex flex-col justify-between shadow-[0_4px_16px_rgba(27,37,100,0.04)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.08)] transition-all min-h-[190px]"
+              className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between min-h-[210px]"
             >
               <div>
-                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] uppercase tracking-wider font-tasaorbiter mb-3">
-                  <span>{t.logo}</span>
+                <div className="text-xs font-bold text-black uppercase tracking-wider font-mono mb-3">
+                  {t.logo}
                 </div>
-                <p className="text-[12px] text-[#222442] italic leading-relaxed">
+                <p className="text-sm text-neutral-800 leading-relaxed">
                   &ldquo;{t.quote}&rdquo;
                 </p>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#E4E7F2] text-[11px]">
-                <div className="font-semibold text-[#222442] font-tasaorbiter">{t.name}</div>
-                <div className="text-[#6F718A] text-[10px]">{t.role}</div>
+              <div className="mt-5 pt-4 border-t border-slate-200 text-xs">
+                <div className="font-bold text-black font-tasaorbiter">{t.name}</div>
+                <div className="text-neutral-600 mt-0.5">{t.role}</div>
               </div>
             </div>
           ))}
@@ -879,41 +857,41 @@ function FAQSection() {
   ];
 
   return (
-    <section id="faq" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-white border-b border-[#E4E7F2]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
-          <h2 className="text-[28px] sm:text-[36px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
+    <section id="faq" className="py-16 sm:py-24 bg-white text-black border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <h2 className="hero-black-text text-3xl sm:text-4xl lg:text-[42px] font-medium text-black leading-[1.1] font-tasaorbiter">
             Frequently asked <br />
             questions
           </h2>
-          <p className="mt-2 text-[12px] sm:text-[13px] text-[#6F718A]">
+          <p className="mt-3 text-sm sm:text-base text-neutral-700">
             Answers to common questions regarding platform governance, security, and setup.
           </p>
         </div>
 
-        {/* Compact Centered Accordion (~650px) */}
-        <div className="max-w-[650px] mx-auto space-y-2.5">
+        {/* Centered Accordion */}
+        <div className="max-w-2xl mx-auto space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
                 key={faq.q}
-                className="bg-[#EDF1FF] rounded-[8px] overflow-hidden transition-all duration-200 border border-[#E4E7F2]"
+                className="bg-[#F8FAFC] rounded-2xl overflow-hidden transition-all duration-200 border border-slate-200"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full text-left px-5 py-3.5 flex items-center justify-between gap-4 select-none hover:bg-[#E4E7F2]/50 transition-colors cursor-pointer"
+                  className="w-full text-left px-6 py-4 flex items-center justify-between gap-4 select-none hover:bg-slate-100 transition-colors cursor-pointer"
                 >
-                  <span className="text-[13px] sm:text-[14px] font-medium text-[#222442] font-tasaorbiter">
+                  <span className="text-sm sm:text-base font-semibold text-black font-tasaorbiter">
                     {faq.q}
                   </span>
-                  <span className="w-5 h-5 rounded-full bg-white flex items-center justify-center text-[#5558FF] shrink-0 text-xs shadow-xs border border-[#E4E7F2]">
-                    {isOpen ? <Minus className="w-3 h-3 stroke-[2.5]" /> : <Plus className="w-3 h-3 stroke-[2.5]" />}
+                  <span className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-black shrink-0 text-xs border border-slate-200">
+                    {isOpen ? <Minus className="w-3.5 h-3.5 stroke-[2.5]" /> : <Plus className="w-3.5 h-3.5 stroke-[2.5]" />}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-4 pt-1 text-[12px] sm:text-[13px] text-[#6F718A] leading-relaxed border-t border-[#E4E7F2]/60 animate-in fade-in duration-200">
+                  <div className="px-6 pb-5 pt-2 text-sm text-neutral-700 leading-relaxed border-t border-slate-200">
                     {faq.a}
                   </div>
                 )}
@@ -956,36 +934,24 @@ function ArticlesSection() {
   ];
 
   return (
-    <section id="articles" className="min-h-[100dvh] flex flex-col justify-center py-12 sm:py-16 bg-[#F7F8FF]">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex items-end justify-between mb-8 sm:mb-10">
-          <div>
-            <h2 className="text-[26px] sm:text-[34px] font-medium text-[#222442] leading-[1.1] font-tasaorbiter">
-              Architecture Playbooks
-            </h2>
-            <p className="mt-1.5 text-[12px] sm:text-[13px] text-[#6F718A]">
-              Engineering specifications, system design patterns, and operational frameworks.
-            </p>
-          </div>
-
-          <a
-            href="#articles"
-            className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] hover:text-[#4346F0] tracking-wider transition-colors group"
-          >
-            <span>ALL PLAYBOOKS</span>
-            <span className="w-5 h-5 rounded-full bg-[#EDF1FF] text-[#5558FF] flex items-center justify-center text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform border border-[#E4E7F2]">
-              ↗
-            </span>
-          </a>
+    <section id="articles" className="py-16 sm:py-24 bg-[#F8FAFC] text-black border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="mb-10 sm:mb-12">
+          <h2 className="hero-black-text text-3xl sm:text-4xl font-medium text-black leading-[1.1] font-tasaorbiter">
+            Architecture Playbooks
+          </h2>
+          <p className="mt-2 text-sm sm:text-base text-neutral-700">
+            Engineering specifications, system design patterns, and operational frameworks.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {articles.map((art) => (
             <div
               key={art.title}
-              className="bg-white border border-[#E4E7F2] rounded-[12px] overflow-hidden shadow-[0_4px_16px_rgba(27,37,100,0.04)] hover:shadow-[0_8px_24px_rgba(27,37,100,0.08)] transition-all group cursor-pointer"
+              className="bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all group"
             >
-              <div className="relative aspect-[1.3] w-full overflow-hidden bg-[#EDF1FF]">
+              <div className="relative aspect-[1.3] w-full overflow-hidden bg-slate-100 border-b border-slate-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={art.image}
@@ -994,12 +960,12 @@ function ArticlesSection() {
                 />
               </div>
 
-              <div className="p-4 sm:p-5">
-                <div className="flex items-center justify-between text-[10px] font-bold tracking-wider text-[#6F718A] mb-2 font-mono">
-                  <span className="text-[#5558FF]">{art.tag}</span>
+              <div className="p-5 sm:p-6">
+                <div className="flex items-center justify-between text-xs font-bold tracking-wider text-neutral-600 mb-2.5 font-mono">
+                  <span className="text-black">{art.tag}</span>
                   <span>{art.readTime}</span>
                 </div>
-                <h3 className="text-[14px] sm:text-[15px] font-semibold text-[#222442] leading-snug group-hover:text-[#5558FF] transition-colors font-tasaorbiter">
+                <h3 className="hero-black-text text-base sm:text-lg font-semibold text-black leading-snug font-tasaorbiter">
                   {art.title}
                 </h3>
               </div>
@@ -1012,21 +978,21 @@ function ArticlesSection() {
 }
 
 /* =========================================================================
-   11. FINAL DRAMATIC CTA SECTION
+   11. FINAL CTA SECTION (Light Mode Background & Black Text)
    ========================================================================= */
 
 function FinalCTA() {
   return (
-    <section className="relative w-full min-h-[100dvh] flex flex-col justify-center py-16 sm:py-24 bg-[#111638] text-white overflow-hidden text-center">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+    <section className="relative w-full py-20 sm:py-28 bg-white text-black border-b border-slate-200 text-center">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <h2
-          className="text-3xl sm:text-5xl md:text-[54px] font-medium leading-[1.1] text-white font-tasaorbiter"
-          style={{ color: '#ffffff' }}
+          className="hero-black-text text-3xl sm:text-5xl md:text-[56px] font-medium leading-[1.08] text-black font-tasaorbiter"
+          style={{ color: '#000000' }}
         >
           Ready to experience{' '}
           <span
-            className="font-instrumentserif italic font-normal text-white"
-            style={{ color: '#ffffff' }}
+            className="font-instrumentserif italic font-normal text-black"
+            style={{ color: '#000000' }}
           >
             real
           </span>{' '}
@@ -1034,10 +1000,14 @@ function FinalCTA() {
           Continuity?
         </h2>
 
+        <p className="mt-4 text-base sm:text-lg text-neutral-700 max-w-xl mx-auto">
+          Start verifying developer shift rotations, deliverables, and cryptographic handoffs today.
+        </p>
+
         <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4 max-w-md sm:max-w-none mx-auto">
           <Link
             href="/dashboard"
-            className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold px-7 py-3.5 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
+            className="dark-cta-btn bg-black hover:bg-neutral-800 text-white font-semibold px-7 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
           >
             <span>Launch Dashboard</span>
             <ArrowRight className="w-4 h-4" />
@@ -1045,7 +1015,7 @@ function FinalCTA() {
 
           <Link
             href="/login"
-            className="bg-[#1A214D] hover:bg-[#232C63] text-white border border-white/15 font-medium px-7 py-3.5 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+            className="bg-white hover:bg-slate-100 text-black border border-slate-300 font-semibold px-7 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
           >
             <span>Sign In to Platform</span>
           </Link>
@@ -1073,14 +1043,9 @@ function Footer() {
   };
 
   return (
-    <footer className="w-full bg-white border-t border-[#E4E7F2] pt-16 sm:pt-20 pb-10 relative overflow-hidden text-[#222442]" suppressHydrationWarning>
-      {/* Faint Oversized Watermark behind bottom columns */}
-      <div className="absolute bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 text-[140px] sm:text-[200px] md:text-[250px] lg:text-[280px] font-extrabold text-[#F4F5FB] select-none pointer-events-none tracking-tight font-tasaorbiter z-0 opacity-80 whitespace-nowrap">
-        Continuity
-      </div>
-
-      <div className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-14 pb-16">
+    <footer className="w-full bg-white pt-16 sm:pt-20 pb-12 relative overflow-hidden text-black" suppressHydrationWarning>
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-14">
           {/* Column 1: Brand & Contact */}
           <div className="lg:col-span-4 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
@@ -1088,16 +1053,16 @@ function Footer() {
               <img
                 src="https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png"
                 alt="Continuity"
-                className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+                className="h-9 sm:h-10 w-auto object-contain"
               />
             </Link>
-            <p className="text-[14px] text-[#6F718A] leading-relaxed max-w-sm">
+            <p className="text-sm text-neutral-700 leading-relaxed max-w-sm">
               Enterprise Project Continuity, Shift Governance &amp; Verifiable Client Delivery Platform.
             </p>
-            <div className="pt-3">
+            <div className="pt-2">
               <a
                 href="mailto:continuity@enterprise.platform"
-                className="text-[14px] text-[#5558FF] hover:underline font-medium font-mono"
+                className="text-sm text-black hover:underline font-semibold font-mono"
               >
                 continuity@enterprise.platform
               </a>
@@ -1106,32 +1071,32 @@ function Footer() {
 
           {/* Column 2: Platform Menu */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="text-[12px] font-bold uppercase tracking-wider text-[#111638] font-tasaorbiter">
+            <div className="text-xs font-bold uppercase tracking-wider text-black font-tasaorbiter">
               Platform
             </div>
-            <ul className="space-y-3 text-[14px] text-[#6F718A]">
+            <ul className="space-y-3 text-sm text-neutral-700">
               <li>
-                <Link href="/dashboard" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/dashboard" className="hover:text-black transition-colors">
                   Governance Dashboard
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/login" className="hover:text-black transition-colors">
                   Platform Login
                 </Link>
               </li>
               <li>
-                <Link href="/handoffs" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/handoffs" className="hover:text-black transition-colors">
                   Shift Handoffs
                 </Link>
               </li>
               <li>
-                <Link href="/reviews" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/reviews" className="hover:text-black transition-colors">
                   Deliverable Reviews
                 </Link>
               </li>
               <li>
-                <Link href="/assistant" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/assistant" className="hover:text-black transition-colors">
                   Gemini RAG Assistant
                 </Link>
               </li>
@@ -1140,32 +1105,32 @@ function Footer() {
 
           {/* Column 3: Workspaces & Pods */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="text-[12px] font-bold uppercase tracking-wider text-[#111638] font-tasaorbiter">
+            <div className="text-xs font-bold uppercase tracking-wider text-black font-tasaorbiter">
               Workspaces &amp; Pods
             </div>
-            <ul className="space-y-3 text-[14px] text-[#6F718A]">
+            <ul className="space-y-3 text-sm text-neutral-700">
               <li>
-                <Link href="/tasks" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/tasks" className="hover:text-black transition-colors">
                   Task Execution &amp; Deadlines
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/projects" className="hover:text-black transition-colors">
                   Client Project Scopes
                 </Link>
               </li>
               <li>
-                <Link href="/teams" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/teams" className="hover:text-black transition-colors">
                   Team Pods &amp; Leaders
                 </Link>
               </li>
               <li>
-                <Link href="/convergence" className="hover:text-[#5558FF] transition-colors">
+                <Link href="/convergence" className="hover:text-black transition-colors">
                   Cross-Team Convergence
                 </Link>
               </li>
               <li>
-                <a href="#faq" className="hover:text-[#5558FF] transition-colors">
+                <a href="#faq" className="hover:text-black transition-colors">
                   Architecture FAQ
                 </a>
               </li>
@@ -1174,13 +1139,13 @@ function Footer() {
 
           {/* Column 4: Newsletter */}
           <div className="lg:col-span-4 space-y-4">
-            <div className="text-[12px] font-bold uppercase tracking-wider text-[#111638] font-tasaorbiter">
+            <div className="text-xs font-bold uppercase tracking-wider text-black font-tasaorbiter">
               Newsletter for updates
             </div>
-            <p className="text-[14px] text-[#6F718A] leading-relaxed">
+            <p className="text-sm text-neutral-700 leading-relaxed">
               Receive our bi-weekly breakdown of platform updates, engineering playbooks, and release notes.
             </p>
-            <form onSubmit={handleSubscribe} className="flex items-center gap-3 pt-1" suppressHydrationWarning>
+            <form onSubmit={handleSubscribe} className="flex items-center gap-2.5 pt-1" suppressHydrationWarning>
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -1191,40 +1156,39 @@ function Footer() {
                 autoComplete="off"
                 data-lpignore="true"
                 data-1p-ignore="true"
-                className="flex-1 min-w-0 bg-[#F4F5F9] border border-[#E4E7F2] rounded-full px-5 py-3 text-[13px] text-[#222442] placeholder:text-[#9DA0B6] focus:outline-none focus:border-[#5558FF] focus:bg-white transition-all shadow-inner"
+                className="flex-1 min-w-0 bg-[#F8FAFC] border border-slate-300 rounded-full px-5 py-3 text-sm text-black placeholder:text-neutral-500 focus:outline-none focus:border-black focus:bg-white transition-all"
               />
               <button
                 type="submit"
                 suppressHydrationWarning
-                className="w-11 h-11 rounded-full bg-[#5558FF] hover:bg-[#4346F0] text-white flex items-center justify-center shrink-0 transition-colors shadow-sm cursor-pointer"
+                className="dark-cta-btn w-11 h-11 rounded-full bg-black hover:bg-neutral-800 text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
                 aria-label="Subscribe"
               >
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
             {subscribed && (
-              <span className="text-[12px] font-medium text-emerald-600 block">
-                ✓ Thank you for subscribing!
+              <span className="text-xs font-semibold text-black block">
+                Thank you for subscribing.
               </span>
             )}
           </div>
         </div>
 
         {/* Bottom Strip */}
-        <div className="pt-8 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#6F718A]">
+        <div className="pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-neutral-600">
           <div>© 2026 CONTINUITY Enterprise Platform. All rights reserved.</div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <Link
               href="/dashboard"
-              className="text-[#5558FF] hover:underline font-medium flex items-center gap-1"
+              className="text-black hover:underline font-semibold flex items-center gap-1.5"
             >
-              <span>Continuity Governance Dashboard</span>
+              <span>Governance Dashboard</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </Link>
-            <span>•</span>
             <Link
               href="/login"
-              className="text-[#6F718A] hover:text-[#5558FF] transition-colors"
+              className="text-neutral-700 hover:text-black font-medium transition-colors"
             >
               Sign In
             </Link>
@@ -1241,7 +1205,7 @@ function Footer() {
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-white text-[#222442] font-sans antialiased selection:bg-[#5558FF]/20 selection:text-[#111638]">
+    <div className="min-h-screen bg-white text-black font-sans antialiased selection:bg-black selection:text-white">
       {/* 1. Hero Section (Occupies 100% of Screen 1) */}
       <HeroSection />
 
