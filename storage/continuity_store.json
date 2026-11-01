@@ -2863,6 +2863,28 @@
   ],
   "reports": [
     {
+      "id": "rep-apollo-core-mv8fsg8i",
+      "projectId": "apollo-core",
+      "projectName": "Apollo Core Distributed Consensus",
+      "teamId": "team-storage",
+      "teamName": "Consensus & Distributed Storage Pod",
+      "leaderId": "user-marcus",
+      "leaderName": "Marcus Vance",
+      "reportingPeriod": "Sprint 42 (Oct 15 - Oct 30, 2026)",
+      "progressPercentage": 13,
+      "milestonesCompleted": [],
+      "workCompleted": "Completed 1 task(s): Update Prometheus alerting rule for apollo_wal_flush_p99_micros",
+      "tasksRemaining": "5 active in-flight task(s): Validate Chaos Mesh partition suite for Raft nodes; Validate Chaos Mesh partition suite for Raft nodes",
+      "blockedTasks": "1 blocked task(s): Benchmark follower read barrier latency under 80k rps load (Blocked on staging load balancer DNS propagation. Escalated to networking team.)",
+      "risks": "",
+      "deadlineConfidence": "Medium",
+      "helpNeededFromAdmin": "",
+      "nextPeriodPlan": "ugj",
+      "evidenceUrls": [],
+      "status": "Submitted",
+      "createdAt": "2026-10-14T18:21:53.586Z"
+    },
+    {
       "id": "rep-project-orion-edge-mv5ee4eu",
       "projectId": "project-orion-edge",
       "projectName": "Project Orion Edge",
@@ -3144,6 +3166,23 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "AUDIT-MV8FSG8J-FU10",
+      "timestamp": "2026-10-14T18:21:53.587Z",
+      "hash": "50015167103490e6b1cac344a64c8fa7102c0e0045734525dfebcdf9a6ce82b9",
+      "prevHash": "c4f1c322cce5025b387e8a021b1d03ef75c004702d8f146c2e9db5198e81b5ed",
+      "action": "REPORT_SUBMITTED",
+      "actorId": "user-marcus",
+      "actorName": "Marcus Vance",
+      "projectName": "Apollo Core Distributed Consensus",
+      "detail": "Team Leader Marcus Vance submitted progress report for Apollo Core Distributed Consensus (Sprint 42 (Oct 15 - Oct 30, 2026), 13% complete).",
+      "metadata": {
+        "reportId": "rep-apollo-core-mv8fsg8i",
+        "projectId": "apollo-core",
+        "progressPercentage": 13
+      },
+      "verifiable": true
+    },
     {
       "id": "AUDIT-MV8CMH9M-OQKR",
       "timestamp": "2026-10-14T16:53:16.138Z",
@@ -4391,6 +4430,16 @@
     }
   ],
   "notifications": [
+    {
+      "id": "notif-1792002113587-wz6g",
+      "title": "New Team Leader Progress Report",
+      "message": "Marcus Vance submitted progress report for Apollo Core Distributed Consensus (Sprint 42 (Oct 15 - Oct 30, 2026)).",
+      "timestamp": "Just now",
+      "read": false,
+      "type": "report",
+      "recipientId": "user-admin",
+      "link": "/reports"
+    },
     {
       "id": "notif-1791996796138-ju2n",
       "title": "Handover Accepted: HO-2026-603",

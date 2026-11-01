@@ -108,69 +108,55 @@ function Navbar() {
 
   return (
     <>
-      <header className="marklab-navbar-header relative z-40 max-w-[1180px] mx-auto pt-4 sm:pt-6 px-2 sm:px-4 mb-4 sm:mb-6 !bg-transparent !border-none !shadow-none w-full">
-        <nav className="backdrop-blur-2xl bg-white/95 hover:bg-white border border-slate-200/90 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between shadow-[0_16px_36px_rgba(0,0,0,0.12)] transition-all text-slate-900">
-          {/* Brandmark: Black logo with white background */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+      <header className="marklab-navbar-header relative z-40 max-w-[1280px] mx-auto pt-4 sm:pt-6 px-4 sm:px-6 lg:px-8 w-full">
+        <nav className="bg-white border border-slate-200 rounded-2xl sm:rounded-full px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between shadow-sm transition-all text-slate-900">
+          {/* Brandmark */}
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png"
               alt="Continuity"
-              className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+              className="h-9 sm:h-11 w-auto object-contain"
             />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-[12px] lg:text-[13px] font-semibold text-slate-800 font-tasaorbiter">
-            <a href="#performance" className="text-slate-800 hover:text-slate-950 flex items-center gap-1 transition-colors">
-              <span className="text-slate-800 hover:text-slate-950">Platform</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-600" />
+          <div className="hidden md:flex items-center gap-7 lg:gap-10 text-sm lg:text-[15px] font-semibold text-slate-800 font-tasaorbiter">
+            <a href="#performance" className="text-slate-800 hover:text-[#5558FF] transition-colors">
+              Platform
             </a>
-            <Link href="/handoffs" className="text-slate-800 hover:text-slate-950 transition-colors">
+            <Link href="/handoffs" className="text-slate-800 hover:text-[#5558FF] transition-colors">
               Handoffs
             </Link>
-            <Link href="/reviews" className="text-slate-800 hover:text-slate-950 transition-colors">
+            <Link href="/reviews" className="text-slate-800 hover:text-[#5558FF] transition-colors">
               Reviews
             </Link>
-            <a href="#workflow" className="text-slate-800 hover:text-slate-950 transition-colors">
+            <a href="#workflow" className="text-slate-800 hover:text-[#5558FF] transition-colors">
               Lifecycle
             </a>
-            <Link href="/assistant" className="text-slate-800 hover:text-slate-950 transition-colors">
+            <Link href="/assistant" className="text-slate-800 hover:text-[#5558FF] transition-colors">
               RAG AI
             </Link>
           </div>
 
           {/* Right Action Group */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            {/* Live Indicator Badge */}
-            <div
-              className="relative text-slate-600 hover:text-slate-900 cursor-pointer transition-colors p-1"
-              title="Platform Services Online"
-            >
-              <Shield className="w-4 h-4 text-[#5558FF]" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#5558FF] text-white text-[9px] font-bold rounded-full flex items-center justify-center font-mono">
-                ✓
-              </span>
-            </div>
-
-            {/* Pill CTA: Open Dashboard */}
+          <div className="flex items-center gap-3">
+            {/* Solid CTA: Open Dashboard */}
             <Link
               href="/dashboard"
-              className="hidden sm:inline-flex items-center gap-2.5 bg-[#111638] hover:bg-[#1A2255] text-white font-semibold text-[11px] sm:text-[12px] pl-4 pr-1.5 py-1.5 rounded-full shadow-md transition-all group cursor-pointer"
+              className="dark-cta-btn hidden sm:inline-flex items-center justify-center gap-2 bg-black hover:bg-neutral-800 text-white font-semibold text-sm px-6 py-2.5 sm:py-3 rounded-full transition-colors cursor-pointer"
             >
               <span>Open Dashboard</span>
-              <span className="w-5 h-5 rounded-full bg-white text-[#111638] flex items-center justify-center font-bold text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                ↗
-              </span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
 
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-slate-800 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+              className="md:hidden text-slate-900 p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </nav>
@@ -178,92 +164,82 @@ function Navbar() {
 
       {/* Mobile Sliding Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#111638]/95 backdrop-blur-xl pt-6 px-6 flex flex-col justify-between pb-10 md:hidden animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 bg-white text-black pt-6 px-6 flex flex-col justify-between pb-10 md:hidden animate-in fade-in duration-200">
           <div>
-            <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+            <div className="flex items-center justify-between pb-5 border-b border-slate-200 mb-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://res.cloudinary.com/deimij13f/image/upload/v1791857114/logo-c_1_ju4lgi.png"
+                src="https://res.cloudinary.com/deimij13f/image/upload/v1791857115/logo-c_mq0xbm.png"
                 alt="Continuity"
-                className="h-8 w-auto object-contain"
+                className="h-9 w-auto object-contain"
               />
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                className="text-black p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors"
                 aria-label="Close menu"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="flex flex-col gap-5 text-base font-medium text-white font-tasaorbiter">
+            <div className="flex flex-col gap-2 text-lg font-medium text-black font-tasaorbiter">
               <Link
                 href="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 border-b border-white/10 flex items-center justify-between"
+                className="py-3.5 border-b border-slate-200 flex items-center justify-between text-black"
               >
                 <span>Governance Dashboard</span>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
+                <ChevronRight className="w-5 h-5 text-slate-500" />
               </Link>
               <Link
                 href="/handoffs"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 border-b border-white/10"
+                className="py-3.5 border-b border-slate-200 flex items-center justify-between text-black"
               >
-                Shift Rotations &amp; Handoffs
+                <span>Shift Rotations &amp; Handoffs</span>
+                <ChevronRight className="w-5 h-5 text-slate-500" />
               </Link>
               <Link
                 href="/reviews"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 border-b border-white/10"
+                className="py-3.5 border-b border-slate-200 flex items-center justify-between text-black"
               >
-                Deliverable Reviews
+                <span>Deliverable Reviews</span>
+                <ChevronRight className="w-5 h-5 text-slate-500" />
               </Link>
               <Link
                 href="/tasks"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 border-b border-white/10"
+                className="py-3.5 border-b border-slate-200 flex items-center justify-between text-black"
               >
-                Task Execution &amp; Deadlines
-              </Link>
-              <Link
-                href="/convergence"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 border-b border-white/10"
-              >
-                Cross-Team Convergence
+                <span>Task Execution &amp; Deadlines</span>
+                <ChevronRight className="w-5 h-5 text-slate-500" />
               </Link>
               <Link
                 href="/assistant"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 border-b border-white/10"
+                className="py-3.5 border-b border-slate-200 flex items-center justify-between text-black"
               >
-                Gemini RAG Assistant
+                <span>Gemini RAG Assistant</span>
+                <ChevronRight className="w-5 h-5 text-slate-500" />
               </Link>
-              <a
-                href="#faq"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2 border-b border-white/10"
-              >
-                Architecture FAQ
-              </a>
             </div>
           </div>
 
           <div className="flex flex-col gap-3 pt-6">
             <Link
-              href="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center bg-[#5558FF] text-white py-3 rounded-full font-medium text-sm shadow-md"
-            >
-              Platform Login ↗
-            </Link>
-            <Link
               href="/dashboard"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center bg-white/10 text-white py-3 rounded-full font-medium text-sm border border-white/15"
+              className="w-full text-center bg-black text-white py-3.5 rounded-full font-semibold text-base"
             >
               Open Governance Dashboard
+            </Link>
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center bg-slate-100 text-black py-3.5 rounded-full font-medium text-base border border-slate-300"
+            >
+              Platform Login
             </Link>
           </div>
         </div>
@@ -278,115 +254,85 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between overflow-hidden bg-[#111638] text-white">
-      {/* 1. Integrated Floating Pill Navbar with White BG and Black Logo */}
+    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between bg-white text-black border-b border-slate-200">
+      {/* 1. Large, Clean Header Navbar */}
       <Navbar />
 
-      {/* Vivid Atmospheric Radial Gradients */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        {/* Core Electric Blue & Soft Periwinkle Center Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[800px] h-[450px] bg-gradient-to-tr from-[#5558FF]/55 via-[#A6B9FF]/35 to-[#B39BFF]/25 blur-[120px] rounded-full" />
-        {/* Left Side Violet Pool */}
-        <div className="absolute -top-10 left-10 w-[420px] h-[340px] bg-[#5558FF]/30 blur-[110px] rounded-full" />
-        {/* Right Side Periwinkle Glow */}
-        <div className="absolute top-10 right-10 w-[500px] h-[400px] bg-[#A6B9FF]/25 blur-[130px] rounded-full" />
-        {/* Subtle Vertical Light Rays near right edge */}
-        <div className="absolute top-0 right-12 w-32 h-full bg-gradient-to-b from-white/10 via-transparent to-transparent opacity-40 blur-lg" />
-        {/* Soft Lavender Gradient Fade at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none" />
-      </div>
+      {/* 2. Main Hero Content (Light Background, Black Text, Zero Gradients, Responsive on Mobile & Desktop) */}
+      <div className="max-w-[1280px] w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-1 flex flex-col justify-center items-center text-center py-12 sm:py-16 lg:py-20">
+        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs sm:text-sm font-semibold tracking-wider uppercase text-black mb-6 sm:mb-8 font-tasaorbiter">
+          Enterprise Continuity &amp; Shift Governance
+        </div>
 
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex-1 flex flex-col justify-center items-center my-auto py-6 sm:py-10">
         {/* Main Editorial Headline */}
         <h1
-          className="text-[34px] sm:text-[44px] md:text-[52px] lg:text-[58px] leading-[1.08] font-medium tracking-tight text-white max-w-4xl mx-auto font-tasaorbiter select-none"
-          style={{ color: '#ffffff' }}
+          className="hero-black-text text-4xl sm:text-5xl md:text-6xl lg:text-[68px] leading-[1.06] font-medium tracking-tight text-black max-w-4xl mx-auto font-tasaorbiter"
+          style={{ color: '#000000' }}
         >
           Engineering that <br className="hidden sm:inline" />
           <span
-            className="font-instrumentserif italic font-normal tracking-tight text-white"
-            style={{ color: '#ffffff' }}
+            className="font-instrumentserif italic font-normal tracking-tight text-black"
+            style={{ color: '#000000' }}
           >
             guarantees{' '}
           </span>
           <span
-            className="font-tasaorbiter font-medium not-italic text-white"
-            style={{ color: '#ffffff' }}
+            className="font-tasaorbiter font-medium not-italic text-black"
+            style={{ color: '#000000' }}
           >
             Continuity
           </span>
         </h1>
 
-        {/* Small Centered Supporting Sentence */}
+        {/* Supporting Subtitle */}
         <p
-          className="mt-4 sm:mt-5 max-w-xl mx-auto text-[13px] sm:text-[15px] leading-[1.45] text-slate-300 font-normal select-none"
-          style={{ color: '#CBD5E1' }}
+          className="mt-5 sm:mt-6 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl leading-relaxed text-neutral-800 font-normal"
+          style={{ color: '#171717' }}
         >
           Mission-critical enterprise platform for verifiable developer shift rotations, automated completeness scoring, and cryptographic client delivery.
         </p>
 
-        {/* Primary and Secondary CTA with Left Hand-Drawn Curved Arrow */}
-        <div className="mt-8 sm:mt-9 flex items-center justify-center gap-5 sm:gap-7 relative z-20">
-          {/* Hand-drawn White Curved Arrow pointing up-right to the button */}
-          <div className="hidden sm:block absolute -left-12 lg:-left-16 top-1/2 -translate-y-1/2 pointer-events-none select-none opacity-85">
-            <svg className="w-14 h-10 text-white drop-shadow-sm" viewBox="0 0 65 45" fill="none">
-              <path
-                d="M10 38 C 22 22, 38 16, 52 18"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-              />
-              <path
-                d="M42 11 L 52 18 L 45 26"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
-          {/* Primary CTA: White Pill Button with Black Circle Arrow */}
+        {/* Primary and Secondary CTAs (Responsive Full-Width on Mobile, Inline on Desktop) */}
+        <div className="mt-8 sm:mt-10 w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4">
           <Link
             href="/dashboard"
-            className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.22)] flex items-center gap-3 group transition-all cursor-pointer"
+            className="dark-cta-btn bg-black hover:bg-neutral-800 text-white font-semibold px-7 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
           >
             <span>Launch Workspace</span>
-            <span className="w-6 h-6 rounded-full bg-[#111638] text-white flex items-center justify-center font-bold text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-              ↗
-            </span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
 
-          {/* Secondary CTA: Transparent text link: Platform Login */}
           <Link
             href="/login"
-            className="text-white hover:text-[#A6B9FF] font-medium text-[12px] sm:text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer group"
+            className="bg-white hover:bg-slate-100 text-black border border-slate-300 font-semibold px-7 py-3.5 sm:py-4 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
           >
             <span>Platform Login</span>
-            <span className="text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-              ↗
-            </span>
           </Link>
         </div>
 
-        {/* 3D Floating Rainbow Notification Bell Artwork on Right */}
-        <div className="hidden md:block absolute right-4 lg:right-16 bottom-4 lg:bottom-10 select-none pointer-events-none z-20">
-          <div className="relative w-32 h-32 lg:w-40 lg:h-40 animate-pulse transition-transform duration-700">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/marklab-bell.jpg"
-              alt="Continuity 3D Bell"
-              className="w-full h-full object-contain filter drop-shadow-[0_15px_35px_rgba(85,88,255,0.4)] [mask-image:radial-gradient(circle_at_center,black_45%,transparent_90%)]"
-              style={{ mixBlendMode: 'screen' }}
-            />
+        {/* Solid Architectural Key Highlights Grid */}
+        <div className="mt-12 sm:mt-16 w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-5 text-left">
+          <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+            <div className="text-2xl sm:text-3xl font-bold text-black font-tasaorbiter">99.4%</div>
+            <div className="mt-1 text-xs sm:text-sm text-neutral-700">
+              Verified handoff completeness across shift rotations
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+            <div className="text-2xl sm:text-3xl font-bold text-black font-tasaorbiter">SHA-256</div>
+            <div className="mt-1 text-xs sm:text-sm text-neutral-700">
+              Tamper-evident package hashes &amp; audit trail
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#F8FAFC] border border-slate-200">
+            <div className="text-2xl sm:text-3xl font-bold text-black font-tasaorbiter">3-Tier RBAC</div>
+            <div className="mt-1 text-xs sm:text-sm text-neutral-700">
+              Strict governance for Admins, Pod Leads &amp; Engineers
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Bottom Scroll Cue to indicate more sections below */}
-      <div className="relative z-10 pb-5 pt-2 flex flex-col items-center justify-center text-slate-300/80 text-[11px] tracking-wider uppercase font-semibold gap-1 select-none pointer-events-none animate-bounce">
-        <span>Scroll to Explore</span>
-        <ChevronDown className="w-4 h-4 text-slate-300" />
       </div>
     </section>
   );
@@ -398,11 +344,11 @@ function HeroSection() {
 
 function ClientLogoStrip() {
   const logos = [
-    { name: 'Stripe Core', symbol: '●' },
-    { name: 'Datadog Ops', symbol: '◎' },
-    { name: 'Vercel Infra', symbol: '▲' },
-    { name: 'Linear Sync', symbol: '◆' },
-    { name: 'HashiCorp', symbol: '✦' },
+    { name: 'Stripe Core' },
+    { name: 'Datadog Ops' },
+    { name: 'Vercel Infra' },
+    { name: 'Linear Sync' },
+    { name: 'HashiCorp' },
   ];
 
   return (
@@ -416,7 +362,6 @@ function ClientLogoStrip() {
             key={logo.name}
             className="flex items-center gap-2 hover:text-[#222442] transition-colors select-none"
           >
-            <span className="text-[12px] text-[#5558FF]">{logo.symbol}</span>
             <span className="text-[13px] sm:text-[14px] font-bold tracking-tight font-tasaorbiter">
               {logo.name}
             </span>
@@ -440,7 +385,7 @@ function MarketingShowcase() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4 items-stretch mt-6 sm:mt-8">
           {/* Left Panel: Wider Card (~2:1 ratio) with Dashboard Floating Metric */}
-          <div className="lg:col-span-8 bg-gradient-to-br from-[#EDF1FF] via-white to-[#F7F8FF] border border-[#E4E7F2] rounded-[14px] p-6 sm:p-8 flex flex-col justify-between shadow-[0_6px_24px_rgba(27,37,100,0.05)] relative overflow-hidden group hover:shadow-[0_10px_32px_rgba(27,37,100,0.08)] transition-all">
+          <div className="lg:col-span-8 bg-white border border-[#E4E7F2] rounded-[14px] p-6 sm:p-8 flex flex-col justify-between shadow-[0_6px_24px_rgba(27,37,100,0.05)] relative overflow-hidden group hover:shadow-[0_10px_32px_rgba(27,37,100,0.08)] transition-all">
             {/* Top Floating White Metric Card */}
             <div className="flex items-start justify-between">
               <div className="bg-white border border-[#E4E7F2] rounded-xl px-4 py-3 shadow-[0_4px_16px_rgba(27,37,100,0.06)] flex items-center gap-4">
@@ -662,19 +607,15 @@ function GrowthWorkflow() {
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
           {/* Left Visual Panel: Abstract Sculpture + Floating Pill */}
-          <div className="lg:col-span-6 bg-gradient-to-tr from-[#EDF1FF] via-[#E4E7F2] to-[#EDF1FF] border border-[#E4E7F2] rounded-[14px] p-8 h-[360px] sm:h-[420px] flex flex-col items-center justify-center relative overflow-hidden shadow-[0_6px_24px_rgba(27,37,100,0.05)]">
-            {/* Background Radial Glow */}
-            <div className="absolute w-[280px] h-[280px] bg-[#5558FF]/20 rounded-full blur-[80px] pointer-events-none" />
-
+          <div className="lg:col-span-6 bg-[#EDF1FF] border border-[#E4E7F2] rounded-[14px] p-8 h-[360px] sm:h-[420px] flex flex-col items-center justify-center relative overflow-hidden shadow-[0_6px_24px_rgba(27,37,100,0.05)]">
             {/* Geometric Lightning-Bolt / Ribbon Sculpture in Center */}
             <div className="relative z-10 flex flex-col items-center">
-              <div className="w-24 h-32 sm:w-28 sm:h-36 bg-gradient-to-b from-[#B39BFF] via-[#5558FF] to-[#111638] rounded-2xl shadow-[0_20px_40px_rgba(85,88,255,0.35)] transform rotate-12 flex items-center justify-center relative border border-white/30 backdrop-blur-sm">
+              <div className="w-24 h-32 sm:w-28 sm:h-36 bg-[#5558FF] rounded-2xl shadow-lg transform rotate-12 flex items-center justify-center relative border border-white/30">
                 <Zap className="w-12 h-12 text-white fill-white/20 stroke-[1.5]" />
               </div>
 
               {/* Floating Pill beneath sculpture */}
-              <div className="mt-8 bg-white/95 backdrop-blur-md border border-[#E4E7F2] rounded-full px-4 py-1.5 shadow-[0_6px_20px_rgba(27,37,100,0.08)] flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#5558FF] animate-pulse" />
+              <div className="mt-8 bg-white border border-[#E4E7F2] rounded-full px-4 py-1.5 shadow-[0_6px_20px_rgba(27,37,100,0.08)] flex items-center gap-2">
                 <span className="text-[11px] font-bold text-[#222442] font-tasaorbiter">
                   CONTINUITY AI ENGINE
                 </span>
@@ -797,9 +738,8 @@ function PortfolioGallery() {
             <Link
               key={item.id}
               href={item.href}
-              className={`${
-                item.isWide ? 'md:col-span-2 lg:col-span-1' : 'md:col-span-1'
-              } flex flex-col group cursor-pointer`}
+              className={`${item.isWide ? 'md:col-span-2 lg:col-span-1' : 'md:col-span-1'
+                } flex flex-col group cursor-pointer`}
             >
               <div className="relative aspect-[1.3] w-full rounded-[10px] overflow-hidden bg-[#EDF1FF] border border-[#E4E7F2]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -885,7 +825,6 @@ function TestimonialsSection() {
             >
               <div>
                 <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#5558FF] uppercase tracking-wider font-tasaorbiter mb-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5558FF]" />
                   <span>{t.logo}</span>
                 </div>
                 <p className="text-[12px] text-[#222442] italic leading-relaxed">
@@ -1079,14 +1018,9 @@ function ArticlesSection() {
 function FinalCTA() {
   return (
     <section className="relative w-full min-h-[100dvh] flex flex-col justify-center py-16 sm:py-24 bg-[#111638] text-white overflow-hidden text-center">
-      {/* Vivid Blue and Lavender Radial Gradient Glow */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#5558FF]/50 via-[#A6B9FF]/30 to-[#B39BFF]/20 blur-[110px] rounded-full" />
-      </div>
-
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <h2
-          className="text-[32px] sm:text-[44px] md:text-[50px] font-medium leading-[1.1] text-white font-tasaorbiter"
+          className="text-3xl sm:text-5xl md:text-[54px] font-medium leading-[1.1] text-white font-tasaorbiter"
           style={{ color: '#ffffff' }}
         >
           Ready to experience{' '}
@@ -1100,23 +1034,20 @@ function FinalCTA() {
           Continuity?
         </h2>
 
-        <div className="mt-8 flex items-center justify-center gap-5 sm:gap-6">
+        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4 max-w-md sm:max-w-none mx-auto">
           <Link
             href="/dashboard"
-            className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold pl-5 pr-2 py-2 sm:py-2.5 text-[12px] sm:text-[13px] rounded-full shadow-[0_10px_28px_rgba(255,255,255,0.2)] flex items-center gap-3 group transition-all cursor-pointer"
+            className="bg-white hover:bg-[#F7F8FF] text-[#111638] font-semibold px-7 py-3.5 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
           >
             <span>Launch Dashboard</span>
-            <span className="w-6 h-6 rounded-full bg-[#111638] text-white flex items-center justify-center font-bold text-[11px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-              ↗
-            </span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
 
           <Link
             href="/login"
-            className="text-white hover:text-[#A6B9FF] font-medium text-[12px] sm:text-[13px] flex items-center gap-1.5 transition-colors cursor-pointer group"
+            className="bg-[#1A214D] hover:bg-[#232C63] text-white border border-white/15 font-medium px-7 py-3.5 text-sm sm:text-base rounded-full inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
           >
             <span>Sign In to Platform</span>
-            <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">↗</span>
           </Link>
         </div>
       </div>

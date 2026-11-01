@@ -183,11 +183,11 @@ export function Sidebar() {
     >
       {/* Brand Header */}
       <div
-        className={`h-16 flex items-center justify-between px-6 border-b shrink-0 ${
+        className={`h-16 sm:h-20 flex items-center justify-between px-6 border-b shrink-0 ${
           isLight ? 'border-slate-200/80' : 'border-white/10'
         }`}
       >
-        <Link href="/dashboard" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2.5 group">
+        <Link href="/dashboard" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={
@@ -196,10 +196,10 @@ export function Sidebar() {
                 : 'https://res.cloudinary.com/deimij13f/image/upload/v1791857114/logo-c_1_ju4lgi.png'
             }
             alt="Continuity"
-            className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+            className="h-9 w-auto object-contain transition-transform group-hover:scale-105"
           />
           <div className="flex flex-col">
-            <span className="text-[9px] text-neutral-400 tracking-wider uppercase">
+            <span className="text-[10px] text-neutral-400 tracking-wider uppercase font-medium">
               {activeRole} Platform
             </span>
           </div>
@@ -207,7 +207,7 @@ export function Sidebar() {
         <div className="flex items-center gap-1">
           <button
             onClick={() => setIsSidebarOpen(false)}
-            className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+            className={`p-2 rounded-xl transition-colors cursor-pointer ${
               isLight ? 'text-slate-400 hover:text-slate-700 hover:bg-slate-100' : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
             title="Close sidebar"
@@ -220,20 +220,17 @@ export function Sidebar() {
 
       {/* Workspace Indicator */}
       <div className="px-4 pt-3 pb-1 shrink-0">
-        <div className="px-3 py-2 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] text-xs flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0" />
-            <span className="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">
-              {activeRole} Workspace
-            </span>
-          </div>
-          <span className="text-[10px] font-mono text-slate-500 dark:text-neutral-400">Strict RBAC</span>
+        <div className="px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] text-xs flex items-center justify-between">
+          <span className="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-xs">
+            {activeRole} Workspace
+          </span>
+          <span className="text-[11px] font-mono text-slate-500 dark:text-neutral-400">Strict RBAC</span>
         </div>
       </div>
 
       {/* Navigation Items */}
       <nav className="flex-1 px-3 py-3 space-y-1 overflow-y-auto">
-        <div className={`px-3 pb-2 text-[10px] font-bold uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
+        <div className={`px-3 pb-2 text-[11px] font-bold uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-neutral-400'}`}>
           Navigation
         </div>
         {navItems.map((item) => {
@@ -256,7 +253,7 @@ export function Sidebar() {
                   setIsSidebarOpen(false);
                 }
               }}
-              className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs transition-all ${
+              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm transition-all ${
                 isActive
                   ? isLight
                     ? 'bg-blue-50 text-blue-700 font-bold border border-blue-200/80 shadow-xs'

@@ -157,12 +157,17 @@ html[data-theme="dark"] body {
   color: #F5F5F2 !important;
 }
 
-html.dark h1:not([class*="bg-"]):not(button *),
-html.dark h2:not([class*="bg-"]):not(button *),
-html.dark h3:not([class*="bg-"]):not(button *),
-html[data-theme="dark"] h1:not([class*="bg-"]):not(button *),
-html[data-theme="dark"] h2:not([class*="bg-"]):not(button *) {
+html.dark h1:not([class*="bg-"]):not(button *):not(.hero-black-text):not(.hero-black-text *),
+html.dark h2:not([class*="bg-"]):not(button *):not(.hero-black-text):not(.hero-black-text *),
+html.dark h3:not([class*="bg-"]):not(button *):not(.hero-black-text):not(.hero-black-text *),
+html[data-theme="dark"] h1:not([class*="bg-"]):not(button *):not(.hero-black-text):not(.hero-black-text *),
+html[data-theme="dark"] h2:not([class*="bg-"]):not(button *):not(.hero-black-text):not(.hero-black-text *) {
   color: #FFFFFF !important;
+}
+
+.hero-black-text,
+.hero-black-text span {
+  color: #000000 !important;
 }
 
 /* Glass cards and panel surfaces in light mode */
@@ -319,8 +324,24 @@ html.light h4:not([class*="bg-"]):not(button *):not([class*="bg-[#111638]"] *):n
   color: #0F172A !important;
 }
 
-html.light :not(button):not(button *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-[#111638]"] *):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *).text-white {
+html.light :not(button):not(button *):not(.dark-cta-btn):not(.dark-cta-btn *):not([class*="bg-black"]):not([class*="bg-black"] *):not([class*="bg-[#111638]"]):not([class*="bg-[#5558FF]"]):not([class*="bg-[#5558FF]"] *):not([class*="bg-blue"]):not([class*="bg-[#2563EB]"]):not([class*="bg-emerald"]):not([class*="bg-rose"]):not([class*="bg-[#111638]"] *):not([class*="bg-[#070914]"] *):not([class*="bg-[#090C1A]"] *):not([class*="bg-[#111428]"] *):not([class*="bg-[#050606]"] *).text-white {
   color: #0F172A !important;
+}
+
+/* Explicitly preserve crisp white text on dark CTA buttons */
+.dark-cta-btn,
+.dark-cta-btn *,
+.dark-cta-btn span,
+.dark-cta-btn svg,
+html.light .dark-cta-btn,
+html.light .dark-cta-btn *,
+html.light .dark-cta-btn span,
+html.light .dark-cta-btn svg,
+.marklab-navbar-header nav a.dark-cta-btn,
+.marklab-navbar-header nav a.dark-cta-btn *,
+.marklab-navbar-header nav a.dark-cta-btn span,
+.marklab-navbar-header nav a.dark-cta-btn svg {
+  color: #FFFFFF !important;
 }
 
 /* Explicitly preserve crisp white text inside dark cards and landing sections */
@@ -343,26 +364,22 @@ html.light [class*="bg-[#111638]"] span.text-slate-300 {
   color: #E2E8F0 !important;
 }
 
-/* White pill navbar links ALWAYS have high-contrast dark slate text */
-nav.bg-white\/95 a,
-nav.bg-white\/95 a *,
-nav.bg-white\/95 a span,
-nav[class*="bg-white"] a,
-nav[class*="bg-white"] a *,
-.marklab-navbar-header nav a,
-.marklab-navbar-header nav a *,
-.marklab-navbar-header nav a span {
+/* White pill navbar links (except dark CTA buttons) have high-contrast dark slate text */
+nav.bg-white\/95 a:not(.dark-cta-btn),
+nav.bg-white\/95 a:not(.dark-cta-btn) *,
+nav[class*="bg-white"] a:not(.dark-cta-btn),
+nav[class*="bg-white"] a:not(.dark-cta-btn) *,
+.marklab-navbar-header nav a:not(.dark-cta-btn),
+.marklab-navbar-header nav a:not(.dark-cta-btn) * {
   color: #1E293B !important;
 }
 
-nav.bg-white\/95 a:hover,
-nav.bg-white\/95 a:hover *,
-nav.bg-white\/95 a:hover span,
-nav[class*="bg-white"] a:hover,
-nav[class*="bg-white"] a:hover *,
-.marklab-navbar-header nav a:hover,
-.marklab-navbar-header nav a:hover *,
-.marklab-navbar-header nav a:hover span {
+nav.bg-white\/95 a:not(.dark-cta-btn):hover,
+nav.bg-white\/95 a:not(.dark-cta-btn):hover *,
+nav[class*="bg-white"] a:not(.dark-cta-btn):hover,
+nav[class*="bg-white"] a:not(.dark-cta-btn):hover *,
+.marklab-navbar-header nav a:not(.dark-cta-btn):hover,
+.marklab-navbar-header nav a:not(.dark-cta-btn):hover * {
   color: #020617 !important;
 }
 
