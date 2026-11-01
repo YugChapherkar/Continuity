@@ -488,7 +488,28 @@ export const api = {
     return [];
   },
 
+  async getHandoff(id: string): Promise<HandoffPackage> {
+    const res = await fetch(`${API_BASE_URL}/api/handoffs/${id}`, {
+      headers: getAuthHeaders(),
+    });
+    return handleResponse(res);
+  },
+
   async createHandoff(payload: any): Promise<HandoffPackage> {
+    const projectId = payload.projectId;
+    // Attempt Spring Boot REST route if projectId is present
+    if (projectId) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/projects/${projectId}/handoffs`, {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) return await res.json();
+      } catch {
+        // Fall back to standard route
+      }
+    }
     const res = await fetch(`${API_BASE_URL}/api/handoffs`, {
       method: 'POST',
       headers: getAuthHeaders(),
@@ -516,6 +537,16 @@ export const api = {
   },
 
   async clarifyHandoff(id: string, question: string): Promise<{ success: boolean; handoff: HandoffPackage }> {
+    // Supports both Spring Boot request-clarification and Next.js /clarify
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/handoffs/${id}/request-clarification`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ question }),
+      });
+      if (res.ok) return handleResponse(res);
+    } catch {}
+
     const res = await fetch(`${API_BASE_URL}/api/handoffs/${id}/clarify`, {
       method: 'POST',
       headers: getAuthHeaders(),
@@ -534,6 +565,32 @@ export const api = {
   },
 
   async checkHandoffReadiness(payload: any): Promise<any> {
+    const res = await fetch(`${API_BASE_URL}/api/handoffs/readiness`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload),
+    });
+    return handleResponse(res);
+  },
+
+  async validateHandoffReadiness(
+    projectId: string,
+    payload: any
+  ): Promise<{
+    score: number;
+    ready: boolean;
+    warnings: string[];
+    satisfiedChecks: string[];
+  }> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/projects/${projectId}/handoffs/validate`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) return await res.json();
+    } catch {}
+
     const res = await fetch(`${API_BASE_URL}/api/handoffs/readiness`, {
       method: 'POST',
       headers: getAuthHeaders(),

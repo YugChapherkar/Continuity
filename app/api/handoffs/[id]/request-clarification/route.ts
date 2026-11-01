@@ -1,0 +1,67 @@
+import { NextRequest, NextResponse } from 'next/server';
+import {
+  getStore,
+  saveStore,
+  createAuditLog,
+  createNotification,
+} from '@/lib/server-store';
+import { requireUser } from '@/lib/auth';
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const auth = await requireUser(req);
+  if (auth.error) return auth.error;
+  const actor = auth.user;
+
+  const { id } = await params;
+
+  const store = getStore();
+  const handoff = store.handoffs.find((h) => h.id === id);
+
+  if (!handoff) {
+    return NextResponse.json({ error: 'Handoff dossier not found' }, { status: 404 });
+  }
+
+  try {
+    const body = await req.json().catch(() => ({}));
+    const { question = 'Additional operational context or runbook verification needed before accepting.' } = body;
+
+    handoff.status = 'Clarification Requested';
+    handoff.clarificationRequest = question;
+
+    handoff.auditTrail.push({
+      action: 'HANDOFF_CLARIFICATION_REQUESTED',
+      actor: actor.name,
+      timestamp: new Date().toISOString(),
+      detail: `Recipient requested clarification: "${question}". Custodianship transfer paused pending response.`,
+    });
+
+    createAuditLog(
+      actor.id,
+      actor.name,
+      'HANDOFF_CLARIFICATION_REQUESTED',
+      `Clarification requested on handoff ${handoff.id} by ${actor.name}: "${question}".`,
+      handoff.projectName,
+      { handoffId: handoff.id, taskId: handoff.taskId, question }
+    );
+
+    createNotification(
+      `Clarification Requested: ${handoff.id}`,
+      `${actor.name} requested clarification on "${handoff.projectName}": "${question}". Please provide details before handoff can proceed.`,
+      'handoff',
+      handoff.senderId,
+      `/handoffs/${handoff.id}`
+    );
+
+    saveStore(store);
+
+    return NextResponse.json({ success: true, handoff });
+  } catch (err: unknown) {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : 'Server error' },
+      { status: 500 }
+    );
+  }
+}

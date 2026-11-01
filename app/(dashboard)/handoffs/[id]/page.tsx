@@ -21,7 +21,10 @@ import {
   Layers,
   ExternalLink,
   Lock,
+  Download,
 } from 'lucide-react';
+import { CompletenessBreakdown } from '@/components/ui/CompletenessBreakdown';
+import { ExportReceiptModal } from '@/components/ui/ExportReceiptModal';
 
 export default function HandoffDossierPage() {
   const routerParams = useParams();
@@ -55,6 +58,8 @@ export default function HandoffDossierPage() {
   const [isOverrideModalOpen, setIsOverrideModalOpen] = useState(false);
   const [overrideReason, setOverrideReason] = useState('Authorized operational manager override transfer.');
   const [isOverriding, setIsOverriding] = useState(false);
+
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   const handoff = handoffs.find((h) => h.id === handoffId);
   if (!handoff) return notFound();
@@ -188,7 +193,15 @@ export default function HandoffDossierPage() {
           </div>
 
           {/* Primary CTA: Action buttons */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            <button
+              onClick={() => setIsExportModalOpen(true)}
+              className="px-3.5 py-2 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 text-slate-900 dark:text-neutral-200 border border-slate-200 dark:border-white/10 text-xs font-semibold rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Export Cryptographic Receipt</span>
+            </button>
+
             {isPending && isRecipient ? (
               <div className="flex flex-wrap items-center gap-2">
                 <button
@@ -205,7 +218,7 @@ export default function HandoffDossierPage() {
                 </button>
                 <button
                   onClick={() => setIsSignoffModalOpen(true)}
-                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md shadow-blue-600/25 transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2.5 bg-black hover:bg-neutral-800 text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <ShieldCheck className="w-4 h-4" />
                   <span>Accept Responsibility</span>
@@ -338,8 +351,21 @@ export default function HandoffDossierPage() {
           </div>
         </div>
 
-        {/* Right Col: Runbook & Verifiable Audit Log */}
+        {/* Right Col: Completeness Breakdown, Runbook & Verifiable Audit Log */}
         <div className="space-y-6">
+          {/* Interactive Completeness Scoring Breakdown */}
+          <CompletenessBreakdown
+            data={{
+              executiveSummary: handoff.briefing?.executiveSummary,
+              completedItems: handoff.briefing?.completedItems,
+              nextSteps: handoff.briefing?.nextSteps,
+              runbookCommands: handoff.briefing?.runbookCommands,
+              criticalBlockers: handoff.briefing?.criticalBlockers,
+              scoreOverride: handoff.completenessScore,
+            }}
+            interactive={true}
+          />
+
           {/* Runbook Commands */}
           <div className="bg-white dark:bg-[#0B0D0E]/60 backdrop-blur-md border border-slate-200 dark:border-white/[0.08] rounded-2xl p-6 shadow-sm space-y-3">
             <div className="flex items-center justify-between">
@@ -467,6 +493,19 @@ export default function HandoffDossierPage() {
                 <span className="text-emerald-700 dark:text-emerald-400 font-semibold">100% losslessly verified</span>
               </div>
             </div>
+
+            {/* Compact 4-Dimension Completeness Attestation Breakdown */}
+            <CompletenessBreakdown
+              data={{
+                executiveSummary: handoff.briefing?.executiveSummary,
+                completedItems: handoff.briefing?.completedItems,
+                nextSteps: handoff.briefing?.nextSteps,
+                runbookCommands: handoff.briefing?.runbookCommands,
+                criticalBlockers: handoff.briefing?.criticalBlockers,
+                scoreOverride: handoff.completenessScore,
+              }}
+              compact={true}
+            />
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-neutral-300 mb-1.5">
@@ -619,6 +658,14 @@ export default function HandoffDossierPage() {
           </div>
         </div>
       )}
+      {/* Cryptographic Attestation Receipt Modal */}
+      <ExportReceiptModal
+        handoff={handoff}
+        sender={sender}
+        recipient={recipient}
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+      />
     </div>
   );
 }
