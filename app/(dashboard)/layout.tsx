@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { TopBar } from '@/components/ui/TopBar';
 import { IridescentWave } from '@/components/ui/IridescentWave';
@@ -8,8 +9,33 @@ import { NavigationProgressBar } from '@/components/ui/NavigationProgressBar';
 import { useApp } from '@/context/AppContext';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const { isSidebarOpen, theme } = useApp();
   const isLight = theme === 'light';
+
+  // Prewarm all primary dashboard routes so tab clicks load instantaneously
+  useEffect(() => {
+    const primaryRoutes = [
+      '/dashboard',
+      '/projects',
+      '/tasks',
+      '/handoffs',
+      '/reports',
+      '/admin/teams',
+      '/admin/employees',
+      '/admin/reviews',
+      '/admin/deliveries',
+      '/notifications',
+    ];
+    const timer = setTimeout(() => {
+      primaryRoutes.forEach((route) => {
+        try {
+          router.prefetch(route);
+        } catch {}
+      });
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [router]);
 
   return (
     <div

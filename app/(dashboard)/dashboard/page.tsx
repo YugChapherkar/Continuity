@@ -185,7 +185,8 @@ export default function HomePage() {
             {/* 1. Total Employees */}
             <Link
               href="/admin/employees"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Employees</span>
@@ -200,7 +201,8 @@ export default function HomePage() {
             {/* 2. Active Teams */}
             <Link
               href="/admin/teams"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Active Teams</span>
@@ -215,7 +217,8 @@ export default function HomePage() {
             {/* 3. Active Projects */}
             <Link
               href="/projects"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Active Projects</span>
@@ -244,7 +247,8 @@ export default function HomePage() {
             {/* 5. Overdue Tasks */}
             <Link
               href="/tasks"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Overdue Tasks</span>
@@ -261,7 +265,8 @@ export default function HomePage() {
             {/* 6. Pending Leader Reports */}
             <Link
               href="/reports"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Pending Reports</span>
@@ -278,7 +283,8 @@ export default function HomePage() {
             {/* 7. Pending Final Reviews */}
             <Link
               href="/admin/reviews"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Final Reviews</span>
@@ -295,7 +301,8 @@ export default function HomePage() {
             {/* 8. Active Revisions */}
             <Link
               href="/admin/reviews"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Active Revisions</span>
@@ -310,7 +317,8 @@ export default function HomePage() {
             {/* 9. Approved Releases */}
             <Link
               href="/admin/deliveries"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Approved Releases</span>
@@ -325,7 +333,8 @@ export default function HomePage() {
             {/* 10. Delivered Releases */}
             <Link
               href="/admin/deliveries"
-              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between"
+              prefetch={true}
+              className="p-3.5 rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-colors group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs">
                 <span>Delivered Releases</span>
@@ -350,7 +359,8 @@ export default function HomePage() {
                   <Link
                     key={idx}
                     href={item.link}
-                    className="p-3 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-750 hover:border-blue-400 dark:hover:border-blue-500 flex items-center justify-between text-xs transition-colors group"
+                    prefetch={true}
+                    className="p-3 rounded-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-750 hover:border-blue-400 dark:hover:border-blue-500 flex items-center justify-between text-xs transition-colors group cursor-pointer"
                   >
                     <div className="min-w-0 pr-2">
                       <span className="text-[10px] font-mono font-semibold uppercase text-blue-600 dark:text-blue-400 block truncate">
@@ -472,7 +482,7 @@ export default function HomePage() {
                       <tr key={p.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
                         {/* Name & Client */}
                         <td className="px-5 py-3.5">
-                          <Link href={`/projects/${p.id}`} className="font-semibold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block">
+                          <Link href={`/projects/${p.id}`} prefetch={true} className="font-semibold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block">
                             {p.name}
                           </Link>
                           <span className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -528,6 +538,7 @@ export default function HomePage() {
                         <td className="px-5 py-3.5 text-right">
                           <Link
                             href={`/projects/${p.id}`}
+                            prefetch={true}
                             className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
                           >
                             View →
@@ -576,6 +587,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <Link
                 href="/reports"
+                prefetch={true}
                 className="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-750 hover:border-blue-400 dark:hover:border-blue-500 flex items-center gap-3 transition-colors group"
               >
                 <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
@@ -587,6 +599,7 @@ export default function HomePage() {
 
               <Link
                 href="/tasks"
+                prefetch={true}
                 className="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-750 hover:border-blue-400 dark:hover:border-blue-500 flex items-center gap-3 transition-colors group"
               >
                 <CheckSquare className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
@@ -598,6 +611,7 @@ export default function HomePage() {
 
               <Link
                 href="/updates"
+                prefetch={true}
                 className="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-750 hover:border-blue-400 dark:hover:border-blue-500 flex items-center gap-3 transition-colors group"
               >
                 <Activity className="w-4 h-4 text-slate-600 dark:text-slate-400 shrink-0" />

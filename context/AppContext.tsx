@@ -167,6 +167,7 @@ interface AppContextType {
   markAllNotificationsRead: () => void;
   toast: { message: string; type: 'success' | 'info' | 'error' } | null;
   showToast: (message: string, type?: 'success' | 'info' | 'error') => void;
+  closeToast: () => void;
   isBackendConnected: boolean;
   refreshData: () => Promise<void>;
   isSidebarOpen: boolean;
@@ -997,6 +998,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         markAllNotificationsRead,
         toast,
         showToast,
+        closeToast: () => setToast(null),
         isBackendConnected,
         refreshData,
         isSidebarOpen,
