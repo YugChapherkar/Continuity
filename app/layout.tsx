@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" className="light" data-theme="light" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `(function() {
               try {
-                var t = localStorage.getItem('continuity_theme') || 'dark';
+                var t = localStorage.getItem('continuity_theme') || 'light';
                 document.documentElement.classList.remove('dark', 'light');
                 document.documentElement.classList.add(t);
                 document.documentElement.setAttribute('data-theme', t);
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="antialiased min-h-screen transition-colors duration-300" suppressHydrationWarning>
+      <body className="antialiased min-h-screen" suppressHydrationWarning>
         <AppProvider>
           {children}
           <CreateHandoffModal />

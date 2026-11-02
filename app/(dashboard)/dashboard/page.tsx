@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { CreateProjectModal } from '@/components/ui/CreateProjectModal';
@@ -49,46 +49,58 @@ export default function HomePage() {
   const [filterClient, setFilterClient] = useState('ALL');
   const [searchProject, setSearchProject] = useState('');
 
-  // Collect all tasks across all projects
-  const allTasks = projects.flatMap((p) => p.tasks || []);
-  const overdueTasks = allTasks.filter(
-    (t) => t.deadline && new Date(t.deadline) < new Date() && t.status !== 'Completed' && t.status !== 'Done'
-  );
-  const blockedTasks = allTasks.filter((t) => t.status === 'Blocked');
+  // Collect all tasks across all projects (memoized)
+  const allTasks = useMemo(() => projects.flatMap((p) => p.tasks || []), [projects]);
+  const overdueTasks = useMemo(() => {
+    const now = new Date();
+    return allTasks.filter(
+      (t) => t.deadline && new Date(t.deadline) < now && t.status !== 'Completed' && t.status !== 'Done'
+    );
+  }, [allTasks]);
+  const blockedTasks = useMemo(() => allTasks.filter((t) => t.status === 'Blocked'), [allTasks]);
 
-  // Specific KPI computations from real records
-  const activeTeamsCount = teams.filter((t) => t.status === 'Active').length || teams.length;
-  const activeProjects = projects.filter((p) => p.status !== 'Delivered');
-  const atRiskProjects = projects.filter((p) => p.health === 'At Risk' || p.health === 'Critical' || p.status === 'Changes Requested');
-  const pendingReports = reports.filter((r) => r.status === 'Submitted');
-  const pendingFinalReviews = reviews.filter((r) => r.status === 'Submitted for Final Review');
-  const revisionRequests = reviews.filter((r) => r.status === 'Changes Requested');
-  const approvedProjects = projects.filter((p) => p.status === 'Approved for Delivery');
+  // Specific KPI computations from real records (memoized)
+  const activeTeamsCount = useMemo(() => teams.filter((t) => t.status === 'Active').length || teams.length, [teams]);
+  const activeProjects = useMemo(() => projects.filter((p) => p.status !== 'Delivered'), [projects]);
+  const atRiskProjects = useMemo(
+    () => projects.filter((p) => p.health === 'At Risk' || p.health === 'Critical' || p.status === 'Changes Requested'),
+    [projects]
+  );
+  const pendingReports = useMemo(() => reports.filter((r) => r.status === 'Submitted'), [reports]);
+  const pendingFinalReviews = useMemo(() => reviews.filter((r) => r.status === 'Submitted for Final Review'), [reviews]);
+  const revisionRequests = useMemo(() => reviews.filter((r) => r.status === 'Changes Requested'), [reviews]);
+  const approvedProjects = useMemo(() => projects.filter((p) => p.status === 'Approved for Delivery'), [projects]);
   const deliveredProjects = deliveries;
 
   // Filter options
-  const clientsList = ['ALL', ...Array.from(new Set(projects.map((p) => p.client).filter(Boolean)))];
+  const clientsList = useMemo(
+    () => ['ALL', ...Array.from(new Set(projects.map((p) => p.client).filter(Boolean)))],
+    [projects]
+  );
 
   // Filtered projects for Admin table
-  const filteredProjects = projects.filter((p) => {
-    const q = searchProject.toLowerCase();
-    const matchesSearch =
-      p.name.toLowerCase().includes(q) ||
-      p.id.toLowerCase().includes(q) ||
-      (p.client && p.client.toLowerCase().includes(q)) ||
-      p.team.toLowerCase().includes(q);
+  const filteredProjects = useMemo(() => {
+    const q = searchProject.trim().toLowerCase();
+    return projects.filter((p) => {
+      const matchesSearch =
+        !q ||
+        p.name.toLowerCase().includes(q) ||
+        p.id.toLowerCase().includes(q) ||
+        (p.client && p.client.toLowerCase().includes(q)) ||
+        p.team.toLowerCase().includes(q);
 
-    const matchesTeam = filterTeam === 'ALL' || p.teamId === filterTeam || p.team === filterTeam;
-    const matchesLeader = filterLeader === 'ALL' || p.teamLeaderId === filterLeader || p.ownerId === filterLeader;
-    const matchesStatus = filterStatus === 'ALL' || p.status === filterStatus;
-    const matchesPriority = filterPriority === 'ALL' || p.priority === filterPriority;
-    const matchesClient = filterClient === 'ALL' || p.client === filterClient;
+      const matchesTeam = filterTeam === 'ALL' || p.teamId === filterTeam || p.team === filterTeam;
+      const matchesLeader = filterLeader === 'ALL' || p.teamLeaderId === filterLeader || p.ownerId === filterLeader;
+      const matchesStatus = filterStatus === 'ALL' || p.status === filterStatus;
+      const matchesPriority = filterPriority === 'ALL' || p.priority === filterPriority;
+      const matchesClient = filterClient === 'ALL' || p.client === filterClient;
 
-    return matchesSearch && matchesTeam && matchesLeader && matchesStatus && matchesPriority && matchesClient;
-  });
+      return matchesSearch && matchesTeam && matchesLeader && matchesStatus && matchesPriority && matchesClient;
+    });
+  }, [projects, searchProject, filterTeam, filterLeader, filterStatus, filterPriority, filterClient]);
 
   // Actionable items requiring Admin review
-  const adminActionItems = [
+  const adminActionItems = useMemo(() => [
     ...pendingFinalReviews.map((r) => ({
       type: 'Final Review',
       title: `${r.projectName} deliverable submitted for final sign-off`,
@@ -104,7 +116,7 @@ export default function HomePage() {
       title: `${p.name} (${p.currentVersionId}) approved and ready for client delivery`,
       link: '/admin/deliveries',
     })),
-  ];
+  ], [pendingFinalReviews, pendingReports, approvedProjects]);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">

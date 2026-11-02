@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { Task, HandoffPackage } from '@/lib/types';
@@ -89,47 +89,64 @@ export function EmployeeDashboard() {
   } | null>(null);
   const [isQueryingAi, setIsQueryingAi] = useState(false);
 
-  // Gather tasks assigned to current user
-  const myTasks = projects.flatMap((p) =>
-    (p.tasks || [])
-      .filter(
-        (t) =>
-          t.assigneeId === currentUser.id ||
-          t.assignee.toLowerCase() === currentUser.name.toLowerCase()
-      )
-      .map((t) => ({ ...t, projectName: p.name, projectId: p.id }))
+  // Gather tasks assigned to current user (memoized)
+  const myTasks = useMemo(() => {
+    const currentName = currentUser.name.toLowerCase();
+    return projects.flatMap((p) =>
+      (p.tasks || [])
+        .filter(
+          (t) =>
+            t.assigneeId === currentUser.id ||
+            t.assignee.toLowerCase() === currentName
+        )
+        .map((t) => ({ ...t, projectName: p.name, projectId: p.id }))
+    );
+  }, [projects, currentUser.id, currentUser.name]);
+
+  const inProgressTasks = useMemo(() => myTasks.filter((t) => t.status === 'In Progress'), [myTasks]);
+  const blockedTasks = useMemo(() => myTasks.filter((t) => t.status === 'Blocked'), [myTasks]);
+  const inReviewTasks = useMemo(() => myTasks.filter((t) => t.status === 'In Review'), [myTasks]);
+  const completedTasks = useMemo(() => myTasks.filter((t) => t.status === 'Completed' || t.status === 'Done'), [myTasks]);
+
+  // Filter tasks (memoized)
+  const filteredTasks = useMemo(() => {
+    const q = taskSearch.trim().toLowerCase();
+    return myTasks.filter((t) => {
+      const matchesSearch =
+        !q ||
+        t.title.toLowerCase().includes(q) ||
+        t.id.toLowerCase().includes(q) ||
+        (t.projectName && t.projectName.toLowerCase().includes(q));
+
+      if (!matchesSearch) return false;
+      if (taskFilter === 'IN_PROGRESS') return t.status === 'In Progress';
+      if (taskFilter === 'BLOCKED') return t.status === 'Blocked';
+      if (taskFilter === 'IN_REVIEW') return t.status === 'In Review';
+      if (taskFilter === 'COMPLETED') return t.status === 'Completed' || t.status === 'Done';
+      return true;
+    });
+  }, [myTasks, taskSearch, taskFilter]);
+
+  // Incoming handovers requiring action (memoized)
+  const incomingHandovers = useMemo(
+    () =>
+      handoffs.filter(
+        (h) => h.recipientId === currentUser.id && (h.status === 'Pending' || h.status === 'Clarification Requested')
+      ),
+    [handoffs, currentUser.id]
   );
 
-  const inProgressTasks = myTasks.filter((t) => t.status === 'In Progress');
-  const blockedTasks = myTasks.filter((t) => t.status === 'Blocked');
-  const inReviewTasks = myTasks.filter((t) => t.status === 'In Review');
-  const completedTasks = myTasks.filter((t) => t.status === 'Completed' || t.status === 'Done');
-
-  // Filter tasks
-  const filteredTasks = myTasks.filter((t) => {
-    const matchesSearch =
-      t.title.toLowerCase().includes(taskSearch.toLowerCase()) ||
-      t.id.toLowerCase().includes(taskSearch.toLowerCase()) ||
-      (t.projectName && t.projectName.toLowerCase().includes(taskSearch.toLowerCase()));
-
-    if (!matchesSearch) return false;
-    if (taskFilter === 'IN_PROGRESS') return t.status === 'In Progress';
-    if (taskFilter === 'BLOCKED') return t.status === 'Blocked';
-    if (taskFilter === 'IN_REVIEW') return t.status === 'In Review';
-    if (taskFilter === 'COMPLETED') return t.status === 'Completed' || t.status === 'Done';
-    return true;
-  });
-
-  // Incoming handovers requiring action
-  const incomingHandovers = handoffs.filter(
-    (h) => h.recipientId === currentUser.id && (h.status === 'Pending' || h.status === 'Clarification Requested')
+  // Outgoing handovers sent by me (memoized)
+  const outgoingHandovers = useMemo(
+    () => handoffs.filter((h) => h.senderId === currentUser.id),
+    [handoffs, currentUser.id]
   );
 
-  // Outgoing handovers sent by me
-  const outgoingHandovers = handoffs.filter((h) => h.senderId === currentUser.id);
-
-  // My recorded daily journal entries
-  const myJournalEntries = updates.filter((u) => u.employeeId === currentUser.id);
+  // My recorded daily journal entries (memoized)
+  const myJournalEntries = useMemo(
+    () => updates.filter((u) => u.employeeId === currentUser.id),
+    [updates, currentUser.id]
+  );
 
   // Handlers
   const handleConfirmHandoffAction = async () => {

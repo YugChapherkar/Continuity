@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
@@ -41,26 +41,30 @@ export function Sidebar() {
 
   const [isPersonaMenuOpen, setIsPersonaMenuOpen] = useState(false);
 
-  // Counts for role-specific badges
-  const pendingHandoffsCount = handoffs.filter(
-    (h) => h.recipientId === currentUser.id && h.status === 'Pending'
-  ).length;
+  // Counts for role-specific badges (memoized)
+  const pendingHandoffsCount = useMemo(
+    () => handoffs.filter((h) => h.recipientId === currentUser.id && h.status === 'Pending').length,
+    [handoffs, currentUser.id]
+  );
 
-  const unreadNotifsCount = notifications.filter(
-    (n) => !n.read && (!n.recipientId || n.recipientId === currentUser.id)
-  ).length;
+  const unreadNotifsCount = useMemo(
+    () => notifications.filter((n) => !n.read && (!n.recipientId || n.recipientId === currentUser.id)).length,
+    [notifications, currentUser.id]
+  );
 
-  const pendingReviewsCount = reviews.filter(
-    (r) => r.status === 'Submitted for Final Review'
-  ).length;
+  const pendingReviewsCount = useMemo(
+    () => reviews.filter((r) => r.status === 'Submitted for Final Review').length,
+    [reviews]
+  );
 
-  const pendingReportsCount = reports.filter(
-    (r) => r.status === 'Submitted'
-  ).length;
+  const pendingReportsCount = useMemo(
+    () => reports.filter((r) => r.status === 'Submitted').length,
+    [reports]
+  );
 
   const isLight = theme === 'light';
 
-  const getNavItems = () => {
+  const navItems = useMemo(() => {
     if (activeRole === 'Admin') {
       return [
         { label: 'Overview', href: '/dashboard', icon: Layers },
@@ -146,9 +150,7 @@ export function Sidebar() {
       { label: 'AI Assistant', href: '/assistant', icon: Bot },
       { label: 'Convergence', href: '/convergence', icon: Network },
     ];
-  };
-
-  const navItems = getNavItems();
+  }, [activeRole, pendingReportsCount, pendingReviewsCount, unreadNotifsCount, pendingHandoffsCount]);
 
   // 3 Primary Demo Personas for instant switching
   const DEMO_PERSONAS = [

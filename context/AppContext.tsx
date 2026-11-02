@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback, useRef } from 'react';
 import {
   User,
   Project,
@@ -279,8 +279,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }, 4500);
   }, []);
 
-  // Fetch live state from backend API routes
+  const isRefreshingRef = useRef(false);
+
+  // Fetch live state from backend API routes with deduplication
   const refreshData = useCallback(async () => {
+    if (isRefreshingRef.current) return;
+    isRefreshingRef.current = true;
     try {
       const [
         backendProjects,
@@ -340,6 +344,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setIsBackendConnected(true);
     } catch (err) {
       console.warn('Backend refresh warning:', err);
+    } finally {
+      isRefreshingRef.current = false;
     }
   }, []);
 

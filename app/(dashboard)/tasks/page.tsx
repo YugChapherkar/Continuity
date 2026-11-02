@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useApp } from '@/context/AppContext';
 import { Avatar } from '@/components/ui/Avatar';
 import { TableSkeleton } from '@/components/ui/Skeletons';
@@ -50,36 +50,43 @@ export default function TasksPage() {
   const [updateNote, setUpdateNote] = useState('');
   const [evidenceInput, setEvidenceInput] = useState('');
 
-  // Collect all tasks across all accessible projects
-  const allTasks: (Task & { projectId: string; projectName: string })[] = [];
-  projects.forEach((p) => {
-    (p.tasks || []).forEach((t) => {
-      allTasks.push({
-        ...t,
-        projectId: p.id,
-        projectName: p.name,
+  // Collect all tasks across all accessible projects (memoized)
+  const allTasks = useMemo(() => {
+    const list: (Task & { projectId: string; projectName: string })[] = [];
+    projects.forEach((p) => {
+      (p.tasks || []).forEach((t) => {
+        list.push({
+          ...t,
+          projectId: p.id,
+          projectName: p.name,
+        });
       });
     });
-  });
+    return list;
+  }, [projects]);
 
-  const filteredTasks = allTasks.filter((t) => {
-    const q = search.toLowerCase();
-    const matchesSearch =
-      t.title.toLowerCase().includes(q) ||
-      t.id.toLowerCase().includes(q) ||
-      (t.description && t.description.toLowerCase().includes(q)) ||
-      t.assignee.toLowerCase().includes(q);
+  const filteredTasks = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const currentName = currentUser.name.toLowerCase();
+    return allTasks.filter((t) => {
+      const matchesSearch =
+        !q ||
+        t.title.toLowerCase().includes(q) ||
+        t.id.toLowerCase().includes(q) ||
+        (t.description && t.description.toLowerCase().includes(q)) ||
+        t.assignee.toLowerCase().includes(q);
 
-    const matchesProject = selectedProjectFilter === 'ALL' || t.projectId === selectedProjectFilter;
-    const matchesStatus = selectedStatusFilter === 'ALL' || t.status === selectedStatusFilter;
-    const matchesPriority = selectedPriorityFilter === 'ALL' || t.priority === selectedPriorityFilter;
-    const matchesAssignee =
-      !onlyMyTasks ||
-      t.assigneeId === currentUser.id ||
-      t.assignee.toLowerCase() === currentUser.name.toLowerCase();
+      const matchesProject = selectedProjectFilter === 'ALL' || t.projectId === selectedProjectFilter;
+      const matchesStatus = selectedStatusFilter === 'ALL' || t.status === selectedStatusFilter;
+      const matchesPriority = selectedPriorityFilter === 'ALL' || t.priority === selectedPriorityFilter;
+      const matchesAssignee =
+        !onlyMyTasks ||
+        t.assigneeId === currentUser.id ||
+        t.assignee.toLowerCase() === currentName;
 
-    return matchesSearch && matchesProject && matchesStatus && matchesPriority && matchesAssignee;
-  });
+      return matchesSearch && matchesProject && matchesStatus && matchesPriority && matchesAssignee;
+    });
+  }, [allTasks, search, selectedProjectFilter, selectedStatusFilter, selectedPriorityFilter, onlyMyTasks, currentUser.id, currentUser.name]);
 
   const canCreateTask = activeRole === 'Admin' || activeRole === 'Team Leader';
 

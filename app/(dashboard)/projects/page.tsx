@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { Avatar } from '@/components/ui/Avatar';
@@ -25,17 +25,21 @@ export default function ProjectsPage() {
   const [statusFilter, setStatusFilter] = useState<string>('All');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
-  const filteredProjects = projects.filter((p) => {
-    const matchesQuery =
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase()) ||
-      p.team.toLowerCase().includes(search.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || p.status === statusFilter;
-    return matchesQuery && matchesStatus;
-  });
+  const filteredProjects = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return projects.filter((p) => {
+      const matchesQuery =
+        !q ||
+        p.name.toLowerCase().includes(q) ||
+        (p.description && p.description.toLowerCase().includes(q)) ||
+        (p.team && p.team.toLowerCase().includes(q));
+      const matchesStatus = statusFilter === 'All' || p.status === statusFilter;
+      return matchesQuery && matchesStatus;
+    });
+  }, [projects, search, statusFilter]);
 
-  const transitioningCount = projects.filter((p) => p.status === 'Transitioning').length;
-  const totalAdrs = projects.reduce((acc, p) => acc + p.decisions.length, 0);
+  const transitioningCount = useMemo(() => projects.filter((p) => p.status === 'Transitioning').length, [projects]);
+  const totalAdrs = useMemo(() => projects.reduce((acc, p) => acc + (p.decisions?.length || 0), 0), [projects]);
 
   return (
     <div className="space-y-8">
