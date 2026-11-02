@@ -130,7 +130,6 @@ export function CreateHandoffModal() {
         <div className="p-5 sm:p-6 border-b border-slate-200 flex items-center justify-between shrink-0 bg-white">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-black" />
               <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
                 Continuity Transfer Protocol
               </span>

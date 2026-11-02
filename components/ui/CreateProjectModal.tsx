@@ -194,7 +194,6 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
         <div className="p-5 sm:p-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between shrink-0">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400" />
               <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-neutral-400">
                 Workspace Governance
               </span>
